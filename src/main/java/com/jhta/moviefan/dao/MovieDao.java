@@ -1,5 +1,5 @@
 package com.jhta.moviefan.dao;
 
-public class Sample13 {
+public class MovieDao {
 
 }
