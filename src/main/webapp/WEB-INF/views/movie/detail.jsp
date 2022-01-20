@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-   <title>무비 차트</title>
+   <title>영화 상세정보</title>
    <meta charset="utf-8">
    <meta name="viewport" content="width=device-width, initial-scale=1">
    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -12,24 +12,8 @@
 <body>
 <%@ include file="/WEB-INF/views/common/header.jsp" %>
 <div class="container">
-	<div class="row mb-3">
-		<h1>무비 차트</h1>
-	</div>
-	<div class="row mb-3">
-		<ol>
-			<li>
-				<div class="col mb-3">
-					<img src="/resources/images/spiderman.png" class="rounded mx-auto d-block" alt="...">
-					<a href="">스파이더맨- 노웨이 홈</a>
-				</div>
-			</li>
-			<li>
-				<div class="col mb-3">
-					<img src="/resources/images/spiderman.png" class="rounded mx-auto d-block" alt="...">
-					<a href="">스파이더맨- 노웨이 홈</a>
-				</div>
-			</li>
-		</ol>
+	<div class="row">
+		<h1>영화 상세정보</h1>
 	</div>
 </div>
 <%@ include file="/WEB-INF/views/common/footer.jsp" %>
