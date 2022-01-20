@@ -27,11 +27,12 @@
 			<div class="collapse navbar-collapse">
 				<ul class="navbar-nav me-auto mb-2 mb-lg-0">		
 					<li class="nav-item me-4"><a class="nav-link text-secondary active" aria-current="page" href="/movie/list">영화</a></li>
-					<li class="nav-item me-4"><a class="nav-link text-secondary" href="#">극장</a></li>
+					<li class="nav-item me-4"><a class="nav-link text-secondary" href="/theater/main">극장</a></li>
 					<li class="nav-item me-4"><a class="nav-link text-secondary" href="#">예매</a></li>
 					<li class="nav-item me-4"><a class="nav-link text-secondary" href="#">스토어</a></li>
 					<li class="nav-item me-4"><a class="nav-link text-secondary" href="#">이벤트</a></li>
 					<li class="nav-item me-4"><a class="nav-link text-secondary" href="#">혜택</a></li>
+					<li class="nav-item me-4"><a class="nav-link text-secondary" href="#">영화수다</a></li>
 				</ul>	
 				<form class="me-2">
 					<input class="form-control" type="text" placeholder="Search" aria-label="Search">
