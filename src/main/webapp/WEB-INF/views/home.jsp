@@ -18,29 +18,23 @@
 <div class="container-fluid">
 	<div class="col">
 		<div class="row mb-3">
-			<div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
+			<div id="carouselExampleInterval" class="carousel slide" data-bs-ride="carousel">
 				<div class="carousel-inner">
-					<div class="carousel-item active">
-						<a href="">
-							<img src="https://caching2.lottecinema.co.kr/lotte_image/2022/Nail/Nail_1920774.jpg" class="d-block w-100" alt="...">
-						</a>
+					<div class="carousel-item active" data-bs-interval="10000">
+						<img src="https://caching2.lottecinema.co.kr/lotte_image/2022/Nail/Nail_1920774.jpg" class="d-block w-100" alt="...">
+					</div>
+					<div class="carousel-item" data-bs-interval="2000">
+						<img src="https://caching2.lottecinema.co.kr/lotte_image/2022/Reverse/0117/Reverse_1920774.jpg" class="d-block w-100" alt="...">
 					</div>
 					<div class="carousel-item">
-						<a href="">
-							<img src="https://caching2.lottecinema.co.kr/lotte_image/2022/Reverse/0117/Reverse_1920774.jpg" class="d-block w-100" alt="...">
-						</a>
-					</div>
-					<div class="carousel-item">
-						<a href="">
-							<img src="https://caching2.lottecinema.co.kr/lotte_image/2022/Ts/0113/Ts_1920774.jpg" class="d-block w-100" alt="...">
-						</a>
+						<img src="https://caching2.lottecinema.co.kr/lotte_image/2022/Ts/0113/Ts_1920774.jpg" class="d-block w-100" alt="...">
 					</div>
 				</div>
-				<button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
+				<button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleInterval" data-bs-slide="prev">
 					<span class="carousel-control-prev-icon" aria-hidden="true"></span>
 					<span class="visually-hidden">Previous</span>
 				</button>
-				<button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
+				<button class="carousel-control-next" type="button" data-bs-target="#carouselExampleInterval" data-bs-slide="next">
 					<span class="carousel-control-next-icon" aria-hidden="true"></span>
 					<span class="visually-hidden">Next</span>
 				</button>
