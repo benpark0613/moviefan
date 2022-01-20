@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-   <title>MovieFan & MoviePen</title>
+   <title>MovieFan</title>
    <link type="image/png" href="/resources/images/logo/moviefan-favicon.png" rel="icon"/>
    <meta charset="utf-8"> 
    <meta name="viewport" content="width=device-width, initial-scale=1">
