@@ -19,26 +19,19 @@
 		<div id="theater-list" class="col container-fluid py-5">
 			<ul>
 				<li>
+				<c:forEach var="cinema" items="${cinemaList }">
 				<!-- 지역 -->
-					<button>서울</button>
-					<div>
-						<!-- 지역별 영화관 목록 -->
-						<ul class="list-group list-group-horizontal">
-							<li class="list-group-item">강남</li>
-						  	<li class="list-group-item">명동</li>
-						  	<li class="list-group-item">대학로</li>
-						</ul>
-					</div>
+						<button id="btn-cimena-name" data-city-name="${cinema.cityName }">${cinema.cityName }</button>
+						<div>
+							<!-- 지역별 영화관 목록 -->
+							<ul class="list-group list-group-horizontal">
+								<li class="list-group-item">${cinema.name }</li>
+							  	<li class="list-group-item">${cinema.name }</li>
+							  	<li class="list-group-item">${cinema.name }</li>
+							</ul>
+						</div>
+					</c:forEach>
 				<li>
-					<button>경기</button>
-					<div>
-						<ul class="list-group list-group-horizontal">
-							<li class="list-group-item">의정부</li>
-						  	<li class="list-group-item">일산</li>
-						  	<li class="list-group-item">구리</li>
-						</ul>
-					</div>
-				</li>
 			</ul>
 		</div>
 	</div>
@@ -118,4 +111,12 @@
 </div>
 <%@ include file="/WEB-INF/views/common/footer.jsp" %>
 </body>
+<script type="text/javascript">
+
+	$("#btn-cimena-name").click(function() {
+		let cityName = $(this).attr("data-city-name");
+		console.log(cityName);
+	})
+
+</script>
 </html>
