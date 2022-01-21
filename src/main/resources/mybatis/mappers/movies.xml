@@ -2,4 +2,22 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.jhta.moviefan.dao.MovieDao">
 
+	<resultMap type="com.jhta.moviefan.vo.Movie" id="MovieResultMap">
+		<id column="MOIVE_NO"	property="no"/>
+		<result column="MOVIE_TITLE" property="title"/>
+		<result column="MOVIE_RATE" property="rate"/>
+		<result column="MOVIE_RUNTIME" property="runTime"/>
+		<result column="MOVIE_RELEASE_DATE" property="releasedDate"/>
+		<result column="MOVIE_USER_RATING" property="userRating"/>
+		<result column="MOVIE_TOTAL_AUDIENCE" property="totalAudience"/>
+		<result column="MOVIE_SUMMARY" property="summary"/>
+		<result column="MOVIE_PRODUCER" property="producer"/>
+	</resultMap>
+	
+	<select id="getMovieByMovieNo" parameterType="int" resultMap="MovieResultMap">
+		select *
+		from movie
+		where movie_no = #{value}
+		
+	</select>
 </mapper>

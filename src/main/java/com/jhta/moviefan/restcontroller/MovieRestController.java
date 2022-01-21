@@ -8,11 +8,6 @@ import com.jhta.moviefan.vo.Movie;
 @RestController("/rest/movie")
 public class MovieRestController {
 	
-	@GetMapping("/list.do")
-	public Movie list() {
-		
-		return null;
-	}
 
 
 }
