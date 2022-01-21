@@ -3,7 +3,7 @@ package com.jhta.moviefan.dto;
 public class CinemaDto {
 	
 	private int no;
-	private String name;
+	private String cinemaName;
 	private String address;
 	private int totalHalls;
 	private String cityName;
@@ -19,11 +19,11 @@ public class CinemaDto {
 	}
 
 	public String getName() {
-		return name;
+		return cinemaName;
 	}
 
 	public void setName(String name) {
-		this.name = name;
+		this.cinemaName = name;
 	}
 
 	public String getAddress() {
@@ -52,8 +52,8 @@ public class CinemaDto {
 
 	@Override
 	public String toString() {
-		return "CinemaDto [no=" + no + ", name=" + name + ", address=" + address + ", totalHalls=" + totalHalls
-				+ ", cityName=" + cityName + "]";
+		return "CinemaDto [no=" + no + ", cinemaName=" + cinemaName + ", address=" + address + ", totalHalls="
+				+ totalHalls + ", cityName=" + cityName + "]";
 	}
 	
 }
