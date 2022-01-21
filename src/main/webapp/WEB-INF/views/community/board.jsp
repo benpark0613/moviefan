@@ -11,9 +11,14 @@
 </head>
 <body>
 <div class="container">
+	<h2>영화리뷰 게시판</h2>
   	<div class="row mb-3">
   		<div class="col">
-  			
+  			<th>
+  				<tr></tr>
+  				<tr></tr>
+  				<tr></tr>
+  			</th>
   		</div>
   	</div>
 </div>
