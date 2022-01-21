@@ -4,11 +4,11 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
 
-import com.jhta.moviefan.vo.Cinema;
+import com.jhta.moviefan.dto.CinemaDto;
 
 @Mapper
 public interface CinemaDao {
 	
-	List<Cinema> getAllCinemas();
+	List<CinemaDto> getAllCinemas();
 	
 }

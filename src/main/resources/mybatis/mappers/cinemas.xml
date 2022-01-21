@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jhta.moviefan.dao.CinemaDao">
+
+	<!-- List<CinemaDto> getAllCinemas(); -->
+	<select id="getAllCinemas" resultType="com.jhta.moviefan.dto.CinemaDto">
+		select
+			a.cinema_no 				as no,
+			a.cinema_name 				as name,
+			a.cinema_address 			as address,
+			a.cinema_total_halls 		as totalHalls,
+			b.city_name					as cityName
+		from
+			cinema a, city b
+		where
+			a.city_no = b.city_no
+		order by
+			a.city_no
+	</select>
+
+</mapper>
