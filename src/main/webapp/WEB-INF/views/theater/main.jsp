@@ -15,23 +15,13 @@
 <%@ include file="/WEB-INF/views/common/header.jsp" %>
 <div class="container">
 	<!-- 영화관 선택부분 -->
-	<div id="theater-select" class="row p-5 mt-4 mb-4 bg-light rounded-3">
-		<div id="theater-list" class="col container-fluid py-5">
-			<ul>
-				<li>
+		<div id="theater-list" class="row container-fluid py-5">
+			<ul class="col list-group">
 				<c:forEach var="cinema" items="${cinemaList }">
-				<!-- 지역 -->
-						<button id="btn-cimena-name" data-city-name="${cinema.cityName }">${cinema.cityName }</button>
-						<div>
-							<!-- 지역별 영화관 목록 -->
-							<ul class="list-group list-group-horizontal">
-								<li class="list-group-item">${cinema.name }</li>
-							  	<li class="list-group-item">${cinema.name }</li>
-							  	<li class="list-group-item">${cinema.name }</li>
-							</ul>
-						</div>
-					</c:forEach>
-				<li>
+					<li><button id="btn-cimena-name" data-city-name="${cinema.cityName }">${cinema.cityName }</button></li>
+					
+					<li class="list-group-item">${cinema.name }</li>
+				</c:forEach>
 			</ul>
 		</div>
 	</div>
@@ -108,15 +98,11 @@
 		</ul>
 		<p class="border-top border-2 p-2 text-end">입장 지연에 따른 관람 불편을 최소화하기 위해 영화는 10분 후 상영이 시작됩니다.</p>
 	</div>
-</div>
 <%@ include file="/WEB-INF/views/common/footer.jsp" %>
 </body>
 <script type="text/javascript">
 
-	$("#btn-cimena-name").click(function() {
-		let cityName = $(this).attr("data-city-name");
-		console.log(cityName);
-	})
+	
 
 </script>
 </html>
