@@ -45,15 +45,16 @@
 		</div>
 	</div>
 	<div class="row mb-3">
-		<div class="col mb-3">
+		<div class="col-3 mb-3">
 			<div class="row">
 			<img src="/resources/images/spiderman.png" class="rounded float-start" alt="..."> 
 			</div>
 			<div class="row mb-3">
-				<a href=""><span><strong>스파이더맨-노웨이 홈</strong></span></a>
+				<a href="detail?no=100"><span class="movie-title0"><strong></strong></span></a>
 				<br>
-				<span style="font-size: 10pt;">예매율 35%</span>
-				<span style="font-size: 10pt;">2022.01.01 개봉</span>
+				<span id="" style="font-size: 10pt;">예매율 35%</span>
+				<span class="movie-released-date0" style="font-size: 10pt;"></span>
+				<input type="hidden" value="">
 			</div>
 			<div class="row mb-3">
 				<div class="col-8">
@@ -61,15 +62,16 @@
 				</div>
 			</div>
 		</div>
-		<div class="col mb-3">
+		<div class="col-3 mb-3">
 			<div class="row">
 			<img src="/resources/images/spiderman.png" class="rounded float-start" alt="..."> 
 			</div>
 			<div class="row mb-3">
-				<a href=""><span><strong>스파이더맨-노웨이 홈</strong></span></a>
+				<a href=""><span class="movie-title1"><strong></strong></span></a>
 				<br>
-				<span style="font-size: 10pt;">예매율 35%</span>
-				<span style="font-size: 10pt;">2022.01.01 개봉</span>
+				<span id="" style="font-size: 10pt;">예매율 35%</span>
+				<span class="movie-released-date1" style="font-size: 10pt;"></span>
+				<input type="hidden" value="">
 			</div>
 			<div class="row mb-3">
 				<div class="col-8">
@@ -77,15 +79,16 @@
 				</div>
 			</div>
 		</div>
-		<div class="col mb-3">
+		<div class="col-3 mb-3">
 			<div class="row">
 			<img src="/resources/images/spiderman.png" class="rounded float-start" alt="..."> 
 			</div>
 			<div class="row mb-3">
-				<a href=""><span><strong>스파이더맨-노웨이 홈</strong></span></a>
+				<a href=""><span class="movie-title2"><strong></strong></span></a>
 				<br>
-				<span style="font-size: 10pt;">예매율 35%</span>
-				<span style="font-size: 10pt;">2022.01.01 개봉</span>
+				<span id="" style="font-size: 10pt;">예매율 35%</span>
+				<span class="movie-released-date2" style="font-size: 10pt;"></span>
+				<input type="hidden" value="">
 			</div>
 			<div class="row mb-3">
 				<div class="col-8">
@@ -93,15 +96,16 @@
 				</div>
 			</div>
 		</div>
-		<div class="col mb-3">
+		<div class="col-3 mb-3">
 			<div class="row">
 			<img src="/resources/images/spiderman.png" class="rounded float-start" alt="..."> 
 			</div>
 			<div class="row mb-3">
-				<a href=""><span><strong>스파이더맨-노웨이 홈</strong></span></a>
+				<a href=""><span class="movie-title3"><strong></strong></span></a>
 				<br>
-				<span style="font-size: 10pt;">예매율 35%</span>
-				<span style="font-size: 10pt;">2022.01.01 개봉</span>
+				<span id="" style="font-size: 10pt;">예매율 35%</span>
+				<span class="movie-released-date3" style="font-size: 10pt;"></span>
+				<input type="hidden" value="">
 			</div>
 			<div class="row mb-3">
 				<div class="col-8">
@@ -109,17 +113,16 @@
 				</div>
 			</div>
 		</div>
-	</div>
-	<div class="row mb-3">
-		<div class="col mb-3">
+		<div class="col-3 mb-3">
 			<div class="row">
 			<img src="/resources/images/spiderman.png" class="rounded float-start" alt="..."> 
 			</div>
 			<div class="row mb-3">
-				<a href=""><span><strong>스파이더맨-노웨이 홈</strong></span></a>
+				<a href=""><span class="movie-title4"><strong></strong></span></a>
 				<br>
-				<span style="font-size: 10pt;">예매율 35%</span>
-				<span style="font-size: 10pt;">2022.01.01 개봉</span>
+				<span id="" style="font-size: 10pt;">예매율 35%</span>
+				<span class="movie-released-date4" style="font-size: 10pt;"></span>
+				<input type="hidden" value="">
 			</div>
 			<div class="row mb-3">
 				<div class="col-8">
@@ -127,15 +130,16 @@
 				</div>
 			</div>
 		</div>
-		<div class="col mb-3">
+		<div class="col-3 mb-3">
 			<div class="row">
 			<img src="/resources/images/spiderman.png" class="rounded float-start" alt="..."> 
 			</div>
 			<div class="row mb-3">
-				<a href=""><span><strong>스파이더맨-노웨이 홈</strong></span></a>
+				<a href=""><span class="movie-title5"><strong></strong></span></a>
 				<br>
-				<span style="font-size: 10pt;">예매율 35%</span>
-				<span style="font-size: 10pt;">2022.01.01 개봉</span>
+				<span id="" style="font-size: 10pt;">예매율 35%</span>
+				<span class="movie-released-date5" style="font-size: 10pt;"></span>
+				<input type="hidden" value="">
 			</div>
 			<div class="row mb-3">
 				<div class="col-8">
@@ -143,15 +147,16 @@
 				</div>
 			</div>
 		</div>
-		<div class="col mb-3">
+		<div class="col-3 mb-3">
 			<div class="row">
 			<img src="/resources/images/spiderman.png" class="rounded float-start" alt="..."> 
 			</div>
 			<div class="row mb-3">
-				<a href=""><span><strong>스파이더맨-노웨이 홈</strong></span></a>
+				<a href=""><span class="movie-title6"><strong></strong></span></a>
 				<br>
-				<span style="font-size: 10pt;">예매율 35%</span>
-				<span style="font-size: 10pt;">2022.01.01 개봉</span>
+				<span id="" style="font-size: 10pt;">예매율 35%</span>
+				<span class="movie-released-date6" style="font-size: 10pt;"></span>
+				<input type="hidden" value="">
 			</div>
 			<div class="row mb-3">
 				<div class="col-8">
@@ -159,15 +164,16 @@
 				</div>
 			</div>
 		</div>
-		<div class="col mb-3">
+		<div class="col-3 mb-3">
 			<div class="row">
 			<img src="/resources/images/spiderman.png" class="rounded float-start" alt="..."> 
 			</div>
 			<div class="row mb-3">
-				<a href=""><span><strong>스파이더맨-노웨이 홈</strong></span></a>
+				<a href=""><span class="movie-title7"><strong></strong></span></a>
 				<br>
-				<span style="font-size: 10pt;">예매율 35%</span>
-				<span style="font-size: 10pt;">2022.01.01 개봉</span>
+				<span id="" style="font-size: 10pt;">예매율 35%</span>
+				<span class="movie-released-date7" style="font-size: 10pt;"></span>
+				<input type="hidden" value="">
 			</div>
 			<div class="row mb-3">
 				<div class="col-8">
@@ -175,17 +181,16 @@
 				</div>
 			</div>
 		</div>
-	</div>
-	<div class="row mb-3">
-		<div class="col mb-3">
+		<div class="col-3 mb-3">
 			<div class="row">
 			<img src="/resources/images/spiderman.png" class="rounded float-start" alt="..."> 
 			</div>
 			<div class="row mb-3">
-				<a href=""><span><strong>스파이더맨-노웨이 홈</strong></span></a>
+				<a href=""><span class="movie-title8"><strong></strong></span></a>
 				<br>
-				<span style="font-size: 10pt;">예매율 35%</span>
-				<span style="font-size: 10pt;">2022.01.01 개봉</span>
+				<span id="" style="font-size: 10pt;">예매율 35%</span>
+				<span class="movie-released-date8" style="font-size: 10pt;"></span>
+				<input type="hidden" value="">
 			</div>
 			<div class="row mb-3">
 				<div class="col-8">
@@ -193,113 +198,16 @@
 				</div>
 			</div>
 		</div>
-		<div class="col mb-3">
+		<div class="col-3 mb-3">
 			<div class="row">
 			<img src="/resources/images/spiderman.png" class="rounded float-start" alt="..."> 
 			</div>
 			<div class="row mb-3">
-				<a href=""><span><strong>스파이더맨-노웨이 홈</strong></span></a>
+				<a href=""><span class="movie-title9"><strong></strong></span></a>
 				<br>
-				<span style="font-size: 10pt;">예매율 35%</span>
-				<span style="font-size: 10pt;">2022.01.01 개봉</span>
-			</div>
-			<div class="row mb-3">
-				<div class="col-8">
-					<button type="button" class="btn btn-danger btn-sm">예매하기</button>
-				</div>
-			</div>
-		</div>
-		<div class="col mb-3">
-			<div class="row">
-			<img src="/resources/images/spiderman.png" class="rounded float-start" alt="..."> 
-			</div>
-			<div class="row mb-3">
-				<a href=""><span><strong>스파이더맨-노웨이 홈</strong></span></a>
-				<br>
-				<span style="font-size: 10pt;">예매율 35%</span>
-				<span style="font-size: 10pt;">2022.01.01 개봉</span>
-			</div>
-			<div class="row mb-3">
-				<div class="col-8">
-					<button type="button" class="btn btn-danger btn-sm">예매하기</button>
-				</div>
-			</div>
-		</div>
-		<div class="col mb-3">
-			<div class="row">
-			<img src="/resources/images/spiderman.png" class="rounded float-start" alt="..."> 
-			</div>
-			<div class="row mb-3">
-				<a href=""><span><strong>스파이더맨-노웨이 홈</strong></span></a>
-				<br>
-				<span style="font-size: 10pt;">예매율 35%</span>
-				<span style="font-size: 10pt;">2022.01.01 개봉</span>
-			</div>
-			<div class="row mb-3">
-				<div class="col-8">
-					<button type="button" class="btn btn-danger btn-sm">예매하기</button>
-				</div>
-			</div>
-		</div>
-	</div>
-	<div class="row mb-3">
-		<div class="col mb-3">
-			<div class="row">
-			<img src="/resources/images/spiderman.png" class="rounded float-start" alt="..."> 
-			</div>
-			<div class="row mb-3">
-				<a href=""><span><strong>스파이더맨-노웨이 홈</strong></span></a>
-				<br>
-				<span style="font-size: 10pt;">예매율 35%</span>
-				<span style="font-size: 10pt;">2022.01.01 개봉</span>
-			</div>
-			<div class="row mb-3">
-				<div class="col-8">
-					<button type="button" class="btn btn-danger btn-sm">예매하기</button>
-				</div>
-			</div>
-		</div>
-		<div class="col mb-3">
-			<div class="row">
-			<img src="/resources/images/spiderman.png" class="rounded float-start" alt="..."> 
-			</div>
-			<div class="row mb-3">
-				<a href=""><span><strong>스파이더맨-노웨이 홈</strong></span></a>
-				<br>
-				<span style="font-size: 10pt;">예매율 35%</span>
-				<span style="font-size: 10pt;">2022.01.01 개봉</span>
-			</div>
-			<div class="row mb-3">
-				<div class="col-8">
-					<button type="button" class="btn btn-danger btn-sm">예매하기</button>
-				</div>
-			</div>
-		</div>
-		<div class="col mb-3">
-			<div class="row">
-			<img src="/resources/images/spiderman.png" class="rounded float-start" alt="..."> 
-			</div>
-			<div class="row mb-3">
-				<a href=""><span><strong>스파이더맨-노웨이 홈</strong></span></a>
-				<br>
-				<span style="font-size: 10pt;">예매율 35%</span>
-				<span style="font-size: 10pt;">2022.01.01 개봉</span>
-			</div>
-			<div class="row mb-3">
-				<div class="col-8">
-					<button type="button" class="btn btn-danger btn-sm">예매하기</button>
-				</div>
-			</div>
-		</div>
-		<div class="col mb-3">
-			<div class="row">
-			<img src="/resources/images/spiderman.png" class="rounded float-start" alt="..."> 
-			</div>
-			<div class="row mb-3">
-				<a href=""><span><strong>스파이더맨-노웨이 홈</strong></span></a>
-				<br>
-				<span style="font-size: 10pt;">예매율 35%</span>
-				<span style="font-size: 10pt;">2022.01.01 개봉</span>
+				<span id="" style="font-size: 10pt;">예매율 35%</span>
+				<span class="movie-released-date9" style="font-size: 10pt;"></span>
+				<input type="hidden" value="">
 			</div>
 			<div class="row mb-3">
 				<div class="col-8">
@@ -311,13 +219,15 @@
 </div>
 <%@ include file="/WEB-INF/views/common/footer.jsp" %>
 <script type="text/javascript">
-	$.ajax({
-		type: "GET",
-		url: "http://kobis.or.kr/kobisopenapi/webservice/rest/boxoffice/searchDailyBoxOfficeList.xml?key=f9dd7d979e07f9f15431b68f1cf1ae1d&targetDt=20220101",
-		success : function(data){
-			console.log(data);
-		} 		
-	})
+$.getJSON("http://kobis.or.kr/kobisopenapi/webservice/rest/boxoffice/searchDailyBoxOfficeList.json?key=f9dd7d979e07f9f15431b68f1cf1ae1d&targetDt=20220101", function(result){
+	let movieList = result.boxOfficeResult.dailyBoxOfficeList
+	
+	for(let i=0; i<=movieList.length; i++){
+		$('.movie-title'+i).text(movieList[i].movieNm);
+		$('.movie-released-date'+i).text(movieList[i].openDt);
+	}
+		
+})
 </script>
 </body>
 </html>

@@ -25,16 +25,53 @@
 			<img src="/resources/images/spiderman.png" class="rounded float-start" alt="...">
 		</div>
 		<div class="col-9 mb-3">
-			<h3>스파이더맨-노 웨이 홈</h3>
-			<span style="font-size: 12pt;">spider-Man: No Way Home</span>
-			<br><br>
-			<span style="font-size: 11pt;">예매율 22.5%</span>
-			<hr color="black">
-			<span style="font-size: 11pt;">감독: </span>
-			<br>
-			<span style="font-size: 11pt;">장르: </span>
-			<br>
-			<span style="font-size: 11pt;">개봉: </span>
+			<div class="row mb-3">
+				<h3>${movie.title }</h3>
+				<span style="font-size: 12pt;">spider-Man: No Way Home</span>
+				<br><br>
+				<span style="font-size: 11pt;">예매율 22.5%</span>
+				<br>
+				<hr color="black">
+				<span style="font-size: 11pt;">감독: ${movie.producer }</span>
+				<br>
+				<span style="font-size: 11pt;">장르: </span>
+				<br>
+				<span style="font-size: 11pt;">개봉: ${movie.runTime }</span>
+			</div>
+			<div class="row mb-3">
+				<div class="col-2">
+					<button type="button" class="btn btn-danger">예매하기</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- 
+		버튼그룹
+	 -->
+	<div class="row justify-content-center">
+		<div class="col-8" >
+			<div class="btn-group" role="group" aria-label="Basic example">
+			  <button type="button" class="btn btn-danger">주요정보</button>
+			  <button type="button" class="btn btn-danger">트레일러</button>
+			  <button type="button" class="btn btn-danger">스틸컷</button>
+			  <button type="button" class="btn btn-danger">평점/리뷰</button>
+			  <button type="button" class="btn btn-danger">상영시간표</button>
+			</div>
+		</div>
+	</div>
+	<div class="row mb-3">
+		<div class="col-10">
+		<span>줄거리줄거리줄거리줄거리줄거리줄거리줄거리줄거리줄거리줄거리줄거리줄거리
+		줄거리줄거리줄거리줄거리줄거리줄거리줄거리줄거리줄거리줄거리줄거리줄거리줄거리
+		줄거리줄거리줄거리줄거리줄거리줄거리줄거리줄거리줄거리줄거리줄거리줄거리줄거리</span>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-6">
+			그래프
+		</div>
+		<div class="col-6">
+			그래프
 		</div>
 	</div>
 </div>
