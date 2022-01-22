@@ -5,12 +5,12 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-@RequestMapping("/customer")
+@RequestMapping("/mymvf")
 public class CustomerController {
 	
-	@GetMapping("/mymvf")
+	@GetMapping("/reserve")
 	public String myMvf() {
-		return "customer/mymvf";
+		return "mymvf/reserve";
 	}
 
 }
