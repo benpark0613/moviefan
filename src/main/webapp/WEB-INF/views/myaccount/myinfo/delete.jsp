@@ -83,32 +83,42 @@
 	<div class="row">
 		<ul class="nav nav-tabs">
 			<li class="nav-item dropdown">
-				<a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">결제내역</a>
+				<a class="nav-link dropdown-toggle " data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">결제내역</a>
 				<ul class="dropdown-menu">
-					<li><a class="dropdown-item" href="#">예매내역</a></li>
-					<li><a class="dropdown-item" href="#">구매내역</a></li>
-					<li><a class="dropdown-item" href="#">취소내역</a></li>
+					<li><a class="dropdown-item active" href="/myaccount/myticket/bookinglist">예매내역</a></li>
+					<li><a class="dropdown-item" href="/myaccount/myticket/orderlist">구매내역</a></li>
+					<li><a class="dropdown-item" href="/myaccount/myticket/canclelist">취소내역</a></li>
 				</ul>
 			</li>
 			<li class="nav-item dropdown">
 				<a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">MY 무비로그</a>
 				<ul class="dropdown-menu">
-					<li><a class="dropdown-item" href="#">찜한 영화</a></li>
-					<li><a class="dropdown-item" href="#">내가 본 영화</a></li>
-					<li><a class="dropdown-item" href="#">취소내역</a></li>
+					<li><a class="dropdown-item" href="/myaccount/movielog/wish">찜한 영화</a></li>
+					<li><a class="dropdown-item" href="/myaccount/movielog/watched">내가 본 영화</a></li>
 				</ul>
 			</li>
 			<li class="nav-item dropdown">
 				<a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">MY 수다</a>
 				<ul class="dropdown-menu">
-					<li><a class="dropdown-item" href="#">스크랩 보기</a></li>
-					<li><a class="dropdown-item" href="#">작성 글 보기</a></li>
-					<li><a class="dropdown-item" href="#">작성 한줄평 보기</a></li>
-					<li><a class="dropdown-item" href="#">작성 댓글 보기</a></li>
+					<li><a class="dropdown-item" href="/myaccount/movietalk/myscrap">스크랩 보기</a></li>
+					<li><a class="dropdown-item" href="/myaccount/movietalk/mydocuments">작성 글 보기</a></li>
+					<li><a class="dropdown-item" href="/myaccount/movietalk/mycomments">작성 한줄평 보기</a></li>
+					<li><a class="dropdown-item" href="/myaccount/movietalk/myreplies">작성 댓글 보기</a></li>
 				</ul>
 			</li>
-			<li class="nav-item">
-				<a class="nav-link">MY 정보관리</a>
+			<li class="nav-item dropdown">
+				<a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">MY MVF 포인트</a>
+				<ul class="dropdown-menu">
+					<li><a class="dropdown-item" href="/myaccount/mypoint/info">포인트 적립/사용안내</a></li>
+					<li><a class="dropdown-item" href="/myaccount/mypoint/history">포인트 적립/사용내역</a></li>
+				</ul>
+			</li>
+			<li class="nav-item dropdown">
+				<a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">MY 정보관리</a>
+				<ul class="dropdown-menu">
+					<li><a class="dropdown-item" href="/myaccount/myinfo/modify">회원 정보 변경</a></li>
+					<li><a class="dropdown-item" href="/myaccount/myinfo/delete">회원 탈퇴</a></li>
+				</ul>
 			</li>
 		</ul>
 	</div>
@@ -117,7 +127,7 @@
 	<div class="row mt-2">
 		<div class="col p-5 my-5">
 			<div class="row text-center"><i class="bi bi-exclamation-square" style="font-size: 5em;"></i></div>
-			<div class="row text-center"><p class="fs-1">예매 내역이 존재하지 않습니다.</p></div>
+			<div class="row text-center"><p class="fs-1">회원 탈퇴를 원하시면 비밀번호를 입력해주세요.</p></div>
 		</div>
 	</div>
 </div>
