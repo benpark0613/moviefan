@@ -67,12 +67,21 @@
 		</div>
 	</div>
 	<div class="row">
-		<div class="col-6">
-			그래프
-		</div>
-		<div class="col-6">
-			그래프
-		</div>
+		<table class="table">
+			<tr>
+				<th>성별 예매 분포</th>
+				<th>연령별 예매 분포</th>
+			</tr>
+			<tr>
+				<td>내용내용내용내용내용내용
+					내용내용내용내용
+				</td>
+				<td>내용내용내용내용내용내용</td>
+			</tr>
+		</table>
+	</div>
+	<div class="row mb-3">
+		트레일러 ? 건
 	</div>
 </div>
 <%@ include file="/WEB-INF/views/common/footer.jsp" %>
