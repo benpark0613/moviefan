@@ -2,7 +2,7 @@
 <header>
 	<div class="px-3 py-4 border-bottom">
 		<div class="container">
-			<div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
+			<div class="d-flex">
 				<a href="/admin/home" class="d-flex align-items-center my-2 my-lg-0 me-lg-auto text-white text-decoration-none"> 
 					<img src="/resources/images/logo/moviefan-admin-logo.png" style="width: 300px;" alt="moviefan" >
 				</a>
