@@ -5,27 +5,25 @@
 	<title>MovieFan</title>
 	<link type="image/png" href="/resources/images/logo/moviefan-favicon.png" rel="icon"/>
 	<meta charset="utf-8">
-	<!-- <meta name="viewport" content="width=device-width, initial-scale=1"> -->
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css" rel="stylesheet">
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 	<style type="text/css">
 		.list-group {
-		    max-height: 500px;
-		    overflow-y: auto;
+		    max-height: 500px !important;
+		    overflow-y: auto !important;
 		}
-		.list-group-item.active{
+		.list-group-item.active, .btn.active {
+			color: #fff !important;
     		background-color: #333 !important;
 		}
-		.btn.active {
-			background-color: #333 !important;
+		.btn:focus {
+		 	outline: none !important;
+			box-shadow: none !important;
 		}
-		th {
-			background-color: #333 !important;
-		}
-		* {
-		 	border-radius: 0 !important;
+		.btn {
+			transition: none !important;
 		}
 	</style>
 </head>
@@ -33,16 +31,18 @@
 <%@ include file="/WEB-INF/views/common/header.jsp" %>
 <div class="container">
 	<div class="row mt-3 mb-3">
-		<h1>영화선택</h1>
+		<div class="col-xs-12">
+			<h1>영화선택</h1>
+		</div>
 	</div>
-	<div class="row mb-3">
-		<table class="table table-bordered">
+	<div class="row">
+		<table class="table table-bordered mb-0">
 			<thead>
 				<tr>
-					<th class="col-3 text-center text-white border-start-0">영화</th>
-					<th class="col-4 text-center text-white" colspan="2">극장</th>
-					<th class="col-1 text-center text-white">날짜</th>
-					<th class="col-4 text-center text-white border-end-0">시간</th>
+					<th class="col-3 bg-dark text-center text-white border-start-0">영화</th>
+					<th class="col-4 bg-dark text-center text-white" colspan="2">극장</th>
+					<th class="col-1 bg-dark text-center text-white">날짜</th>
+					<th class="col-4 bg-dark text-center text-white border-end-0">시간</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -108,7 +108,7 @@
 						<div class="list-group" id="">
 							<a class="list-group-item list-group-item-action bg-light border-light text-center disabled" id="" data-bs-toggle="list" href="#">
 								<span>2022</span>
-								<span>1</span>
+								<span>1월</span>
 							</a>
 							<a class="list-group-item list-group-item-action bg-light border-light text-center" id="" data-bs-toggle="list" href="#">
 								<span>금</span>
@@ -156,7 +156,7 @@
 							</a>
 							<a class="list-group-item list-group-item-action bg-light border-light text-center disabled" id="" data-bs-toggle="list" href="#">
 								<span>2022</span>
-								<span>2</span>
+								<span>2월</span>
 							</a>
 							<a class="list-group-item list-group-item-action bg-light border-light text-center" id="" data-bs-toggle="list" href="#">
 								<span>화</span>
@@ -173,18 +173,85 @@
 						</div>
 					</td>
 					<td class="col-4 bg-light border-end-0">
-						<div class="list-group list-group-horizontal" id="">
-							<span class="mt-2">2D(라스트 특가)5관(Laser) 10층(총172석)</span>
-							<a class="list-group-item list-group-item-action bg-light border-light text-center" id="" data-bs-toggle="list" href="#" style="width: 80px; height:40px;">09:00</a>
-							<a class="list-group-item list-group-item-action bg-light border-light text-center" id="" data-bs-toggle="list" href="#" style="width: 80px; height:40px;">12:00</a>
-							<a class="list-group-item list-group-item-action bg-light border-light text-center" id="" data-bs-toggle="list" href="#" style="width: 80px; height:40px;">15:00</a>
+						<div class="py-2">
+							<p>2D(라스트 특가)5관(Laser) 10층(총172석)</p>
+							<a class="btn bg-secondary bg-opacity-10 border-light" id="" data-bs-toggle="button" href="#">09:00</a><span class="align-middle" style="display: inline-block; width: 70px;">155석</span>
+							<a class="btn bg-secondary bg-opacity-10 border-light" id="" data-bs-toggle="button" href="#">09:00</a><span class="align-middle" style="display: inline-block; width: 70px;">155석</span>
+							<a class="btn bg-secondary bg-opacity-10 border-light" id="" data-bs-toggle="button" href="#">09:00</a><span class="align-middle" style="display: inline-block; width: 70px;">155석</span>
+							<a class="btn bg-secondary bg-opacity-10 border-light" id="" data-bs-toggle="button" href="#">09:00</a><span class="align-middle" style="display: inline-block; width: 70px;">155석</span>
+							<a class="btn bg-secondary bg-opacity-10 border-light" id="" data-bs-toggle="button" href="#">09:00</a><span class="align-middle" style="display: inline-block; width: 70px;">155석</span>
+							<a class="btn bg-secondary bg-opacity-10 border-light" id="" data-bs-toggle="button" href="#">09:00</a><span class="align-middle" style="display: inline-block; width: 70px;">155석</span>
+						</div>
+						<div class="py-2">
+							<p>2D(라스트 특가)5관(Laser) 10층(총172석)</p>
+							<a class="btn bg-secondary bg-opacity-10 border-light" id="" data-bs-toggle="button" href="#">09:00</a><span class="align-middle" style="display: inline-block; width: 70px;">155석</span>
+							<a class="btn bg-secondary bg-opacity-10 border-light" id="" data-bs-toggle="button" href="#">09:00</a><span class="align-middle" style="display: inline-block; width: 70px;">155석</span>
+							<a class="btn bg-secondary bg-opacity-10 border-light" id="" data-bs-toggle="button" href="#">09:00</a><span class="align-middle" style="display: inline-block; width: 70px;">155석</span>
+							<a class="btn bg-secondary bg-opacity-10 border-light" id="" data-bs-toggle="button" href="#">09:00</a><span class="align-middle" style="display: inline-block; width: 70px;">155석</span>
+							<a class="btn bg-secondary bg-opacity-10 border-light" id="" data-bs-toggle="button" href="#">09:00</a><span class="align-middle" style="display: inline-block; width: 70px;">155석</span>
+							<a class="btn bg-secondary bg-opacity-10 border-light" id="" data-bs-toggle="button" href="#">09:00</a><span class="align-middle" style="display: inline-block; width: 70px;">155석</span>
 						</div>
 					</td>
 				</tr>
 			</tbody>
 		</table>
-	</div>	
+	</div>
 </div>
+<div class="bg-dark text-white">
+	<div class="container">
+		<div class="row" style="height: 150px;">
+			<div class="col d-flex justify-content-center align-items-center">
+				<span class="fs-3">영화선택</span>
+			</div>
+			<div class="vr p-0 my-4"></div>
+			<div class="col d-flex justify-content-center align-items-center">
+				<span class="fs-3">극장선택</span>
+			</div>
+			<div class="vr p-0 my-4"></div>
+			<div class="col d-flex justify-content-center align-items-center">
+				<span class="fs-3"><i class="bi bi-chevron-right"></i> 좌석선택 <i class="bi bi-chevron-right"></i> 결제</span>
+			</div>
+			<div class="col d-flex justify-content-end align-items-center">
+				<a class="btn btn-lg disabled" href="/ticket/seat" style="background-color: #333; color: #fff;"><i class="bi bi-caret-right d-flex justify-content-center" style="font-size: 3rem;"></i> <strong>좌석선택</strong></a>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="bg-dark text-white">
+	<div class="container">
+		<div class="row" style="height: 150px;">
+			<div class="col-1 d-flex justify-content-center align-items-center">
+				<img src="/resources/images/84949_185.jpg" style="width: 74px; height:104px;">
+			</div>
+			<div class="col d-flex justify-content-center align-items-center">
+				<div>
+					<span class="d-block"><strong>스파이더맨-노웨이홈</strong></span>
+					<span class="d-block"><strong>2D(라스트특가)</strong></span>
+					<span class="d-block"><strong>12세 관람가</strong></span>
+				</div>
+			</div>
+			<div class="vr p-0 my-4"></div>
+			<div class="col-3 d-flex justify-content-center align-items-center">
+				<div>
+					<span class="d-block"><span style="display: inline-block; width: 70px;">극장</span><strong>CGV 강남</strong></span>
+					<span class="d-block"><span style="display: inline-block; width: 70px;">일시</span><strong>2022.1.24(월) 18:00</strong></span>
+					<span class="d-block"><span style="display: inline-block; width: 70px;">상영관</span><strong>5관(Laser) 10층</strong></span>
+					<span class="d-block"><span style="display: inline-block; width: 70px;">인원</span><strong></strong></span>
+				</div>
+			</div>
+			<div class="vr p-0 my-4"></div>
+			<div class="col d-flex justify-content-center align-items-center">
+				<span class="fs-3"><i class="bi bi-chevron-right"></i> 좌석선택 <i class="bi bi-chevron-right"></i> 결제</span>
+			</div>
+			<div class="col d-flex justify-content-end align-items-center">
+				<a class="btn btn-danger btn-lg" href="/ticket/seat"><i class="bi bi-caret-right-fill d-flex justify-content-center" style="font-size: 3rem;"></i> <strong>좌석선택</strong></a>
+			</div>
+		</div>
+	</div>
+</div>
+<script type="text/javascript">
+
+</script>
 <%@ include file="/WEB-INF/views/common/footer.jsp" %>
 </body>
 </html>

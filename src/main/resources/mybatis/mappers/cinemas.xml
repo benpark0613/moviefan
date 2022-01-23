@@ -48,4 +48,5 @@
 		and
 			a.cinema_no = e.cinema_no
 	</select>
+
 </mapper>

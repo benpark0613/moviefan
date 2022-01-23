@@ -1,16 +1,31 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <header>
-	<div class="px-3 py-4 border-bottom">
+	<div class="py-4 border-bottom">
 		<div class="container">
-			<div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
+			<div class="d-flex">
 				<a href="/home" class="d-flex align-items-center my-2 my-lg-0 me-lg-auto text-white text-decoration-none"> 
 					<img src="/resources/images/logo/moviefan-logo.png" style="width: 300px;" alt="moviefan" >
 				</a>
 
 				<ul class="nav col-12 col-lg-auto my-2 justify-content-center my-md-0 text-small">
 					<li>
+						<a href="/admin/home" class="nav-link text-secondary">
+							<i class="bi bi-toggle-off d-flex justify-content-center" style="font-size: 2rem;"></i> 관리자 모드
+						</a>
+					</li>
+					<li>
 						<a href="#" class="nav-link text-secondary">
-							<i class="bi bi-person d-flex justify-content-center" style="font-size: 2rem;"></i> 로그인
+							<i class="bi bi-lock d-flex justify-content-center" style="font-size: 2rem;"></i> 로그인
+						</a>
+					</li>
+					<li>
+						<a href="#" class="nav-link text-secondary">
+							<i class="bi bi-unlock d-flex justify-content-center" style="font-size: 2rem;"></i> 로그아웃
+						</a>
+					</li>
+					<li>
+						<a href="/myaccount/myticket/bookinglist" class="nav-link text-secondary">
+							<i class="bi bi-person d-flex justify-content-center" style="font-size: 2rem;"></i> 마이페이지
 						</a>
 					</li>
 					<li>
@@ -27,8 +42,10 @@
 			<div class="collapse navbar-collapse">
 				<ul class="navbar-nav me-auto mb-2 mb-lg-0">		
 					<li class="nav-item me-4"><a class="nav-link text-secondary active" aria-current="page" href="/movie/list">영화</a></li>
+
 					<li class="nav-item me-4"><a class="nav-link text-secondary" href="/theater/main">극장</a></li>
 					<li class="nav-item me-4"><a class="nav-link text-secondary" href="#">예매</a></li>
+
 					<li class="nav-item me-4"><a class="nav-link text-secondary" href="#">스토어</a></li>
 					<li class="nav-item me-4"><a class="nav-link text-secondary" href="#">이벤트</a></li>
 					<li class="nav-item me-4"><a class="nav-link text-secondary" href="#">혜택</a></li>
