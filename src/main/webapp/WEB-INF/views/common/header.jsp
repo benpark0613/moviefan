@@ -14,7 +14,7 @@
 						</a>
 					</li>
 					<li>
-						<a href="/mymvf/reserve" class="nav-link text-secondary">
+						<a href="/myaccount/myticket/bookinglist" class="nav-link text-secondary">
 							<i class="bi bi-person d-flex justify-content-center" style="font-size: 2rem;"></i> 마이페이지
 						</a>
 					</li>
