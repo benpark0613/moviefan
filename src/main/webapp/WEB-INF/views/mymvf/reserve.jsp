@@ -65,13 +65,13 @@
 				</div>
 				<div class="col-4">
 					<div class="card">
-						<img src="https://pds.joongang.co.kr/news/component/htmlphoto_mmdata/201602/19/htm_20160219165732323457.jpg" class="card-img-top w-100" alt="...">
+						<img src="https://img.cgv.co.kr/Movie/Thumbnail/Poster/000084/84949/84949_1000.jpg" class="card-img-top w-100" alt="...">
 						<h6 class="card-title mt-1">영화 제목</h6>
 					</div>
 				</div>
 				<div class="col-4">
 					<div class="card">
-						<img src="https://pds.joongang.co.kr/news/component/htmlphoto_mmdata/201602/19/htm_20160219165732323457.jpg" class="card-img-top w-100" alt="...">
+						<img src="https://img.cgv.co.kr/Movie/Thumbnail/Poster/000085/85611/85611_1000.jpg" class="card-img-top w-100" alt="...">
 						<h6 class="card-title mt-1">영화 제목</h6>
 					</div>
 				</div>
@@ -113,7 +113,7 @@
 		</ul>
 	</div>
 	
-	<%-- 결제내역, 마이페이지의 랜딩페이지 화면이다. --%>
+	<%-- 결제내역, 마이페이지 첫 화면에 보여져야 하는 화면 --%>
 	<div class="row mt-2">
 		<div class="col p-5 my-5">
 			<div class="row text-center"><i class="bi bi-exclamation-square" style="font-size: 5em;"></i></div>

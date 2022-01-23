@@ -10,7 +10,12 @@
 				<ul class="nav col-12 col-lg-auto my-2 justify-content-center my-md-0 text-small">
 					<li>
 						<a href="#" class="nav-link text-secondary">
-							<i class="bi bi-person d-flex justify-content-center" style="font-size: 2rem;"></i> 로그인
+							<i class="bi bi-lock d-flex justify-content-center" style="font-size: 2rem;"></i> 로그인
+						</a>
+					</li>
+					<li>
+						<a href="/mymvf/reserve" class="nav-link text-secondary">
+							<i class="bi bi-person d-flex justify-content-center" style="font-size: 2rem;"></i> 마이페이지
 						</a>
 					</li>
 					<li>
