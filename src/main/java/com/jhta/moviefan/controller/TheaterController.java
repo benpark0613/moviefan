@@ -10,7 +10,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.jhta.moviefan.dto.CinemaDto;
+import com.jhta.moviefan.dto.CinemaNameDto;
 import com.jhta.moviefan.service.CinemaService;
 
 @Controller
@@ -22,14 +22,19 @@ public class TheaterController {
 	@Autowired
 	private CinemaService cinemaService; 
 	
-	// 지역코드 영화관 코드 날짜 
-	@GetMapping("/main")
+	// 영화관 정보
+	//@GetMapping("/main1")
+	//public String main(Model model) {
+	//	List<CinemaDto> cinemaList = cinemaService.getAllCinemaList();
+	//	model.addAttribute("cinemaList", cinemaList);
+	//	return "theater/main1";
+	//}
+	
+	@GetMapping("/main1")
 	public String main(Model model) {
-		List<CinemaDto> cinemaList = cinemaService.getAllCinemaList();
-		model.addAttribute("cinemaList", cinemaList);
-		return "theater/main";
+		List<CinemaNameDto> cinemaNames = cinemaService.getCinemaName();
+		model.addAttribute("cinemaNames", cinemaNames);
+		return "theater/main1";
 	}
-	
-	
 	
 }

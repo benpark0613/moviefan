@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.jhta.moviefan.dao.CinemaDao;
 import com.jhta.moviefan.dto.CinemaDto;
+import com.jhta.moviefan.dto.CinemaNameDto;
 
 @Service
 public class CinemaService {
@@ -16,5 +17,9 @@ public class CinemaService {
 	
 	public List<CinemaDto> getAllCinemaList() {
 		return cinemaDao.getAllCinemas();
+	}
+	
+	public List<CinemaNameDto> getCinemaName() {
+		return cinemaDao.getCinemaName();
 	}
 }

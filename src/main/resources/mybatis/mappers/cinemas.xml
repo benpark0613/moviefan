@@ -17,5 +17,16 @@
 		order by
 			a.city_no
 	</select>
-
+	
+	<!-- 지역별 영화관 이름 서울-강남 List<CinemaNameDto> getCinemaName(); -->
+	<select id="getCinemaName" resultType="com.jhta.moviefan.dto.CinemaNameDto">
+ 		select
+ 			a.city_name			as cityName,
+ 			b.cinema_name		as cinemaName
+ 		from
+ 			city a, cinema b
+ 		where
+ 			a.city_no = b.city_no
+	</select>
+	
 </mapper>
