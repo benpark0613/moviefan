@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-   <title>MovieFan :: 극장</title>
+   <title>MovieFan</title>
    <link type="image/png" href="/resources/images/logo/moviefan-favicon.png" rel="icon"/>
    <meta charset="utf-8">
    <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -11,98 +11,77 @@
    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 </head>
+<style>
+	a {
+		color: black;
+		text-decoration: none;
+	}
+</style>
 <body>
 <%@ include file="/WEB-INF/views/common/header.jsp" %>
 <div class="container">
-	<!-- 영화관 선택부분 -->
-		<div id="theater-list" class="row container-fluid py-5">
-			<ul class="col list-group">
-				<c:forEach var="cinema" items="${cinemaList }">
-					<li><button id="btn-cimena-name" data-city-name="${cinema.cityName }">${cinema.cityName }</button></li>
-					
-					<li class="list-group-item">${cinema.name }</li>
-				</c:forEach>
-			</ul>
-		</div>
+	<!-- 점보트론 -->
+	<div class="p-5 mt-5 mb-5 bg-light rounded-3">
+		<!-- 지역 선택 - 셀렉트박스로 바꿀까..? -->
+		<c:forEach var="movieTimeTable" items="${movieTimeTableList }">
+			<button id="cinema-city" class="btn btn-dark fs-4"><strong>${movieTimeTable.cityName }</strong></button>
+			<!-- 지역별 영화관 이름 -->
+			<div class="container mt-4">
+				<div class="row row-cols-2 row-cols-lg-3 g-2 g-lg-2">
+		    		<div class="col">
+						<div id="cinema-name" class="p-4 border bg-light text-center">
+				      		<a href="#" class="fs-5"><strong>${movieTimeTable.cinemaName }</strong></a>
+				      	</div>
+		    		</div>
+				</div>
+			</div>
+  		</c:forEach>
 	</div>
-	
-	<div class="row row justify-content-center hstack gap-1">
-		<button type="button" class="col-2 btn btn-secondary">상영시간표</button>
-	  	<button type="button" class="col-2 btn btn-secondary">위치/주차안내</button>
+	<!-- 안내버튼 -->
+	<div class="row mt-5 mb-5 justify-content-center hstack gap-2">
+		<a href="/theater/price" id="price-info" class="col-2 btn btn-success">관람가격 안내</a>
+		<a href="/theater/location" id="location-info" class="col-2 btn btn-success">위치/주차 안내</a>
 	</div>
-	
 	<!-- 상영시간표 -->
-	<div id="movie-timetable" class="row mt-5 mb-3">
-		<ul class="list-group list-group-flush">
-			<!-- 영화 상영정보 -->
-			<li id="movie-info" class="list-group-item mb-3">
-				<div>
-					<a>영화제목/ </a>
-					<span>장르/ </span>
-					<span>러닝타임/ </span>
-					<span>개봉일</span>
-				</div>
-				<div>
-					<span>상영관 이름/ </span>
-					<span>총 좌석수</span>
-				</div>
-				<div>
-					<ul id="movie-reservable" class="list-group list-group-horizontal">
-					  <li class="list-group-item mt-3 mb-3">상영시간<br>잔여좌석수</li>
-					  <li class="list-group-item mt-3 mb-3">상영시간<br>잔여좌석수</li>
-					  <li class="list-group-item mt-3 mb-3">상영시간<br>잔여좌석수</li>
-					</ul>
-				</div>
-			</li>
-			
-			<li class="list-group-item mb-3">
-				<div>
-					<a>영화제목/ </a>
-					<span>장르/ </span>
-					<span>러닝타임/ </span>
-					<span>개봉일</span>
-				</div>
-				<div>
-					<span>상영관 이름/ </span>
-					<span>총 좌석수</span>
-				</div>
-				<div>
-					<ul class="list-group list-group-horizontal">
-					  <li class="list-group-item mt-3 mb-3">상영시간<br>잔여좌석수</li>
-					  <li class="list-group-item mt-3 mb-3">상영시간<br>잔여좌석수</li>
-					  <li class="list-group-item mt-3 mb-3">상영시간<br>잔여좌석수</li>
-					</ul>
-				</div>
-			</li>
-			
-			<li class="list-group-item">
-				<div>
-					<a>영화제목/ </a>
-					<span>장르/ </span>
-					<span>러닝타임/ </span>
-					<span>개봉일</span>
-				</div>
-				<div>
-					<span>상영관 이름/ </span>
-					<span>총 좌석수</span>
-				</div>
-				<div>
-					<ul class="list-group list-group-horizontal">
-					  <li class="list-group-item mt-3 mb-3">상영시간<br>잔여좌석수</li>
-					  <li class="list-group-item mt-3 mb-3">상영시간<br>잔여좌석수</li>
-					  <li class="list-group-item mt-3 mb-3">상영시간<br>잔여좌석수</li>
-					</ul>
-				</div>
-			</li>
-			
-		</ul>
-		<p class="border-top border-2 p-2 text-end">입장 지연에 따른 관람 불편을 최소화하기 위해 영화는 10분 후 상영이 시작됩니다.</p>
+	<div id="movie-timetable" class="row mt-5 mb-5">
+		<table class="table">
+			<thead>
+				<c:forEach var="movieTimeTable" items="${movieTimeTableList }">
+					<tr>
+						<th>
+							<span class="fs-2">${movieTimeTable.title }</span>
+							<span class="ml-3">${movieTimeTable.genre } / </span>
+							<span><fmt:formatDate value="${movieTimeTable.releaseDate }" pattern="yyyy년 M월 d일"/> 개봉</span>
+						</th>
+					</tr>
+				</c:forEach>
+			</thead>
+			<tbody>
+				<c:forEach var="movieTimeTable" items="${movieTimeTableList }">
+					<tr>
+						<td>
+							<div class="mx-5 my-3">
+								<span class="fs-4">${movieTimeTable.hallName }</span>
+								<span>총 ${movieTimeTable.totalSeats }석</span>
+							</div>
+							<div class="d-flex align-items-center mx-5">
+								<ul class="list-group list-group-horizontal">
+								  <li class="list-group-item mt-2 mb-3 text-center">상영시작시간<br>잔여좌석수</li>
+								  <li class="list-group-item mt-2 mb-3 text-center">상영시작시간<br>잔여좌석수</li>
+								  <li class="list-group-item mt-2 mb-3 text-center">상영시작시간<br>잔여좌석수</li>
+								</ul>
+							</div>
+						</td>
+					</tr>
+				</c:forEach>
+			</tbody>
+		</table>
+		<p class="text-end">* 입장 지연에 따른 관람 불편을 최소화하기 위해, 상영시간 10분 후부터 영화가 시작됩니다.</p>
 	</div>
+</div>
 <%@ include file="/WEB-INF/views/common/footer.jsp" %>
 </body>
 <script type="text/javascript">
-
 	
-
 </script>
 </html>

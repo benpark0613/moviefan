@@ -21,12 +21,31 @@
 	<!-- 지역별 영화관 이름 서울-강남 List<CinemaNameDto> getCinemaName(); -->
 	<select id="getCinemaName" resultType="com.jhta.moviefan.dto.CinemaNameDto">
  		select
- 			a.city_name			as cityName,
- 			b.cinema_name		as cinemaName
+ 			a.city_name					as cityName,
+ 			b.cinema_name				as cinemaName
  		from
  			city a, cinema b
  		where
  			a.city_no = b.city_no
 	</select>
 
+	<!-- 상영시간표에 표시할 데이터 List<MovieTimeTableDto> getAllMovieTimeTables(); -->
+	<select id="getAllMovieTimeTables" resultType="com.jhta.moviefan.dto.MovieTimeTableDto">
+		select
+			b.city_no					as cityNo,
+			b.city_name					as cityName,
+			a.cinema_name				as cinemaName,
+			d.movie_title				as title,
+			c.genre_name				as genre,
+			d.movie_runtime				as runtime,
+			d.movie_release_date		as releaseDate,
+			e.hall_name					as hallName,
+			e.hall_total_seats			as totalSeats
+		from
+			cinema a, city b, genre c, movie d, cinema_hall e
+		where
+			a.city_no = b.city_no
+		and
+			a.cinema_no = e.cinema_no
+	</select>
 </mapper>
