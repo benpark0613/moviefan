@@ -12,4 +12,14 @@ public class TicketController {
 	public String movie() {
 		return "ticket/movie";
 	}
+	
+	@GetMapping("/seat")
+	public String seat() {
+		return "ticket/seat";
+	}
+	
+	@GetMapping("/checkout")
+	public String checkout() {
+		return "ticket/checkout";
+	}
 }
