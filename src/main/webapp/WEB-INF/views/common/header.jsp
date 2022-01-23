@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <header>
-	<div class="px-3 py-4 border-bottom">
+	<div class="py-4 border-bottom">
 		<div class="container">
 			<div class="d-flex">
 				<a href="/home" class="d-flex align-items-center my-2 my-lg-0 me-lg-auto text-white text-decoration-none"> 
@@ -43,7 +43,7 @@
 				<ul class="navbar-nav me-auto mb-2 mb-lg-0">		
 					<li class="nav-item me-4"><a class="nav-link text-secondary active" aria-current="page" href="/movie/list">영화</a></li>
 					<li class="nav-item me-4"><a class="nav-link text-secondary" href="/theater/main1">극장</a></li>
-					<li class="nav-item me-4"><a class="nav-link text-secondary" href="#">예매</a></li>
+					<li class="nav-item me-4"><a class="nav-link text-secondary" href="/ticket/movie">예매</a></li>
 					<li class="nav-item me-4"><a class="nav-link text-secondary" href="#">스토어</a></li>
 					<li class="nav-item me-4"><a class="nav-link text-secondary" href="#">이벤트</a></li>
 					<li class="nav-item me-4"><a class="nav-link text-secondary" href="#">혜택</a></li>
