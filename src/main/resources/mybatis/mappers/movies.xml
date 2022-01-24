@@ -6,9 +6,9 @@
 		<id column="MOIVE_NO"	property="no"/>
 		<result column="MOVIE_TITLE" property="title"/>
 		<result column="MOVIE_RATE" property="rate"/>
-		<result column="MOVIE_RUNTIME" property="runTime"/>
-		<result column="MOVIE_OPEN_DATE" property="openDt"/>
-		<result column="MOVIE_USER_RATING" property="userRating"/>
+		<result column="MOVIE_RUNTIME" property="runtime"/>
+		<result column="MOVIE_OPEN_DATE" property="openDate"/>
+		<result column="MOVIE_USER_RATING" property="customerRating"/>
 		<result column="MOVIE_TOTAL_AUDIENCE" property="totalAudience"/>
 		<result column="MOVIE_SUMMARY" property="summary"/>
 		<result column="MOVIE_PRODUCER" property="producer"/>
@@ -25,7 +25,7 @@
 		insert into movie
 		(MOVIE_NO, MOVIE_TITLE, MOVIE_RATE, MOVIE_RUNTIME)
 		values
-		(#{no}, #{title}, #{rate}, #{runTime})
+		(#{no}, #{title}, #{rate}, #{runtime})
 	</insert>
 	
 	<insert id="insertActor" parameterType="com.jhta.moviefan.vo.Movie_Actor">

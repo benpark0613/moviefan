@@ -70,8 +70,9 @@ public class Movie {
 		return customerRating;
 	}
 
-	public void setCustomerRating(double customerRating) {
+	public void setCustomerRating(Double customerRating) {
 		this.customerRating = customerRating;
+	}
 
 	public int getTotalAudience() {
 		return totalAudience;
