@@ -20,27 +20,102 @@
 <div class="container">
 	<div class="row my-3">
 		<div class="col">
-			<h1>영화조회</h1>
+			<h1>영화등록</h1>
 		</div>
 	</div>
 	<div class="row mb-3">
 		<div class="col">
-			<form id="form-search-movie" class="row row-cols-lg-auto g-3 align-items-center" method="get" action="search">
-				<input type="hidden" name="page" value="1" />
-				<div class="col-12">
-					<select class="form-select" name="opt">
-						<option value="" selected disabled="disabled">검색조건을 선택하세요</option>
-						<option value="제목" ${'제목' eq param.opt ? 'selected' : ''}> 제목으로 검색</option>
-						<option value="감독" ${'감독' eq param.opt ? 'selected' : ''}> 감독으로 검색</option>
-					</select>
-				</div>
-				<div class="col-12">
-					<input type="text" class="form-control" name="value" value="${param.value }">
-				</div>
-				<div class="col-12">
-					<button type="button" class="btn btn-primary" id="btn-search-movie">검색</button>
-				</div>
+			<form class="border-top border-bottom ">
+ 				<div class="row py-5">
+ 					<div class="col-5">
+ 						<div class="row g-0 align-items-center mb-2">
+ 							<div class="col-2">
+			 					<label><strong>영화명</strong></label>
+ 							</div>
+ 							<div class="col-9">
+		 						<input type="text" class="form-control">
+ 							</div>
+ 						</div>
+ 						<div class="row g-0 align-items-center">
+ 							<div class="col-2">
+			 					<label><strong>제작연도</strong></label>
+ 							</div>
+ 							<div class="col-4">
+		 						<select class="form-select">
+								  <option selected>-전체-</option>
+								  <option value="1">1922</option>
+								  <option value="2">1923</option>
+								  <option value="3">1924</option>
+								</select>
+ 							</div>
+ 							<span class="col-1 text-center">~</span>
+ 							<div class="col-4">
+		 						<select class="form-select">
+								  <option selected>-전체-</option>
+								  <option value="1">1922</option>
+								  <option value="2">1923</option>
+								  <option value="3">1924</option>
+								</select>
+ 							</div>
+ 						</div>
+ 					</div>
+ 					<div class="col-5">
+ 						<div class="row g-0 align-items-center mb-2">
+ 							<div class="col-2">
+			 					<label><strong>감독명</strong></label>
+ 							</div>
+ 							<div class="col-9">
+		 						<input type="text" class="form-control">
+ 							</div>
+ 						</div>
+ 						<div class="row g-0 align-items-center">
+ 							<div class="col-2">
+			 					<label><strong>제작연도</strong></label>
+ 							</div>
+ 							<div class="col-4">
+ 								<select class="form-select">
+								  <option selected>-전체-</option>
+								  <option value="1">1922</option>
+								  <option value="2">1923</option>
+								  <option value="3">1924</option>
+								</select>
+ 							</div>
+ 							<span class="col-1 text-center">~</span>
+ 							<div class="col-4">
+ 								<select class="form-select">
+								  <option selected>-전체-</option>
+								  <option value="1">1922</option>
+								  <option value="2">1923</option>
+								  <option value="3">1924</option>
+								</select>
+ 							</div>
+ 						</div>
+ 					</div>
+ 					<div class="col-2 d-flex align-items-center">
+ 						<button class="btn btn-primary btn-lg me-1 fs-6" style="width: 85px;">조회</button>
+ 						<button class="btn btn-secondary btn-lg fs-6" style="width: 85px;">초기화</button>
+ 					</div>
+ 				</div>
 			</form>
+		</div>
+	</div>
+	<div class="row mb-3">
+		<div class="col">
+			<table class="table">
+				<thead>
+					<tr>
+						<th>영화명</th>
+						<th>영화명(영문)</th>
+						<th>제작연도</th>
+						<th>개봉연도</th>
+						<th>장르</th>
+						<th>감독</th>
+						<th>제작사</th>
+					</tr>
+				</thead>
+				<tbody>
+				</tbody>
+			</table>
 		</div>
 	</div>
 </div>
