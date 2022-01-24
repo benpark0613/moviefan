@@ -10,7 +10,7 @@ public class MovieTimeTableDto {
 	private String title;			// 영화 제목
 	private String genre;			// 장르
 	private int runtime;			// 러닝타임
-	private Date releaseDate;		// 개봉일
+	private Date openDate;			// 개봉일
 	private String hallName;		// 상영관 이름
 	//private 						// 상영 시작시간
 	private int totalSeats;			// 상영관 전체 좌석수
@@ -66,12 +66,12 @@ public class MovieTimeTableDto {
 		this.runtime = runtime;
 	}
 
-	public Date getReleaseDate() {
-		return releaseDate;
+	public Date getOpenDate() {
+		return openDate;
 	}
 
-	public void setReleaseDate(Date releaseDate) {
-		this.releaseDate = releaseDate;
+	public void setOpenDate(Date openDate) {
+		this.openDate = openDate;
 	}
 
 	public String getHallName() {
@@ -92,9 +92,9 @@ public class MovieTimeTableDto {
 
 	@Override
 	public String toString() {
-		return "MovieTimeTableByCinemaNameDto [cityNo=" + cityNo + ", cityName=" + cityName + ", cinemaName="
-				+ cinemaName + ", title=" + title + ", genre=" + genre + ", runtime=" + runtime + ", releaseDate="
-				+ releaseDate + ", hallName=" + hallName + ", totalSeats=" + totalSeats + "]";
+		return "MovieTimeTableDto [cityNo=" + cityNo + ", cityName=" + cityName + ", cinemaName=" + cinemaName
+				+ ", title=" + title + ", genre=" + genre + ", runtime=" + runtime + ", openDate=" + openDate
+				+ ", hallName=" + hallName + ", totalSeats=" + totalSeats + "]";
 	}
 
 }
