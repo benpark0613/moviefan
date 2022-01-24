@@ -22,34 +22,28 @@
 <div class="container">
 	<!-- 점보트론 -->
 	<div class="p-5 mt-5 mb-5 bg-light rounded-3">
-		
 		<div class="container px-4">
-			<div class="row gx-1">
-			
 			<!-- 지역 선택 -->
-				<select class="form-select form-select-lg mb-3" aria-label=".form-select-lg example">
-					<c:forEach var="cinema" items="${cinemaList }">
-						<option value="{cinema.cityName }">1</option>
+			<div class="col mx-2">
+				<select id="city" class="form-select form-select-lg w-25 h-10 mb-3">
+					<c:forEach var="cinema" items="${cinemaNameList }">
+						<option value="지역명" id="cityName">${cinema.cityName }</option>
 					</c:forEach>
 				</select>
-				<!-- 영화관 선택 -->  		
-					<div class="col-8" id="cinema-list">
-						<div class="container mt-4">
-							<div class="row row-cols-2 row-cols-lg-3 g-2 g-lg-2">
-								
-								<c:forEach var="cinema" items="${cinemaList }">
-						    		<div class="col">
-										<div id="cinema" class="p-4 border bg-light text-center">
-								      		<a href="#">${cinema.cinemaName }</a>
-								      	</div>
-						    		</div>
-						  		</c:forEach>
-						  		
-							</div>
-						</div>
+			</div>
+			<!-- 영화관 선택 -->  		
+			<div class="col" id="cinema-list">
+				<div class="container mt-4">
+					<div class="row row-cols-2 row-cols-lg-3 g-2 g-lg-2">
+						<c:forEach var="cinema" items="${cinemaNameList }">
+				    		<div class="col">
+								<div id="cinema" class="p-4 border bg-light text-center">
+						      		<a href="#">${cinema.cinemaName }</a>
+						      	</div>
+				    		</div>
+				  		</c:forEach>
 					</div>
-				
-				
+				</div>
 			</div>
 		</div>
 	</div>
@@ -92,33 +86,33 @@
 	</div>
 	<!-- 상영시간표 -->
 	<div id="movie-timetable" class="row mt-5 mb-5">
-		<c:forEach var="movieTimeTable" items="${movieTimeTableList }">
+		<c:forEach var="movie" items="${movieTimeTableList }">
 			<table class="table">
 				<thead>
-						<tr>
-							<th>
-								<span class="fs-2">${movieTimeTable.title }</span>
-								<span class="ml-3">${movieTimeTable.genre } / </span>
-								<span><fmt:formatDate value="${movieTimeTable.openDate }" pattern="yyyy년 M월 d일"/> 개봉</span>
-							</th>
-						</tr>
+					<tr>
+						<th>
+							<span class="fs-2">${movie.title }</span>
+							<span class="ml-3">${movie.genre } / </span>
+							<span><fmt:formatDate value="${movie.openDate }" pattern="yyyy년 M월 d일"/> 개봉</span>
+						</th>
+					</tr>
 				</thead>
 				<tbody>
-						<tr>
-							<td>
-								<div class="mx-5 my-3">
-									<span class="fs-4">${movieTimeTable.hallName }</span>
-									<span>총 ${movieTimeTable.totalSeats }석</span>
-								</div>
-								<div class="d-flex align-items-center mx-5">
-									<ul class="list-group list-group-horizontal">
-									  <li class="list-group-item mt-2 mb-3 text-center">상영시작시간<br>잔여좌석수</li>
-									  <li class="list-group-item mt-2 mb-3 text-center">상영시작시간<br>잔여좌석수</li>
-									  <li class="list-group-item mt-2 mb-3 text-center">상영시작시간<br>잔여좌석수</li>
-									</ul>
-								</div>
-							</td>
-						</tr>
+					<tr>
+						<td>
+							<div class="mx-5 my-3">
+								<span class="fs-4">${movie.hallName }</span>
+								<span>총 ${movie.totalSeats }석</span>
+							</div>
+							<div class="d-flex align-items-center mx-5">
+								<ul class="list-group list-group-horizontal">
+								  <li class="list-group-item mt-2 mb-3 text-center">상영시작시간<br>잔여좌석수</li>
+								  <li class="list-group-item mt-2 mb-3 text-center">상영시작시간<br>잔여좌석수</li>
+								  <li class="list-group-item mt-2 mb-3 text-center">상영시작시간<br>잔여좌석수</li>
+								</ul>
+							</div>
+						</td>
+					</tr>
 				</tbody>
 			</table>
 		</c:forEach>
@@ -129,7 +123,9 @@
 </body>
 <script type="text/javascript">
 	
-	$('#city')
+	$('#cityName').click(function name() {
+
+	})
 	
 </script>
 </html>
