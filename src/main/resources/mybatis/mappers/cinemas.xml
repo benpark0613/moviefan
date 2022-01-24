@@ -18,8 +18,8 @@
 			a.city_no
 	</select>
 	
-	<!-- 지역별 영화관 이름 List<CinemaNameDto> getCinemaName(); -->
-	<select id="getCinemaName" parameterType="string" resultType="com.jhta.moviefan.dto.CinemaNameDto">
+	<!-- 지역별 영화관 이름 List<CinemaNameDto> getCinemaNameByCityName(); -->
+	<select id="getCinemaNameByCityName" parameterType="string" resultType="com.jhta.moviefan.dto.CinemaNameDto">
  		select
  			a.city_name					as cityName,
  			b.cinema_name				as cinemaName
@@ -27,6 +27,8 @@
  			city a, cinema b
  		where
  			a.city_no = b.city_no
+ 		and
+ 			a.city_name like '%' || #{value} || '%'
 	</select>
 	
 	<!-- 상영시간표에 표시할 데이터 List<MovieTimeTableDto> getAllMovieTimeTables(); -->

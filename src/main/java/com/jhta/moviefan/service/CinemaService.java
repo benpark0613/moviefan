@@ -20,8 +20,8 @@ public class CinemaService {
 		return cinemaDao.getAllCinemas();
 	}
 	
-	public List<CinemaNameDto> getCinemaName() {
-		return cinemaDao.getCinemaName();
+	public List<CinemaNameDto> getCinemaNameByCityName(String cityName) {
+		return cinemaDao.getCinemaNameByCityName(cityName);
 	}
 	
 	public List<MovieTimeTableDto> getMovieTimeTableList() {

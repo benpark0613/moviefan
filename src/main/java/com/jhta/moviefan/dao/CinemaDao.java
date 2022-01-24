@@ -13,6 +13,6 @@ public interface CinemaDao {
 	
 	List<CinemaDto> getAllCinemas();
 	List<CinemaNameDto> getCinemaName();
-	List<CinemaNameDto> getCinemaNameByLocation(String cityName);
+	List<CinemaNameDto> getCinemaNameByCityName(String cityName);
 	List<MovieTimeTableDto> getAllMovieTimeTables();
 }
