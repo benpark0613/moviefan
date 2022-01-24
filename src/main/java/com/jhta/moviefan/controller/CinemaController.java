@@ -12,14 +12,15 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.jhta.moviefan.dto.CinemaDto;
+import com.jhta.moviefan.dto.CinemaNameDto;
 import com.jhta.moviefan.dto.MovieTimeTableDto;
 import com.jhta.moviefan.service.CinemaService;
 
 @Controller
-@RequestMapping("/theater")
-public class TheaterController {
+@RequestMapping("/cinema")
+public class CinemaController {
 	
-	static final Logger logger = LogManager.getLogger(TheaterController.class);
+	static final Logger logger = LogManager.getLogger(CinemaController.class);
 	
 	@Autowired
 	private CinemaService cinemaService; 
@@ -33,21 +34,24 @@ public class TheaterController {
 	//}
 	
 	@GetMapping("/main")
-	public String main(Model model) {
+	public String main(Model model, String cityName) {
 		List<MovieTimeTableDto> movieTimeTableList = cinemaService.getMovieTimeTableList();
-		model.addAttribute("movieTimeTableList", movieTimeTableList);
+		List<CinemaNameDto> cinemaList = cinemaService.getCinemaName();
 		
-		return "theater/main";
+		model.addAttribute("movieTimeTableList", movieTimeTableList);
+		model.addAttribute("cinemaList", cinemaList);
+		
+		return "cinema/main";
 	}
 	
 	@GetMapping("/location")
 	public String location() {
-		return "theater/location";
+		return "cinema/location";
 	}
 	
 	@GetMapping("/price")
 	public String price() {
-		return "theater/price";
+		return "cinema/price";
 	}
 	
 	
