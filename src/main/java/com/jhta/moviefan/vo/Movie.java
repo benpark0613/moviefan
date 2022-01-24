@@ -3,16 +3,16 @@ package com.jhta.moviefan.vo;
 import java.util.Date;
 
 public class Movie {
-	
-	private int no;
-	private String title;
-	private String rate;
-	private int runTime;
-	private Date releasedDate;
-	private int userRating;
-	private int totalAudience;
-	private String summary;
-	private String producer;
+
+	private int no;					
+	private String title;			// 제목
+	private String rate;			// 관람등급
+	private int runtime;			// 상영시간(분)
+	private Date openDate;			// 개봉일
+	private double customerRating;	// 관객평점
+	private int totalAudience;		// 누적관객수
+	private String summary;			// 개요
+	private String producer;		// 제작사
 	
 	public Movie() {}
 
@@ -40,28 +40,28 @@ public class Movie {
 		this.rate = rate;
 	}
 
-	public int getRunTime() {
-		return runTime;
+	public int getRuntime() {
+		return runtime;
 	}
 
-	public void setRunTime(int runTime) {
-		this.runTime = runTime;
+	public void setRuntime(int runtime) {
+		this.runtime = runtime;
 	}
 
-	public Date getReleasedDate() {
-		return releasedDate;
+	public Date getOpenDate() {
+		return openDate;
 	}
 
-	public void setReleasedDate(Date releasedDate) {
-		this.releasedDate = releasedDate;
+	public void setOpenDate(Date openDate) {
+		this.openDate = openDate;
 	}
 
-	public int getUserRating() {
-		return userRating;
+	public double getCustomerRating() {
+		return customerRating;
 	}
 
-	public void setUserRating(int userRating) {
-		this.userRating = userRating;
+	public void setCustomerRating(double customerRating) {
+		this.customerRating = customerRating;
 	}
 
 	public int getTotalAudience() {
@@ -90,8 +90,10 @@ public class Movie {
 
 	@Override
 	public String toString() {
-		return "Movie [no=" + no + ", title=" + title + ", rate=" + rate + ", runTime=" + runTime + ", releasedDate="
-				+ releasedDate + ", userRating=" + userRating + ", totalAudience=" + totalAudience + ", summary="
+		return "Movie2 [no=" + no + ", title=" + title + ", rate=" + rate + ", runtime=" + runtime + ", openDate="
+				+ openDate + ", customerRating=" + customerRating + ", totalAudience=" + totalAudience + ", summary="
 				+ summary + ", producer=" + producer + "]";
 	}
+	
+	
 }

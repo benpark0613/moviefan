@@ -13,7 +13,7 @@
 <body>
 <%@ include file="/WEB-INF/views/common/header.jsp" %>
 <div class="container">
-	<div class="row mt-3 mb-3">
+	<div class="row my-3">
 		<div class="col-xs-12">
 			<h1>결제선택</h1>
 		</div>

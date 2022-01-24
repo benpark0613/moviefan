@@ -6,7 +6,6 @@
 				<a href="/home" class="d-flex align-items-center my-2 my-lg-0 me-lg-auto text-white text-decoration-none"> 
 					<img src="/resources/images/logo/moviefan-logo.png" style="width: 300px;" alt="moviefan" >
 				</a>
-
 				<ul class="nav col-12 col-lg-auto my-2 justify-content-center my-md-0 text-small">
 					<li>
 						<a href="#" class="nav-link text-secondary">
@@ -42,10 +41,8 @@
 			<div class="collapse navbar-collapse">
 				<ul class="navbar-nav me-auto mb-2 mb-lg-0">		
 					<li class="nav-item me-4"><a class="nav-link text-secondary active" aria-current="page" href="/movie/list">영화</a></li>
-
 					<li class="nav-item me-4"><a class="nav-link text-secondary" href="/theater/main">극장</a></li>
-					<li class="nav-item me-4"><a class="nav-link text-secondary" href="#">예매</a></li>
-
+					<li class="nav-item me-4"><a class="nav-link text-secondary" href="/ticket/movie">예매</a></li>
 					<li class="nav-item me-4"><a class="nav-link text-secondary" href="#">스토어</a></li>
 					<li class="nav-item me-4"><a class="nav-link text-secondary" href="#">이벤트</a></li>
 					<li class="nav-item me-4"><a class="nav-link text-secondary" href="#">혜택</a></li>

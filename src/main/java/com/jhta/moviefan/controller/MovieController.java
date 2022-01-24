@@ -68,7 +68,7 @@ public class MovieController {
 				
 				Date releasedDate = sdf1.parse(openDt);
 				
-				movie.setReleasedDate(releasedDate);
+				// movie.setReleasedDate(releasedDate);
 				movieList.add(movie);
 				
 				System.out.println("날짜 :" + releasedDate);
@@ -124,7 +124,7 @@ public class MovieController {
 				SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy-MM-dd");
 				
 				Date releasedDate = sdf1.parse(openDt);
-				movie.setReleasedDate(releasedDate);
+				// movie.setReleasedDate(releasedDate);
 				movieList.add(movie);
 				
 				System.out.println("날짜 :" + releasedDate);
