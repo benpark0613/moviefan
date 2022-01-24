@@ -17,4 +17,9 @@ public class AdminController {
 	public String index() {
 		return "admin/home";
 	}
+	
+	@GetMapping("/search")
+	public String form() {
+		return "admin/movie/search";
+	}
 }

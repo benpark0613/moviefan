@@ -32,8 +32,6 @@ import com.jhta.moviefan.vo.Movie_Genre;
 @RequestMapping("/movie")
 public class MovieController {
 	
-
-	
 	static final Logger logger = LogManager.getLogger(MovieController.class);
 	
 	@Autowired

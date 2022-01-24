@@ -18,6 +18,6 @@
 <div class="container">
   
 </div>
-<%@ include file="/WEB-INF/views/admin/common/footer.jsp" %>
+<%@ include file="/WEB-INF/views/common/footer.jsp" %>
 </body>
 </html>

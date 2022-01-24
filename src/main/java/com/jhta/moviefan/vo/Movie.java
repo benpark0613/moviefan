@@ -9,9 +9,9 @@ public class Movie {
 	private String title;
 	private String titleEn;
 	private String rate;
-	private int runTime;
+	private int runtime;
 	private Date openDate;
-	private Double userRating;
+	private Double customerRating;
 	private int totalAudience;
 	private String summary;
 	private String producer;
@@ -50,12 +50,12 @@ public class Movie {
 		this.rate = rate;
 	}
 
-	public int getRunTime() {
-		return runTime;
+	public int getRuntime() {
+		return runtime;
 	}
 
-	public void setRunTime(int runTime) {
-		this.runTime = runTime;
+	public void setRuntime(int runtime) {
+		this.runtime = runtime;
 	}
 
 	public Date getOpenDate() {
@@ -66,13 +66,12 @@ public class Movie {
 		this.openDate = openDate;
 	}
 
-	public Double getUserRating() {
-		return userRating;
+	public double getCustomerRating() {
+		return customerRating;
 	}
 
-	public void setUserRating(Double userRating) {
-		this.userRating = userRating;
-	}
+	public void setCustomerRating(double customerRating) {
+		this.customerRating = customerRating;
 
 	public int getTotalAudience() {
 		return totalAudience;
@@ -100,9 +99,8 @@ public class Movie {
 
 	@Override
 	public String toString() {
-		return "Movie [no=" + no + ", title=" + title + ", titleEn=" + titleEn + ", rate=" + rate + ", runTime="
-				+ runTime + ", openDate=" + openDate + ", userRating=" + userRating + ", totalAudience=" + totalAudience
-				+ ", summary=" + summary + ", producer=" + producer + "]";
+		return "Movie2 [no=" + no + ", title=" + title + ", rate=" + rate + ", runtime=" + runtime + ", openDate="
+				+ openDate + ", customerRating=" + customerRating + ", totalAudience=" + totalAudience + ", summary="
+				+ summary + ", producer=" + producer + "]";
 	}
-
 }

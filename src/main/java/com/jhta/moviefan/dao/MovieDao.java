@@ -1,4 +1,4 @@
-package com.jhta.moviefan.dao;
+	package com.jhta.moviefan.dao;
 
 import org.apache.ibatis.annotations.Mapper;
 
@@ -12,6 +12,9 @@ import com.jhta.moviefan.vo.Movie_Rate;
 @Mapper
 public interface MovieDao {
 	
+	void insertMovie(Movie movie);
+	void updateMovie(Movie movie);
+	Movie getMovieByNo(int no);
 	Movie getMovieByMovieNo(int movieNo);
 	
 	void insertMovie(movieDto movie);
@@ -27,6 +30,4 @@ public interface MovieDao {
 	
 	void insertRate(Movie_Rate rate);
 	void insertMovieRate(Movie_Rate rate);
-	
-
 }
