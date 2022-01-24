@@ -2,14 +2,16 @@ package com.jhta.moviefan.vo;
 
 import java.util.Date;
 
+
 public class Movie {
 	
 	private int no;
 	private String title;
+	private String titleEn;
 	private String rate;
 	private int runTime;
-	private Date releasedDate;
-	private int userRating;
+	private Date openDate;
+	private Double userRating;
 	private int totalAudience;
 	private String summary;
 	private String producer;
@@ -32,6 +34,14 @@ public class Movie {
 		this.title = title;
 	}
 
+	public String getTitleEn() {
+		return titleEn;
+	}
+
+	public void setTitleEn(String titleEn) {
+		this.titleEn = titleEn;
+	}
+
 	public String getRate() {
 		return rate;
 	}
@@ -48,19 +58,19 @@ public class Movie {
 		this.runTime = runTime;
 	}
 
-	public Date getReleasedDate() {
-		return releasedDate;
+	public Date getOpenDate() {
+		return openDate;
 	}
 
-	public void setReleasedDate(Date releasedDate) {
-		this.releasedDate = releasedDate;
+	public void setOpenDate(Date openDate) {
+		this.openDate = openDate;
 	}
 
-	public int getUserRating() {
+	public Double getUserRating() {
 		return userRating;
 	}
 
-	public void setUserRating(int userRating) {
+	public void setUserRating(Double userRating) {
 		this.userRating = userRating;
 	}
 
@@ -90,8 +100,9 @@ public class Movie {
 
 	@Override
 	public String toString() {
-		return "Movie [no=" + no + ", title=" + title + ", rate=" + rate + ", runTime=" + runTime + ", releasedDate="
-				+ releasedDate + ", userRating=" + userRating + ", totalAudience=" + totalAudience + ", summary="
-				+ summary + ", producer=" + producer + "]";
+		return "Movie [no=" + no + ", title=" + title + ", titleEn=" + titleEn + ", rate=" + rate + ", runTime="
+				+ runTime + ", openDate=" + openDate + ", userRating=" + userRating + ", totalAudience=" + totalAudience
+				+ ", summary=" + summary + ", producer=" + producer + "]";
 	}
+
 }
