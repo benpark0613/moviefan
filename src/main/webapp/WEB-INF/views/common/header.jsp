@@ -1,4 +1,52 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+	
+<!-- 로그인 모달 -->
+<div class="modal fade" id="modal-login" data-bs-backdrop="static" tabindex="-1" aria-labelledby="책 상세정보 모달" aria-hidden="true">
+  	<div class="modal-dialog modal-dialog-centered">
+    	<div class="modal-content">
+   			<div class="modal-header">
+     			<h5 class="modal-title" id="exampleModalLabel">로그인</h5>
+     			<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+   			</div>
+      		<div class="modal-body">
+				<div class="row">
+					<form class="border bg-light" method="post" action="login">
+						<div class="mb-3 mt-3">
+							<label class="form-label">아이디</label>
+							<input type="text" class="form-control" name="id">
+						</div>
+						<div class="mb-3">
+							<label class="form-label">비밀번호</label>
+							<input type="password" class="form-control" name="password">
+						</div>
+						<div class="mb-1">
+							<button class="btn btn-danger w-100">로그인</button>
+						</div>
+						<div class="d-flex justify-content-center">
+							<a>아이디 찾기</a>
+							<p>&nbsp;|&nbsp;</p> 
+							<a>비밀번호 찾기</a>
+							<p>&nbsp;|&nbsp;</p> 
+							<a>회원가입</a>
+						</div>
+						<div>
+							<a id="btn-kakao-login" href="kakao/login">
+  								<img src="//k.kakaocdn.net/14/dn/btroDszwNrM/I6efHub1SN5KCJqLm1Ovx1/o.jpg" width="222" alt="카카오 로그인 버튼"/>
+							</a>
+						</div>
+					</form>
+				</div>
+				<div class="row"></div>
+				<div class="row"></div>
+				<div class="row"></div>
+				<div class="row"></div>
+				<div class="row"></div>
+			</div>
+		</div>
+	</div>
+</div>
+	
+<!-- 상단 네비 -->
 <header>
 	<div class="py-4 border-bottom">
 		<div class="container">
@@ -8,7 +56,7 @@
 				</a>
 				<ul class="nav col-12 col-lg-auto my-2 justify-content-center my-md-0 text-small">
 					<li>
-						<a href="#" class="nav-link text-secondary">
+						<a href="#" class="nav-link text-secondary" id="login">
 							<i class="bi bi-lock d-flex justify-content-center" style="font-size: 2rem;"></i> 로그인
 						</a>
 					</li>
@@ -57,10 +105,34 @@
 	</nav>
 </header>
 <script type="text/javascript">
-	$(".navbar-nav").mouseenter(function() {
-		console.log("마우스 들어옴");
-	})
-	$(".navbar-nav").mouseleave(function() {
-		console.log("마우스 나감");
-	})
+// 로그인 모달 스크립트
+$(function() {
+	var loginModal = new bootstrap.Modal(document.getElementById('modal-login'));
+	
+	$('#login').click(function(event) {
+		event.preventDefault();
+		loginModal.show();
+	});
+});
 </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
