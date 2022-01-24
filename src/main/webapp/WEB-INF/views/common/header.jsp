@@ -94,7 +94,7 @@
 					<li class="nav-item me-4"><a class="nav-link text-secondary" href="#">스토어</a></li>
 					<li class="nav-item me-4"><a class="nav-link text-secondary" href="#">이벤트</a></li>
 					<li class="nav-item me-4"><a class="nav-link text-secondary" href="#">혜택</a></li>
-					<li class="nav-item me-4"><a class="nav-link text-secondary" href="#">영화수다</a></li>
+					<li class="nav-item me-4"><a class="nav-link text-secondary" href="/community/reviewBoard">영화수다</a></li>
 				</ul>	
 				<form class="me-2">
 					<input class="form-control" type="text" placeholder="Search" aria-label="Search">
