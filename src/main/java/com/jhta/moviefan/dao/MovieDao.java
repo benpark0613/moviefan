@@ -18,16 +18,8 @@ public interface MovieDao {
 	Movie getMovieByMovieNo(int movieNo);
 	
 	void insertMovie(movieDto movie);
-	
-	void insertActor(Movie_Actor actor);
 	void insertMovieActor(Movie_Actor actor);
-	
-	void insertGenre(Movie_Genre genre);
 	void insertMovieGenre(Movie_Genre genre);
-	
-	void insertDirector(Movie_Director director);
 	void insertMovieDirector(Movie_Director director);
-	
-	void insertRate(Movie_Rate rate);
 	void insertMovieRate(Movie_Rate rate);
 }

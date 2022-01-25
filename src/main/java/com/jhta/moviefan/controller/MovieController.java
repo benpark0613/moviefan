@@ -70,16 +70,12 @@ public class MovieController {
 				movie.setTitle((String) movies.get("movieNm"));
 				
 				
-				String openDt = ((String) movies.get("openDt"));
-				System.out.println(openDt);
-				// 시간 이상하게 나옴
+				String strOpenDt = ((String) movies.get("openDt"));
 				SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy-MM-dd");
+				Date openDate = sdf1.parse(strOpenDt);
+				movie.setOpenDate(openDate);
+				movieList.add(movie);
 				
-//				Date releasedDate = sdf1.parse(openDt);
-//				movie.setReleasedDate(releasedDate);
-//				movieList.add(movie);
-				
-//				System.out.println("날짜 :" + releasedDate);
 			}
 			model.addAttribute("movie",movieList);
 			
@@ -98,99 +94,21 @@ public class MovieController {
 		System.out.println("영화번호: " + no);
 		Movie movie = movieService.getMovieByMovieNo(no);
 		model.addAttribute("movie", movie);
-		return"movie/detail";
+		return "movie/detail";
 	}
 	
-
-	@GetMapping("/db")
-	public String db() {
+	@GetMapping("/trailer")
+	public String trailer() {
 		
-		String listResult = "";
-		int curPage = 2;
-		String DetailResult = "";
-		
-		try {
-			URL listUrl = new URL("https://kobis.or.kr/kobisopenapi/webservice/rest/movie/searchMovieList.json?key=f9dd7d979e07f9f15431b68f1cf1ae1d&itemPerPage=100&curPage=1&openEndDt=2018");
-			BufferedReader bf;
-			bf = new BufferedReader(new InputStreamReader(listUrl.openStream(), "UTF-8"));
-			listResult = bf.readLine();
-			JSONParser ListParse = new JSONParser();
-			JSONObject movieListResultObject = (JSONObject) ListParse.parse(listResult);
-			JSONObject movieListObject = (JSONObject) movieListResultObject.get("movieListResult");
-			JSONArray movieListArray = (JSONArray) movieListObject.get("movieList");
-			
-			List<Movie> movieList = new ArrayList<>();
-			for(int i=0; i<movieListArray.size(); i++) {
-				JSONObject movies = (JSONObject) movieListArray.get(i);
-				Movie movie = new Movie();
-				movie.setNo(Integer.parseInt((String)movies.get("movieCd")));
-				movieList.add(movie);
-			}
-			for(Movie movie : movieList) {
-				///// 영화 상세정보
-				URL detailUrl = new URL("http://www.kobis.or.kr/kobisopenapi/webservice/rest/movie/searchMovieInfo.json?key=f9dd7d979e07f9f15431b68f1cf1ae1d&movieCd="+movie.getNo());
-				BufferedReader bf1;
-				bf1 = new BufferedReader(new InputStreamReader(detailUrl.openStream(), "UTF-8"));
-				DetailResult = bf1.readLine();
-				JSONParser detailParse = new JSONParser();
-				JSONObject movieInfoResultObject = (JSONObject) detailParse.parse(DetailResult);
-				JSONObject movieInfoObject = (JSONObject) movieInfoResultObject.get("movieInfoResult");
-				JSONObject movieDetail = (JSONObject) movieInfoObject.get("movieInfo");
-				movieDto movie1 = new movieDto();
-				movie1.setNo(Integer.parseInt((String) movieDetail.get("movieCd")));
-				movie1.setTitle((String)movieDetail.get("movieNm"));
-				//movie1.setTitleEn((String) movieDetail.get("movieNmEn"));
-				movie1.setRunTime(Integer.parseInt((String) movieDetail.get("showTm")));
-				
-				
-				JSONArray auditList = (JSONArray) movieDetail.get("audits");
-				for(int j=0; j<auditList.size(); j++) {
-					JSONObject audits = (JSONObject) auditList.get(j);
-					movie1.setRate((String) audits.get("watchGradeNm"));
-				}
-				
-				movieService.insertMovie(movie1);
-				
-				JSONArray genreList = (JSONArray) movieDetail.get("genres");
-				List<Movie_Genre> movieGenreList = new ArrayList<>();
-				for(int j=0; j<genreList.size(); j++) {
-					JSONObject genres = (JSONObject) genreList.get(j);
-					Movie_Genre genre = new Movie_Genre();
-					
-					genre.setMovieNo(movie1.getNo());
-					genre.setGenreName((String) genres.get("genreNm"));
-					movieGenreList.add(genre);
-					movieService.insertGenre(genre);
-				}
-				JSONArray directList = (JSONArray) movieDetail.get("directors");
-				List<Movie_Director> movieDirectList = new ArrayList<>();
-				for(int j=0; j<directList.size(); j++) {
-					JSONObject directs = (JSONObject) directList.get(j);
-					Movie_Director direct = new Movie_Director();
-					
-					direct.setMovieNo(movie1.getNo());
-					direct.setDirectorName((String) directs.get("peopleNm"));
-					movieDirectList.add(direct);
-					movieService.insertDirector(direct);
-				}
-				JSONArray actorList = (JSONArray) movieDetail.get("actors");
-				List<Movie_Actor> movieActorList = new ArrayList<>();
-				for(int j=0; j<actorList.size(); j++) {
-					JSONObject actors = (JSONObject) actorList.get(j);
-					Movie_Actor actor = new Movie_Actor();
-					
-					actor.setMovieNo(movie1.getNo());
-					actor.setActorName((String) actors.get("peopleNm"));
-					
-					movieActorList.add(actor);
-					movieService.insertActor(actor);
-				}
-			}
-				
-		}catch(Exception e) {
-			e.printStackTrace();
-		}
-		return "home";
+		return "movie/trailer";
 	}
+	
+	@GetMapping("/customerrating")
+	public String customerrating() {
+		
+		return "movie/customerrating";
+	}
+	
+	
 	
 }

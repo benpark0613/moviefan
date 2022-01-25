@@ -1,11 +1,14 @@
 package com.jhta.moviefan.dto;
 
+import java.util.Date;
+
 public class movieDto {
 
 	private int no;
 	private String title;
-	private int runTime;
+	private int runtime;
 	private String rate;
+	private Date openDate;
 	
 	public movieDto() {}
 
@@ -25,12 +28,12 @@ public class movieDto {
 		this.title = title;
 	}
 
-	public int getRunTime() {
-		return runTime;
+	public int getRuntime() {
+		return runtime;
 	}
 
-	public void setRunTime(int runTime) {
-		this.runTime = runTime;
+	public void setRuntime(int runtime) {
+		this.runtime = runtime;
 	}
 
 	public String getRate() {
@@ -41,11 +44,20 @@ public class movieDto {
 		this.rate = rate;
 	}
 
+	public Date getOpenDate() {
+		return openDate;
+	}
+
+	public void setOpenDate(Date openDate) {
+		this.openDate = openDate;
+	}
+
 	@Override
 	public String toString() {
-		return "movieDto [no=" + no + ", title=" + title + ", runTime=" + runTime + ", rate=" + rate + "]";
+		return "movieDto [no=" + no + ", title=" + title + ", runtime=" + runtime + ", rate=" + rate + ", openDate="
+				+ openDate + "]";
 	}
-	
+
 	
 	
 }
