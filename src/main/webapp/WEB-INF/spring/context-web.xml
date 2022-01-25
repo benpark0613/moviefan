@@ -7,16 +7,37 @@
 		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd">
 
-	<mvc:annotation-driven />
+	<!-- 
+		spring webmvc 관련 어노테이션을 감지하고, 적절한 처리를 수행한 객체가 스프링 컨테이너에 등록된다.
+	 -->
+	<mvc:annotation-driven>
+		<mvc:argument-resolvers>
+			<bean class="com.jhta.moviefan.argumentResolver.LoginedCustomerArgumentResolver"></bean>
+		</mvc:argument-resolvers>
+	</mvc:annotation-driven>
+	
+	<!-- 
+		사용자정의 MethodInterceptor를 설정한다.
+	 -->
+	<mvc:interceptors>
+		<!-- 
+			사용자정의 MethodInterceptor를 빈으로 등록한다.
+		 -->
+		<!-- 
+			웹페이지 요청에 대한 로그인체크를 담당하는 인터셉터
+		 -->
+		<mvc:interceptor>
+			<mvc:mapping path="**"/>
+			<bean class="com.jhta.moviefan.interceptor.LoginCheckInterceptor"></bean>
+		</mvc:interceptor>
+	</mvc:interceptors>
 	
 	<!-- 정적리소스 관련 매핑 -->
 	<mvc:resources location="/resources/" mapping="/resources/**"></mvc:resources>
-	
 	<!-- jsp 페이지 관련 설정 -->
 	<mvc:view-resolvers>
 		<mvc:jsp prefix="/WEB-INF/views/" suffix=".jsp"/>
 	</mvc:view-resolvers>
-	
 	
 	<!-- 
 		@Controller, @RestController 어노테이션이 부착된 클래스를 스캔해서 스프링컨테이너의 빈으로 등록시킨다.

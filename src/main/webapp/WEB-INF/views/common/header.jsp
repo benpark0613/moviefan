@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 	
 <!-- 로그인 모달 -->
-<div class="modal fade" id="modal-login" data-bs-backdrop="static" tabindex="-1" aria-labelledby="책 상세정보 모달" aria-hidden="true">
+<div class="modal fade" id="modal-login" data-bs-backdrop="static" tabindex="-1" aria-labelledby="로그인 모달" aria-hidden="true">
   	<div class="modal-dialog modal-dialog-centered">
     	<div class="modal-content">
    			<div class="modal-header">
@@ -50,26 +50,35 @@
 					<img src="/resources/images/logo/moviefan-logo.png" style="width: 300px;" alt="moviefan" >
 				</a>
 				<ul class="nav col-12 col-lg-auto my-2 justify-content-center my-md-0 text-small">
-					<li>
-						<a href="#" class="nav-link text-secondary" id="login">
-							<i class="bi bi-lock d-flex justify-content-center" style="font-size: 2rem;"></i> 로그인
-						</a>
-					</li>
-					<li>
-						<a href="#" class="nav-link text-secondary">
-							<i class="bi bi-unlock d-flex justify-content-center" style="font-size: 2rem;"></i> 로그아웃
-						</a>
-					</li>
-					<li>
-						<a href="/myaccount/myticket/bookinglist" class="nav-link text-secondary">
-							<i class="bi bi-person d-flex justify-content-center" style="font-size: 2rem;"></i> 마이페이지
-						</a>
-					</li>
-					<li>
-						<a href="/member/join" class="nav-link text-secondary">
-							<i class="bi bi-person-plus d-flex justify-content-center" style="font-size: 2rem;"></i> 회원가입
-						</a>
-					</li>
+					<c:if test="${empty LOGIN_CUSTOMER }">
+						<li>
+							<a href="" class="nav-link text-secondary" id="login">
+								<i class="bi bi-lock d-flex justify-content-center" style="font-size: 2rem;"></i> 로그인
+							</a>
+						</li>
+						<li>
+							<a href="/member/join" class="nav-link text-secondary">
+								<i class="bi bi-person-plus d-flex justify-content-center" style="font-size: 2rem;"></i> 회원가입
+							</a>
+						</li>
+						<li>
+							<a href="/myaccount/myticket/bookinglist" class="nav-link text-secondary">
+								<i class="bi bi-person d-flex justify-content-center" style="font-size: 2rem;"></i> MY MVF
+							</a>
+						</li>
+					</c:if>
+					<c:if test="${not empty LOGIN_CUSTOMER }">
+						<li>
+							<a href="/logout" class="nav-link text-secondary">
+								<i class="bi bi-unlock d-flex justify-content-center" style="font-size: 2rem;"></i> 로그아웃
+							</a>
+						</li>
+						<li>
+							<a href="/myaccount/myticket/bookinglist" class="nav-link text-secondary">
+								<i class="bi bi-person d-flex justify-content-center" style="font-size: 2rem;"></i> MY MVF
+							</a>
+						</li>
+					</c:if>
 					<li>
 						<a href="/admin/home" class="nav-link text-secondary">
 							<i class="bi bi-toggle-off d-flex justify-content-center" style="font-size: 2rem;"></i> 관리자 모드
@@ -114,7 +123,7 @@ $(function() {
 		event.preventDefault();
 		loginModal.show();
 		
-		$('form-normal-login').click(function(event) {
+		$('#form-normal-login').click(function(event) {
 			$('form[action=post]').submit();
 		});
 	});
