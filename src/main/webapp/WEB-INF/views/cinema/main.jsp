@@ -25,23 +25,32 @@
 		<div class="container px-4">
 			<!-- 지역 선택 -->
 			<div class="col mx-2">
-				<select id="city" class="form-select form-select-lg w-25 h-10 mb-3">
-					<c:forEach var="cinema" items="${cinemaNameList }">
-						<option value="지역명" id="cityName">${cinema.cityName }</option>
+				<select id="city-select" name="city" class="form-select form-select-lg w-25 h-10 mb-3">
+					<c:forEach var="city" items="${cityList }">
+						<option value="${city.no }">${city.name }</option>
 					</c:forEach>
 				</select>
 			</div>
-			<!-- 영화관 선택 -->  		
-			<div class="col" id="cinema-list">
+			<!-- 영화관 선택 -->
+			<div class="col">
 				<div class="container mt-4">
-					<div class="row row-cols-2 row-cols-lg-3 g-2 g-lg-2">
-						<c:forEach var="cinema" items="${cinemaNameList }">
-				    		<div class="col">
+					<div class="row row-cols-2 row-cols-lg-3 g-2 g-lg-2" id="cinemaBox">
+						<c:forEach var="cinema" items="${cinemaList }">
+				    		<div id="cinema-select" class="col">
 								<div id="cinema" class="p-4 border bg-light text-center">
-						      		<a href="#">${cinema.cinemaName }</a>
+						      		<a href="#" id="${cinema.cityNo }">${cinema.name }</a>
 						      	</div>
 				    		</div>
-				  		</c:forEach>
+				  		</c:forEach> 
+				  		
+				  		
+				  		<%-- 
+				  		<div id="cinema-select" class="col">
+								<div id="cinema" class="p-4 border bg-light text-center">
+						      		<a href="#" id="">MVF 강남점</a>
+						      	</div>
+				  		 --%>
+				    	</div>
 					</div>
 				</div>
 			</div>
@@ -118,14 +127,62 @@
 		</c:forEach>
 		<p class="text-end">* 입장 지연에 따른 관람 불편을 최소화하기 위해, 상영시간 10분 후부터 영화가 시작됩니다.</p>
 	</div>
-</div>
+	
 <%@ include file="/WEB-INF/views/common/footer.jsp" %>
 </body>
 <script type="text/javascript">
 	
-	$('#cityName').click(function name() {
-
+	$('#city-select').change(function () {
+		let no = $(this).val();
+		//alert(cityNo);
+		
+		let $box = $("#cinemaBox").empty();
+		
+		$.getJSON("/rest/cinema/list", {cityNo:no}, function (cinemaList) {
+			//console.log(response);
+			$.each (cinemaList, function(index, cinema) {
+				//console.log(cinema)
+				
+				let content = '<div id="cinema-select" class="col">';
+					content += '<div id="cinema" class="p-4 border bg-light text-center">';
+		      		content += '<a href="#" id="' + cinema.cityNo + '">' + cinema.cinemaName + '</a>';
+		      		content += '</div>';
+    				content += '</div>';
+    			
+    			$box.append(content);
+			})
+		})
 	})
 	
+	
+
+
+	
+		// 이벤트가 발생해서 함수가 실행되면(change)
+		// 극장 리스트를 감싸는 div 엘리먼트를 선택하고
+		// 극장 리스트를 div 엘리먼트에 append 한다.
+		
+		// cityno가 같은 a만 남기기?
+	
+		/*
+			$('#city-select').change(function() {
+				var $cityNo = $('[name=city]').val();
+				var $cinemaCity = $('#cinema a');
+				
+				console.log($cinemaCity);
+			})
+		*/
+		
+			//var cinemaBox = $("#cinemaBox");
+			
+			//var cinema = '<div id="cinema-select" class="col">' 
+			//	+ '<div id="cinema" class="p-4 border bg-light text-center">'
+			//	+ '<a href="#" id="">MVF 강남점</a>'
+			//	+ '</div>'
+			//	+ '</div>';
+		
+			//cinemaBox.append(cinema);
+		
+		
 </script>
 </html>

@@ -2,14 +2,24 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.jhta.moviefan.dao.CinemaDao">
 
-	<!-- List<CinemaDto> getAllCinemas(); -->
+	<!-- 전체 지역 정보 List<City> getAllCities(); -->
+	<select id="getAllCities" resultType="com.jhta.moviefan.vo.City">
+		select
+			city_no						as no,
+			city_name					as name
+		from
+			city
+	</select>
+	
+	<!-- 전체 영화관 정보 List<CinemaDto> getAllCinemas(); -->
 	<select id="getAllCinemas" resultType="com.jhta.moviefan.dto.CinemaDto">
 		select
 			a.cinema_no 				as no,
 			a.cinema_name 				as name,
 			a.cinema_address 			as address,
 			a.cinema_total_halls 		as totalHalls,
-			b.city_name					as cityName
+			b.city_name					as cityName,
+			b.city_no					as cityNo
 		from
 			cinema a, city b
 		where
@@ -18,8 +28,8 @@
 			a.city_no
 	</select>
 	
-	<!-- 지역별 영화관 이름 List<CinemaNameDto> getCinemaNameByCityName(); -->
-	<select id="getCinemaNameByCityName" parameterType="string" resultType="com.jhta.moviefan.dto.CinemaNameDto">
+	<!-- 지역별 영화관 이름 List<CinemaNameDto> getCinemaNameByCityNo(); -->
+	<select id="getCinemaNameByCityNo" parameterType="int" resultType="com.jhta.moviefan.dto.CinemaNameDto">
  		select
  			a.city_name					as cityName,
  			b.cinema_name				as cinemaName
@@ -28,10 +38,10 @@
  		where
  			a.city_no = b.city_no
  		and
- 			a.city_name like '%' || #{value} || '%'
+ 			a.city_no = #{value}
 	</select>
 	
-	<!-- 상영시간표에 표시할 데이터 List<MovieTimeTableDto> getAllMovieTimeTables(); -->
+	<!-- 상영시간표 List<MovieTimeTableDto> getAllMovieTimeTables(); -->
 	<select id="getAllMovieTimeTables" resultType="com.jhta.moviefan.dto.MovieTimeTableDto">
 		select
 			b.city_no					as cityNo,

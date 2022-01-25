@@ -9,6 +9,7 @@ import com.jhta.moviefan.dao.CinemaDao;
 import com.jhta.moviefan.dto.CinemaDto;
 import com.jhta.moviefan.dto.CinemaNameDto;
 import com.jhta.moviefan.dto.MovieTimeTableDto;
+import com.jhta.moviefan.vo.City;
 
 @Service
 public class CinemaService {
@@ -16,12 +17,16 @@ public class CinemaService {
 	@Autowired
 	private CinemaDao cinemaDao;
 	
+	public List<City> getAllCityList() {
+		return cinemaDao.getAllCities();
+	}
+
 	public List<CinemaDto> getAllCinemaList() {
 		return cinemaDao.getAllCinemas();
 	}
-	
-	public List<CinemaNameDto> getCinemaNameByCityName(String cityName) {
-		return cinemaDao.getCinemaNameByCityName(cityName);
+
+	public List<CinemaNameDto> getCinemaNameByCityNo(int cityNo) {
+		return cinemaDao.getCinemaNameByCityNo(cityNo);
 	}
 	
 	public List<MovieTimeTableDto> getMovieTimeTableList() {
