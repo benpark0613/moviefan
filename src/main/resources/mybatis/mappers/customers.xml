@@ -2,4 +2,78 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.jhta.moviefan.dao.CustomerDao">
 
+	<resultMap type="com.jhta.moviefan.vo.Customer" id="CustomerResultMap">
+		<id 	column="customer_no" 			property="no" />
+		<result column="grade_code" 			property="gradeCode" />
+		<result column="customer_id" 			property="id"/>
+		<result column="customer_password"		property="password"/>
+		<result column="customer_phone_number" 	property="phoneNumber"/>
+		<result column="customer_email" 		property="email"/>
+		<result column="customer_gender" 		property="gender"/>
+		<result column="customer_birthday" 		property="birthday"/>
+		<result column="customer_total_point" 	property="totalPoint"/>
+		<result column="is_admin" 				property="isAdmin"/>
+		<result column="customer_name" 			property="name"/>
+		<result column="customer_nickname" 		property="nickName"/>
+		<result column="is_banned" 				property="isBanned"/>
+		<result column="customer_login_type" 	property="loginType"/>
+	</resultMap>
+	
+	<select id="getCustomerByNo" parameterType="int" resultMap="CustomerResultMap">
+		select 
+			*
+		from
+			customer
+		where
+			customer_no = #{no}
+	</select>
+	
+	<insert id="insertCustomer" parameterType="com.jhta.moviefan.vo.Customer">
+		<selectKey keyProperty="no" resultType="int" order="BEFORE">
+			select customer_seq.nextval
+			from dual
+		</selectKey>
+		insert into customer
+		(customer_no, customer_id, customer_password, customer_phone_number, 
+		customer_email, customer_gender, customer_birthday, customer_name, customer_nickname)
+		values
+		(#{no}, #{id}, #{password}, #{phoneNumber}, 
+		#{email}, #{gender}, #{birthday}, #{name}, #{nickName})
+	</insert>
 </mapper>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

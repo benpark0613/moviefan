@@ -71,7 +71,7 @@
 						</a>
 					</li>
 					<li>
-						<a href="#" class="nav-link text-secondary">
+						<a href="/member/join" class="nav-link text-secondary">
 							<i class="bi bi-person-plus d-flex justify-content-center" style="font-size: 2rem;"></i> 회원가입
 						</a>
 					</li>
