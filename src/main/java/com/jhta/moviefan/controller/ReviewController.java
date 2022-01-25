@@ -8,9 +8,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/community")
 public class ReviewController {
 
-	@GetMapping("/comentScore")
-	public String comentSocre() {
-		return "community/comentScore";
+	@GetMapping("/commentScore")
+	public String commentSocre() {
+		return "community/commentScore";
 	}
 	
 	@GetMapping("/reviewBoard")

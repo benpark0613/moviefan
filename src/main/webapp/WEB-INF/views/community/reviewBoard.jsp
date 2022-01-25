@@ -19,7 +19,7 @@
   		<div class="col">
   			<table class="table table-hover table-bordered">
   				<thead>
-  					<tr>
+  					<tr class="text-center">
   						<th width="8%">번호</th>
   						<th width="70%">제목</th>
   						<th width="10%">글쓴이</th>
@@ -77,12 +77,27 @@
   					</tr>
   				</tbody>
   			</table>
+  			<nav aria-label="Page navigation example" class="pagination justify-content-center">
+				<ul class="pagination">
+					<li class="page-item"><a class="page-link" href="#" aria-label="Previous"> <span aria-hidden="true">&laquo;</span>
+					</a></li>
+					<li class="page-item"><a class="page-link" href="#">1</a></li>
+					<li class="page-item"><a class="page-link" href="#">2</a></li>
+					<li class="page-item"><a class="page-link" href="#">3</a></li>
+					<li class="page-item"><a class="page-link" href="#">4</a></li>
+					<li class="page-item"><a class="page-link" href="#">5</a></li>
+					<li class="page-item"><a class="page-link" href="#">6</a></li>
+					<li class="page-item"><a class="page-link" href="#">7</a></li>
+					<li class="page-item"><a class="page-link" href="#">8</a></li>
+					<li class="page-item"><a class="page-link" href="#">9</a></li>
+					<li class="page-item"><a class="page-link" href="#">10</a></li>
+					<li class="page-item"><a class="page-link" href="#" aria-label="Next"> <span aria-hidden="true">&raquo;</span>
+					</a></li>
+				</ul>
+			</nav>
   		</div>
   		<div>
-  			<button type="button" class="btn btn-primary">검색</button>
-	  		<div class="text-end">
-	  			<a href="/community/write" class="btn btn-secondary">쓰기</a>
-	  		</div>
+  			<button type="button" class="btn btn-primary">검색</button> <a href="/community/write" class="btn btn-secondary">쓰기</a>
   		</div>
   	</div>
 </div>

@@ -89,12 +89,18 @@
 			<div class="collapse navbar-collapse">
 				<ul class="navbar-nav me-auto mb-2 mb-lg-0">		
 					<li class="nav-item me-4"><a class="nav-link text-secondary active" aria-current="page" href="/movie/list">영화</a></li>
-					<li class="nav-item me-4"><a class="nav-link text-secondary" href="/theater/main">극장</a></li>
+					<li class="nav-item me-4"><a class="nav-link text-secondary" href="/cinema/main">극장</a></li>
 					<li class="nav-item me-4"><a class="nav-link text-secondary" href="/ticket/movie">예매</a></li>
 					<li class="nav-item me-4"><a class="nav-link text-secondary" href="#">스토어</a></li>
 					<li class="nav-item me-4"><a class="nav-link text-secondary" href="#">이벤트</a></li>
 					<li class="nav-item me-4"><a class="nav-link text-secondary" href="#">혜택</a></li>
-					<li class="nav-item me-4"><a class="nav-link text-secondary" href="/community/reviewBoard">영화수다</a></li>
+					<li class="nav-item dropdown me-4">
+					<a class="nav-link dropdown-toggle text-secondary" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">영화수다</a>
+						<ul class="dropdown-menu">
+     						<li><a class="dropdown-item" href="/community/commentScore">한줄평점</a></li>
+							<li><a class="dropdown-item" href="/community/reviewBoard">영화리뷰</a></li>
+						</ul>
+					</li>
 				</ul>	
 				<form class="me-2">
 					<input class="form-control" type="text" placeholder="Search" aria-label="Search">
