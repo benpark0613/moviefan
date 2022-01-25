@@ -33,7 +33,7 @@
 			</div>
 			<!-- 영화관 선택 -->
 			<div class="col">
-				<div class="container mt-4">
+				<div class="container mt-4" id="test">
 					<div class="row row-cols-2 row-cols-lg-3 g-2 g-lg-2" id="cinemaBox">
 						<c:forEach var="cinema" items="${cinemaList }">
 				    		<div id="cinema-select" class="col">
@@ -42,16 +42,7 @@
 						      	</div>
 				    		</div>
 				  		</c:forEach> 
-				  		
-				  		
-				  		<%-- 
-				  		<div id="cinema-select" class="col">
-								<div id="cinema" class="p-4 border bg-light text-center">
-						      		<a href="#" id="">MVF 강남점</a>
-						      	</div>
-				  		 --%>
-				    	</div>
-					</div>
+				    </div>
 				</div>
 			</div>
 		</div>
@@ -94,69 +85,80 @@
 	  	</div>
 	</div>
 	<!-- 상영시간표 -->
-	<div id="movie-timetable" class="row mt-5 mb-5">
+	<div id="movie-timetable" class="row justify-content-center mt-5 mb-5">
 		<c:forEach var="movie" items="${movieTimeTableList }">
-			<table class="table">
-				<thead>
-					<tr>
-						<th>
-							<span class="fs-2">${movie.title }</span>
-							<span class="ml-3">${movie.genre } / </span>
-							<span><fmt:formatDate value="${movie.openDate }" pattern="yyyy년 M월 d일"/> 개봉</span>
-						</th>
-					</tr>
-				</thead>
-				<tbody>
-					<tr>
-						<td>
-							<div class="mx-5 my-3">
-								<span class="fs-4">${movie.hallName }</span>
-								<span>총 ${movie.totalSeats }석</span>
-							</div>
-							<div class="d-flex align-items-center mx-5">
-								<ul class="list-group list-group-horizontal">
-								  <li class="list-group-item mt-2 mb-3 text-center">상영시작시간<br>잔여좌석수</li>
-								  <li class="list-group-item mt-2 mb-3 text-center">상영시작시간<br>잔여좌석수</li>
-								  <li class="list-group-item mt-2 mb-3 text-center">상영시작시간<br>잔여좌석수</li>
-								</ul>
-							</div>
-						</td>
-					</tr>
-				</tbody>
-			</table>
+			<div class="col-10 px-0">	
+				<table class="table">
+					<thead>
+						<tr>
+							<th>
+								<span class="fs-2">${movie.title }</span>
+								<span class="ml-3">${movie.genre } | </span>
+								<span><fmt:formatDate value="${movie.openDate }" pattern="yyyy년 M월 d일"/> 개봉</span>
+							</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td>
+								<div class="mx-5 my-3">
+									<span class="fs-4">${movie.hallName }</span>
+									<span>총 ${movie.totalSeats }석</span>
+								</div>
+								<div class="d-flex align-items-center mx-5">
+									<ul class="list-group list-group-horizontal">
+									  <li class="list-group-item mt-2 mb-3 text-center">상영시작시간<br>잔여좌석수</li>
+									  <li class="list-group-item mt-2 mb-3 text-center">상영시작시간<br>잔여좌석수</li>
+									  <li class="list-group-item mt-2 mb-3 text-center">상영시작시간<br>잔여좌석수</li>
+									</ul>
+								</div>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
 		</c:forEach>
-		<p class="text-end">* 입장 지연에 따른 관람 불편을 최소화하기 위해, 상영시간 10분 후부터 영화가 시작됩니다.</p>
+		<p class="col-10 text-end">* 입장 지연에 따른 관람 불편을 최소화하기 위해, 상영시간 10분 후부터 영화가 시작됩니다.</p>
 	</div>
-	
+</div>	
 <%@ include file="/WEB-INF/views/common/footer.jsp" %>
 </body>
 <script type="text/javascript">
-	
-	$('#city-select').change(function () {
-		let no = $(this).val();
-		//alert(cityNo);
+
+	$(function() {
 		
-		let $box = $("#cinemaBox").empty();
+		let test1 = $("#cinema a[id='20']");
+		//console.log(test);
+		$("#test").empty();
+		$(test1).appendTo("#test");
+	})	
 		
-		$.getJSON("/rest/cinema/list", {cityNo:no}, function (cinemaList) {
-			//console.log(response);
-			$.each (cinemaList, function(index, cinema) {
-				//console.log(cinema)
-				
-				let content = '<div id="cinema-select" class="col">';
-					content += '<div id="cinema" class="p-4 border bg-light text-center">';
-		      		content += '<a href="#" id="' + cinema.cityNo + '">' + cinema.cinemaName + '</a>';
-		      		content += '</div>';
-    				content += '</div>';
-    			
-    			$box.append(content);
+		$('#city-select').change(function () {
+			let no = $(this).val();
+			//alert(cityNo);
+			
+			let $box = $("#cinemaBox").empty();
+			
+			$.getJSON("/rest/cinema/list", {cityNo:no}, function (cinemaList) {
+				//console.log(response);
+				$.each (cinemaList, function(index, cinema) {
+					//console.log(cinema)
+					
+					let content = '<div id="cinema-select" class="col">';
+						content += '<div id="cinema" class="p-4 border bg-light text-center">';
+			      		content += '<a href="#" id="' + cinema.cityNo + '">' + cinema.cinemaName + '</a>';
+			      		content += '</div>';
+	    				content += '</div>';
+	    			
+	    			$box.append(content);
+				})
 			})
 		})
-	})
 	
 	
-
-
+	
+	
+	
 	
 		// 이벤트가 발생해서 함수가 실행되면(change)
 		// 극장 리스트를 감싸는 div 엘리먼트를 선택하고

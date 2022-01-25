@@ -20,6 +20,10 @@ public class CinemaService {
 	public List<City> getAllCityList() {
 		return cinemaDao.getAllCities();
 	}
+	
+	public List<City> getCityByNo(int no) {
+		return cinemaDao.getCityByNo(no);
+	}
 
 	public List<CinemaDto> getAllCinemaList() {
 		return cinemaDao.getAllCinemas();

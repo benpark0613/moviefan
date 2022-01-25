@@ -3,12 +3,22 @@
 <mapper namespace="com.jhta.moviefan.dao.CinemaDao">
 
 	<!-- 전체 지역 정보 List<City> getAllCities(); -->
-	<select id="getAllCities" resultType="com.jhta.moviefan.vo.City">
+	<select id="getAllCities" parameterType="int" resultType="com.jhta.moviefan.vo.City">
 		select
 			city_no						as no,
 			city_name					as name
 		from
 			city
+	</select>
+	
+	<select id="getCityByNo" parameterType="int" resultType="com.jhta.moviefan.vo.City">
+		select
+			city_no						as no,
+			city_name					as name
+		from
+			city
+		where
+			city_no = #{value}
 	</select>
 	
 	<!-- 전체 영화관 정보 List<CinemaDto> getAllCinemas(); -->
@@ -31,6 +41,7 @@
 	<!-- 지역별 영화관 이름 List<CinemaNameDto> getCinemaNameByCityNo(); -->
 	<select id="getCinemaNameByCityNo" parameterType="int" resultType="com.jhta.moviefan.dto.CinemaNameDto">
  		select
+ 			a.city_no					as cityNo,
  			a.city_name					as cityName,
  			b.cinema_name				as cinemaName
  		from

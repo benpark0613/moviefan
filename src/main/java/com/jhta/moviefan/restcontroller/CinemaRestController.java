@@ -7,7 +7,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.jhta.moviefan.dto.CinemaDto;
 import com.jhta.moviefan.dto.CinemaNameDto;
 import com.jhta.moviefan.service.CinemaService;
 
@@ -20,8 +19,8 @@ public class CinemaRestController {
 	
 	@GetMapping("/list")
 	public List<CinemaNameDto> list(int cityNo) {
-		List<CinemaNameDto> cinemaDtos = cinemaService.getCinemaNameByCityNo(cityNo);
+		List<CinemaNameDto> cinemaNameDtos = cinemaService.getCinemaNameByCityNo(cityNo);
 		
-		return cinemaDtos;
+		return cinemaNameDtos;
 	}
 }
