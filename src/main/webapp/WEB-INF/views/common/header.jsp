@@ -20,7 +20,7 @@
 							<input type="password" class="form-control" name="password">
 						</div>
 						<div class="mb-1">
-							<button class="btn btn-danger w-100">로그인</button>
+							<button class="btn btn-danger w-100" id="form-normal-login">로그인</button>
 						</div>
 						<div class="d-flex justify-content-center">
 							<a>아이디 찾기</a>
@@ -29,18 +29,13 @@
 							<p>&nbsp;|&nbsp;</p> 
 							<a>회원가입</a>
 						</div>
-						<div>
-							<a id="btn-kakao-login" href="kakao/login">
-  								<img src="//k.kakaocdn.net/14/dn/btroDszwNrM/I6efHub1SN5KCJqLm1Ovx1/o.jpg" width="222" alt="카카오 로그인 버튼"/>
+						<div class="d-flex justify-content-center mb-3">
+							<a id="btn-kakao-login" href="">
+  								<img src="/resources/images/kakao_login.png" alt="카카오 로그인 버튼"/>
 							</a>
 						</div>
 					</form>
 				</div>
-				<div class="row"></div>
-				<div class="row"></div>
-				<div class="row"></div>
-				<div class="row"></div>
-				<div class="row"></div>
 			</div>
 		</div>
 	</div>
@@ -118,8 +113,14 @@ $(function() {
 	$('#login').click(function(event) {
 		event.preventDefault();
 		loginModal.show();
+		
+		$('form-normal-login').click(function(event) {
+			$('form[action=post]').submit();
+		});
 	});
 });
+
+
 </script>
 
 

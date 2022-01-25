@@ -17,8 +17,10 @@
 		<result column="customer_nickname" 		property="nickName"/>
 		<result column="is_banned" 				property="isBanned"/>
 		<result column="customer_login_type" 	property="loginType"/>
+		<result column="customer_created_date" 	property="createdDate"/>
+		<result column="is_withdrawal" 			property="isWithdrawal"/>
 	</resultMap>
-	
+
 	<select id="getCustomerByNo" parameterType="int" resultMap="CustomerResultMap">
 		select 
 			*
@@ -28,6 +30,42 @@
 			customer_no = #{no}
 	</select>
 	
+	<select id="getCustomerById" parameterType="String" resultMap="CustomerResultMap">
+		select 
+			*
+		from
+			customer
+		where
+			customer_id = #{id}
+	</select>
+	
+	<select id="getCustomerByEmail" parameterType="String" resultMap="CustomerResultMap">
+		select 
+			*
+		from
+			customer
+		where
+			customer_email = #{email}
+	</select>
+	
+	<select id="getCustomerByPhoneNumber" parameterType="String" resultMap="CustomerResultMap">
+		select 
+			*
+		from
+			customer
+		where
+			customer_phone_number = #{phoneNumber}
+	</select>
+	
+	<select id="getCustomerByNickName" parameterType="String" resultMap="CustomerResultMap">
+		select 
+			*
+		from
+			customer
+		where
+			customer_nickname = #{nickName}
+	</select>
+
 	<insert id="insertCustomer" parameterType="com.jhta.moviefan.vo.Customer">
 		<selectKey keyProperty="no" resultType="int" order="BEFORE">
 			select customer_seq.nextval
