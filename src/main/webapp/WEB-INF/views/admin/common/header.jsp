@@ -35,7 +35,7 @@
 					<li class="nav-item me-4"><a class="nav-link text-secondary" href="#">회원정보</a></li>
 					<li class="nav-item me-4"><a class="nav-link text-secondary" href="#">매출통계</a></li>
 					<li class="nav-item me-4"><a class="nav-link text-secondary" href="#">게시판관리</a></li>
-					<li class="nav-item me-4"><a class="nav-link text-secondary" href="/admin/search">영화등록</a></li>
+					<li class="nav-item me-4"><a class="nav-link text-secondary" href="/admin/search">영화검색/등록</a></li>
 				</ul>	
 			</div>
 		</div>
