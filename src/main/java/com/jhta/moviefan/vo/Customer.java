@@ -2,22 +2,30 @@ package com.jhta.moviefan.vo;
 
 import java.util.Date;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 public class Customer {
 
-	public int no;
-	public String gradeCode;
-	public String id;
-	public String password;
-	public String phoneNumber;
-	public String email;
-	public String gender;
-	public Date birthday;
-	public int totalPoint;
-	public String isAdmin;
-	public String name;
-	public String nickName;
-	public String isBanned;
-	public String loginType;
+	private int no;
+	private String gradeCode;
+	private String id;
+	private String password;
+	private String phoneNumber;
+	private String email;
+	private String gender;
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
+	private Date birthday;
+	private int totalPoint;
+	private String isAdmin;
+	private String name;
+	private String nickName;
+	private String isBanned;
+	private String loginType;
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
+	private Date createdDate;
+	private String isWithdrawal;
+	
+	public Customer() {}
 
 	public int getNo() {
 		return no;
@@ -131,12 +139,35 @@ public class Customer {
 		this.loginType = loginType;
 	}
 
+	public Date getCreatedDate() {
+		return createdDate;
+	}
+
+	public void setCreatedDate(Date createdDate) {
+		this.createdDate = createdDate;
+	}
+
+	public String getIsWithdrawal() {
+		return isWithdrawal;
+	}
+
+	public void setIsWithdrawal(String isWithdrawal) {
+		this.isWithdrawal = isWithdrawal;
+	}
+
 	@Override
 	public String toString() {
 		return "Customer [no=" + no + ", gradeCode=" + gradeCode + ", id=" + id + ", password=" + password
 				+ ", phoneNumber=" + phoneNumber + ", email=" + email + ", gender=" + gender + ", birthday=" + birthday
 				+ ", totalPoint=" + totalPoint + ", isAdmin=" + isAdmin + ", name=" + name + ", nickName=" + nickName
-				+ ", isBanned=" + isBanned + ", loginType=" + loginType + "]";
+				+ ", isBanned=" + isBanned + ", loginType=" + loginType + ", createdDate=" + createdDate
+				+ ", isWithdrawal=" + isWithdrawal + "]";
 	}
+	
+	
+
+	
+
+	
 
 }

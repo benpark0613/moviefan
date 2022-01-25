@@ -9,57 +9,57 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class MyAccountController {
 
 	@GetMapping("/myticket/bookinglist")
-	public String ticketBookingList() {
+	public String bookingList() {
 		return "myaccount/myticket/bookinglist";
 	}
 	
 	@GetMapping("/myticket/orderlist")
-	public String ticketOrderList() {
+	public String orderList() {
 		return "myaccount/myticket/orderlist";
 	}
 	
 	@GetMapping("/myticket/canclelist")
-	public String ticketCancleList() {
+	public String cancleList() {
 		return "myaccount/myticket/canclelist";
 	}
 	
 	@GetMapping("/movielog/wish")
-	public String movieWishList() {
+	public String wishList() {
 		return "myaccount/movielog/wish";
 	}
 	
 	@GetMapping("/movielog/watched")
-	public String movieWatchedList() {
+	public String watchedList() {
 		return "myaccount/movielog/watched";
 	}
 	
 	@GetMapping("/movietalk/myscrap")
-	public String movietalkScrapList() {
+	public String myScrapList() {
 		return "myaccount/movietalk/myscrap";
 	}
 	
 	@GetMapping("/movietalk/mydocuments")
-	public String movietalkDocumentList() {
+	public String myDocumentList() {
 		return "myaccount/movietalk/mydocuments";
 	}
 	
 	@GetMapping("/movietalk/mycomments")
-	public String movietalkCommentList() {
+	public String myCommentList() {
 		return "myaccount/movietalk/mycomments";
 	}
 	
 	@GetMapping("/movietalk/myreplies")
-	public String movietalkReplyList() {
+	public String myReplyList() {
 		return "myaccount/movietalk/myreplies";
 	}
 	
 	@GetMapping("/mypoint/info")
-	public String pointInfo() {
+	public String myPointInfo() {
 		return "myaccount/mypoint/info";
 	}
 	
 	@GetMapping("/mypoint/history")
-	public String pointList() {
+	public String myPointHistory() {
 		return "myaccount/mypoint/history";
 	}
 	

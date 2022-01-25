@@ -1,1 +1,1 @@
-<c:redirect url="/home.do"/>
+<c:redirect url="/home"/>

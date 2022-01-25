@@ -54,11 +54,11 @@
    				<div class="col-6">
    					<p>성별</p>
 	   				<div class="form-check form-check-inline">
-						<input class="form-check-input" type="radio" name="gender" value="male">
+						<input class="form-check-input" type="radio" name="gender" value="male" checked>
 						<label class="form-check-label" >남자</label>
 					</div>
 					<div class="form-check form-check-inline">
-						<input class="form-check-input" type="radio" name="gender" value="female" checked>
+						<input class="form-check-input" type="radio" name="gender" value="female">
 						<label class="form-check-label">여자</label>
 					</div>
    				</div>
@@ -69,7 +69,7 @@
    			</div>
    			<div class="row">
 				<div class="d-grid gap-1 col-6 mx-auto">
-					<a class="btn btn-danger" href="/member/register">회원가입</a>
+					<button type="submit" class="btn btn-danger">회원가입</button>
 				</div>
 				<div class="d-grid gap-1 col-6 mx-auto">
 					<a class="btn btn-light" href="/home">취소</a>
