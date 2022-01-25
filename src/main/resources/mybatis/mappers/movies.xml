@@ -23,44 +23,25 @@
 	
 	<insert id="insertMovie" parameterType="com.jhta.moviefan.dto.movieDto">
 		insert into movie
-		(MOVIE_NO, MOVIE_TITLE, MOVIE_RATE, MOVIE_RUNTIME)
+		(MOVIE_NO, MOVIE_TITLE, MOVIE_RATE, MOVIE_OPEN_DATE, MOVIE_RUNTIME)
 		values
-		(#{no}, #{title}, #{rate}, #{runtime})
+		(#{no}, #{title}, #{rate}, #{openDate}, #{runtime})
 	</insert>
 	
-	<insert id="insertActor" parameterType="com.jhta.moviefan.vo.Movie_Actor">
-		insert into ACTOR
-		(ACTOR_NO, ACTOR_NAME)
-		values
-		(movie_actor_seq.nextval, #{actorName})
-	</insert>
 	<insert id="insertMovieActor" parameterType="com.jhta.moviefan.vo.Movie_Actor">
 		insert into movie_actor
 		(MOIVE_NO, ACTOR_NO)
 		values
-		(#}movieNo},movie_actor_seq.nextval)
-	</insert>
-	
-	<insert id="insertDirector" parameterType="com.jhta.moviefan.vo.Movie_Director">
-		insert into DIRECTOR
-		(DIRECTOR_NO, DIRECTOR_NAME)
-		values
-		(movie_director_seq.nextval, #{directorName})
+		(#{movieNo}, movie_actor_seq.nextval)
 	</insert>
 	
 	<insert id="insertMovieDirector" parameterType="com.jhta.moviefan.vo.Movie_Director">
 		insert into MOVIE_DIRECTOR
 		(MOIVE_NO, DIRECTOR_NO)
-		(#{movieNo}, movie_director_seq.nextval)
 		values
+		(#{movieNo}, movie_director_seq.nextval)
 	</insert>
 	
-	<insert id="insertGenre" parameterType="com.jhta.moviefan.vo.Movie_Genre">
-		insert into GENRE
-		(GENRE_NO, GENRE_NAME)
-		values
-		(MOVIE_GENRE_SEQUNCE_SEQ.nextval, #{genreName})
-	</insert>
 	<insert id="insertMovieGenre" parameterType="com.jhta.moviefan.vo.Movie_Genre">
 		insert into MOVIE_GENRE
 		(MOIVE_NO, GENRE_NO)

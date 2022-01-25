@@ -24,28 +24,23 @@ public class MovieService {
 		return movieDao.getMovieByMovieNo(movieNo);
 	}
 	
-	
 	public void insertMovie(movieDto movie) {
 		movieDao.insertMovie(movie);
 	}
 	
 	public void insertActor(Movie_Actor actor) {
 		movieDao.insertMovieActor(actor);
-		movieDao.insertActor(actor);
 	}
 	
 	public void insertGenre(Movie_Genre genre) {
 		movieDao.insertMovieGenre(genre);
-		movieDao.insertGenre(genre);
 	}
 	
 	public void insertDirector(Movie_Director director) {
 		movieDao.insertMovieDirector(director);
-		movieDao.insertDirector(director);
 	}
 	
 	public void insertRate(Movie_Rate rate) {
-		movieDao.insertRate(rate);
 		movieDao.insertMovieRate(rate);
 	}
 

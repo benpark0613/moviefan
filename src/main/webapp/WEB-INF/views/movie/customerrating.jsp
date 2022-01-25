@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-   <title>MovieFan : 영화상세정보</title>
+   <title>MovieFan : 관람평</title>
    <link type="image/png" href="/resources/images/logo/moviefan-favicon.png" rel="icon"/>
    <meta charset="utf-8">
    <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -65,73 +65,24 @@
 		  </li>
 		</ul>		
 	</div>
-	<div data-bs-spy="scroll" data-bs-target="#navbar-example2" data-bs-offset="0" class="scrollspy-example" tabindex="0">
-	  <h4 id="scrollspyHeading1">줄거리</h4>
-	  <p>줄거리줄거리줄거리줄거리줄거리줄거리줄거리줄거리줄거리줄거리줄거리줄거리
-		줄거리줄거리줄거리줄거리줄거리줄거리줄거리줄거리줄거리줄거리줄거리줄거리줄거리
-		줄거리줄거리줄거리줄거리줄거리줄거리줄거리줄거리줄거리줄거리줄거리줄거리줄거리</p>
-	</div>
-	<div class="row">
-		<table class="table">
-			<tr>
-				<th>성별 예매 분포</th>
-				<th>연령별 예매 분포</th>
-			</tr>
-			<tr>
-				<td>내용내용내용내용내용내용
-					내용내용내용내용
-				</td>
-				<td>내용내용내용내용내용내용</td>
-			</tr>
-		</table>
-	</div>
-	<div class="row mb-3 border">
-		트레일러 ? 건
-	</div>
-	<!-- 트레일러 유튜브링크-->
-	<div class="row mb-3">
-		<div class="col">
-			<iframe width="260" height="142" src="https://www.youtube.com/embed/W7edvITC9g4"></iframe>
-		</div>
-		<div class="col">
-			<iframe width="260" height="142" src="https://www.youtube.com/embed/7HEAfb9EDvM"></iframe>
-		</div>
-		<div class="col">
-			<iframe width="260" height="142" src="https://www.youtube.com/embed/yFZh-Wqi7RI"></iframe>		</div>
-	</div>
-	<div class="row mb-3 border">
-		스틸컷 ? / ? 건
-	</div>
-	<!-- 캐러셀 -->
-	<div class="row mb-3">
-		<div id="carouselExampleControls" class="carousel slide" data-bs-touch="false" data-interval="false">
-		  <div class="carousel-inner">
-		    <div class="carousel-item active">
-		      <img src="/resources/images/movie/spiderman_image1.jpg" class="d-block w-100" alt="...">
-		    </div>
-		    <div class="carousel-item">
-		      <img src="/resources/images/movie/spiderman_image2.jpg" class="d-block w-100" alt="...">
-		    </div>
-		    <div class="carousel-item">
-		      <img src="/resources/images/movie/spiderman_image3.jpg" class="d-block w-100" alt="...">
-		    </div>
-		    <div class="carousel-item">
-		      <img src="/resources/images/movie/spiderman_image4.jpg" class="d-block w-100" alt="...">
-		    </div>
-		  </div>
-		  <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
-		    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-		    <span class="visually-hidden">Previous</span>
-		  </button>
-		  <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
-		    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-		    <span class="visually-hidden">Next</span>
-		  </button>
-		</div>
-	</div>
 	
 	<div class="row mb-3">
-		<p>[영화제목]에 대한 [갯수]개의 이야기가 있어요!</p>
+		<div class="col-10">
+			<p>[영화제목]에 대한 [갯수]개의 이야기가 있어요!</p>
+		</div>
+		<div class="col-2">
+			<div class="row">
+				<button type="button" class="btn btn-outline-secondary">본 영화 등록</button>
+			</div>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-10">
+			<p>전체[]건</p>
+		</div>
+		<div class="col-2">
+			<p>최신순 공감순 평점순</p>
+		</div>
 	</div>
 	<div class="row mb-3">
 		<div class="col-2 text-align-center">
@@ -147,6 +98,54 @@
 				</div>
 				<div class="col-2">
 					<i class="fas fa-pen fa-lg"></i><span> 관람평 쓰기</span>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="row mb-3">
+		<div class="row mb-3">
+			<div class="col-2">
+				<img alt="" src="/resources/images/movie/bg-profile.png">
+				<p>user id</p>
+			</div>
+			<div class="col-10 rounded-pill bg-light">
+				<div class="row">
+					<div class="col-1">
+					 	<p class="" style="font-size:1.2em; color:#503396;">관람평</p>
+					</div>
+					<div class="col-1">
+						<p style="font-size:1.5em; color:#503396;">10</p>
+					</div>
+					<div class="col-9">
+						<span> 화려한 액션과 시원시원한 바다배경이 좋았습니다.</span>
+					</div>
+					<div class="col-1">
+						<i class="far fa-thumbs-up fa-lg"></i>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="row mb-3">
+		<div class="row mb-3">
+			<div class="col-2">
+				<img alt="" src="/resources/images/movie/bg-profile.png">
+				<p>user id</p>
+			</div>
+			<div class="col-10 rounded-pill bg-light">
+				<div class="row">
+					<div class="col-1">
+					 	<p class="" style="font-size:1.2em; color:#503396;">관람평</p>
+					</div>
+					<div class="col-1">
+						<p style="font-size:1.5em; color:#503396;">10</p>
+					</div>
+					<div class="col-9">
+						<span> 화려한 액션과 시원시원한 바다배경이 좋았습니다.</span>
+					</div>
+					<div class="col-1">
+						<i class="far fa-thumbs-up fa-lg"></i>
+					</div>
 				</div>
 			</div>
 		</div>

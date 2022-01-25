@@ -3,7 +3,7 @@
 <html lang="ko">
 <head>
    <title>MovieFan : 무비차트</title>
-   <link type="image/png" href="/resources/images/logo/moviefan-favicon.png" rel="icon"/>
+   <link type="image/png" href="/resources/images/movie/logo/moviefan-favicon.png" rel="icon"/>
    <meta charset="utf-8">
    <meta name="viewport" content="width=device-width, initial-scale=1">
    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -48,13 +48,13 @@
 		<c:forEach var="movie" items="${movie }">
 			<div class="col-3 mb-3">
 				<div class="row">
-				<img src="/resources/images/spiderman.png" class="rounded float-start" alt="..."> 
+				<img src="/resources/images/movie/spiderman.png" class="rounded float-start" alt="..."> 
 				</div>
 				<div class="row mb-3">
 					<a href="detail?no=${movie.no }"><span><strong>${movie.title }</strong></span></a>
 					<br>
 					<span id="" style="font-size: 10pt;">예매율 35%</span>
-					<span style="font-size: 10pt;">${movie.releasedDate } 개봉</span>
+					<span style="font-size: 10pt;"><fmt:formatDate value="${movie.openDate }" pattern="yyyy-MM-dd" /> 개봉</span>
 				</div>
 				<div class="row mb-3">
 					<div class="col-8">
