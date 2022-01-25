@@ -3,10 +3,11 @@ package com.jhta.moviefan.dto;
 public class CinemaDto {
 	
 	private int no;
-	private String cinemaName;
+	private String name;
 	private String address;
 	private int totalHalls;
 	private String cityName;
+	private int cityNo;
 	
 	public CinemaDto() {}
 
@@ -19,11 +20,11 @@ public class CinemaDto {
 	}
 
 	public String getName() {
-		return cinemaName;
+		return name;
 	}
 
 	public void setName(String name) {
-		this.cinemaName = name;
+		this.name = name;
 	}
 
 	public String getAddress() {
@@ -50,10 +51,18 @@ public class CinemaDto {
 		this.cityName = cityName;
 	}
 
+	public int getCityNo() {
+		return cityNo;
+	}
+
+	public void setCityNo(int cityNo) {
+		this.cityNo = cityNo;
+	}
+
 	@Override
 	public String toString() {
-		return "CinemaDto [no=" + no + ", cinemaName=" + cinemaName + ", address=" + address + ", totalHalls="
-				+ totalHalls + ", cityName=" + cityName + "]";
+		return "CinemaDto [no=" + no + ", name=" + name + ", address=" + address + ", totalHalls=" + totalHalls
+				+ ", cityName=" + cityName + ", cityNo=" + cityNo + "]";
 	}
-	
+
 }

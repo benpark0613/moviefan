@@ -7,12 +7,13 @@ import org.apache.ibatis.annotations.Mapper;
 import com.jhta.moviefan.dto.CinemaDto;
 import com.jhta.moviefan.dto.CinemaNameDto;
 import com.jhta.moviefan.dto.MovieTimeTableDto;
+import com.jhta.moviefan.vo.City;
 
 @Mapper
 public interface CinemaDao {
 	
+	List<City> getAllCities();
 	List<CinemaDto> getAllCinemas();
-	List<CinemaNameDto> getCinemaName();
-	List<CinemaNameDto> getCinemaNameByCityName(String cityName);
+	List<CinemaNameDto> getCinemaNameByCityNo(int cityNo);
 	List<MovieTimeTableDto> getAllMovieTimeTables();
 }
