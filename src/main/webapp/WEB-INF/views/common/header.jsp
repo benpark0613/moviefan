@@ -64,7 +64,7 @@
 								</a>
 							</li>
 							<li>
-								<a href="/myaccount/myticket/bookinglist" class="nav-link text-secondary">
+								<a href="/member/myaccount" class="nav-link text-secondary">
 									<i class="bi bi-person d-flex justify-content-center" style="font-size: 2rem;"></i> MY MVF
 								</a>
 							</li>
@@ -77,7 +77,7 @@
 								</a>
 							</li>
 							<li>
-								<a href="/myaccount/myticket/bookinglist" class="nav-link text-secondary">
+								<a href="/member/myaccount" class="nav-link text-secondary">
 									<i class="bi bi-person d-flex justify-content-center" style="font-size: 2rem;"></i> MY MVF
 								</a>
 							</li>
