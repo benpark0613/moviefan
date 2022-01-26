@@ -1,10 +1,11 @@
 package com.jhta.moviefan.dao;
 
-import java.util.Map;
+import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
 
 import com.jhta.moviefan.vo.Customer;
+import com.jhta.moviefan.vo.CustomerMovieWishList;
 
 @Mapper
 public interface CustomerDao {
@@ -14,7 +15,11 @@ public interface CustomerDao {
 	Customer getCustomerByEmail(String email);
 	Customer getCustomerByPhoneNumber(String phoneNumber);
 	Customer getCustomerByNickName(String nickName);
+	
+	List<CustomerMovieWishList> getCustomerMovieWishListByCustomerNo(int customerNo); 
+	
 	void deleteCustomerByNo(int no);
 	void insertCustomer(Customer customer);
 	void updateCustomerByNo(Customer customer);
+	
 }

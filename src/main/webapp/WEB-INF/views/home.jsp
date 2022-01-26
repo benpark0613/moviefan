@@ -11,6 +11,7 @@
    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 </head>
 <body>
+<c:set var="menu" value="home"/>
 <%@ include file="/WEB-INF/views/common/header.jsp" %>
 <%--상영예정작 표시 --%>
 <div class="container-fluid"">
