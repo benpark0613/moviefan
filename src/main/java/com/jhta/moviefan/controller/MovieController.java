@@ -9,6 +9,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -21,12 +22,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.jhta.moviefan.dto.movieDto;
 import com.jhta.moviefan.service.MovieService;
 import com.jhta.moviefan.vo.Movie;
-import com.jhta.moviefan.vo.Movie_Actor;
-import com.jhta.moviefan.vo.Movie_Director;
-import com.jhta.moviefan.vo.Movie_Genre;
 
 @Controller
 @RequestMapping("/movie")
@@ -91,20 +88,20 @@ public class MovieController {
 	
 	@GetMapping("/detail")
 	public String detail(int no, Model model) {
-		System.out.println("영화번호: " + no);
 		Movie movie = movieService.getMovieByMovieNo(no);
 		model.addAttribute("movie", movie);
+		
 		return "movie/detail";
 	}
 	
 	@GetMapping("/trailer")
-	public String trailer() {
+	public String trailer(int no, Model model) {
 		
 		return "movie/trailer";
 	}
 	
 	@GetMapping("/customerrating")
-	public String customerrating() {
+	public String customerrating(int no, Model model) {
 		
 		return "movie/customerrating";
 	}

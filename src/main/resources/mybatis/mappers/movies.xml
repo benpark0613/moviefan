@@ -5,6 +5,7 @@
 	<resultMap type="com.jhta.moviefan.vo.Movie" id="MovieResultMap">
 		<id column="MOIVE_NO"	property="no"/>
 		<result column="MOVIE_TITLE" property="title"/>
+		<result column="MOVIE_TITLE_EN" property="titleEn"/>
 		<result column="MOVIE_RATE" property="rate"/>
 		<result column="MOVIE_RUNTIME" property="runtime"/>
 		<result column="MOVIE_OPEN_DATE" property="openDate"/>
@@ -21,11 +22,11 @@
 		
 	</select>
 	
-	<insert id="insertMovie" parameterType="com.jhta.moviefan.dto.movieDto">
+	<insert id="insertMovie" parameterType="com.jhta.moviefan.vo.Movie">
 		insert into movie
-		(MOVIE_NO, MOVIE_TITLE, MOVIE_RATE, MOVIE_OPEN_DATE, MOVIE_RUNTIME)
+		(MOVIE_NO, MOVIE_TITLE, MOVIE_TITLE_EN, MOVIE_RATE, MOVIE_OPEN_DATE, MOVIE_RUNTIME)
 		values
-		(#{no}, #{title}, #{rate}, #{openDate}, #{runtime})
+		(#{no}, #{title}, #{titleEn} #{rate}, #{openDate}, #{runtime})
 	</insert>
 	
 	<insert id="insertMovieActor" parameterType="com.jhta.moviefan.vo.Movie_Actor">

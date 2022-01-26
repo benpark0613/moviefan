@@ -49,21 +49,21 @@
 	<!-- 
 		상단 네비바
 	 -->
-	<div class="row mb-3">
-		<ul class="nav nav-tabs">
+	<div class="row">
+		<ul class="nav nav-tabs nav-justified">
 		  <li class="nav-item">
-		    <a class="nav-link" href="#scrollspyHeading1">주요정보</a>
+		    <a class="nav-link" href="detail?no=20210028">주요정보</a>
 		  </li>
 		  <li class="nav-item">
-		    <a class="nav-link" href="trailer">트레일러/스틸컷</a>
+		    <a class="nav-link" href="trailer?no=20210028">트레일러/스틸컷</a>
 		  </li>
 		  <li class="nav-item">
-		    <a class="nav-link" href="customerrating">평점/리뷰</a>
+		    <a class="nav-link active" href="customerrating?no=20210028">평점/리뷰</a>
 		  </li>
 		  <li class="nav-item">
 		    <a class="nav-link">상영시간표</a>
 		  </li>
-		</ul>		
+		</ul>	
 	</div>
 	
 	<div class="row mb-3">
@@ -85,6 +85,7 @@
 		</div>
 	</div>
 	<div class="row mb-3">
+		<hr color="black">
 		<div class="col-2 text-align-center">
 			<img alt="" src="/resources/images/movie/ex.png">
 			<p>MOVIEFAN</p>

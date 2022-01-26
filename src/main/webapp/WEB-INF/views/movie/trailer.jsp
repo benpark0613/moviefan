@@ -8,6 +8,7 @@
    <meta name="viewport" content="width=device-width, initial-scale=1">
    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css" rel="stylesheet">
+   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 </head>
@@ -45,43 +46,43 @@
 			</div>
 		</div>
 	</div>
-	<div class="row mb-3">
-		<ul class="nav nav-tabs">
+	<div class="row">
+		<ul class="nav nav-tabs nav-justified">
 		  <li class="nav-item">
-		    <a class="nav-link" href="detail">주요정보</a>
+		    <a class="nav-link" href="detail?no=20210028">주요정보</a>
 		  </li>
 		  <li class="nav-item">
-		    <a class="nav-link" href="trailer">트레일러/스틸컷</a>
+		    <a class="nav-link active" href="trailer?no=20210028">트레일러/스틸컷</a>
 		  </li>
 		  <li class="nav-item">
-		    <a class="nav-link" href="customerrating">평점/리뷰</a>
+		    <a class="nav-link" href="customerrating?no=20210028">평점/리뷰</a>
 		  </li>
 		  <li class="nav-item">
 		    <a class="nav-link">상영시간표</a>
 		  </li>
-		</ul>		
+		</ul>	
 	</div>
 	
 	<div class="row mb-3">
 		<hr color="black">
-		<p>티저 예고편</p>
+		<p style="color:#351f67; font-weight:bold; ">티저 예고편</p>
 		<hr color="black">
 	</div>
 	<div class="row mb-3">
-		<div class="col align-center">
-			<a href=""><span>이전</span></a>
+		<div class="col align-self-center">
+			<i class="far fa-arrow-alt-circle-left fa-3x"></i>
 		</div>
 		<div class="col">
 			<iframe width="800" height="450" src="https://www.youtube.com/embed/W7edvITC9g4"></iframe>
 		</div>
-		<div class="col align-middle">
-			<a href=""><span>다음</span></a>
+		<div class="col align-self-center">
+			<i class="far fa-arrow-alt-circle-right fa-3x"> </i>
 		</div>
 	</div>
 	
 	<div class="row mb-3">
-		<div class="col">
-			<a href=""><span>이전</span></a>
+		<div class="col align-self-center">
+			<i class="fas fa-chevron-left fa-3x"></i>
 		</div>
 		<div class="col">
 			<iframe width="240" height="136" src="https://www.youtube.com/embed/W7edvITC9g4"></iframe>
@@ -92,10 +93,15 @@
 		<div class="col">
 			<iframe width="240" height="136" src="https://www.youtube.com/embed/yFZh-Wqi7RI"></iframe>		
 		</div>
-		<div class="col">
-			<a href=""><span>이전</span></a>
+		<div class="col align-self-center">
+			<i class="fas fa-chevron-right fa-3x"></i>
 		</div>
 	</div>
+	  
+	
+	
+	
+	
 	<div class="row">
 		<hr color="black">
 		<p> []영화제목]에 대한 [?]개의 스틸컷이 있어요!
@@ -119,5 +125,12 @@
 	</div>
 </div>
 <%@ include file="/WEB-INF/views/common/footer.jsp" %>
+<script type="text/javascript">
+
+$(document.getElementsByTagName("img")).on("click", function(){
+	$(this).modal();
+})
+
+</script>
 </body>
 </html>

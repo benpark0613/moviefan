@@ -12,9 +12,29 @@
    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 </head>
+<style>
+	body, table, div, p{
+	font-family: 'Sans-serif'; 
+	}
+</style>
 <body>
 <%@ include file="/WEB-INF/views/common/header.jsp" %>
 <div class="container">
+	<div class="row" style="background-color:black; font-color:white;">
+		<div class="col-7">
+			<p>#돌비시네마</p>
+			<p>스파이더맨: 노웨이 홈</p>
+			<p>Spider-Man: No Way Home</p>
+		</div>
+		<div class="col-5">
+			<img src="/resources/images/movie/spiderman.png" class="rounded float-start" alt="...">
+		</div>
+	</div>
+	
+	
+	
+	
+	
 	<div class="row mb-3">
 		<div class="col-10">
 		<h1>영화 상세</h1>
@@ -28,7 +48,7 @@
 		<div class="col-9 mb-3">
 			<div class="row mb-3">
 				<h3>${movie.title }</h3>
-				<span style="font-size: 12pt;">spider-Man: No Way Home</span>
+				<span style="font-size: 12pt;">${movie.titleEn }</span>
 				<br><br>
 				<span style="font-size: 11pt;">예매율 22.5%</span>
 				<br>
@@ -37,7 +57,7 @@
 				<br>
 				<span style="font-size: 11pt;">장르: </span>
 				<br>
-				<span style="font-size: 11pt;">개봉: ${movie.runTime }</span>
+				<span style="font-size: 11pt;">개봉: ${movie.runtime }</span>
 			</div>
 			<div class="row mb-3">
 				<div class="col-2">
@@ -49,40 +69,37 @@
 	<!-- 
 		상단 네비바
 	 -->
-	<div class="row mb-3">
-		<ul class="nav nav-tabs">
+	<div class="row">
+		<ul class="nav nav-tabs nav-justified">
 		  <li class="nav-item">
-		    <a class="nav-link" href="#scrollspyHeading1">주요정보</a>
+		    <a class="nav-link active" href="detail?no=20210028">주요정보</a>
 		  </li>
 		  <li class="nav-item">
-		    <a class="nav-link" href="trailer">트레일러/스틸컷</a>
+		    <a class="nav-link" href="trailer?no=20210028">트레일러/스틸컷</a>
 		  </li>
 		  <li class="nav-item">
-		    <a class="nav-link" href="customerrating">평점/리뷰</a>
+		    <a class="nav-link" href="customerrating?no=20210028">평점/리뷰</a>
 		  </li>
 		  <li class="nav-item">
 		    <a class="nav-link">상영시간표</a>
 		  </li>
-		</ul>		
+		</ul>	
 	</div>
 	<div data-bs-spy="scroll" data-bs-target="#navbar-example2" data-bs-offset="0" class="scrollspy-example" tabindex="0">
 	  <h4 id="scrollspyHeading1">줄거리</h4>
-	  <p>줄거리줄거리줄거리줄거리줄거리줄거리줄거리줄거리줄거리줄거리줄거리줄거리
-		줄거리줄거리줄거리줄거리줄거리줄거리줄거리줄거리줄거리줄거리줄거리줄거리줄거리
-		줄거리줄거리줄거리줄거리줄거리줄거리줄거리줄거리줄거리줄거리줄거리줄거리줄거리</p>
+	  <p style="font-size: 15px;">${movie.summary }</p>
 	</div>
 	<div class="row">
-		<table class="table">
-			<tr>
-				<th>성별 예매 분포</th>
-				<th>연령별 예매 분포</th>
-			</tr>
-			<tr>
-				<td>내용내용내용내용내용내용
-					내용내용내용내용
-				</td>
-				<td>내용내용내용내용내용내용</td>
-			</tr>
+		<table class="table table-bordered">
+			<tbody>
+				<tr>
+					<td>
+						성별 예매분포
+						내용내용내용
+					</td>
+					<td>연령별 예매분포</td>
+				</tr>
+			</tbody>
 		</table>
 	</div>
 	<div class="row mb-3 border">
