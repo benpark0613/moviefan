@@ -14,7 +14,7 @@ public class CommentService {
 	@Autowired
 	private CommentDao commentDao;
 	
-	public void insertComment(Comment comment) {
+	public void addComment(Comment comment) {
 		commentDao.insertComment(comment);
 	}
 	
@@ -26,7 +26,7 @@ public class CommentService {
 		commentDao.deleteCommentByNo(comment);
 	}
 	
-	public List<Comment> getAllComments() {
+	public List<Comment> getCommentList() {
 		return commentDao.getAllComments();
 	}
 	

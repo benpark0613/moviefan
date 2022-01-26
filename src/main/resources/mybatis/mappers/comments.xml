@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jhta.moviefan.dao.CommentDao">
+
+<!-- 	<resultMap type="com.jhta.moviefan.vo.Comment" id="CommentResultMap">
+		<id column="COMMENT_NO"			property="commentNo"/>
+		<result column="CUSTOMER_NO" 	property="customerNo"/>
+		<result column="MOVIE_NO" 		property="movieNo"/>
+		<result column="CUSTOMER_RATING" property="rating"/>
+		<result column="COMMENT_CONTENT" property="content"/>
+		<result column="COMMENT_CREATED_DATE" property="creDate"/>
+		<result column="COMMENT_REPORT_COUNT" property="reportCount"/>
+		<result column="COMMENT_LIKE_COUNT" property="likeCount"/>
+		<result column="COMMENT_UPDATED_DATE" property="upDate"/>
+	</resultMap> -->
+	
+	<insert id="insertComment" parameterType="com.jhta.moviefan.vo.Comment">
+		insert into movie_customer_comment
+		(comment_no, movie_no, customer_rating, comment_content)
+		values
+		(movie_customer_comment_seq.nextval, #{movieNo}, #{rating}, #{content})
+	</insert>
+	
+	<update id="updateCommentByNo" parameterType="com.jhta.moviefan.vo.Comment">
+		update movie_customer_comment
+		set
+			customer_rating = #{rating},
+			comment_content = #{content},
+			comment_updated_date = sysdate
+		where
+			comment_no = #{commentNo}
+	</update>
+	
+	<delete id="deleteCommentByNo">
+		delete 
+	</delete>
+	
+	<select id="getAllComments" resultType="com.jhta.moviefan.vo.Comment">
+		select 
+			comment_no				as commentNo,				
+			customer_no				as customerNo,
+			movie_no				as movieNo,
+			customer_rating			as rating,
+			comment_content			as content,
+			comment_created_date	as creDate,
+			comment_report_count	as reportCount,
+			comment_like_count		as likeCount,
+			comment_updated_date	as upDate
+		from 
+			movie_customer_comment
+		order by
+			comment_no desc
+	</select>
+	
+	<select id="searchCommentsByMovieNo" parameterType="int" resultType="com.jhta.moviefan.vo.Comment">
+		select 
+			comment_no				as commentNo,				
+			customer_no				as customerNo,
+			movie_no				as movieNo,
+			customer_rating			as rating,
+			comment_content			as content,
+			comment_created_date	as creDate,
+			comment_report_count	as reportCount,
+			comment_like_count		as likeCount,
+			comment_updated_date	as upDate
+		from 
+			movie_customer_comment
+		where
+			movie_no = #{value}
+		order by
+			comment_no desc
+	</select>
+	
+	<select id="searchCommnetsByCustomerNo" parameterType="int" resultType="com.jhta.moviefan.vo.Comment">
+		select 
+			comment_no				as commentNo,				
+			customer_no				as customerNo,
+			movie_no				as movieNo,
+			customer_rating			as rating,
+			comment_content			as content,
+			comment_created_date	as creDate,
+			comment_report_count	as reportCount,
+			comment_like_count		as likeCount,
+			comment_updated_date	as upDate
+		from 
+			movie_customer_comment
+		where
+			customer_no = #{value}
+		order by
+			comment_no desc
+	</select>
+	
+	<select id="getCommentByCommentNo" parameterType="int" resultType="com.jhta.moviefan.vo.Comment">
+		select 
+			comment_no				as commentNo,				
+			customer_no				as customerNo,
+			movie_no				as movieNo,
+			customer_rating			as rating,
+			comment_content			as content,
+			comment_created_date	as creDate,
+			comment_report_count	as reportCount,
+			comment_like_count		as likeCount,
+			comment_updated_date	as upDate
+		from 
+			movie_customer_comment
+		where
+			comment_no = #{value}
+	</select>
+	
+</mapper>

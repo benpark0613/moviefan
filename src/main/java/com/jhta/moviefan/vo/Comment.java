@@ -91,10 +91,13 @@ public class Comment {
 	public void setLikeCount(int likeCount) {
 		this.likeCount = likeCount;
 	}
-	
+
 	@Override
 	public String toString() {
-		return "CommentInsertForm = [commentNo=" + commentNo + ", customerNo=" + customerNo + ", movieNo=" + movieNo + ", rating=" + rating 
-				+ ", content=" + content + ", creDate=" + creDate + ", reportCount=" + reportCount + ", likeCount=" + likeCount + ", upDate=" + upDate + "]";
+		return "Comment [commentNo=" + commentNo + ", customerNo=" + customerNo + ", movieNo=" + movieNo + ", rating="
+				+ rating + ", content=" + content + ", creDate=" + creDate + ", reportCount=" + reportCount
+				+ ", likeCount=" + likeCount + ", upDate=" + upDate + "]";
 	}
+	
+	
 }

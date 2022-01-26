@@ -75,7 +75,7 @@ public class CustomerService {
 		List<Movie> movies = new ArrayList<Movie>();
 
 		for (CustomerMovieWishList item : customerMovieWishList) {
-			Movie movie = movieDao.getMovieByNo(item.getMovieNo());
+			Movie movie = movieDao.getMovieByMovieNo(item.getMovieNo());
 			movies.add(movie);
 		}
 		

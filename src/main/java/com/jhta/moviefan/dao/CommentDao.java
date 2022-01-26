@@ -2,8 +2,11 @@ package com.jhta.moviefan.dao;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Mapper;
+
 import com.jhta.moviefan.vo.Comment;
 
+@Mapper
 public interface CommentDao {
 
 	void insertComment(Comment comment);
@@ -12,4 +15,5 @@ public interface CommentDao {
 	List<Comment> getAllComments();
 	List<Comment> searchCommentsByMovieNo(int movieNo);
 	List<Comment> searchCommnetsByCustomerNo(int customerNo);
+	Comment getCommentByCommentNo(int commentNo);
 }
