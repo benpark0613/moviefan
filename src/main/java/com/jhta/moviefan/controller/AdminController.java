@@ -34,11 +34,6 @@ public class AdminController {
 	
 	@GetMapping("/schedule")
 	public String schedule() {
-		return "admin/schedule/list";
-	}
-	
-	@GetMapping("/schedule/modify")
-	public String modify() {
-		return "admin/schedule/modify";
+		return "admin/schedule/form";
 	}
 }
