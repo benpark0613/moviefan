@@ -27,7 +27,7 @@
 			<div class="col mx-2">
 				<select id="city-select" name="city" class="form-select form-select-lg w-25 h-10 mb-3">
 					<c:forEach var="city" items="${cityList }">
-						<option value="${city.no }">${city.name }</option>
+						<option value="${city.no }" ${city.no eq 20 ? 'selected' : '' }>${city.name }</option>
 					</c:forEach>
 				</select>
 			</div>
@@ -36,11 +36,13 @@
 				<div class="container mt-4" id="test">
 					<div class="row row-cols-2 row-cols-lg-3 g-2 g-lg-2" id="cinemaBox">
 						<c:forEach var="cinema" items="${cinemaList }">
-				    		<div id="cinema-select" class="col">
-								<div id="cinema" class="p-4 border bg-light text-center">
-						      		<a href="#" id="${cinema.cityNo }">${cinema.name }</a>
-						      	</div>
-				    		</div>
+							<c:if test="${cinema.cityNo eq 20 }">
+					    		<div id="cinema-select" class="col">
+									<div id="cinema" class="p-4 border bg-light text-center">
+							      		<a href="#" id="${cinema.cityNo }">${cinema.name }</a>
+							      	</div>
+					    		</div>
+							</c:if>
 				  		</c:forEach> 
 				    </div>
 				</div>
@@ -125,66 +127,27 @@
 </body>
 <script type="text/javascript">
 
-	$(function() {
+	$('#city-select').change(function () {
+		let no = $(this).val();
+		//alert(cityNo);
 		
-		let test1 = $("#cinema a[id='20']");
-		//console.log(test);
-		$("#test").empty();
-		$(test1).appendTo("#test");
-	})	
+		let $box = $("#cinemaBox").empty();
 		
-		$('#city-select').change(function () {
-			let no = $(this).val();
-			//alert(cityNo);
-			
-			let $box = $("#cinemaBox").empty();
-			
-			$.getJSON("/rest/cinema/list", {cityNo:no}, function (cinemaList) {
-				//console.log(response);
-				$.each (cinemaList, function(index, cinema) {
-					//console.log(cinema)
-					
-					let content = '<div id="cinema-select" class="col">';
-						content += '<div id="cinema" class="p-4 border bg-light text-center">';
-			      		content += '<a href="#" id="' + cinema.cityNo + '">' + cinema.cinemaName + '</a>';
-			      		content += '</div>';
-	    				content += '</div>';
-	    			
-	    			$box.append(content);
-				})
+		$.getJSON("/rest/cinema/list", {cityNo:no}, function (cinemaList) {
+			//console.log(response);
+			$.each (cinemaList, function(index, cinema) {
+				//console.log(cinema)
+				
+				let content = '<div id="cinema-select" class="col">';
+					content += '<div id="cinema" class="p-4 border bg-light text-center">';
+		      		content += '<a href="#" id="' + cinema.cityNo + '">' + cinema.cinemaName + '</a>';
+		      		content += '</div>';
+    				content += '</div>';
+    			
+    			$box.append(content);
 			})
 		})
-	
-	
-	
-	
-	
-	
-		// 이벤트가 발생해서 함수가 실행되면(change)
-		// 극장 리스트를 감싸는 div 엘리먼트를 선택하고
-		// 극장 리스트를 div 엘리먼트에 append 한다.
-		
-		// cityno가 같은 a만 남기기?
-	
-		/*
-			$('#city-select').change(function() {
-				var $cityNo = $('[name=city]').val();
-				var $cinemaCity = $('#cinema a');
-				
-				console.log($cinemaCity);
-			})
-		*/
-		
-			//var cinemaBox = $("#cinemaBox");
-			
-			//var cinema = '<div id="cinema-select" class="col">' 
-			//	+ '<div id="cinema" class="p-4 border bg-light text-center">'
-			//	+ '<a href="#" id="">MVF 강남점</a>'
-			//	+ '</div>'
-			//	+ '</div>';
-		
-			//cinemaBox.append(cinema);
-		
-		
+	})
+
 </script>
 </html>
