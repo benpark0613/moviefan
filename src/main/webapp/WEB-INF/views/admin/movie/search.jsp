@@ -21,7 +21,7 @@
 <div class="container">
 	<div class="row my-3">
 		<div class="col">
-			<h1>영화검색</h1>
+			<h1>영화검색/등록</h1>
 		</div>
 	</div>
 	<div class="row mb-3">
@@ -114,13 +114,72 @@
 			</table>
 		</div>
 	</div>
+	<!-- 페이지네이션 -->
 	<div class="row mb-3">
 		<div class="col" id="pagination">
 		</div>
 	</div>
+	<!-- 모달 -->
+	<div class="modal" tabindex="-1" id="modal-movie">
+  		<div class="modal-dialog modal-xl">
+    		<div class="modal-content">
+      			<div class="modal-header">
+        			<h5 class="modal-title"><strong>다음 영화를 등록하시겠습니까?</strong></h5>
+        			<div class="ms-2" id="modal-spinner-box"></div>
+        			<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      			</div>
+      			<div class="modal-body">
+        			<table class="table">
+        				<tr>
+        					<th>영화코드</th>
+        					<td colspan="3"><span id="modal-movie-code"></span></td>
+        				</tr>
+        				<tr>
+        					<th>영화명</th>
+        					<td colspan="3"><span id="modal-movie-name"></span></td>
+        				</tr>
+        				<tr>
+        					<th>영화명(영문)</th>
+        					<td colspan="3"><span id="modal-movie-name-en"></span></td>
+        				</tr>
+        				<tr>
+        					<th style="width: 10%;">제작연도</th>
+        					<td style="width: 35%;"><span id="modal-movie-production-year"></span></td>
+        					<th style="width: 10%;">상영시간</th>
+        					<td style="width: 55%;"><span id="modal-movie-show-time"></span>분</td>
+        				</tr>
+        				<tr>
+        					<th style="width: 10%;">개봉일</th>
+        					<td style="width: 35%;"><span id="modal-movie-open-date"></span></td>
+        					<th style="width: 10%;">제작상태</th>
+        					<td style="width: 55%;"><span id="modal-movie-production-status"></span>분</td>
+        				</tr>
+        				<tr>
+        					<th style="width: 10%;">장르</th>
+        					<td style="width: 35%;"><span id="modal-movie-genre"></span></td>
+        					<th style="width: 10%;">관람등급</th>
+        					<td style="width: 55%;"><span id="modal-movie-watch-grade"></span></td>
+        				</tr>
+        				<tr>
+        					<th style="width: 10%;">감독</th>
+        					<td style="width: 35%;"><span id="modal-movie-directors"></span></td>
+        					<th style="width: 10%;">배우</th>
+        					<td style="width: 55%;"><span id="modal-movie-actors"></span></td>
+        				</tr>
+        				<tr>
+        					<th><span>제작/배급사</span></th>
+        					<td colspan="3"><span id="modal-movie-companys"></span></td>
+        				</tr>
+        			</table>
+      			</div>
+				<div class="modal-footer">
+    				<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
+    				<button type="button" class="btn btn-primary">확인</button>
+				</div>
+   			</div>
+  		</div>
+	</div>
 </div>
-<%@ include file="/WEB-INF/views/common/footer.jsp" %>
-</body>
 <script type="text/javascript">
 	$(function() {
 		var $selectProductionYearFrom = $("select[name=production-year-from]");
@@ -137,62 +196,72 @@
 			$selectOpenYearFrom.append(row);
 			$selectOpenYearTo.append(row);
 		}
-	});
-	
-	$("select[name=production-year-from]").change(function(event) {
-		var productionYearFrom = $("select[name=production-year-from]").val();
-		var productionYearTo = $("select[name=production-year-to]").val();
 		
-		if (productionYearTo !== "") {
-			if (productionYearFrom > productionYearTo) {
-				$("select[name=production-year-from]").val(productionYearTo).change();
+		$("select[name=production-year-from]").change(function(event) {
+			var productionYearFrom = $("select[name=production-year-from]").val();
+			var productionYearTo = $("select[name=production-year-to]").val();
+			
+			if (productionYearTo !== "") {
+				if (productionYearFrom > productionYearTo) {
+					$("select[name=production-year-from]").val(productionYearTo).change();
+				}
 			}
-		}
-	});
-	
-	$("select[name=production-year-to]").change(function(event) {
-		var productionYearFrom = $("select[name=production-year-from]").val();
-		var productionYearTo = $("select[name=production-year-to]").val();
+		});
 		
-		if (productionYearFrom !== "") {
-			if (productionYearFrom > productionYearTo) {
-				$("select[name=production-year-from]").val(productionYearTo).change();
+		$("select[name=production-year-to]").change(function(event) {
+			var productionYearFrom = $("select[name=production-year-from]").val();
+			var productionYearTo = $("select[name=production-year-to]").val();
+			
+			if (productionYearFrom !== "") {
+				if (productionYearFrom > productionYearTo) {
+					$("select[name=production-year-from]").val(productionYearTo).change();
+				}
 			}
-		}
-	});
+		});
 
-	$("select[name=open-year-from]").change(function(event) {
-		var openYearFrom = $("select[name=open-year-from]").val();
-		var openYearTo = $("select[name=open-year-to]").val();
-		
-		if (openYearTo !== "") {
-			if (openYearFrom > openYearTo) {
-				$("select[name=open-year-from]").val(openYearTo).change();
+		$("select[name=open-year-from]").change(function(event) {
+			var openYearFrom = $("select[name=open-year-from]").val();
+			var openYearTo = $("select[name=open-year-to]").val();
+			
+			if (openYearTo !== "") {
+				if (openYearFrom > openYearTo) {
+					$("select[name=open-year-from]").val(openYearTo).change();
+				}
 			}
-		}
-	});
-	
-	$("select[name=open-year-to]").change(function(event) {
-		var openYearFrom = $("select[name=open-year-from]").val();
-		var openYearTo = $("select[name=open-year-to]").val();
+		});
 		
-		if (openYearTo !== "") {
-			if (openYearFrom > openYearTo) {
-				$("select[name=open-year-from]").val(openYearTo).change();
+		$("select[name=open-year-to]").change(function(event) {
+			var openYearFrom = $("select[name=open-year-from]").val();
+			var openYearTo = $("select[name=open-year-to]").val();
+			
+			if (openYearTo !== "") {
+				if (openYearFrom > openYearTo) {
+					$("select[name=open-year-from]").val(openYearTo).change();
+				}
 			}
-		}
-	});
-	
-	$("#btn-search-movie").click(function(event) {
-		event.preventDefault();
-		$("input[name=current-page]").val("1");
-		getMovieList();
-	});
-	
-	$("#btn-clear-form").click(function(event) {
-		event.preventDefault();
-		$("#form-search-movie input").val("");
-		$("#form-search-movie select").val("").change();
+		});
+		
+		$("#btn-search-movie").click(function(event) {
+			event.preventDefault();
+			$("input[name=current-page]").val("1");
+			getMovieList();
+		});
+		
+		$("#btn-clear-form").click(function(event) {
+			event.preventDefault();
+			$("#form-search-movie input").val("");
+			$("#form-search-movie select").val("").change();
+		});
+		
+		var movieModal = new bootstrap.Modal(document.getElementById('modal-movie'), {
+			keyboard: false
+		});
+		
+		$("#table-movie tbody").on("click", ".btn", function() {
+			var movieCode = $(this).attr("data-movie-code");
+			getMovieDetail(movieCode);
+			movieModal.show();
+		});
 	});
 	
 	function getMovieList() {
@@ -219,7 +288,8 @@
 				prdtStartYear: productionYearFrom,
 				prdtEndYear: productionYearTo,
 				openStartDt: openYearFrom,
-				openEndDt: openYearTo },
+				openEndDt: openYearTo 
+			},
 			dataType: "json",
 			beforeSend: function() {
 				var row = '<tr>' 
@@ -270,7 +340,9 @@
 						} else {
 							row += '<td class="text-center">' + movie.directors[0].peopleNm + '</td>';
 						}
-						row += '<td class="text-center"><a href="form" class="btn btn-outline-primary btn-sm">등록</a></td>';
+						row += '<td class="text-center">';
+						row += '<button class="btn btn-outline-primary btn-sm" data-movie-code=' + movie.movieCd + '>등록</button>';
+						row += '</td>';
 						
 						$tbody.append(row);
 						pagination(currentPage, totalRecords, rowsPerPage);
@@ -281,6 +353,60 @@
 				alert("오류가 발생하였습니다.");
 			}
 		});
+	}
+	
+	function getMovieDetail(movieCode) {
+		var $modalSpinnerBox = $("#modal-spinner-box");
+		$.ajax({
+			type: "get",
+			url: "https://www.kobis.or.kr/kobisopenapi/webservice/rest/movie/searchMovieInfo.json",
+			data: {
+				key: "e8b10fb1808ddda8683a3f66f734a149",
+				movieCd: movieCode
+			},
+			dataType: "json",
+			beforeSend: function() {
+				var row = '<div class="spinner-border spinner-border-sm" role="status">'
+					+ '<span class="visually-hidden">Loading...</span>'
+					+ '</div>';
+				$modalSpinnerBox.append(row);
+			},
+			success: function(result) {
+				$modalSpinnerBox.empty();
+				var movie = result.movieInfoResult.movieInfo;
+				$("#modal-movie-code").text(movie.movieCd);
+				$("#modal-movie-name").text(movie.movieNm);
+				$("#modal-movie-name-en").text(movie.movieNmEn);
+				$("#modal-movie-production-year").text(movie.prdtYear);
+				$("#modal-movie-show-time").text(movie.showTm);
+				$("#modal-movie-open-date").text(movie.openDt);
+				$("#modal-movie-production-status").text(movie.prdtStatNm);			
+				$("#modal-movie-genre").text(movie.genres.map(item => item.genreNm).join(', '));
+				$("#modal-movie-watch-grade").text(movie.audits.map(item => item.watchGradeNm).join(', '));
+				$("#modal-movie-directors").text(movie.directors.map(item => item.peopleNm).join(', '));
+				$("#modal-movie-actors").text(movie.actors.map(item => item.peopleNm).filter((item, index) => index < 5).join(', '));
+				$("#modal-movie-companys").text(movie.companys.map(item => item.companyNm + "("+item.companyPartNm+")").join(', '));
+			}
+		})
+		
+		/* $.getJSON("https://www.kobis.or.kr/kobisopenapi/webservice/rest/movie/searchMovieInfo.json", 
+			{key: "e8b10fb1808ddda8683a3f66f734a149", movieCd: movieCode}, 
+			function(result) {
+				var movie = result.movieInfoResult.movieInfo;
+				$("#modal-movie-code").text(movie.movieCd);
+				$("#modal-movie-name").text(movie.movieNm);
+				$("#modal-movie-name-en").text(movie.movieNmEn);
+				$("#modal-movie-production-year").text(movie.prdtYear);
+				$("#modal-movie-show-time").text(movie.showTm);
+				$("#modal-movie-open-date").text(movie.openDt);
+				$("#modal-movie-production-status").text(movie.prdtStatNm);			
+				$("#modal-movie-genre").text(movie.genres.map(item => item.genreNm).join(', '));
+				$("#modal-movie-watch-grade").text(movie.audits.map(item => item.watchGradeNm).join(', '));
+				$("#modal-movie-directors").text(movie.directors.map(item => item.peopleNm).join(', '));
+				$("#modal-movie-actors").text(movie.actors.map(item => item.peopleNm).filter((item, index) => index < 5).join(', '));
+				$("#modal-movie-companys").text(movie.companys.map(item => item.companyNm + "("+item.companyPartNm+")").join(', '));
+			}
+		); */
 	}
 	
 	function pagination(currentPage, totalRecords, rowsPerPage) {
@@ -343,7 +469,7 @@
 			} else {
 				nav += '<li class="page-item disabled">';
 			}
-			nav += '<a class="page-link" href="#" id=' + prevPage + '>이전</a>';
+			nav += '<a class="page-link" href="#" data-page-number=' + prevPage + '>이전</a>';
 			nav	+= '</li>';
 			
 			for (var i = beginPage; i <= endPage; i++) {
@@ -352,7 +478,7 @@
 				} else {
 					nav += '<li class="page-item">';
 				}
-				nav += '<a class="page-link" href="#" id=' + i + '>';
+				nav += '<a class="page-link" href="#" data-page-number=' + i + '>';
 				nav += i;
 				nav += '</a>';
 				nav += '</li>';
@@ -363,7 +489,7 @@
 			} else {
 				nav += '<li class="page-item disabled">';
 			}
-			nav += '<a class="page-link" href="#" id=' + nextPage + '>다음</a>';
+			nav += '<a class="page-link" href="#" data-page-number=' + nextPage + '>다음</a>';
 			nav	+= '</li>';
 			nav += '</ul>';
 			nav += '</nav>';
@@ -372,11 +498,13 @@
 			
 			$("#pagination a").click(function(event) {
 				event.preventDefault();
-				var pageNo = $(this).attr("id");
+				var pageNo = $(this).attr("data-page-number");
 				$("input[name=current-page]").val(pageNo);
 				getMovieList(pageNo);
 			});
 		}
 	} 
 </script>
+<%@ include file="/WEB-INF/views/common/footer.jsp" %>
+</body>
 </html>

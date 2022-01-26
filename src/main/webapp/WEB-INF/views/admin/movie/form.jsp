@@ -24,7 +24,17 @@
 			<h1>영화등록</h1>
 		</div>
 	</div>
+	<div class="row my-3">
+		<div class="col">
+			
+
+		</div>
+	</div>
 </div>
 <%@ include file="/WEB-INF/views/common/footer.jsp" %>
 </body>
+<script type="text/javascript">
+	
+
+</script>
 </html>
