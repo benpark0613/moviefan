@@ -40,8 +40,8 @@ public class CinemaController {
 	
 	@GetMapping("/list")
 	public String list(int no, Model model) {
-		List<CinemaNameDto> cinemaDtos = cinemaService.getCinemaNameByCityNo(no);
-		model.addAttribute("cinema", cinemaDtos);
+		List<CinemaNameDto> cinemaNameDtos = cinemaService.getCinemaNameByCityNo(no);
+		model.addAttribute("cinemaNameDtos", cinemaNameDtos);
 		
 		return "cinema/list";
 	}

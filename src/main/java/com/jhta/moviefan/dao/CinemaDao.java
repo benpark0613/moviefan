@@ -13,6 +13,7 @@ import com.jhta.moviefan.vo.City;
 public interface CinemaDao {
 	
 	List<City> getAllCities();
+	List<City> getCityByNo(int no);
 	List<CinemaDto> getAllCinemas();
 	List<CinemaNameDto> getCinemaNameByCityNo(int cityNo);
 	List<MovieTimeTableDto> getAllMovieTimeTables();
