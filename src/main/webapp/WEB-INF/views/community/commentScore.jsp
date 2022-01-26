@@ -76,27 +76,15 @@
 					</tr>
 				</thead>
 				<tbody>
+				<c:forEach var="comments" items="${commentList }" varStatus="loop">
 					<tr class="text-top">
-						<td>100</td>
-						<td><a href="" class="col text-dark">특송</a> <span>별점</span>
+						<td>${comment.commentNo }</td>
+						<td><a href="" class="col text-dark">${comment.movieNo }</a> <span>별점</span>
 							<p>액션신만 가득할거라 예상하고 안볼랬는데 볼거 없어서 봤어요재밌게 봤습니다.액션 스토리 연기 모두 굿!</p></td>
 						<td><a href="" class="col text-dark">lsw****</a> <fmt:formatDate value="" pattern="yyyy.M.d" />
 							<p>22.01.23</p> <a href="" class="text-dark">신고</a> <a href="" class="text-dark">좋아요</a></td>
 					</tr>
-					<tr class="text-top">
-						<td>100</td>
-						<td><a href="" class="col text-dark">특송</a> <span>별점</span>
-							<p>액션신만 가득할거라 예상하고 안볼랬는데 볼거 없어서 봤어요재밌게 봤습니다.액션 스토리 연기 모두 굿!</p></td>
-						<td><a href="" class="col text-dark">lsw****</a> <fmt:formatDate value="" pattern="yyyy.M.d" />
-							<p>22.01.23</p> <a href="" class="text-dark">신고</a> <a href="" class="text-dark">좋아요</a></td>
-					</tr>
-					<tr class="text-top">
-						<td>100</td>
-						<td><a href="" class="col text-dark">특송</a> <span>별점</span>
-							<p>액션신만 가득할거라 예상하고 안볼랬는데 볼거 없어서 봤어요재밌게 봤습니다.액션 스토리 연기 모두 굿!</p></td>
-						<td><a href="" class="col text-dark">lsw****</a> <fmt:formatDate value="" pattern="yyyy.M.d" />
-							<p>22.01.23</p> <a href="" class="text-dark">신고</a> <a href="" class="text-dark">좋아요</a></td>
-					</tr>
+				</c:forEach>
 				</tbody>
 			</table>
 			<nav aria-label="Page navigation example" class="pagination justify-content-center">
