@@ -46,12 +46,17 @@
 	</div>
 	<div class="row mb-3">
 		<c:forEach var="movie" items="${movie }">
-			<div class="col-3 mb-3">
+			<div class="col-4 mb-3">
 				<div class="row">
-				<img src="/resources/images/movie/spiderman.png" class="rounded float-start" alt="..."> 
+					<img src="/resources/images/movie/spiderman.png" class="rounded float-start" alt="..."> 
 				</div>
 				<div class="row mb-3">
-					<a href="detail?no=${movie.no }"><span><strong>${movie.title }</strong></span></a>
+					<div class="col-1">
+						<img alt="" src="/resources/images/movie/age/age_15.png">
+					</div>
+					<div class="col">
+						<a href="detail?no=${movie.no }"><span><strong>${movie.title }</strong></span></a>
+					</div>
 					<br>
 					<span id="" style="font-size: 10pt;">예매율 35%</span>
 					<span style="font-size: 10pt;"><fmt:formatDate value="${movie.openDate }" pattern="yyyy-MM-dd" /> 개봉</span>

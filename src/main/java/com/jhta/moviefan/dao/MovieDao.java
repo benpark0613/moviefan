@@ -14,7 +14,6 @@ public interface MovieDao {
 	
 	void insertMovie(Movie movie);
 	void updateMovie(Movie movie);
-	Movie getMovieByNo(int no);
 	Movie getMovieByMovieNo(int movieNo);
 	
 	void insertMovie(movieDto movie);
