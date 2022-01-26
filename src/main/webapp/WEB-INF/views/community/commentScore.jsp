@@ -40,8 +40,13 @@
 									<div class="row mb-3">
 										<div class="col-md-3">영화포스터</div>
 										<div class="col-md-6">
-											별점
-											
+											<div class="btn-group me-2 " id="button-box">
+												<button type="button" class="btn" id="1"><i class="bi bi-star"></i></button>
+												<button type="button" class="btn" id="2"><i class="bi bi-star"></i></button>
+												<button type="button" class="btn" id="3"><i class="bi bi-star"></i></button>
+												<button type="button" class="btn" id="4"><i class="bi bi-star"></i></button>
+												<button type="button" class="btn" id="5"><i class="bi bi-star"></i></button>
+											</div>
 										</div>
 										<hr>
 									<textarea class="form-control" name="content" rows="4" placeholder="감상평을 남겨주세요."></textarea>
@@ -115,7 +120,11 @@
 		</form>
 	</div>
 <script type="text/javascript">
-	
+$("#button-box button").mouseenter(function() {
+	var rating = $(this).attr("id");
+	$(this).closest('div').find("button").find('i').removeClass('bi-star-fill').addClass('bi-star')
+	$(this).closest('div').find("button:lt("+parseInt(rating)+")").find('i').removeClass('bi-star').addClass('bi-star-fill');
+})
 
 </script>
 </body>
