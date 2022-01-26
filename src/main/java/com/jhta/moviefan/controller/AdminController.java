@@ -31,4 +31,9 @@ public class AdminController {
 	public String form() {
 		return "admin/movie/form";
 	}
+	
+	@GetMapping("/schedule")
+	public String schedule() {
+		return "admin/schedule/form";
+	}
 }
