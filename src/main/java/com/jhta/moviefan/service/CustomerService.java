@@ -49,7 +49,7 @@ public class CustomerService {
 		if (!"NORMAL".equals(savedCustomer.getLoginType())) {
 			throw new RuntimeException("사이트에 가입된 사용자가 아닙니다.");
 		}
-		if (!"Y".equals(savedCustomer.getIsWithdrawal())) {
+		if ("Y".equals(savedCustomer.getIsWithdrawal())) {
 			throw new RuntimeException("탈퇴처리된 사용자입니다.");
 		}
 		if (!password.equals(savedCustomer.getPassword())) {

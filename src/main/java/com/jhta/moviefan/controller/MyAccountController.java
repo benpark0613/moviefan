@@ -1,16 +1,21 @@
 package com.jhta.moviefan.controller;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+
+import com.jhta.moviefan.annotation.LoginedCustomer;
+import com.jhta.moviefan.vo.Customer;
 
 @Controller
 @RequestMapping("/myaccount")
 public class MyAccountController {
 
 	@GetMapping("/myticket/bookinglist")
-	public String bookingList() {
-		return "myaccount/myticket/bookinglist";
+	public String bookingList(@LoginedCustomer Customer customer) {
+		
+		return "/myaccount/myticket/bookinglist";
 	}
 	
 	@GetMapping("/myticket/orderlist")
