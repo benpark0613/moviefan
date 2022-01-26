@@ -1,18 +1,28 @@
 package com.jhta.moviefan.service;
 
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.jhta.moviefan.annotation.LoginedCustomer;
 import com.jhta.moviefan.dao.CustomerDao;
+import com.jhta.moviefan.dao.MovieDao;
 import com.jhta.moviefan.vo.Customer;
+import com.jhta.moviefan.vo.CustomerMovieWishList;
+import com.jhta.moviefan.vo.Movie;
 
 @Service
 public class CustomerService {
 
 	@Autowired
 	private CustomerDao customerDao;
+	@Autowired
+	private MovieDao movieDao;
+	
 	
 	public Customer registerCustomer(Customer customer) {
 		Customer savedCustomer = customerDao.getCustomerById(customer.getId());
@@ -58,6 +68,18 @@ public class CustomerService {
 		
 		return savedCustomer;
 	}
-	
+
+	public List<Movie> getCustomerMovieWishList(int customerNo) {
+		List<CustomerMovieWishList> customerMovieWishList = customerDao.getCustomerMovieWishListByCustomerNo(customerNo);
+		
+		List<Movie> movies = new ArrayList<Movie>();
+
+		for (CustomerMovieWishList item : customerMovieWishList) {
+			Movie movie = movieDao.getMovieByNo(item.getMovieNo());
+			movies.add(movie);
+		}
+		
+		return movies;
+	}
 	
 }

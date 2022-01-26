@@ -65,6 +65,16 @@
 		where
 			customer_nickname = #{nickName}
 	</select>
+	
+	<select id="getCustomerMovieWishListByCustomerNo" parameterType="int" resultType="com.jhta.moviefan.vo.CustomerMovieWishList">
+		select 
+			movie_no	as	movieNo,
+			customer_no	as	customerNo
+		from
+			customer_movie_wishlist
+		where
+			customer_no = #{customerNo}
+	</select>
 
 	<insert id="insertCustomer" parameterType="com.jhta.moviefan.vo.Customer">
 		<selectKey keyProperty="no" resultType="int" order="BEFORE">
