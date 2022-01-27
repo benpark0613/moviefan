@@ -2,12 +2,12 @@ package com.jhta.moviefan.dto;
 
 public class CinemaDto {
 	
-	private int no;
-	private String name;
-	private String address;
-	private int totalHalls;
-	private String cityName;
-	private int cityNo;
+	private int no;					// 영화관 코드
+	private String name;			// 영화관 이름
+	private String address;			// 영화관 주소
+	private int totalHalls;			// 영화관의 총 상영관 수
+	private String cityName;		// 영화관이 속한 지역 이름
+	private int cityNo;				// 영화관이 속한 지역 번호
 	
 	public CinemaDto() {}
 

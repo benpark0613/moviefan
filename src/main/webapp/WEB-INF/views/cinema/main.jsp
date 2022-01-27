@@ -34,7 +34,7 @@
 			<!-- 영화관 선택 -->
 			<div class="col">
 				<div class="container mt-4" id="test">
-					<div class="row row-cols-2 row-cols-lg-3 g-2 g-lg-2" id="cinemaBox">
+					<div id="cinemaBox" class="row row-cols-2 row-cols-lg-3 g-2 g-lg-2">
 						<c:forEach var="cinema" items="${cinemaList }">
 							<c:if test="${cinema.cityNo eq 20 }">
 					    		<div id="cinema-select" class="col">
@@ -88,15 +88,16 @@
 	</div>
 	<!-- 상영시간표 -->
 	<div id="movie-timetable" class="row justify-content-center mt-5 mb-5">
-		<c:forEach var="movie" items="${movieTimeTableList }">
-			<div class="col-10 px-0">	
+		<c:forEach var="movieTimeTable" items="${movieTimeTableList }">
+			<div class="col-10 px-0">
+			
 				<table class="table">
 					<thead>
 						<tr>
 							<th>
-								<span class="fs-2">${movie.title }</span>
-								<span class="ml-3">${movie.genre } | </span>
-								<span><fmt:formatDate value="${movie.openDate }" pattern="yyyy년 M월 d일"/> 개봉</span>
+								<span class="fs-2">${movieTimeTable.title }</span>
+								<span class="ml-3">${movieTimeTable.genre } | </span>
+								<span><fmt:formatDate value="${movieTimeTable.openDate }" pattern="yyyy년 M월 d일"/> 개봉</span>
 							</th>
 						</tr>
 					</thead>
@@ -104,8 +105,8 @@
 						<tr>
 							<td>
 								<div class="mx-5 my-3">
-									<span class="fs-4">${movie.hallName }</span>
-									<span>총 ${movie.totalSeats }석</span>
+									<span class="fs-4">${movieTimeTable.hallName }</span>
+									<span>총 ${movieTimeTable.totalSeats }석</span>
 								</div>
 								<div class="d-flex align-items-center mx-5">
 									<ul class="list-group list-group-horizontal">
