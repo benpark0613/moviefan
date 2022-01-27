@@ -12,81 +12,13 @@
    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 </head>
-<style>
-	body, table, div, p{
-	font-family: 'Sans-serif'; 
-	}
-</style>
 <body>
+<c:set var="movieNav" value="주요정보"/>
 <%@ include file="/WEB-INF/views/common/header.jsp" %>
 <div class="container">
-	<div class="row" style="background-color:black; font-color:white;">
-		<div class="col-7">
-			<p>#돌비시네마</p>
-			<p>스파이더맨: 노웨이 홈</p>
-			<p>Spider-Man: No Way Home</p>
-		</div>
-		<div class="col-5">
-			<img src="/resources/images/movie/spiderman.png" class="rounded float-start" alt="...">
-		</div>
-	</div>
-	
-	
-	
-	
-	
+	<%@ include file="top.jsp" %>
 	<div class="row mb-3">
-		<div class="col-10">
-		<h1>영화 상세</h1>
-		</div>
-		<hr size="3px" color="black">
-	</div>
-	<div class="row mb-3">
-		<div class="col-3 mb-3">
-			<img src="/resources/images/movie/spiderman.png" class="rounded float-start" alt="...">
-		</div>
-		<div class="col-9 mb-3">
-			<div class="row mb-3">
-				<h3>${movie.title }</h3>
-				<span style="font-size: 12pt;">${movie.titleEn }</span>
-				<br><br>
-				<span style="font-size: 11pt;">예매율 22.5%</span>
-				<br>
-				<hr color="black">
-				<span style="font-size: 11pt;">감독: ${movie.producer }</span>
-				<br>
-				<span style="font-size: 11pt;">장르: </span>
-				<br>
-				<span style="font-size: 11pt;">개봉: ${movie.runtime }</span>
-			</div>
-			<div class="row mb-3">
-				<div class="col-2">
-					<button type="button" class="btn btn-danger">예매하기</button>
-				</div>
-			</div>
-		</div>
-	</div>
-	<!-- 
-		상단 네비바
-	 -->
-	<div class="row">
-		<ul class="nav nav-tabs nav-justified">
-		  <li class="nav-item">
-		    <a class="nav-link active" href="detail?no=20210028">주요정보</a>
-		  </li>
-		  <li class="nav-item">
-		    <a class="nav-link" href="trailer?no=20210028">트레일러/스틸컷</a>
-		  </li>
-		  <li class="nav-item">
-		    <a class="nav-link" href="customerrating?no=20210028">평점/리뷰</a>
-		  </li>
-		  <li class="nav-item">
-		    <a class="nav-link">상영시간표</a>
-		  </li>
-		</ul>	
-	</div>
-	<div data-bs-spy="scroll" data-bs-target="#navbar-example2" data-bs-offset="0" class="scrollspy-example" tabindex="0">
-	  <h4 id="scrollspyHeading1">줄거리</h4>
+	  <h4>줄거리</h4>
 	  <p style="font-size: 15px;">${movie.summary }</p>
 	</div>
 	<div class="row">
@@ -103,38 +35,28 @@
 		</table>
 	</div>
 	<div class="row mb-3 border">
-		트레일러 ? 건
+		트레일러 ${countTrailer } 건
 	</div>
 	<!-- 트레일러 유튜브링크-->
 	<div class="row mb-3">
-		<div class="col">
-			<iframe width="260" height="142" src="https://www.youtube.com/embed/W7edvITC9g4"></iframe>
-		</div>
-		<div class="col">
-			<iframe width="260" height="142" src="https://www.youtube.com/embed/7HEAfb9EDvM"></iframe>
-		</div>
-		<div class="col">
-			<iframe width="260" height="142" src="https://www.youtube.com/embed/yFZh-Wqi7RI"></iframe>		</div>
+		<c:forEach var="movieTrailer" items="${movieTrailer }">
+			<div class="col">
+				<iframe width="260" height="142" src="${movieTrailer.movieTrailerURLAddress }"></iframe>
+			</div>
+		</c:forEach>
 	</div>
 	<div class="row mb-3 border">
-		스틸컷 ? / ? 건
+		스틸컷 ${countImage } 건
 	</div>
 	<!-- 캐러셀 -->
 	<div class="row mb-3">
 		<div id="carouselExampleControls" class="carousel slide" data-bs-touch="false" data-interval="false">
 		  <div class="carousel-inner">
-		    <div class="carousel-item active">
-		      <img src="/resources/images/movie/spiderman_image1.jpg" class="d-block w-100" alt="...">
-		    </div>
-		    <div class="carousel-item">
-		      <img src="/resources/images/movie/spiderman_image2.jpg" class="d-block w-100" alt="...">
-		    </div>
-		    <div class="carousel-item">
-		      <img src="/resources/images/movie/spiderman_image3.jpg" class="d-block w-100" alt="...">
-		    </div>
-		    <div class="carousel-item">
-		      <img src="/resources/images/movie/spiderman_image4.jpg" class="d-block w-100" alt="...">
-		    </div>
+		  	<c:forEach var="movieImage" items="${movieImage }" varStatus="status">
+			    <div class="carousel-item ${status.count eq 1 ? 'active' : '' }">
+			      <img src="/resources/images/movie/${movieImage.movieImageFileName }" class="d-block w-100" alt="...">
+			    </div>
+		  	</c:forEach>
 		  </div>
 		  <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
 		    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
@@ -148,7 +70,7 @@
 	</div>
 	
 	<div class="row mb-3">
-		<p>[영화제목]에 대한 [갯수]개의 이야기가 있어요!</p>
+		<p><strong>${movie.title }</strong>에 대한 [갯수]개의 이야기가 있어요!</p>
 	</div>
 	<div class="row mb-3">
 		<div class="col-2 text-align-center">
