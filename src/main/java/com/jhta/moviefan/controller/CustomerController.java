@@ -53,4 +53,9 @@ public class CustomerController {
 		return "/member/completed";
 	}
 	
+	@GetMapping("/myaccount")
+	public String myAccount() {
+		return "/member/myaccount";
+	}
+	
 }
