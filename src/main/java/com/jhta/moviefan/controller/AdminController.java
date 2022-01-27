@@ -22,12 +22,12 @@ public class AdminController {
 		return "admin/home";
 	}
 	
-	@GetMapping("/search")
-	public String search() {
+	@GetMapping("/movie/search")
+	public String searchMovie() {
 		return "admin/movie/search";
 	}
 	
-	@GetMapping("/form")
+	@GetMapping("/movie/form")
 	public String form() {
 		return "admin/movie/form";
 	}
