@@ -107,9 +107,6 @@
 					<li class="nav-item me-4"><a class="nav-link text-secondary active" aria-current="page" href="/movie/list">영화</a></li>
 					<li class="nav-item me-4"><a class="nav-link text-secondary" href="/cinema/main">극장</a></li>
 					<li class="nav-item me-4"><a class="nav-link text-secondary" href="/ticket/movie">예매</a></li>
-					<li class="nav-item me-4"><a class="nav-link text-secondary" href="#">스토어</a></li>
-					<li class="nav-item me-4"><a class="nav-link text-secondary" href="#">이벤트</a></li>
-					<li class="nav-item me-4"><a class="nav-link text-secondary" href="#">혜택</a></li>
 					<li class="nav-item dropdown me-4">
 					<a class="nav-link dropdown-toggle text-secondary" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">영화수다</a>
 						<ul class="dropdown-menu">

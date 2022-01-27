@@ -123,59 +123,76 @@
 	<div class="modal" tabindex="-1" id="modal-movie">
   		<div class="modal-dialog modal-xl">
     		<div class="modal-content">
-      			<div class="modal-header">
-        			<h5 class="modal-title"><strong>다음 영화를 등록하시겠습니까?</strong></h5>
-        			<div class="ms-2" id="modal-spinner-box"></div>
-        			<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      			</div>
-      			<div class="modal-body">
-        			<table class="table">
-        				<tr>
-        					<th>영화코드</th>
-        					<td colspan="3"><span id="modal-movie-code"></span></td>
-        				</tr>
-        				<tr>
-        					<th>영화명</th>
-        					<td colspan="3"><span id="modal-movie-name"></span></td>
-        				</tr>
-        				<tr>
-        					<th>영화명(영문)</th>
-        					<td colspan="3"><span id="modal-movie-name-en"></span></td>
-        				</tr>
-        				<tr>
-        					<th style="width: 10%;">제작연도</th>
-        					<td style="width: 35%;"><span id="modal-movie-production-year"></span></td>
-        					<th style="width: 10%;">상영시간</th>
-        					<td style="width: 55%;"><span id="modal-movie-show-time"></span>분</td>
-        				</tr>
-        				<tr>
-        					<th style="width: 10%;">개봉일</th>
-        					<td style="width: 35%;"><span id="modal-movie-open-date"></span></td>
-        					<th style="width: 10%;">제작상태</th>
-        					<td style="width: 55%;"><span id="modal-movie-production-status"></span>분</td>
-        				</tr>
-        				<tr>
-        					<th style="width: 10%;">장르</th>
-        					<td style="width: 35%;"><span id="modal-movie-genre"></span></td>
-        					<th style="width: 10%;">관람등급</th>
-        					<td style="width: 55%;"><span id="modal-movie-watch-grade"></span></td>
-        				</tr>
-        				<tr>
-        					<th style="width: 10%;">감독</th>
-        					<td style="width: 35%;"><span id="modal-movie-directors"></span></td>
-        					<th style="width: 10%;">배우</th>
-        					<td style="width: 55%;"><span id="modal-movie-actors"></span></td>
-        				</tr>
-        				<tr>
-        					<th><span>제작/배급사</span></th>
-        					<td colspan="3"><span id="modal-movie-companys"></span></td>
-        				</tr>
-        			</table>
-      			</div>
-				<div class="modal-footer">
-    				<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
-    				<button type="button" class="btn btn-primary">확인</button>
-				</div>
+    			<form id="form-insert-book" method="post" action="insert" enctype="multipart/form-data">
+    				<input type="hidden" name="no" value="">
+    				<input type="hidden" name="title" value="">
+    				<input type="hidden" name="titleEn" value="">
+    				<input type="hidden" name="rate" value="">
+    				<input type="hidden" name="runtime" value="">
+    				<input type="hidden" name="openDate" value="">
+    				<input type="hidden" name="producer" value="">
+	      			<div class="modal-header">
+	        			<h5 class="modal-title"><strong>다음 영화를 등록하시겠습니까?</strong></h5>
+	        			<div class="ms-2" id="modal-spinner-box"></div>
+	        			<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+	      			</div>
+	      			<div class="modal-body">
+	        			<table class="table">
+	        				<tr>
+	        					<th>영화코드</th>
+	        					<td colspan="3"><span id="modal-movie-code"></span></td>
+	        				</tr>
+	        				<tr>
+	        					<th>영화명</th>
+	        					<td colspan="3"><span id="modal-movie-name"></span></td>
+	        				</tr>
+	        				<tr>
+	        					<th>영화명(영문)</th>
+	        					<td colspan="3"><span id="modal-movie-name-en"></span></td>
+	        				</tr>
+	        				<tr>
+	        					<th style="width: 10%;">제작연도</th>
+	        					<td style="width: 35%;"><span id="modal-movie-production-year"></span></td>
+	        					<th style="width: 10%;">상영시간</th>
+	        					<td style="width: 55%;"><span id="modal-movie-show-time"></span>분</td>
+	        				</tr>
+	        				<tr>
+	        					<th style="width: 10%;">개봉일</th>
+	        					<td style="width: 35%;"><span id="modal-movie-open-date"></span></td>
+	        					<th style="width: 10%;">제작상태</th>
+	        					<td style="width: 55%;"><span id="modal-movie-production-status"></span>분</td>
+	        				</tr>
+	        				<tr>
+	        					<th style="width: 10%;">장르</th>
+	        					<td style="width: 35%;"><span id="modal-movie-genre"></span></td>
+	        					<th style="width: 10%;">관람등급</th>
+	        					<td style="width: 55%;"><span id="modal-movie-watch-grade"></span></td>
+	        				</tr>
+	        				<tr>
+	        					<th style="width: 10%;">감독</th>
+	        					<td style="width: 35%;"><span id="modal-movie-directors"></span></td>
+	        					<th style="width: 10%;">배우</th>
+	        					<td style="width: 55%;"><span id="modal-movie-actors"></span></td>
+	        				</tr>
+	        				<tr>
+	        					<th><span>제작/배급사</span></th>
+	        					<td colspan="3"><span id="modal-movie-companys"></span></td>
+	        				</tr>
+	        			</table>
+		      			<div class="mb-1">
+							<label class="form-label"><strong class="ms-2">시놉시스</strong></label>
+							<textarea rows="10" class="form-control" name="summary"></textarea>
+						</div>
+		      			<div class="mb-1">
+							<label class="form-label"><strong class="ms-2">영화포스터</strong></label>
+							<input type="file" class="form-control" name="images" multiple>
+						</div>
+	      			</div>
+					<div class="modal-footer">
+	    				<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
+	    				<a href="insert" class="btn btn-primary">등록</a>
+					</div>
+				</form>
    			</div>
   		</div>
 	</div>
@@ -374,6 +391,7 @@
 			success: function(result) {
 				$modalSpinnerBox.empty();
 				var movie = result.movieInfoResult.movieInfo;
+				
 				$("#modal-movie-code").text(movie.movieCd);
 				$("#modal-movie-name").text(movie.movieNm);
 				$("#modal-movie-name-en").text(movie.movieNmEn);
@@ -386,6 +404,10 @@
 				$("#modal-movie-directors").text(movie.directors.map(item => item.peopleNm).join(', '));
 				$("#modal-movie-actors").text(movie.actors.map(item => item.peopleNm).filter((item, index) => index < 5).join(', '));
 				$("#modal-movie-companys").text(movie.companys.map(item => item.companyNm + "("+item.companyPartNm+")").join(', '));
+				
+				$("input[name=#modal-movie-code]").val(movie.movieCd);
+				
+				
 			}
 		})
 		
