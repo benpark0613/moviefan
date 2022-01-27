@@ -37,4 +37,13 @@ public class CommentService {
 	public List<Comment> searchCommentsByCustomerNo(int customeNo) {
 		return commentDao.searchCommnetsByCustomerNo(customeNo);
 	}
+	
+	public List<Comment> getMovieTitle(int movieNo) {
+		return commentDao.getMovieTitleByMovieNo(movieNo);
+	}
+	
+	public List<Comment> getCustomerId(int customerNo) {
+		return commentDao.getCustomerIdBycustomerNo(customerNo);
+	}
+
 }
