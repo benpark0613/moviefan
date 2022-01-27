@@ -20,7 +20,6 @@ public class MovieService {
 	private MovieDao movieDao;
 	
 	public Movie getMovieByMovieNo(int movieNo) {
-		
 		return movieDao.getMovieByMovieNo(movieNo);
 	}
 	

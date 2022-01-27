@@ -124,13 +124,14 @@
   		<div class="modal-dialog modal-xl">
     		<div class="modal-content">
     			<form id="form-insert-book" method="post" action="insert" enctype="multipart/form-data">
-    				<input type="hidden" name="no" value="">
-    				<input type="hidden" name="title" value="">
-    				<input type="hidden" name="titleEn" value="">
-    				<input type="hidden" name="rate" value="">
-    				<input type="hidden" name="runtime" value="">
-    				<input type="hidden" name="openDate" value="">
-    				<input type="hidden" name="producer" value="">
+	    			<input type="hidden" name="no" value="">
+	    			<input type="hidden" name="title" value="">
+	    			<input type="hidden" name="titleEn" value="">
+	    			<input type="hidden" name="rate" value="">
+	    			<input type="hidden" name="runtime" value="">
+	    			<input type="hidden" name="openDate" value="">
+	    			<input type="hidden" name="producer" value="">
+    				<div id="modal-input-box"></div>
 	      			<div class="modal-header">
 	        			<h5 class="modal-title"><strong>다음 영화를 등록하시겠습니까?</strong></h5>
 	        			<div class="ms-2" id="modal-spinner-box"></div>
@@ -160,7 +161,7 @@
 	        					<th style="width: 10%;">개봉일</th>
 	        					<td style="width: 35%;"><span id="modal-movie-open-date"></span></td>
 	        					<th style="width: 10%;">제작상태</th>
-	        					<td style="width: 55%;"><span id="modal-movie-production-status"></span>분</td>
+	        					<td style="width: 55%;"><span id="modal-movie-production-status"></span></td>
 	        				</tr>
 	        				<tr>
 	        					<th style="width: 10%;">장르</th>
@@ -190,7 +191,7 @@
 	      			</div>
 					<div class="modal-footer">
 	    				<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
-	    				<a href="insert" class="btn btn-primary">등록</a>
+	    				<button type="submit" class="btn btn-primary">등록</button>
 					</div>
 				</form>
    			</div>
@@ -373,12 +374,13 @@
 	}
 	
 	function getMovieDetail(movieCode) {
+		var $modalInputBox = $("#modal-input-box").empty();
 		var $modalSpinnerBox = $("#modal-spinner-box");
 		$.ajax({
 			type: "get",
 			url: "https://www.kobis.or.kr/kobisopenapi/webservice/rest/movie/searchMovieInfo.json",
 			data: {
-				key: "e8b10fb1808ddda8683a3f66f734a149",
+				key: "f5eef3421c602c6cb7ea224104795888",
 				movieCd: movieCode
 			},
 			dataType: "json",
@@ -397,7 +399,7 @@
 				$("#modal-movie-name-en").text(movie.movieNmEn);
 				$("#modal-movie-production-year").text(movie.prdtYear);
 				$("#modal-movie-show-time").text(movie.showTm);
-				$("#modal-movie-open-date").text(movie.openDt);
+				$("#modal-movie-open-date").text(moment(movie.openDt).format('YYYY-MM-DD'));
 				$("#modal-movie-production-status").text(movie.prdtStatNm);			
 				$("#modal-movie-genre").text(movie.genres.map(item => item.genreNm).join(', '));
 				$("#modal-movie-watch-grade").text(movie.audits.map(item => item.watchGradeNm).join(', '));
@@ -405,11 +407,34 @@
 				$("#modal-movie-actors").text(movie.actors.map(item => item.peopleNm).filter((item, index) => index < 5).join(', '));
 				$("#modal-movie-companys").text(movie.companys.map(item => item.companyNm + "("+item.companyPartNm+")").join(', '));
 				
-				$("input[name=#modal-movie-code]").val(movie.movieCd);
-				
-				
+				$("input[name=no]").val(movie.movieCd);
+				$("input[name=title]").val(movie.movieNm);
+				$("input[name=titleEn]").val(movie.movieNmEn);
+				if (movie.audits.length > 0) {
+					$("input[name=rate]").val(movie.audits[0].watchGradeNm);
+				}
+				$("input[name=runtime]").val(movie.showTm);
+				$("input[name=openDate]").val(moment(movie.openDt).format('YYYY-MM-DD'));
+				if (movie.companys.length > 0 ) {
+					$("input[name=producer]").val(movie.companys[0].companyNm);
+				}
+				for (var i = 0; i < movie.genres.length; i++) {
+					var row = '<input type="hidden" name="genres" value="' + movie.genres[i].genreNm + '">';
+					$modalInputBox.append(row);
+				}
+				for (var i = 0; i < movie.directors.length; i++) {
+					var row = '<input type="hidden" name="directors" value="' + movie.directors[i].peopleNm + '">';
+					$modalInputBox.append(row);
+				}
+				for (var i = 0; i < movie.actors.length; i++) {
+					var row = '<input type="hidden" name="actors" value="' + movie.actors[i].peopleNm + '">';
+					$modalInputBox.append(row);
+				}
+			},
+			error: function() {
+				alert("오류가 발생하였습니다.");
 			}
-		})
+		});
 		
 		/* $.getJSON("https://www.kobis.or.kr/kobisopenapi/webservice/rest/movie/searchMovieInfo.json", 
 			{key: "e8b10fb1808ddda8683a3f66f734a149", movieCd: movieCode}, 

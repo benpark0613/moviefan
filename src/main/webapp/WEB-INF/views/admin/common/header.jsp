@@ -30,22 +30,14 @@
 		<div class="container">
 			<div class="collapse navbar-collapse">
 				<ul class="navbar-nav me-auto mb-2 mb-lg-0">		
-					<li class="nav-item me-4"><a class="nav-link text-secondary active" aria-current="page" href="">영화DB</a></li>
 					<li class="nav-item me-4"><a class="nav-link text-secondary" href="/admin/schedule">상영일정</a></li>
 					<li class="nav-item me-4"><a class="nav-link text-secondary" href="#">회원정보</a></li>
 					<li class="nav-item me-4"><a class="nav-link text-secondary" href="#">매출통계</a></li>
 					<li class="nav-item me-4"><a class="nav-link text-secondary" href="#">게시판관리</a></li>
+					<li class="nav-item me-4"><a class="nav-link text-secondary active" aria-current="page" href="/admin/movie/list">영화목록</a></li>
 					<li class="nav-item me-4"><a class="nav-link text-secondary" href="/admin/movie/search">영화검색/등록</a></li>
 				</ul>	
 			</div>
 		</div>
 	</nav>
 </header>
-<script type="text/javascript">
-	$(".navbar-nav").mouseenter(function() {
-		console.log("마우스 들어옴");
-	})
-	$(".navbar-nav").mouseleave(function() {
-		console.log("마우스 나감");
-	})
-</script>
