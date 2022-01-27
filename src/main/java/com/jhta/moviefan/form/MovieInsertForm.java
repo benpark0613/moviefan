@@ -1,8 +1,11 @@
 package com.jhta.moviefan.form;
 
+import java.util.Arrays;
 import java.util.Date;
+import java.util.List;
 
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.web.multipart.MultipartFile;
 
 public class MovieInsertForm {
 
@@ -13,8 +16,120 @@ public class MovieInsertForm {
 	private int runtime;
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private Date openDate;
-	private String summary;
 	private String producer;
+	private String summary;
+	private String[] genres;
+	private String[] directors;
+	private String[] actors;
+	private List<MultipartFile> images;
+	
+	public MovieInsertForm() {}
+
+	public int getNo() {
+		return no;
+	}
+
+	public void setNo(int no) {
+		this.no = no;
+	}
+
+	public String getTitle() {
+		return title;
+	}
+
+	public void setTitle(String title) {
+		this.title = title;
+	}
+
+	public String getTitleEn() {
+		return titleEn;
+	}
+
+	public void setTitleEn(String titleEn) {
+		this.titleEn = titleEn;
+	}
+
+	public String getRate() {
+		return rate;
+	}
+
+	public void setRate(String rate) {
+		this.rate = rate;
+	}
+
+	public int getRuntime() {
+		return runtime;
+	}
+
+	public void setRuntime(int runtime) {
+		this.runtime = runtime;
+	}
+
+	public Date getOpenDate() {
+		return openDate;
+	}
+
+	public void setOpenDate(Date openDate) {
+		this.openDate = openDate;
+	}
+
+	public String getProducer() {
+		return producer;
+	}
+
+	public void setProducer(String producer) {
+		this.producer = producer;
+	}
+
+	public String getSummary() {
+		return summary;
+	}
+
+	public void setSummary(String summary) {
+		this.summary = summary;
+	}
+
+	public String[] getGenres() {
+		return genres;
+	}
+
+	public void setGenres(String[] genres) {
+		this.genres = genres;
+	}
+
+	public String[] getActors() {
+		return actors;
+	}
+
+	public void setActors(String[] actors) {
+		this.actors = actors;
+	}
+
+	public String[] getDirectors() {
+		return directors;
+	}
+
+	public void setDirectors(String[] directors) {
+		this.directors = directors;
+	}
+
+	public List<MultipartFile> getImages() {
+		return images;
+	}
+
+	public void setImages(List<MultipartFile> images) {
+		this.images = images;
+	}
+
+	@Override
+	public String toString() {
+		return "MovieInsertForm [no=" + no + ", title=" + title + ", titleEn=" + titleEn + ", rate=" + rate
+				+ ", runtime=" + runtime + ", openDate=" + openDate + ", producer=" + producer + ", summary=" + summary
+				+ ", genres=" + Arrays.toString(genres) + ", actors=" + Arrays.toString(actors) + ", directors="
+				+ Arrays.toString(directors) + ", images=" + images + "]";
+	}
+
+	
 	
 	
 }

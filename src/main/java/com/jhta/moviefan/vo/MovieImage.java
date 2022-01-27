@@ -1,29 +1,32 @@
 package com.jhta.moviefan.vo;
 
 public class MovieImage {
-	
+
 	private int movieNo;
-	private String movieImageFileName;
+	private String filename;
 	
 	public MovieImage() {}
-	
+
 	public int getMovieNo() {
 		return movieNo;
 	}
+
 	public void setMovieNo(int movieNo) {
 		this.movieNo = movieNo;
 	}
-	
-	public String getMovieImageFileName() {
-		return movieImageFileName;
+
+	public String getFilename() {
+		return filename;
 	}
 
-	public void setMovieImageFileName(String movieImageFileName) {
-		this.movieImageFileName = movieImageFileName;
+	public void setFilename(String filename) {
+		this.filename = filename;
+
 	}
 
 	@Override
 	public String toString() {
-		return "MovieImage [movieNo=" + movieNo + ", movieImageFileName=" + movieImageFileName + "]";
+
+		return "MovieImage [movieNo=" + movieNo + ", filename=" + filename + "]";
 	}
 }

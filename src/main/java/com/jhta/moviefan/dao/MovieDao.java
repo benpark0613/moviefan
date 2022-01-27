@@ -17,10 +17,11 @@ public interface MovieDao {
 	
 	void insertMovie(Movie movie);
 	void updateMovie(Movie movie);
+  
 	Movie getMovieByMovieNo(int movieNo);
 	List<MovieImage> getMovieImageByMovieNo(int movieNo);
 	List<MovieTrailer> getMovieTrailerByMovieNo(int movieNo);
-	
+
 	void insertMovieActor(Movie_Actor actor);
 	void insertMovieGenre(Movie_Genre genre);
 	void insertMovieDirector(Movie_Director director);
