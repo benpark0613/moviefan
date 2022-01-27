@@ -1,9 +1,10 @@
 package com.jhta.moviefan.vo;
 
-public class Actor {
+public class Actor extends MoviePerson {
 
 	private int no;
 	private String name;
+	private String nameEn;
 	
 	public Actor() {}
 
@@ -23,10 +24,19 @@ public class Actor {
 		this.name = name;
 	}
 
+	public String getNameEn() {
+		return nameEn;
+	}
+
+	public void setNameEn(String nameEn) {
+		this.nameEn = nameEn;
+	}
+
 	@Override
 	public String toString() {
-		return "Actor [no=" + no + ", name=" + name + "]";
+		return "Actor [no=" + no + ", name=" + name + ", nameEn=" + nameEn + "]";
 	}
+	
 	
 	
 }

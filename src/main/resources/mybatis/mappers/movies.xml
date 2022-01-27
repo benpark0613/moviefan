@@ -19,12 +19,11 @@
 		select *
 		from movie
 		where movie_no = #{value}
-		
 	</select>
 	
 	<select id="getMovieImageByMovieNo" parameterType="int" resultType="com.jhta.moviefan.vo.MovieImage">
 		select 	MOVIE_NO			 as movieNo, 
-				MOVIE_IMAGE_FILENAME as movieImageFileName
+				MOVIE_IMAGE_FILENAME as fileName
 		from MOVIE_IMAGE
 		where MOVIE_NO = #{value}
 	</select>
@@ -38,31 +37,80 @@
 		where MOVIE_NO = #{value}
 	</select>
 	
+	<select id="getGenreByName" parameterType="string" resultType="com.jhta.moviefan.vo.Genre">
+		select genre_no		as no, 
+			   genre_name	as name
+		from genre
+		where genre_name = #{value}
+	</select>
+	
+	<select id="getDirectorByNo" parameterType="int" resultType="com.jhta.moviefan.vo.Director">
+		select director_no			as no,
+			   director_name		as name,
+			   director_name_en		as nameEn
+		from director
+		where director_no = #{value}			
+	</select>
+	
+	<select id="getActorByNo" parameterType="int" resultType="com.jhta.moviefan.vo.Actor">
+		select actor_no			as no,
+			   actor_name		as name,
+			   actor_name_en	as nameEn
+		from actor
+		where actor_no = #{value}			
+	</select>
+	
 	<insert id="insertMovie" parameterType="com.jhta.moviefan.vo.Movie">
 		insert into movie
-		(MOVIE_NO, MOVIE_TITLE, MOVIE_TITLE_EN, MOVIE_RATE, MOVIE_OPEN_DATE, MOVIE_RUNTIME)
+		(movie_no, movie_title, movie_title_en, movie_rate, movie_runtime, movie_open_date, movie_summary, movie_producer)
 		values
-		(#{no}, #{title}, #{titleEn} #{rate}, #{openDate}, #{runtime})
+		(#{no}, #{title}, #{titleEn}, #{rate}, #{runtime}, #{openDate}, #{summary}, #{producer})
 	</insert>
 	
-	<insert id="insertMovieActor" parameterType="com.jhta.moviefan.vo.Movie_Actor">
+	<insert id="insertActor" parameterType="com.jhta.moviefan.vo.Actor">
+		insert into actor
+		(actor_no, actor_name, actor_name_en)
+		values
+		(#{no}, #{name}, #{nameEn})
+	</insert>
+	
+	<insert id="insertMovieActor" parameterType="com.jhta.moviefan.vo.MovieActor">
 		insert into movie_actor
-		(MOIVE_NO, ACTOR_NO)
+		(moive_no, actor_no, actor_priority)
 		values
-		(#{movieNo}, movie_actor_seq.nextval)
+		(#{movieNo}, #{actorNo}, #{actorPriority})
 	</insert>
 	
-	<insert id="insertMovieDirector" parameterType="com.jhta.moviefan.vo.Movie_Director">
-		insert into MOVIE_DIRECTOR
-		(MOIVE_NO, DIRECTOR_NO)
+	<insert id="insertDirector" parameterType="com.jhta.moviefan.vo.Director">
+		insert into director
+		(director_no, director_name, director_name_en)
 		values
-		(#{movieNo}, movie_director_seq.nextval)
+		(#{no}, #{name}, #{nameEn})
 	</insert>
 	
-	<insert id="insertMovieGenre" parameterType="com.jhta.moviefan.vo.Movie_Genre">
-		insert into MOVIE_GENRE
-		(MOIVE_NO, GENRE_NO)
+	<insert id="insertMovieDirector" parameterType="com.jhta.moviefan.vo.MovieDirector">
+		insert into movie_director
+		(moive_no, director_no)
 		values
-		(#{movieNo}, MOVIE_GENRE_SEQUNCE_SEQ.nextval)
+		(#{movieNo}, #{directorNo})
 	</insert>
+	
+	<insert id="insertMovieGenre" parameterType="com.jhta.moviefan.vo.MovieGenre">
+		insert into movie_genre 
+		(moive_no, genre_no)
+		values 
+		(#{movieNo}, #{genreNo})
+	</insert>
+	
+	<insert id="insertMovieImage" parameterType="com.jhta.moviefan.vo.MovieImage">
+		insert into movie_image
+		(movie_no, movie_image_filename)
+		values
+		(#{movieNo}, #{filename})
+	</insert>
+	
+
+	
+	
+	
 </mapper>
