@@ -27,7 +27,7 @@
 			웹페이지 요청에 대한 로그인체크를 담당하는 인터셉터
 		 -->
 		<mvc:interceptor>
-			<mvc:mapping path="/myaccount/**"/>
+			<mvc:mapping path="myaccount/**"/>
 			<bean class="com.jhta.moviefan.interceptor.LoginCheckInterceptor"></bean>
 		</mvc:interceptor>
 	</mvc:interceptors>
