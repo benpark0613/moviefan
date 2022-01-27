@@ -8,9 +8,25 @@
    <meta name="viewport" content="width=device-width, initial-scale=1">
    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css" rel="stylesheet">
+   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 </head>
+<style>
+	body, table, div, p, span{
+	font-family: NanumBarunGothic; 
+	font-weight: bold;
+	}
+	 a:link { 
+	 color: #444; text-decoration: none;
+	 }
+	 a:visited { 
+	 color: #444; text-decoration: none;
+	 }
+	 a:hover { 
+	 color: #444; text-decoration: none;
+	 }
+</style>
 <body>
 <%@ include file="/WEB-INF/views/common/header.jsp" %>
 <div class="container">
@@ -45,25 +61,31 @@
 		</div>
 	</div>
 	<div class="row mb-3">
-		<c:forEach var="movie" items="${movie }">
+		<c:forEach var="movie" items="${movie }" varStatus="status">
 			<div class="col-4 mb-3">
 				<div class="row">
-					<img src="/resources/images/movie/spiderman.png" class="rounded float-start" alt="..."> 
+					<img id="img${status.count }" src="/resources/images/movie/spiderman.png" class="rounded float-start" alt="..."> 
 				</div>
-				<div class="row mb-3">
+				<div class="row">
 					<div class="col-1">
 						<img alt="" src="/resources/images/movie/age/age_15.png">
 					</div>
 					<div class="col">
-						<a href="detail?no=${movie.no }"><span><strong>${movie.title }</strong></span></a>
+						<a href="detail?no=${movie.no }"><span style="font-size: 15pt"><strong>${movie.title }</strong></span></a>
 					</div>
-					<br>
-					<span id="" style="font-size: 10pt;">예매율 35%</span>
-					<span style="font-size: 10pt;"><fmt:formatDate value="${movie.openDate }" pattern="yyyy-MM-dd" /> 개봉</span>
+				</div>
+				<div class="row">
+					<div class="col">
+						<span style="font-size: 12pt; color:#444;">예매율 35%</span>
+					</div>
+					<div class="col-7">
+						<span style="font-size: 12pt;">개봉일 <fmt:formatDate value="${movie.openDate }" pattern="yyyy.MM.dd" /></span>
+					</div>
 				</div>
 				<div class="row mb-3">
-					<div class="col-8">
-						<button type="button" class="btn btn-danger btn-sm">예매하기</button>
+					<div class="col">
+						<button type="button" class="btn btn-outline-dark" style="padding-left:20px; padding-right:20px;"><i class="far fa-heart fa-lg"></i><span> 1234</span></button>
+						<button type="button" class="btn btn-danger btn-block" style="padding-left:75px; padding-right:75px;"><span>예매</span></button>
 					</div>
 				</div>
 			</div>
@@ -83,6 +105,10 @@ $.getJSON("http://kobis.or.kr/kobisopenapi/webservice/rest/boxoffice/searchDaily
 		
 })
 */
+$("#img1").hover(function(){
+	$(this).css("background-color", "gray");
+})
+
 </script>
 </body>
 </html>
