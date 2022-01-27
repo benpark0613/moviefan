@@ -16,7 +16,7 @@ public class Comment {
 	private int reportCount;
 	private int likeCount;
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
-	private Date upDate;
+	private Date updatedDate;
 	
 	public Comment() {}
 
@@ -68,12 +68,12 @@ public class Comment {
 		this.creDate = creDate;
 	}
 
-	public Date getUpDate() {
-		return upDate;
+	public Date getUpdatedDate() {
+		return updatedDate;
 	}
 
-	public void setUpDate(Date upDate) {
-		this.upDate = upDate;
+	public void setUpdatedDate(Date updatedDate) {
+		this.updatedDate = updatedDate;
 	}
 
 	public int getReportCount() {
@@ -96,7 +96,7 @@ public class Comment {
 	public String toString() {
 		return "Comment [commentNo=" + commentNo + ", customerNo=" + customerNo + ", movieNo=" + movieNo + ", rating="
 				+ rating + ", content=" + content + ", creDate=" + creDate + ", reportCount=" + reportCount
-				+ ", likeCount=" + likeCount + ", upDate=" + upDate + "]";
+				+ ", likeCount=" + likeCount + ", upDate=" + updatedDate + "]";
 	}
 	
 	

@@ -30,19 +30,19 @@
 	<div class="row justify-content-center">
  		<div class="row g-2">
    			<div class="col-2">
-   				<select class="form-select">
-					<option value="" selected>-- 지역선택 --</option>
-					<option value="서울">서울</option>
-					<option value="인천">인천</option>
-					<option value="경기">경기</option>
+				<select id="city-select" name="city" class="form-select">
+					<option value="" selected disabled>-- 지역 --</option>
+					<c:forEach var="city" items="${cityList }">
+						<option value="${city.no }">${city.name }</option>
+					</c:forEach>
 				</select>
-   			</div>
+			</div>
    			<div class="col-3">
-   				<select class="form-select">
-					<option value="" selected>-- 상영관선택 --</option>
-					<option value="서울">MVF 강변</option>
-					<option value="인천">MVF 대학로</option>
-					<option value="경기">MVF 강릉</option>
+   				<select id="cinema-select" name="cinema" class="form-select">
+					<option value="" selected disabled>-- 지역을 먼저 선택하세요. --</option>
+   					<c:forEach var="cinema" items="${cinemaList }">
+						<option value="${cinema.cityNo }">${cinema.name }</option>
+   					</c:forEach>
 				</select>
    			</div>
    		</div>
@@ -50,7 +50,9 @@
 
 	<!-- 선택한 영화관에서 현재 상영중인 영화 목록 -->
 	<div class="mt-5 mb-5">
-		<p>MVF 강변 :: 총 상영관 수/ 현재 상영중인 영화 수</p>
+		<div>
+			<span>MVF 강변</span> :: <span>총 상영관 수</span>/  <span>현재 상영중인 영화 수</span>
+		</div>
 		<table class="table">
 			<thead>
 		    	<tr>
@@ -104,4 +106,28 @@
 </div>
 <%@ include file="/WEB-INF/views/common/footer.jsp" %>
 </body>
+<script type="text/javascript">
+
+	$(function () {
+		let $firstSelect = $('#cinema-select').empty();
+		let secondSelect = '<option value="" selected disabled>-- 지역을 먼저 선택하세요. --</option>';
+		$firstSelect.append(secondSelect);
+	})
+
+	$('#city-select').change(function () {
+		let no = $(this).val();
+		
+		let $select = $("#cinema-select").empty();
+		
+		$.getJSON("/rest/cinema/list", {cityNo:no}, function (cinemaList) {
+			$.each (cinemaList, function(index, cinema) {
+				
+				let option = '<option value="${cinema.cityNo }">' + cinema.cinemaName + '</option>';
+				
+				$select.append(option);
+			})
+		})
+	})
+
+</script>
 </html>

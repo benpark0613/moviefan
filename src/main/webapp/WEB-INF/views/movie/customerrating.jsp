@@ -13,58 +13,10 @@
    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 </head>
 <body>
+<c:set var="movieNav" value="평점"/>
 <%@ include file="/WEB-INF/views/common/header.jsp" %>
 <div class="container">
-	<div class="row mb-3">
-		<div class="col-10">
-		<h1>영화 상세</h1>
-		</div>
-		<hr size="3px" color="black">
-	</div>
-	<div class="row mb-3">
-		<div class="col-3 mb-3">
-			<img src="/resources/images/movie/spiderman.png" class="rounded float-start" alt="...">
-		</div>
-		<div class="col-9 mb-3">
-			<div class="row mb-3">
-				<h3>${movie.title }</h3>
-				<span style="font-size: 12pt;">spider-Man: No Way Home</span>
-				<br><br>
-				<span style="font-size: 11pt;">예매율 22.5%</span>
-				<br>
-				<hr color="black">
-				<span style="font-size: 11pt;">감독: ${movie.producer }</span>
-				<br>
-				<span style="font-size: 11pt;">장르: </span>
-				<br>
-				<span style="font-size: 11pt;">개봉: ${movie.runTime }</span>
-			</div>
-			<div class="row mb-3">
-				<div class="col-2">
-					<button type="button" class="btn btn-danger">예매하기</button>
-				</div>
-			</div>
-		</div>
-	</div>
-	<!-- 
-		상단 네비바
-	 -->
-	<div class="row">
-		<ul class="nav nav-tabs nav-justified">
-		  <li class="nav-item">
-		    <a class="nav-link" href="detail?no=20210028">주요정보</a>
-		  </li>
-		  <li class="nav-item">
-		    <a class="nav-link" href="trailer?no=20210028">트레일러/스틸컷</a>
-		  </li>
-		  <li class="nav-item">
-		    <a class="nav-link active" href="customerrating?no=20210028">평점/리뷰</a>
-		  </li>
-		  <li class="nav-item">
-		    <a class="nav-link">상영시간표</a>
-		  </li>
-		</ul>	
-	</div>
+	<%@ include file="top.jsp" %>
 	
 	<div class="row mb-3">
 		<div class="col-10">

@@ -35,7 +35,7 @@
 		where
 			a.city_no = b.city_no
 		order by
-			a.city_no
+			a.cinema_no
 	</select>
 	
 	<!-- 지역별 영화관 이름 List<CinemaNameDto> getCinemaNameByCityNo(); -->

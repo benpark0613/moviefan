@@ -2,15 +2,20 @@ package com.jhta.moviefan.dto;
 
 import java.util.Date;
 
-public class movieDto {
+public class MovieDto {
 
 	private int no;
 	private String title;
-	private int runtime;
+	private String titleEn;
 	private String rate;
+	private int runtime;
 	private Date openDate;
+	private Double customerRating;
+	private int totalAudience;
+	private String summary;
+	private String producer;
 	
-	public movieDto() {}
+	public MovieDto() {}
 
 	public int getNo() {
 		return no;
@@ -28,12 +33,12 @@ public class movieDto {
 		this.title = title;
 	}
 
-	public int getRuntime() {
-		return runtime;
+	public String getTitleEn() {
+		return titleEn;
 	}
 
-	public void setRuntime(int runtime) {
-		this.runtime = runtime;
+	public void setTitleEn(String titleEn) {
+		this.titleEn = titleEn;
 	}
 
 	public String getRate() {
@@ -44,6 +49,14 @@ public class movieDto {
 		this.rate = rate;
 	}
 
+	public int getRuntime() {
+		return runtime;
+	}
+
+	public void setRuntime(int runtime) {
+		this.runtime = runtime;
+	}
+
 	public Date getOpenDate() {
 		return openDate;
 	}
@@ -52,12 +65,45 @@ public class movieDto {
 		this.openDate = openDate;
 	}
 
-	@Override
-	public String toString() {
-		return "movieDto [no=" + no + ", title=" + title + ", runtime=" + runtime + ", rate=" + rate + ", openDate="
-				+ openDate + "]";
+	public Double getCustomerRating() {
+		return customerRating;
 	}
 
-	
+	public void setCustomerRating(Double customerRating) {
+		this.customerRating = customerRating;
+	}
+
+	public int getTotalAudience() {
+		return totalAudience;
+	}
+
+	public void setTotalAudience(int totalAudience) {
+		this.totalAudience = totalAudience;
+	}
+
+	public String getSummary() {
+		return summary;
+	}
+
+	public void setSummary(String summary) {
+		this.summary = summary;
+	}
+
+	public String getProducer() {
+		return producer;
+	}
+
+	public void setProducer(String producer) {
+		this.producer = producer;
+	}
+
+	@Override
+	public String toString() {
+		return "MovieDto [no=" + no + ", title=" + title + ", titleEn=" + titleEn + ", rate=" + rate + ", runtime="
+				+ runtime + ", openDate=" + openDate + ", customerRating=" + customerRating + ", totalAudience="
+				+ totalAudience + ", summary=" + summary + ", producer=" + producer + "]";
+	}
+
+
 	
 }

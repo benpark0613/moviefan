@@ -13,91 +13,43 @@
    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 </head>
 <body>
+<c:set var="movieNav" value="트레일러"/>
 <%@ include file="/WEB-INF/views/common/header.jsp" %>
 <div class="container">
-	<div class="row mb-3">
-		<div class="col-10">
-		<h1>영화 상세</h1>
-		</div>
-		<hr size="3px" color="black">
-	</div>
-	<div class="row mb-3">
-		<div class="col-3 mb-3">
-			<img src="/resources/images/movie/spiderman.png" class="rounded float-start" alt="...">
-		</div>
-		<div class="col-9 mb-3">
-			<div class="row mb-3">
-				<h3>${movie.title }</h3>
-				<span style="font-size: 12pt;">spider-Man: No Way Home</span>
-				<br><br>
-				<span style="font-size: 11pt;">예매율 22.5%</span>
-				<br>
-				<hr color="black">
-				<span style="font-size: 11pt;">감독: ${movie.producer }</span>
-				<br>
-				<span style="font-size: 11pt;">장르: </span>
-				<br>
-				<span style="font-size: 11pt;">개봉: ${movie.runTime }</span>
-			</div>
-			<div class="row mb-3">
-				<div class="col-2">
-					<button type="button" class="btn btn-danger">예매하기</button>
-				</div>
-			</div>
-		</div>
-	</div>
-	<div class="row">
-		<ul class="nav nav-tabs nav-justified">
-		  <li class="nav-item">
-		    <a class="nav-link" href="detail?no=20210028">주요정보</a>
-		  </li>
-		  <li class="nav-item">
-		    <a class="nav-link active" href="trailer?no=20210028">트레일러/스틸컷</a>
-		  </li>
-		  <li class="nav-item">
-		    <a class="nav-link" href="customerrating?no=20210028">평점/리뷰</a>
-		  </li>
-		  <li class="nav-item">
-		    <a class="nav-link">상영시간표</a>
-		  </li>
-		</ul>	
-	</div>
-	
+	<%@ include file="top.jsp" %>
 	<div class="row mb-3">
 		<hr color="black">
 		<p style="color:#351f67; font-weight:bold; ">티저 예고편</p>
 		<hr color="black">
 	</div>
-	<div class="row mb-3">
-		<div class="col align-self-center">
-			<i class="far fa-arrow-alt-circle-left fa-3x"></i>
+
+	<c:forEach var="movieTrailer" items="${movieTrailer }" varStatus="status" end="0">
+		<div class="row mb-3">
+			<div class="col align-self-center">
+				<i id="prev-button" class="far fa-arrow-alt-circle-left fa-3x"></i>
+			</div>
+			<div class="col">
+				<iframe id="trailer1" width="800" height="450" src="${movieTrailer.movieTrailerURLAddress }"></iframe>
+			</div>
+			<div class="col align-self-center">
+				<i id="next-button" class="far fa-arrow-alt-circle-right fa-3x"> </i>
+			</div>
 		</div>
-		<div class="col">
-			<iframe width="800" height="450" src="https://www.youtube.com/embed/W7edvITC9g4"></iframe>
-		</div>
-		<div class="col align-self-center">
-			<i class="far fa-arrow-alt-circle-right fa-3x"> </i>
-		</div>
-	</div>
+	</c:forEach>
 	
 	<div class="row mb-3">
 		<div class="col align-self-center">
 			<i class="fas fa-chevron-left fa-3x"></i>
 		</div>
-		<div class="col">
-			<iframe width="240" height="136" src="https://www.youtube.com/embed/W7edvITC9g4"></iframe>
-		</div>
-		<div class="col">
-			<iframe width="240" height="136" src="https://www.youtube.com/embed/7HEAfb9EDvM"></iframe>
-		</div>
-		<div class="col">
-			<iframe width="240" height="136" src="https://www.youtube.com/embed/yFZh-Wqi7RI"></iframe>		
-		</div>
+		<c:forEach var="movieTrailer" items="${movieTrailer }" varStatus="status" begin="1">
+			<div class="col">
+				<iframe id="trailer${status.count }" width="240" height="136" src="${movieTrailer.movieTrailerURLAddress }"></iframe>
+			</div>
+		</c:forEach>
 		<div class="col align-self-center">
 			<i class="fas fa-chevron-right fa-3x"></i>
 		</div>
 	</div>
-	  
 	
 	
 	
@@ -107,18 +59,11 @@
 		<p> []영화제목]에 대한 [?]개의 스틸컷이 있어요!
 	</div>
 	<div class="row">
-		<div class="col">
-			<img src="/resources/images/movie/spiderman_image1.jpg" class="d-block w-100" alt="...">
-		</div>
-		<div class="col">
-			<img src="/resources/images/movie/spiderman_image2.jpg" class="d-block w-100" alt="...">
-		</div>
-		<div class="col">
-			<img src="/resources/images/movie/spiderman_image3.jpg" class="d-block w-100" alt="...">
-		</div>
-		<div class="col">
-			<img src="/resources/images/movie/spiderman_image4.jpg" class="d-block w-100" alt="...">
-		</div>
+		<c:forEach var="movieImage" items="${movieImage }">
+			<div class="col">
+				<img src="/resources/images/movie/${movieImage.movieImageFileName }" class="d-block w-100" alt="...">
+			</div>
+		</c:forEach>
 	</div>
 	<div class="row">
 		페이지네이션
@@ -127,8 +72,30 @@
 <%@ include file="/WEB-INF/views/common/footer.jsp" %>
 <script type="text/javascript">
 
-$(document.getElementsByTagName("img")).on("click", function(){
-	$(this).modal();
+var num = 1;
+var url = $("#trailer"+num).attr("src");
+
+$("#prev-button").click(function(){
+	if(num =1){
+		$("#prev-button").prop("disabled", true);
+	}else(num>1){
+		$("#prev-button").prop("disabled", false);
+	}
+	num--;
+	alert(num);
+	url = $("#trailer"+num).attr("src");
+	$("#trailer1").attr("src",url);
+})
+$("#next-button").click(function(){
+	num++;
+	if(num >2){
+		$("#next-button").prop("disabled",true);
+	}else(num<2){
+		$("#next-button").prop("disabled",false);
+	}
+	alert(num);
+	url = $("#trailer"+num).attr("src"); 
+	$("#trailer1").attr("src",url);
 })
 
 </script>

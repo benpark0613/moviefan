@@ -22,8 +22,11 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.jhta.moviefan.dto.MovieDto;
 import com.jhta.moviefan.service.MovieService;
 import com.jhta.moviefan.vo.Movie;
+import com.jhta.moviefan.vo.MovieImage;
+import com.jhta.moviefan.vo.MovieTrailer;
 
 @Controller
 @RequestMapping("/movie")
@@ -89,13 +92,32 @@ public class MovieController {
 	@GetMapping("/detail")
 	public String detail(int no, Model model) {
 		Movie movie = movieService.getMovieByMovieNo(no);
+		List<MovieImage> movieImage = movieService.getMovieImageByMovieNo(no);
+		List<MovieTrailer> movieTrailer = movieService.getMovieTrailerByMovieNo(no);
+		int countTrailer = movieService.getMovieTrailerByMovieNo(no).size();
+		int countImage = movieService.getMovieImageByMovieNo(no).size();
+		model.addAttribute("countTrailer", countTrailer);
+		model.addAttribute("countImage", countImage);
 		model.addAttribute("movie", movie);
+		model.addAttribute("movieImage", movieImage);
+		model.addAttribute("movieTrailer", movieTrailer);
+		
 		
 		return "movie/detail";
 	}
 	
 	@GetMapping("/trailer")
 	public String trailer(int no, Model model) {
+		Movie movie = movieService.getMovieByMovieNo(no);
+		List<MovieImage> movieImage = movieService.getMovieImageByMovieNo(no);
+		List<MovieTrailer> movieTrailer = movieService.getMovieTrailerByMovieNo(no);
+		int countTrailer = movieService.getMovieTrailerByMovieNo(no).size();
+		int countImage = movieService.getMovieImageByMovieNo(no).size();
+		model.addAttribute("countTrailer", countTrailer);
+		model.addAttribute("countImage", countImage);
+		model.addAttribute("movie", movie);
+		model.addAttribute("movieImage", movieImage);
+		model.addAttribute("movieTrailer", movieTrailer);
 		
 		return "movie/trailer";
 	}

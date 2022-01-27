@@ -16,10 +16,14 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.FileCopyUtils;
+import org.springframework.ui.Model;
+
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -30,10 +34,17 @@ import com.jhta.moviefan.form.MovieInsertForm;
 import com.jhta.moviefan.vo.Genre;
 import com.jhta.moviefan.vo.MovieImage;
 
+import com.jhta.moviefan.dto.CinemaDto;
+import com.jhta.moviefan.service.CinemaService;
+import com.jhta.moviefan.vo.City;
+
 @Controller
 @RequestMapping("/admin")
 public class AdminController {
 
+	@Autowired
+	private CinemaService cinemaService;
+	
 	static final Logger logger = LogManager.getLogger(AdminController.class);
 	
 	@GetMapping("home")
@@ -135,8 +146,14 @@ public class AdminController {
 		return "admin/movie/modifyform";
 	}
 	
-	@GetMapping("/schedule")
-	public String schedule() {
+	@GetMapping("/schedule/list")
+	public String list(Model model) {
+		List<City> cityList = cinemaService.getAllCityList();
+		List<CinemaDto> cinemaList = cinemaService.getAllCinemaList();
+		
+		model.addAttribute("cityList", cityList);
+		model.addAttribute("cinemaList", cinemaList);
+		
 		return "admin/schedule/list";
 	}
 	

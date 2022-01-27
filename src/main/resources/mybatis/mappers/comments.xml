@@ -16,9 +16,9 @@
 	
 	<insert id="insertComment" parameterType="com.jhta.moviefan.vo.Comment">
 		insert into movie_customer_comment
-		(comment_no, movie_no, customer_rating, comment_content)
+		(comment_no, movie_no, customer_rating, comment_content, customer_no, comment_created_date)
 		values
-		(movie_customer_comment_seq.nextval, #{movieNo}, #{rating}, #{content})
+		(movie_customer_comment_seq.nextval, #{movieNo}, #{rating}, #{content}, #{customerNo}, sysdate)
 	</insert>
 	
 	<update id="updateCommentByNo" parameterType="com.jhta.moviefan.vo.Comment">
@@ -45,11 +45,31 @@
 			comment_created_date	as creDate,
 			comment_report_count	as reportCount,
 			comment_like_count		as likeCount,
-			comment_updated_date	as upDate
+			comment_updated_date	as updatedDate
 		from 
 			movie_customer_comment
 		order by
-			comment_no desc
+			comment_no asc
+	</select>
+	
+	<select id="getMovieTitle" parameterType="int" resultType="com.jhta.moviefan.vo.Comment">
+		select 	
+			movie_title
+		from 
+			movie m, movie_customer_comment c
+		where 
+			m.movie_no = c.movie_no
+			movie_no = #{value}
+	</select>
+	
+	<select id="getCustomerId" parameterType="int" resultType="com.jhta.moviefan.vo.Comment">
+		select 
+			customer_id
+		from 
+			customer cus, movie_customer_comment c
+		where 
+			cus.customer_no = c.customer_no
+			customer_no = #{value}
 	</select>
 	
 	<select id="searchCommentsByMovieNo" parameterType="int" resultType="com.jhta.moviefan.vo.Comment">

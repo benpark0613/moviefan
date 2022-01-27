@@ -21,12 +21,12 @@ public class MovieImage {
 
 	public void setFilename(String filename) {
 		this.filename = filename;
+
 	}
 
 	@Override
 	public String toString() {
+
 		return "MovieImage [movieNo=" + movieNo + ", filename=" + filename + "]";
 	}
-	
-	
 }
