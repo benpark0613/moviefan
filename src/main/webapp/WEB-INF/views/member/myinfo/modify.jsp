@@ -19,36 +19,36 @@
 		</div>
 	</div>
 	<div class="d-flex justify-content-center">
-		<form class="border p-4 mb-5 bg-white w-50" method="post" action="register">
+		<form class="border p-4 mb-5 bg-white w-50" method="post" action="modifyComplete">
 			<div class="d-flex justify-content-between">
 				<p><strong>기본정보</strong></p>
 				<p><i class="bi bi-dot text-danger"></i>필수입력사항</p>
 			</div>
 			<div class="mb-3">
    				<label class="form-label"><i class="bi bi-dot text-danger"></i>아이디</label>
-   				<input type="text" class="form-control" name="id"/>
+   				<input type="text" class="form-control" name="id" value="${LOGINED_CUSTOMER.id }" disabled="disabled"/>
     		</div>
 			<div class="mb-3">
    				<label class="form-label"><i class="bi bi-dot text-danger"></i>비밀번호</label>
-   				<input type="password" class="form-control" name="password"/>
+   				<input type="password" class="form-control" name="password" value="${LOGINED_CUSTOMER.password }"/>
    			</div>
    			<div class="mb-3 row">
 	   			<div class="col-6">
 	   				<label class="form-label"><i class="bi bi-dot text-danger"></i>이름</label>
-	   				<input type="text" class="form-control" name="name"/>
+	   				<input type="text" class="form-control" name="name" value="${LOGINED_CUSTOMER.name }" disabled="disabled"/>
 	   			</div>
 	   			<div class="col-6">
 	   				<label class="form-label">닉네임</label>
-	   				<input type="text" class="form-control" name="nickName"/>
+	   				<input type="text" class="form-control" name="nickName" value="${LOGINED_CUSTOMER.nickName }"/>
 	   			</div>
    			</div>
    			<div class="mb-3">
    				<label class="form-label"><i class="bi bi-dot text-danger"></i>이메일</label>
-   				<input type="text" class="form-control" name="email"/>
+   				<input type="text" class="form-control" name="email" value="${LOGINED_CUSTOMER.email }"/>
    			</div>
    			<div class="mb-3">
    				<label class="form-label"><i class="bi bi-dot text-danger"></i>휴대전화</label>
-   				<input type="text" class="form-control" name="phoneNumber"/>
+   				<input type="text" class="form-control" name="phoneNumber" value="${LOGINED_CUSTOMER.phoneNumber }"/>
    			</div>
    			<div class="mb-3 row">
    				<div class="col-6">
@@ -69,7 +69,7 @@
    			</div>
    			<div class="row">
 				<div class="d-grid gap-1 col-6 mx-auto">
-					<button type="submit" class="btn btn-danger">회원가입</button>
+					<button type="submit" class="btn btn-danger">회원정보수정</button>
 				</div>
 				<div class="d-grid gap-1 col-6 mx-auto">
 					<a class="btn btn-light" href="/home">취소</a>

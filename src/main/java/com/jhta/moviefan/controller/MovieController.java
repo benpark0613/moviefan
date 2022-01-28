@@ -22,7 +22,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.jhta.moviefan.dto.MovieDto;
+import com.jhta.moviefan.dto.movieDto;
 import com.jhta.moviefan.service.MovieService;
 import com.jhta.moviefan.vo.Movie;
 import com.jhta.moviefan.vo.MovieImage;

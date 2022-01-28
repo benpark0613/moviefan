@@ -14,7 +14,7 @@
 <c:set var="menu" value="home"/>
 <%@ include file="/WEB-INF/views/common/header.jsp" %>
 <%--상영예정작 표시 --%>
-<div class="container-fluid"">
+<div class="container-fluid">
 	<div class="row mb-2">
 		<div id="carouselExampleInterval" class="carousel slide" data-bs-ride="carousel">
 			<div class="carousel-inner">

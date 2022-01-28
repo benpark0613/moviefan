@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.management.RuntimeErrorException;
 
+import org.apache.ibatis.annotations.Param;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.BeanUtils;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.jhta.moviefan.annotation.LoginedCustomer;
+import com.jhta.moviefan.exception.LoginErrorException;
 import com.jhta.moviefan.form.CustomerRegisterForm;
 import com.jhta.moviefan.service.CustomerService;
 import com.jhta.moviefan.vo.Customer;
@@ -68,16 +70,21 @@ public class CustomerController {
 	}
 	
 	@PostMapping("/check-password")
-	public String checkPassword(@LoginedCustomer Customer customer, String id, String password) {
+	public String checkPassword(@LoginedCustomer Customer customer, @Param("id") String id, @Param("password") String password) {
 		if (!customer.getId().equals(id)) {
-			throw new RuntimeException("아이디를 확인해주세요.");
+			throw new LoginErrorException("아이디를 확인해주세요.");
 		}
 		
 		if (!customer.getPassword().equals(password)) {
-			throw new RuntimeException("비밀번호가 일치하지 않습니다.");
+			throw new LoginErrorException("비밀번호가 일치하지 않습니다.");
 		}
 		
-		return "redirect: /member/myinfo/modify";
+		return "redirect:/member/myinfo/modify";
+	}
+	
+	@GetMapping("/myinfo/modify")
+	public String modify() {
+		return "/member/myinfo/modify";
 	}
 	
 }

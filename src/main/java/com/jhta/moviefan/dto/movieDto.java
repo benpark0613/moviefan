@@ -2,7 +2,7 @@ package com.jhta.moviefan.dto;
 
 import java.util.Date;
 
-public class MovieDto {
+public class movieDto {
 
 	private int no;
 	private String title;
@@ -15,7 +15,7 @@ public class MovieDto {
 	private String summary;
 	private String producer;
 	
-	public MovieDto() {}
+	public movieDto() {}
 
 	public int getNo() {
 		return no;
