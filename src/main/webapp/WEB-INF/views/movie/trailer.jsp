@@ -11,6 +11,7 @@
    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+   <script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
 </head>
 <body>
 <c:set var="movieNav" value="트레일러"/>
@@ -26,13 +27,13 @@
 	<c:forEach var="movieTrailer" items="${movieTrailer }" varStatus="status" end="0">
 		<div class="row mb-3">
 			<div class="col align-self-center">
-				<i id="prev-button" class="far fa-arrow-alt-circle-left fa-3x"></i>
+				<i id="prev-button" class="fas fa-chevron-left fa-3x"></i>
 			</div>
 			<div class="col">
-				<iframe id="trailer1" width="800" height="450" src="${movieTrailer.movieTrailerURLAddress }"></iframe>
+				<iframe id="trailer${status.count }" width="900" height="450" src="${movieTrailer.movieTrailerURLAddress }"></iframe>
 			</div>
 			<div class="col align-self-center">
-				<i id="next-button" class="far fa-arrow-alt-circle-right fa-3x"> </i>
+				<i id="next-button" class="fas fa-chevron-right fa-3x"> </i>
 			</div>
 		</div>
 	</c:forEach>
@@ -61,7 +62,7 @@
 	<div class="row">
 		<c:forEach var="movieImage" items="${movieImage }">
 			<div class="col">
-				<img src="/resources/images/movie/${movieImage.movieImageFileName }" class="d-block w-100" alt="...">
+				<img src="/resources/images/movie/${movieImage.filename }" class="d-block w-100" alt="...">
 			</div>
 		</c:forEach>
 	</div>
@@ -75,29 +76,22 @@
 var num = 1;
 var url = $("#trailer"+num).attr("src");
 
-$("#prev-button").click(function(){
-	if(num =1){
-		$("#prev-button").prop("disabled", true);
-	}else(num>1){
-		$("#prev-button").prop("disabled", false);
+$("#next-button").click(function(){
+	num++;
+	if(num > 3){
+		num = 1;
 	}
+	alert(num);
+	url = $("#trailer"+num).attr("src"); 
+	$("#trailer1")("src",url);
+})
+
+$("#prev-button").click(function(){
 	num--;
 	alert(num);
 	url = $("#trailer"+num).attr("src");
 	$("#trailer1").attr("src",url);
 })
-$("#next-button").click(function(){
-	num++;
-	if(num >2){
-		$("#next-button").prop("disabled",true);
-	}else(num<2){
-		$("#next-button").prop("disabled",false);
-	}
-	alert(num);
-	url = $("#trailer"+num).attr("src"); 
-	$("#trailer1").attr("src",url);
-})
-
 </script>
 </body>
 </html>

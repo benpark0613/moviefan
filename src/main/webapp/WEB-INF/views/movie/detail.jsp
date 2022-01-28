@@ -11,6 +11,7 @@
    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+   <script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
 </head>
 <body>
 <c:set var="movieNav" value="주요정보"/>
@@ -54,7 +55,7 @@
 		  <div class="carousel-inner">
 		  	<c:forEach var="movieImage" items="${movieImage }" varStatus="status">
 			    <div class="carousel-item ${status.count eq 1 ? 'active' : '' }">
-			      <img src="/resources/images/movie/${movieImage.movieImageFileName }" class="d-block w-100" alt="...">
+			      <img src="/resources/images/movie/${movieImage.filename }" class="d-block w-100" alt="...">
 			    </div>
 		  	</c:forEach>
 		  </div>
@@ -77,12 +78,12 @@
 			<img alt="" src="/resources/images/movie/ex.png">
 			<p>MOVIEFAN</p>
 		</div>
-		<div class="col-10 border bg-light">
+		<div class="col-10 border bg-light align-self-center">
 			<div class="row">
 				<div class="col-10">
-				 	<p class="" style="font-size:1.2em; color:#503396;">
+				 	<span class="" style="font-size:1.2em; color:#503396;">
 				 		[영화제목] 재미있게 보셨나요? 영화의 어떤 점이 좋았는지 이야기해주세요.
-					</p>
+					</span>
 				</div>
 				<div class="col-2">
 					<i class="fas fa-pen fa-lg"></i><span> 관람평 쓰기</span>
@@ -96,18 +97,18 @@
 				<img alt="" src="/resources/images/movie/bg-profile.png">
 				<p>user id</p>
 			</div>
-			<div class="col-10 rounded-pill bg-light">
+			<div class="col-10 rounded-pill bg-light align-self-center">
 				<div class="row">
-					<div class="col-1">
-					 	<p class="" style="font-size:1.2em; color:#503396;">관람평</p>
+					<div class="col-1 align-self-center">
+					 	<span class="" style="font-size:1.2em; color:#503396;">관람평</span>
 					</div>
-					<div class="col-1">
-						<p style="font-size:1.5em; color:#503396;">10</p>
+					<div class="col-1 align-self-center">
+						<span style="font-size:1.5em; color:#503396;">10</span>
 					</div>
-					<div class="col-9">
+					<div class="col-9 align-self-center">
 						<span> 화려한 액션과 시원시원한 바다배경이 좋았습니다.</span>
 					</div>
-					<div class="col-1">
+					<div class="col-1 align-self-center">
 						<i class="far fa-thumbs-up fa-lg"></i>
 					</div>
 				</div>
