@@ -1,12 +1,12 @@
 package com.jhta.moviefan.vo;
 
-public class Director extends MoviePerson {
+public class MoviePerson {
 
 	private int no;
 	private String name;
 	private String nameEn;
 	
-	public Director() {}
+	public MoviePerson() {}
 
 	public int getNo() {
 		return no;
@@ -34,7 +34,7 @@ public class Director extends MoviePerson {
 
 	@Override
 	public String toString() {
-		return "Director [no=" + no + ", name=" + name + ", nameEn=" + nameEn + "]";
+		return "MoviePerson [no=" + no + ", name=" + name + ", nameEn=" + nameEn + "]";
 	}
 
 	
