@@ -33,6 +33,7 @@ public interface MovieDao {
 	void insertMovieRate(Movie_Rate rate);
 	void insertMovieGenre(MovieGenre movieGenre);
 	void insertMovieImage(MovieImage movieImage);
+	void insertMovieTrailer(MovieTrailer movieTrailer);
 	
 	void updateMovie(Movie movie);
 }

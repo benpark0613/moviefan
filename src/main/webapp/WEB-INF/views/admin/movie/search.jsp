@@ -119,7 +119,7 @@
 		<div class="col" id="pagination">
 		</div>
 	</div>
-	<!-- 모달 -->
+	<!-- 영화등록 폼 모달 -->
 	<div class="modal" tabindex="-1" id="modal-movie">
   		<div class="modal-dialog modal-xl">
     		<div class="modal-content">
@@ -191,9 +191,11 @@
 						<div class="mb-3">
 							<label class="form-label"><strong class="ms-2">트레일러</strong></label>
 							<div id="trailer-box"></div>
-							<div class="input-group mb-2">
-							  	<span class="input-group-text">링크 입력</span>
-							  	<input type="text" class="form-control" id="input-open-trailer-modal">
+							<div class="input-group mb-2" id="input-open-trailer-modal">
+							  	<input type="text" class="form-control" placeholder="제목" >
+							  	<span class="input-group-text"><i class="bi bi-link"></i></span>
+  								<input type="text" class="form-control" placeholder="동영상 URL">
+  								<a class="btn btn-outline-primary"><i class="bi bi-plus-lg"></i></a>
 							</div>
 						</div>
 	      			</div>
@@ -205,22 +207,24 @@
    			</div>
   		</div>
 	</div>
-	<!-- 모달2 -->
+	<!-- 트레일러 추가 모달 -->
 	<div class="modal" tabindex="-1" id="modal-trailer">
   		<div class="modal-dialog modal-dialog-centered">
     		<div class="modal-content">
 	    		<div class="modal-header">
-		       		<h5 class="modal-title"><strong>동영상 경로를 입력하세요</strong></h5>
+		       		<h5 class="modal-title"><strong>트레일러 추가</strong></h5>
 		       		<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 		    	</div>
 		    	<div class="modal-body">
-		      		<input type="url" class="form-control" name="url" placeholder="http://www.example.com/embed">
-		      		<div class="" id="iframe-box">
+		    		<input type="text" class="form-control mb-2" name="trailerTitle" placeholder="제목" >
+		    		<div class="input-group mb-2">
+			    		<span class="input-group-text"><i class="bi bi-link"></i></span>
+			      		<input type="url" class="form-control" name="trailerUrl" placeholder="동영상 URL">
 		      		</div>
+		      		<div class="" id="iframe-box"></div>
 		      	</div>
 				<div class="modal-footer">
-		    		<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
-		    		<button type="button" class="btn btn-primary" id="btn-add-trailer" data-bs-dismiss="modal" disabled>확인</button>
+		    		<button type="button" class="btn btn-primary" id="btn-add-trailer" data-bs-dismiss="modal">확인</button>
 				</div>
    			</div>
   		</div>
@@ -316,32 +320,58 @@
 		
 		$("#input-open-trailer-modal").click(function() {
 			$("#iframe-box").empty();
-			$("#trailer-box").empty();
 			$("#modal-trailer input").val("");
+			$("#btn-add-trailer").prop("disabled", true);
 			trailerModal.show();
 		});
 		
-		$("#modal-trailer input").change(function() {
-			$("#btn-add-trailer").prop("disabled", true);
+		$("#modal-trailer input[name=trailerTitle]").change(function() {
+			if ($(this).val() != "" && $("#modal-trailer input[name=trailerUrl]").val() != "") {
+				$("#btn-add-trailer").prop("disabled", false);
+			} else {
+				$("#btn-add-trailer").prop("disabled", true);
+			}
+		});
+		
+		$("#modal-trailer input[name=trailerUrl]").change(function() {
 			$("#iframe-box").empty();
-			var url = $(this).val();
+			var url = $(this).val().replace("watch?v=", "embed/");
+			$(this).val(url);
 			
 			if (url != "") {
 				var row = '<div class="ratio ratio-16x9 mt-3"><iframe src="' + url + '"></iframe></div>';
-					
 				$("#iframe-box").append(row);
-				$("#btn-add-trailer").prop("disabled", false);
+				if ($("#modal-trailer input[name=trailerTitle]").val() != "") {
+					$("#btn-add-trailer").prop("disabled", false);
+				} else {
+					$("#btn-add-trailer").prop("disabled", true);
+				}
+			} else {
+				$("#btn-add-trailer").prop("disabled", true);
 			}
 		});
 		
 		$("#btn-add-trailer").click(function(event) {
 			event.preventDefault();
-			var url = $("#modal-trailer input").val();
-			
-			var row = '<input type="text" class="form-control mb-2" name="trailers" value="' + url + '">';
+			var title = $("#modal-trailer input[name=trailerTitle]").val();
+			var url = $("#modal-trailer input[name=trailerUrl]").val();
+
+			var row = '<div class="input-group mb-2">' 
+				+ '<input type="text" class="form-control" name=trailerTitles value="' + title + '" readonly>'
+				+ '<span class="input-group-text"><i class="bi bi-link"></i></span>'
+				+ '<input type="url" class="form-control" name="trailerUrls" value="' + url + '" readonly>'
+				+ '<a class="btn btn-outline-danger"><i class="bi bi-trash"></i></a></div>';
+
 			$("#trailer-box").append(row);
-			
 		});
+		
+		
+		$("#trailer-box").on("click", ".btn-outline-danger", function() {
+			$(this).closest(".input-group").remove();
+		});
+		
+		
+		
 	});
 	
 	function getMovieList() {
@@ -438,6 +468,7 @@
 	function getMovieDetail(movieCode) {
 		var $modalInputBox = $("#modal-input-box").empty();
 		var $modalSpinnerBox = $("#modal-spinner-box");
+		
 		$.ajax({
 			type: "get",
 			url: "https://www.kobis.or.kr/kobisopenapi/webservice/rest/movie/searchMovieInfo.json",
@@ -501,25 +532,6 @@
 				alert("오류가 발생하였습니다.");
 			}
 		});
-		
-		/* $.getJSON("https://www.kobis.or.kr/kobisopenapi/webservice/rest/movie/searchMovieInfo.json", 
-			{key: "e8b10fb1808ddda8683a3f66f734a149", movieCd: movieCode}, 
-			function(result) {
-				var movie = result.movieInfoResult.movieInfo;
-				$("#modal-movie-code").text(movie.movieCd);
-				$("#modal-movie-name").text(movie.movieNm);
-				$("#modal-movie-name-en").text(movie.movieNmEn);
-				$("#modal-movie-production-year").text(movie.prdtYear);
-				$("#modal-movie-show-time").text(movie.showTm);
-				$("#modal-movie-open-date").text(movie.openDt);
-				$("#modal-movie-production-status").text(movie.prdtStatNm);			
-				$("#modal-movie-genre").text(movie.genres.map(item => item.genreNm).join(', '));
-				$("#modal-movie-watch-grade").text(movie.audits.map(item => item.watchGradeNm).join(', '));
-				$("#modal-movie-directors").text(movie.directors.map(item => item.peopleNm).join(', '));
-				$("#modal-movie-actors").text(movie.actors.map(item => item.peopleNm).filter((item, index) => index < 5).join(', '));
-				$("#modal-movie-companys").text(movie.companys.map(item => item.companyNm + "("+item.companyPartNm+")").join(', '));
-			}
-		); */
 	}
 	
 	function pagination(currentPage, totalRecords, rowsPerPage) {
@@ -617,6 +629,25 @@
 			});
 		}
 	} 
+	
+	var myModalEl = document.getElementById("modal-movie");
+	myModalEl.addEventListener("hide.bs.modal", function(event) {
+		$("#modal-movie-code").val("");
+		$("#modal-movie-name").val("");
+		$("#modal-movie-name-en").val("");
+		$("#modal-movie-production-year").val("");
+		$("#modal-movie-show-time").val("");
+		$("#modal-movie-open-date").val("");
+		$("#modal-movie-production-status").val("");
+		$("#modal-movie-genre").val("");
+		$("#modal-movie-watch-grade").val("");
+		$("#modal-movie-directors").val("");
+		$("#modal-movie-actors").val("");
+		$("#modal-movie-companys").val("");
+		$("textarea[name=summary]").val("");
+		$("input[name=images]").val("");
+		$("#trailer-box").empty();
+	});
 </script>
 <%@ include file="/WEB-INF/views/common/footer.jsp" %>
 </body>

@@ -22,6 +22,8 @@ public class MovieInsertForm {
 	private String[] directors;
 	private String[] actors;
 	private List<MultipartFile> images;
+	private String[] trailerTitles;
+	private String[] trailerUrls;
 	
 	public MovieInsertForm() {}
 
@@ -120,16 +122,30 @@ public class MovieInsertForm {
 	public void setImages(List<MultipartFile> images) {
 		this.images = images;
 	}
+	
+	public String[] getTrailerTitles() {
+		return trailerTitles;
+	}
+
+	public void setTrailerTitles(String[] trailerTitles) {
+		this.trailerTitles = trailerTitles;
+	}
+
+	public String[] getTrailerUrls() {
+		return trailerUrls;
+	}
+
+	public void setTrailerUrls(String[] trailerUrls) {
+		this.trailerUrls = trailerUrls;
+	}
 
 	@Override
 	public String toString() {
 		return "MovieInsertForm [no=" + no + ", title=" + title + ", titleEn=" + titleEn + ", rate=" + rate
 				+ ", runtime=" + runtime + ", openDate=" + openDate + ", producer=" + producer + ", summary=" + summary
-				+ ", genres=" + Arrays.toString(genres) + ", actors=" + Arrays.toString(actors) + ", directors="
-				+ Arrays.toString(directors) + ", images=" + images + "]";
+				+ ", genres=" + Arrays.toString(genres) + ", directors=" + Arrays.toString(directors) + ", actors="
+				+ Arrays.toString(actors) + ", images=" + images + ", trailerTitles=" + Arrays.toString(trailerTitles)
+				+ ", trailerUrls=" + Arrays.toString(trailerUrls) + "]";
 	}
-
-	
-	
 	
 }

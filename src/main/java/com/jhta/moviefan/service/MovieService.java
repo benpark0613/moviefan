@@ -79,4 +79,8 @@ public class MovieService {
 	public void insertMovieImage(MovieImage movieImage) {
 		movieDao.insertMovieImage(movieImage);
 	}
+	
+	public void insertMovieTrailer(MovieTrailer movieTrailer) {
+		movieDao.insertMovieTrailer(movieTrailer);
+	}
 }

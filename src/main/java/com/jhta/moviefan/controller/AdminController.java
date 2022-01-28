@@ -34,6 +34,7 @@ import com.jhta.moviefan.vo.MovieDirector;
 import com.jhta.moviefan.vo.MovieGenre;
 import com.jhta.moviefan.vo.MovieImage;
 import com.jhta.moviefan.vo.MoviePerson;
+import com.jhta.moviefan.vo.MovieTrailer;
 import com.jhta.moviefan.dto.CinemaDto;
 import com.jhta.moviefan.dto.MovieTimeTableDto;
 import com.jhta.moviefan.exception.MovieErrorException;
@@ -88,6 +89,8 @@ public class AdminController {
 		String[] genres = form.getGenres();
 		String[] directors = form.getDirectors();
 		String[] actors = form.getActors();
+		String[] trailerTitles = form.getTrailerTitles();
+		String[] trailerUrls = form.getTrailerUrls();
 
 		// MOVIE 테이블 INSERT
 		movie = new Movie();
@@ -171,6 +174,17 @@ public class AdminController {
 
 				in.close();
 				out.close();
+			}
+		}
+		
+		// MOVIE_TRAILER 테이블 INSERT
+		if (trailerTitles != null && trailerUrls != null) {
+			for (int i = 0; i < trailerTitles.length; i++) {
+				MovieTrailer movieTrailer = new MovieTrailer();
+				movieTrailer.setMovieNo(movie.getNo());
+				movieTrailer.setTitle(trailerTitles[i]);
+				movieTrailer.setUrlAddress(trailerUrls[i]);
+				movieService.insertMovieTrailer(movieTrailer);
 			}
 		}
 		

@@ -5,9 +5,9 @@ import java.util.Date;
 public class MovieTrailer {
 	
 	private int movieNo;
-	private String movieTrailerTitle;
-	private String movieTrailerURLAddress;;
-	private Date movieTrailerCreatedDate;
+	private String title;
+	private String urlAddress;;
+	private Date createdDate;
 	
 	public MovieTrailer() {}
 
@@ -19,35 +19,36 @@ public class MovieTrailer {
 		this.movieNo = movieNo;
 	}
 
-	public String getMovieTrailerTitle() {
-		return movieTrailerTitle;
+	public String getTitle() {
+		return title;
 	}
 
-	public void setMovieTrailerTitle(String movieTrailerTitle) {
-		this.movieTrailerTitle = movieTrailerTitle;
+	public void setTitle(String title) {
+		this.title = title;
 	}
 
-	public String getMovieTrailerURLAddress() {
-		return movieTrailerURLAddress;
+	public String getUrlAddress() {
+		return urlAddress;
 	}
 
-	public void setMovieTrailerURLAddress(String movieTrailerURLAddress) {
-		this.movieTrailerURLAddress = movieTrailerURLAddress;
+	public void setUrlAddress(String urlAddress) {
+		this.urlAddress = urlAddress;
 	}
 
-	public Date getMovieTrailerCreatedDate() {
-		return movieTrailerCreatedDate;
+	public Date getCreatedDate() {
+		return createdDate;
 	}
 
-	public void setMovieTrailerCreatedDate(Date movieTrailerCreatedDate) {
-		this.movieTrailerCreatedDate = movieTrailerCreatedDate;
+	public void setCreatedDate(Date createdDate) {
+		this.createdDate = createdDate;
 	}
 
 	@Override
 	public String toString() {
-		return "MovieTrailer [movieNo=" + movieNo + ", movieTrailerTitle=" + movieTrailerTitle
-				+ ", movieTrailerURLAddress=" + movieTrailerURLAddress + ", movieTrailerCreatedDate="
-				+ movieTrailerCreatedDate + "]";
+		return "MovieTrailer [movieNo=" + movieNo + ", title=" + title + ", urlAddress=" + urlAddress + ", createdDate="
+				+ createdDate + "]";
 	}
+
+	
 	
 }

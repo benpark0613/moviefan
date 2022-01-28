@@ -110,7 +110,12 @@
 		(#{movieNo}, #{filename})
 	</insert>
 	
-
+	<insert id="insertMovieTrailer" parameterType="com.jhta.moviefan.vo.MovieTrailer">
+		insert into movie_trailer
+		(movie_no, movie_trailer_title, movie_trailer_url_address)
+		values
+		(#{movieNo}, #{title}, #{urlAddress})
+	</insert>
 	
 	
 	
