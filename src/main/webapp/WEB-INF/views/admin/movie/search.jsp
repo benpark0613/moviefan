@@ -180,13 +180,21 @@
 	        					<td colspan="3"><span id="modal-movie-companys"></span></td>
 	        				</tr>
 	        			</table>
-		      			<div class="mb-1">
+		      			<div class="mb-3">
 							<label class="form-label"><strong class="ms-2">시놉시스</strong></label>
 							<textarea rows="10" class="form-control" name="summary"></textarea>
 						</div>
-		      			<div class="mb-1">
+		      			<div class="mb-3">
 							<label class="form-label"><strong class="ms-2">영화포스터</strong></label>
 							<input type="file" class="form-control" name="images" multiple>
+						</div>
+						<div class="mb-3">
+							<label class="form-label"><strong class="ms-2">트레일러</strong></label>
+							<div id="trailer-box"></div>
+							<div class="input-group mb-2">
+							  	<span class="input-group-text">링크 입력</span>
+							  	<input type="text" class="form-control" id="input-open-trailer-modal">
+							</div>
 						</div>
 	      			</div>
 					<div class="modal-footer">
@@ -194,6 +202,26 @@
 	    				<button type="submit" class="btn btn-primary">확인</button>
 					</div>
 				</form>
+   			</div>
+  		</div>
+	</div>
+	<!-- 모달2 -->
+	<div class="modal" tabindex="-1" id="modal-trailer">
+  		<div class="modal-dialog modal-dialog-centered">
+    		<div class="modal-content">
+	    		<div class="modal-header">
+		       		<h5 class="modal-title"><strong>동영상 경로를 입력하세요</strong></h5>
+		       		<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+		    	</div>
+		    	<div class="modal-body">
+		      		<input type="url" class="form-control" name="url" placeholder="http://www.example.com/embed">
+		      		<div class="" id="iframe-box">
+		      		</div>
+		      	</div>
+				<div class="modal-footer">
+		    		<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
+		    		<button type="button" class="btn btn-primary" id="btn-add-trailer" data-bs-dismiss="modal" disabled>확인</button>
+				</div>
    			</div>
   		</div>
 	</div>
@@ -275,10 +303,44 @@
 			keyboard: false
 		});
 		
+		var trailerModal = new bootstrap.Modal(document.getElementById('modal-trailer'), {
+			keyboard: false,
+			backdrop: false
+		});
+		
 		$("#table-movie tbody").on("click", ".btn", function() {
 			var movieCode = $(this).attr("data-movie-code");
 			getMovieDetail(movieCode);
 			movieModal.show();
+		});
+		
+		$("#input-open-trailer-modal").click(function() {
+			$("#iframe-box").empty();
+			$("#trailer-box").empty();
+			$("#modal-trailer input").val("");
+			trailerModal.show();
+		});
+		
+		$("#modal-trailer input").change(function() {
+			$("#btn-add-trailer").prop("disabled", true);
+			$("#iframe-box").empty();
+			var url = $(this).val();
+			
+			if (url != "") {
+				var row = '<div class="ratio ratio-16x9 mt-3"><iframe src="' + url + '"></iframe></div>';
+					
+				$("#iframe-box").append(row);
+				$("#btn-add-trailer").prop("disabled", false);
+			}
+		});
+		
+		$("#btn-add-trailer").click(function(event) {
+			event.preventDefault();
+			var url = $("#modal-trailer input").val();
+			
+			var row = '<input type="text" class="form-control mb-2" name="trailers" value="' + url + '">';
+			$("#trailer-box").append(row);
+			
 		});
 	});
 	
@@ -399,7 +461,9 @@
 				$("#modal-movie-name-en").text(movie.movieNmEn);
 				$("#modal-movie-production-year").text(movie.prdtYear);
 				$("#modal-movie-show-time").text(movie.showTm);
-				$("#modal-movie-open-date").text(moment(movie.openDt).format('YYYY-MM-DD'));
+				if (movie.openDt != "") {
+					$("#modal-movie-open-date").text(moment(movie.openDt).format('YYYY-MM-DD'));
+				}
 				$("#modal-movie-production-status").text(movie.prdtStatNm);			
 				$("#modal-movie-genre").text(movie.genres.map(item => item.genreNm).join(', '));
 				$("#modal-movie-watch-grade").text(movie.audits.map(item => item.watchGradeNm).join(', '));
@@ -414,7 +478,9 @@
 					$("input[name=rate]").val(movie.audits[0].watchGradeNm);
 				}
 				$("input[name=runtime]").val(movie.showTm);
-				$("input[name=openDate]").val(moment(movie.openDt).format('YYYY-MM-DD'));
+				if (movie.openDt != "") {
+					$("input[name=openDate]").val(moment(movie.openDt).format('YYYY-MM-DD'));
+				}
 				if (movie.companys.length > 0 ) {
 					$("input[name=producer]").val(movie.companys[0].companyNm);
 				}

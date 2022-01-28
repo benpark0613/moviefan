@@ -1,5 +1,4 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-	
 <!-- 로그인 모달 -->
 <div class="modal fade" id="modal-login" data-bs-backdrop="static" tabindex="-1" aria-labelledby="로그인 모달" aria-hidden="true">
   	<div class="modal-dialog modal-dialog-centered">
@@ -40,9 +39,8 @@
 		</div>
 	</div>
 </div>
-	
 <!-- 상단 네비 -->
-<header>
+<header class="mb-3">
 	<div class="py-4 border-bottom">
 		<div class="container">
 			<div class="d-flex">
@@ -137,27 +135,7 @@ $(function() {
 		});
 	});
 });
-
-
 </script>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

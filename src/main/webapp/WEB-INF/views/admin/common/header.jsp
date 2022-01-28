@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<header>
+<header class="mb-3">
 	<div class="py-4 border-bottom">
 		<div class="container">
 			<div class="d-flex">
