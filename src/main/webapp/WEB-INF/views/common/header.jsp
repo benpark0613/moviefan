@@ -10,7 +10,7 @@
    			</div>
       		<div class="modal-body">
 				<div class="row">
-					<form class="border bg-light" method="post" action="login">
+					<form class="border bg-light" method="post" action="login" id="form-normal-login">
 						<div class="mb-3 mt-3">
 							<label class="form-label">아이디</label>
 							<input type="text" class="form-control" name="id">
@@ -20,7 +20,7 @@
 							<input type="password" class="form-control" name="password">
 						</div>
 						<div class="mb-1">
-							<button class="btn btn-danger w-100" id="form-normal-login">로그인</button>
+							<button class="btn btn-danger w-100" id="button-normal-login">로그인</button>
 						</div>
 						<div class="d-flex justify-content-center">
 							<a>아이디 찾기</a>
@@ -35,6 +35,18 @@
 							</a>
 						</div>
 					</form>
+				</div>
+				<div class="row">
+					<%--
+			    		카카오 로그인 서비스가 제공하는 사용자 정보를 서버로 제출할 때 사용하는 폼과 폼 입력요소다.
+			    		카카오 로그인 인증이 완료되면 사용자정보를 전달받아서 아래 폼 입력필드에 설정하고, 폼을 서버로 제출한다.
+			    	 --%>
+			    	<form id="form-kakao-login" method="post" action="kakao-login">
+			    		<input type="hidden" name="id" />
+			    		<input type="hidden" name="nickName" />
+			    		<input type="hidden" name="email" />
+			    		<input type="hidden" name="gender" />
+			    	</form>
 				</div>
 			</div>
 		</div>
@@ -132,9 +144,54 @@ $(function() {
 		event.preventDefault();
 		loginModal.show();
 		
-		$('#form-normal-login').click(function(event) {
-			$('form[action=post]').submit();
+		$('#button-normal-login').click(function(event) {
+			event.preventDefault();
+			
+			var $id = $('#form-normal-login input[name=id]');
+			var $password = $('#form-normal-login input[name=password]');
+			
+			if ($id.val() === null || $id.val() === "") {
+				alert("아이디를 입력해주세요.");
+				return false;
+			}
+			if ($password.val() === null || $password.val() === "") {
+				alert("비밀번호를 입력해주세요.");
+				return false;
+			}
+		
+			$('form[action="login"]').submit();
 		});
+		
+		$('#btn-kakao-login').click(function(event) {
+			event.preventDefault();
+			// 사용자키 전달, 카카오 로그인 서비스 초기화
+			Kakao.init('01646474eb0f93b6d4faadcbe95c79ea');
+			// 카카오 로그인 서비스 실행, 사용자 정보 가져오기
+			Kakao.Auth.login({
+				success: function(auth) {
+					Kakao.API.request({
+						url: '/v2/user/me',
+						success: function(response) {
+							// 사용자 정보를 가져와서 폼에 추가
+							let account = response.kakao_account;
+							
+							$('#form-kakao-login input[name=id]').val(response.id);
+							$('#form-kakao-login input[name=nickName]').val(account.profile.nickname);
+							$('#form-kakao-login input[name=email]').val(account.email);
+							$('#form-kakao-login input[name=gender]').val(account.gender);
+							// 사용자 정보가 포함된 폼을 서버로 제출한다.
+							document.querySelector('#form-kakao-login').submit()
+						},
+						fail: function(error) {
+							alert('카카오 로그인 처리 중 오류가 발생하였습니다.');
+						}
+					});
+				},
+				fail: function(error) {
+					alert('카카오 로그인 처리 중 오류가 발생하였습니다.')
+				}
+			});
+		})
 	});
 });
 

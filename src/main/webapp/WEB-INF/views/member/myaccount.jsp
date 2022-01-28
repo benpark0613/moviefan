@@ -2,13 +2,14 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-   <title>MovieFan</title>
-   <link type="image/png" href="/resources/images/logo/moviefan-favicon.png" rel="icon"/>
-   <meta charset="utf-8"> 
-   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
-   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css" rel="stylesheet">
-   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
-   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+	<title>MovieFan</title>
+	<link type="image/png" href="/resources/images/logo/moviefan-favicon.png" rel="icon" />
+	<meta charset="utf-8">
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css" rel="stylesheet">
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+	<script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
 </head>
 <style>
 .dropdown:hover .dropdown-menu {
@@ -118,7 +119,7 @@
 	<%-- 서브메뉴 네비 --%>
 	<ul class="nav nav-tabs d-flex justify-content-center" id="sub-menu-tab">
 		<li class="nav-item dropdown">
-			<a class="nav-link text-dark dropdown-toggle text-decoration-none fw-bolder" data-bs-toggle="dropdown" role="button" aria-expanded="false" id="my-ticket-tab">결제내역</a>
+			<a class="nav-link text-dark dropdown-toggle text-decoration-none fw-bolder btn disabled" data-bs-toggle="dropdown" role="button" aria-expanded="false" id="my-ticket-tab">결제내역</a>
 			<ul class="dropdown-menu">
 				<li><a class="dropdown-item-text text-decoration-none fw-bolder" href="" id="booking-list-item">예매내역</a></li>
 				<li><a class="dropdown-item-text text-decoration-none" href="" id="order-list-item">구매내역</a></li>
@@ -126,14 +127,14 @@
 			</ul>
 		</li>
 		<li class="nav-item dropdown">
-			<a class="nav-link text-dark dropdown-toggle text-decoration-none" data-bs-toggle="dropdown" role="button" aria-expanded="false" id="my-movie-tab">MY 무비로그</a>
+			<a class="nav-link text-dark dropdown-toggle text-decoration-none btn disabled" data-bs-toggle="dropdown" role="button" aria-expanded="false" id="my-movie-tab">MY 무비로그</a>
 			<ul class="dropdown-menu">
 				<li><a class="dropdown-item-text text-decoration-none" href="" id="wish-movie-item">찜한 영화</a></li>
 				<li><a class="dropdown-item-text text-decoration-none" href="" id="watched-movie-item">내가 본 영화</a></li>
 			</ul>
 		</li>
 		<li class="nav-item dropdown">
-			<a class="nav-link text-dark dropdown-toggle text-decoration-none" data-bs-toggle="dropdown" role="button" aria-expanded="false" id="my-document-tab" id="my-talk">MY 수다</a>
+			<a class="nav-link text-dark dropdown-toggle text-decoration-none btn disabled" data-bs-toggle="dropdown" role="button" aria-expanded="false" id="my-document-tab" id="my-talk">MY 수다</a>
 			<ul class="dropdown-menu">
 				<li><a class="dropdown-item-text text-decoration-none" href="" id="my-scrap-item">스크랩 보기</a></li>
 				<li><a class="dropdown-item-text text-decoration-none" href="" id="my-document-item">작성 글 보기</a></li>
@@ -142,14 +143,14 @@
 			</ul>
 		</li>
 		<li class="nav-item dropdown">
-			<a class="nav-link text-dark dropdown-toggle text-decoration-none" data-bs-toggle="dropdown" role="button" aria-expanded="false" id="my-point-tab">MY MVF 포인트</a>
+			<a class="nav-link text-dark dropdown-toggle text-decoration-none btn disabled" data-bs-toggle="dropdown" role="button" aria-expanded="false" id="my-point-tab">MY MVF 포인트</a>
 			<ul class="dropdown-menu">
 				<li><a class="dropdown-item-text text-decoration-none" href="" id="point-info-item">포인트 안내</a></li>
 				<li><a class="dropdown-item-text text-decoration-none" href="" id="point-history-item">포인트 내역</a></li>
 			</ul>
 		</li>
 		<li class="nav-item dropdown">
-			<a class="nav-link text-dark dropdown-toggle text-decoration-none" data-bs-toggle="dropdown" role="button" aria-expanded="false" id="my-info-tab">MY 정보관리</a>
+			<a class="nav-link text-dark dropdown-toggle text-decoration-none btn disabled" data-bs-toggle="dropdown" role="button" aria-expanded="false" id="my-info-tab">MY 정보관리</a>
 			<ul class="dropdown-menu">
 				<li><a class="dropdown-item-text text-decoration-none" href="" id="info-modify-item">회원 정보 변경</a></li>
 				<li><a class="dropdown-item-text text-decoration-none" href="" id="info-delete-item">회원 탈퇴</a></li>
@@ -254,9 +255,10 @@
 		
 		<%-- 서브메뉴: MY정보 --%>
 		<div class="row d-none" id="info-modify">
-			<div class="col p-5 my-5">
+			<div class="col p-5 my-3">
 				<div class="row text-center">
-					<p class="fs-1">비밀번호 재확인</p>
+					<p class="fs-1">회원정보 변경</p>
+					<p class="fs-2">비밀번호 재확인</p>
 					<p>회원의 정보를 안전하게 보호하기 위해 비밀번호를 다시 한번 확인 합니다.</p>	
 				</div>
 				<div class="row">
@@ -281,9 +283,31 @@
 			</div>
 		</div>
 		<div class="row d-none" id="info-delete">
-			<div class="col p-5 my-5">
-				<div class="row text-center"><i class="bi bi-exclamation-square" style="font-size: 5em;"></i></div>
-				<div class="row text-center"><p class="fs-1">회원 탈퇴</p></div>
+			<div class="col p-5 my-3">
+				<div class="row text-center">
+					<p class="fs-1">회원 탈퇴</p>
+					<p class="fs-2">비밀번호 재확인</p>
+					<p>회원의 정보를 안전하게 보호하기 위해 비밀번호를 다시 한번 확인 합니다.</p>	
+				</div>
+				<div class="row">
+					<form class="col-6 offset-3 border p-4 mb-5 bg-light w-50" method="post" action="check-withdrawal-password">
+						<div class="mb-3 row">
+							<label class="col-3 col-form-label">아이디</label>
+						    <div class="col-9">
+						    	<input type="text" readonly class="form-control-plaintext" name="id" value='<c:out value="${LOGINED_CUSTOMER.id }" />'>
+						    </div>
+						</div>
+					  	<div class="mb-3 row">
+					    	<label class="col-3 col-form-label">비밀번호</label>
+					    	<div class="col-9">
+					      		<input type="password" class="form-control" name="password">
+					    	</div>
+					  	</div>
+					  	<div class="row">
+							<button class="btn btn-danger w-100" id="check-password" type="submit">비밀번호 확인</button>
+						</div>
+					</form>
+				</div>
 			</div>
 		</div>
 	</div>
@@ -398,7 +422,6 @@ $(function() {
 		$('#my-info-tab').addClass('fw-bolder')
 		$('#info-modify').removeClass("d-none")
 	});
-	
 	$('#info-delete-item').click(function(event) {
 		event.preventDefault();
 		$("#sub-menu-list-container > div").addClass("d-none")
@@ -407,7 +430,6 @@ $(function() {
 		$('#my-info-tab').addClass('fw-bolder')
 		$('#info-delete').removeClass("d-none")
 	});
-	
 })
 
 

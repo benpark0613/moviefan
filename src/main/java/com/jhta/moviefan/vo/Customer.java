@@ -23,6 +23,8 @@ public class Customer {
 	private String loginType;
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private Date createdDate;
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
+	private Date updatedDate;
 	private String isWithdrawal;
 	
 	public Customer() {}
@@ -155,19 +157,21 @@ public class Customer {
 		this.isWithdrawal = isWithdrawal;
 	}
 
+	public Date getUpdatedDate() {
+		return updatedDate;
+	}
+
+	public void setUpdatedDate(Date updatedDate) {
+		this.updatedDate = updatedDate;
+	}
+
 	@Override
 	public String toString() {
 		return "Customer [no=" + no + ", gradeCode=" + gradeCode + ", id=" + id + ", password=" + password
 				+ ", phoneNumber=" + phoneNumber + ", email=" + email + ", gender=" + gender + ", birthday=" + birthday
 				+ ", totalPoint=" + totalPoint + ", isAdmin=" + isAdmin + ", name=" + name + ", nickName=" + nickName
 				+ ", isBanned=" + isBanned + ", loginType=" + loginType + ", createdDate=" + createdDate
-				+ ", isWithdrawal=" + isWithdrawal + "]";
+				+ ", updatedDate=" + updatedDate + ", isWithdrawal=" + isWithdrawal + "]";
 	}
-	
-	
-
-	
-
-	
 
 }

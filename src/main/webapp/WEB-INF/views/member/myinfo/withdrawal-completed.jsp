@@ -14,12 +14,16 @@
 <body>
 <%@ include file="/WEB-INF/views/common/header.jsp" %>
 <div class="container">
-	<div class="p-3 mb-4 bg-light rounded-3">
-		<div class="container-fluid py-5">
-        	<h1 class="display-5 fw-bold">사용자 인증 오류!</h1>
-        	<p class="col fs-4">로그인 인증 후 사용해주세요.</p>
-      	</div>
-    </div>
+	<div class="col p-5 my-3">
+		<div class="row text-center">
+			<p class="fs-1">탈퇴 신청 완료</p>
+			<p>그동안 저희 무비팬을 이용해 주셔서 감사합니다.</p>
+			<p>더 좋은 서비스를 제공하기 위해서 열심히 노력하겠습니다.</p>	
+		</div>
+		<div class="text-center">
+			<a class="btn btn-secondary" href="/home">무비팬 홈 바로가기</a>
+		</div>
+	</div>
 </div>
 <%@ include file="/WEB-INF/views/common/footer.jsp" %>
 </body>

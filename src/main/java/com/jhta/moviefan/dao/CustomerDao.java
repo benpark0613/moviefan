@@ -20,6 +20,6 @@ public interface CustomerDao {
 	
 	void deleteCustomerByNo(int no);
 	void insertCustomer(Customer customer);
-	void updateCustomerByNo(Customer customer);
+	void updateCustomer(Customer customer);
 	
 }

@@ -18,8 +18,10 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.jhta.moviefan.annotation.LoginedCustomer;
 import com.jhta.moviefan.exception.LoginErrorException;
+import com.jhta.moviefan.exception.RestLoginErrorException;
 import com.jhta.moviefan.form.CustomerRegisterForm;
 import com.jhta.moviefan.service.CustomerService;
+import com.jhta.moviefan.utils.SessionUtils;
 import com.jhta.moviefan.vo.Customer;
 import com.jhta.moviefan.vo.Movie;
 
@@ -32,7 +34,10 @@ public class CustomerController {
 	@Autowired
 	private CustomerService customerService;
 	
-	// 회원가입
+	/**
+	 * 회원가입과 관련된 요청핸들러 메소드
+	 * @return
+	 */
 	@GetMapping("/join")
 	public String join() {
 		return "/member/join";
@@ -59,16 +64,12 @@ public class CustomerController {
 		return "/member/completed";
 	}
 	
-	// MY MVF
-	@GetMapping("/myaccount")
-	public String myAccount(@LoginedCustomer Customer customer, Model model) {
-		List<Movie> wishMovies = customerService.getCustomerMovieWishList(customer.getNo());
-		
-		model.addAttribute("wishMovies", wishMovies);
-		
-		return "/member/myaccount";
-	}
-	
+	/**
+	 * 내 정보와 관련된 요청핸들러 메소드
+	 * @param customer
+	 * @param model
+	 * @return
+	 */
 	@PostMapping("/check-password")
 	public String checkPassword(@LoginedCustomer Customer customer, @Param("id") String id, @Param("password") String password) {
 		if (!customer.getId().equals(id)) {
@@ -79,12 +80,56 @@ public class CustomerController {
 			throw new LoginErrorException("비밀번호가 일치하지 않습니다.");
 		}
 		
-		return "redirect:/member/myinfo/modify";
+		return "/member/myinfo/modifyform";
 	}
 	
-	@GetMapping("/myinfo/modify")
+	@GetMapping("/myinfo/modifyform")
 	public String modify() {
-		return "/member/myinfo/modify";
+		return "/member/myinfo/modifyform";
+	}
+	
+	@PostMapping("/myinfo/modify-customer-info")
+	public String modifyCustomerInfo(@LoginedCustomer Customer customer, CustomerRegisterForm modifyform) {
+		BeanUtils.copyProperties(modifyform, customer);
+		
+		customerService.updateCustomerInfo(customer);
+		
+		return "redirect:/member/myinfo/modifycompleted";
+	}
+	
+	@GetMapping("/myinfo/modifycompleted")
+	public String modifyCompleted() {
+		SessionUtils.removeAttribute("LOGINED_CUSTOMER");
+		return "/member/myinfo/modifycompleted";
+	}
+		
+	@PostMapping("/check-withdrawal-password")
+	public String checkWithdrawalPassword(@LoginedCustomer Customer customer, @Param("id") String id, @Param("password") String password) {
+		if (!customer.getId().equals(id)) {
+			throw new LoginErrorException("아이디를 확인해주세요.");
+		}
+		
+		if (!customer.getPassword().equals(password)) {
+			throw new LoginErrorException("비밀번호가 일치하지 않습니다.");
+		}
+		
+		return "/member/myinfo/checkwithdrawal";
+	}
+	
+	@GetMapping("/myinfo/checkwithdrawal")
+	public String checkWithdrawalForm(@LoginedCustomer Customer customer) {
+		return "/member/myinfo/checkwithdrawal";
+	}
+	
+	@PostMapping("/myinfo/withdrawal-agree")
+	public String withdrawal(@LoginedCustomer Customer customer) {
+		customerService.deleteCustomerInfo(customer.getNo());
+		return "redirect:/member/myinfo/withdrawal-completed";
+	}
+	
+	@GetMapping("/myinfo/withdrawal-completed")
+	public String withdrawalCompleted() {
+		return "/member/myinfo/withdrawal-completed";
 	}
 	
 }

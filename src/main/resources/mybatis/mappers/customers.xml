@@ -19,6 +19,7 @@
 		<result column="customer_login_type" 	property="loginType"/>
 		<result column="customer_created_date" 	property="createdDate"/>
 		<result column="is_withdrawal" 			property="isWithdrawal"/>
+		<result column="customer_updated_date" 	property="updatedDate"/>
 	</resultMap>
 
 	<select id="getCustomerByNo" parameterType="int" resultMap="CustomerResultMap">
@@ -82,12 +83,35 @@
 			from dual
 		</selectKey>
 		insert into customer
-		(customer_no, customer_id, customer_password, customer_phone_number, 
+		(customer_no, customer_id, customer_password, customer_phone_number, customer_login_type,
 		customer_email, customer_gender, customer_birthday, customer_name, customer_nickname)
 		values
-		(#{no}, #{id}, #{password}, #{phoneNumber}, 
+		(#{no}, #{id}, #{password}, #{phoneNumber}, #{loginType}, 
 		#{email}, #{gender}, #{birthday}, #{name}, #{nickName})
 	</insert>
+	
+	<update id="updateCustomer" parameterType="com.jhta.moviefan.vo.Customer">
+		update customer
+		set
+			customer_password = #{password},
+			customer_nickname = #{nickName},
+			customer_email = #{email},
+			customer_phone_number = #{phoneNumber},
+			customer_gender = #{gender},
+			customer_birthday = #{birthday},
+			customer_updated_date = sysdate
+		where 
+			customer_no = #{no}
+	</update>
+	
+	<update id="deleteCustomerByNo" parameterType="int">
+		update customer
+		set
+			is_withdrawal = 'Y'
+		where
+			customer_no = #{customerNo}
+	</update>
+	
 </mapper>
 
 
