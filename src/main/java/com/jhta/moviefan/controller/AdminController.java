@@ -35,6 +35,7 @@ import com.jhta.moviefan.vo.MovieGenre;
 import com.jhta.moviefan.vo.MovieImage;
 import com.jhta.moviefan.vo.MoviePerson;
 import com.jhta.moviefan.dto.CinemaDto;
+import com.jhta.moviefan.dto.MovieTimeTableDto;
 import com.jhta.moviefan.exception.MovieErrorException;
 import com.jhta.moviefan.service.CinemaService;
 import com.jhta.moviefan.service.MovieService;
@@ -181,22 +182,6 @@ public class AdminController {
 		return "admin/movie/modifyform";
 	}
 	
-	@GetMapping("/schedule/list")
-	public String list(Model model) {
-		List<City> cityList = cinemaService.getAllCityList();
-		List<CinemaDto> cinemaList = cinemaService.getAllCinemaList();
-		
-		model.addAttribute("cityList", cityList);
-		model.addAttribute("cinemaList", cinemaList);
-		
-		return "admin/schedule/list";
-	}
-	
-	@GetMapping("/schedule/modify")
-	public String modify() {
-		return "admin/schedule/modify";
-	}
-	
 	/**
 	 * 영화인객체와 영화제목을 전달받아 영화진흥위원회 오픈 API에서 영화인목록 정보를 조회한 다음<br>
 	 * 영화인 코드와 이름, 영어이름을 객체에 저장하여 반환한다.  
@@ -234,4 +219,30 @@ public class AdminController {
 		
 		return moviePerson;
 	}
+	
+	@GetMapping("/schedule/list")
+	public String list(Model model) {
+		List<City> cityList = cinemaService.getAllCityList();
+		List<CinemaDto> cinemaList = cinemaService.getAllCinemaList();
+		
+		model.addAttribute("cityList", cityList);
+		model.addAttribute("cinemaList", cinemaList);
+		
+		return "admin/schedule/list";
+	}
+	
+	@GetMapping("/schedule/timetable")
+	public String timetable(int cinemaNo, Model model) {
+		List<MovieTimeTableDto> movieTimeTableDtos = cinemaService.getMovieTimeTableByCinemaNo(cinemaNo);
+		
+		model.addAttribute("movieTimeTableDtos", movieTimeTableDtos);
+		
+		return "admin/schedule/list";
+	}
+	
+	@GetMapping("/schedule/modify")
+	public String modify() {
+		return "admin/schedule/modify";
+	}
+	
 }
