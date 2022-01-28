@@ -12,6 +12,7 @@
 <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
 </head>
 <body>
 <%@ include file="/WEB-INF/views/common/header.jsp"%>
@@ -59,15 +60,15 @@
 									<td class="text-center">${comment.commentNo }</td>
 									<td>
 										<div class="row">
-											<div class="col-2">${comment.movieNo }</div>
+											<div class="col-2">${comment.movieTitle }</div>
 											<div class="col-4">별점 ${comment.rating } /5</div>
 										</div>
 										<div class="col pe-3">${comment.content }</div>
 									</td>
 									<td>
-										<div>${comment.customerNo }</div>
+										<div>${comment.customerId }</div>
 										<div>
-											<fmt:formatDate value="${comment.updatedDate }" pattern="yyyy-MM-dd" />
+											<fmt:formatDate value="${comment.creDate }" pattern="yyyy-MM-dd" />
 										</div>
 									</td>
 								</tr>

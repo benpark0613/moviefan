@@ -55,4 +55,9 @@ public class ReviewController {
 		return "redirect:commentScore";
 	}
 	
+	@GetMapping("")
+	public String reply() {
+		return "community/reply";
+	}
+	
 }

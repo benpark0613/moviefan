@@ -8,7 +8,9 @@ public class Comment {
 
 	private int commentNo;
 	private int customerNo;
+	private String customerId;
 	private int movieNo;
+	private String movieTitle;
 	private int rating;
 	private String content;
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
@@ -19,6 +21,32 @@ public class Comment {
 	private Date updatedDate;
 	
 	public Comment() {}
+	
+	
+
+	public String getCustomerId() {
+		return customerId;
+	}
+
+
+
+	public void setCustomerId(String customerId) {
+		this.customerId = customerId;
+	}
+
+
+
+	public String getMovieTitle() {
+		return movieTitle;
+	}
+
+
+
+	public void setMovieTitle(String movieTitle) {
+		this.movieTitle = movieTitle;
+	}
+
+
 
 	public int getCommentNo() {
 		return commentNo;
@@ -92,12 +120,17 @@ public class Comment {
 		this.likeCount = likeCount;
 	}
 
+
+
 	@Override
 	public String toString() {
-		return "Comment [commentNo=" + commentNo + ", customerNo=" + customerNo + ", movieNo=" + movieNo + ", rating="
-				+ rating + ", content=" + content + ", creDate=" + creDate + ", reportCount=" + reportCount
-				+ ", likeCount=" + likeCount + ", upDate=" + updatedDate + "]";
+		return "Comment [commentNo=" + commentNo + ", customerNo=" + customerNo + ", customerId=" + customerId
+				+ ", movieNo=" + movieNo + ", movieTitle=" + movieTitle + ", rating=" + rating + ", content=" + content
+				+ ", creDate=" + creDate + ", reportCount=" + reportCount + ", likeCount=" + likeCount
+				+ ", updatedDate=" + updatedDate + "]";
 	}
+
+	
 	
 	
 }
