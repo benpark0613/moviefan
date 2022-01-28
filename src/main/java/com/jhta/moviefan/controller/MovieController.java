@@ -62,22 +62,27 @@ public class MovieController {
 			JSONArray jsonObject3 = (JSONArray) jsonObject2.get("dailyBoxOfficeList");
 			
 			List<Movie> movieList = new ArrayList<>();
+//			List<MovieImage> movieImageList = new ArrayList<>();
+//			MovieImage movieImage = new MovieImage();
 			for(int i=0; i<jsonObject3.size(); i++) {
 				JSONObject movies = (JSONObject) jsonObject3.get(i);
 				Movie movie = new Movie();
 				
-				movie.setNo(Integer.parseInt((String)movies.get("movieCd")));
-				movie.setTitle((String) movies.get("movieNm"));
-				
-				
-				String strOpenDt = ((String) movies.get("openDt"));
-				SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy-MM-dd");
-				Date openDate = sdf1.parse(strOpenDt);
-				movie.setOpenDate(openDate);
+				int movieCd = (Integer.parseInt((String)movies.get("movieCd")));
+//				movie.setNo((Integer.parseInt((String)movies.get("movieCd"))));
+//				movie.setTitle((String) movies.get("movieNm"));
+//				String strOpenDt = ((String) movies.get("openDt"));
+//				SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy-MM-dd");
+//				Date openDate = sdf1.parse(strOpenDt);
+//				movie.setOpenDate(openDate);
+				movie = movieService.getMovieByMovieNo(movieCd);
+				movie.setNo(movieCd);
 				movieList.add(movie);
+//				movieImageList = movieService.getMovieImageByMovieNo(movie.getNo());
 				
 			}
 			model.addAttribute("movie",movieList);
+//			model.addAttribute("movieImage", movieImageList);
 			
 			
 		}catch(Exception e) {
@@ -101,6 +106,7 @@ public class MovieController {
 		model.addAttribute("movie", movie);
 		model.addAttribute("movieImage", movieImage);
 		model.addAttribute("movieTrailer", movieTrailer);
+		model.addAttribute("no", no);
 		
 		
 		return "movie/detail";
@@ -118,6 +124,7 @@ public class MovieController {
 		model.addAttribute("movie", movie);
 		model.addAttribute("movieImage", movieImage);
 		model.addAttribute("movieTrailer", movieTrailer);
+		model.addAttribute("no", no);
 		
 		return "movie/trailer";
 	}
