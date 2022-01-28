@@ -2,19 +2,27 @@ package com.jhta.moviefan.dto;
 
 import java.util.Date;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 public class MovieTimeTableDto {
 
 	private int cityNo;				// 지역 번호
 	private String cityName;		// 지역 이름
 	private String cinemaName;		// 영화관 이름
+	private String hallName;		// 상영관 이름
 	private String title;			// 영화 제목
-	private String genre;			// 장르
+	//private String genre;			// 장르
 	private int runtime;			// 러닝타임
 	private Date openDate;			// 개봉일
-	private String hallName;		// 상영관 이름
-	//private 						// 상영 시작시간
-	private int totalSeats;			// 상영관 전체 좌석수
-	//private						// 상영관 예약 좌석수
+	//private String genre;			// 장르
+	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "Asia/Seoul")
+	private Date showDate;			// 상영일
+	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "Asia/Seoul")
+	private Date startTime;			// 상영 시작시간
+	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "Asia/Seoul")
+	private Date endTime;			// 상영 종료시간
+	//private int totalSeats;		// 상영관 전체 좌석수
+	//private int reservedSeats;	// 상영관 예약 좌석수
 	
 	public MovieTimeTableDto() {}
 
@@ -42,20 +50,20 @@ public class MovieTimeTableDto {
 		this.cinemaName = cinemaName;
 	}
 
+	public String getHallName() {
+		return hallName;
+	}
+
+	public void setHallName(String hallName) {
+		this.hallName = hallName;
+	}
+
 	public String getTitle() {
 		return title;
 	}
 
 	public void setTitle(String title) {
 		this.title = title;
-	}
-
-	public String getGenre() {
-		return genre;
-	}
-
-	public void setGenre(String genre) {
-		this.genre = genre;
 	}
 
 	public int getRuntime() {
@@ -74,27 +82,35 @@ public class MovieTimeTableDto {
 		this.openDate = openDate;
 	}
 
-	public String getHallName() {
-		return hallName;
+	public Date getShowDate() {
+		return showDate;
 	}
 
-	public void setHallName(String hallName) {
-		this.hallName = hallName;
+	public void setShowDate(Date showDate) {
+		this.showDate = showDate;
 	}
 
-	public int getTotalSeats() {
-		return totalSeats;
+	public Date getStartTime() {
+		return startTime;
 	}
 
-	public void setTotalSeats(int totalSeats) {
-		this.totalSeats = totalSeats;
+	public void setStartTime(Date startTime) {
+		this.startTime = startTime;
+	}
+
+	public Date getEndTime() {
+		return endTime;
+	}
+
+	public void setEndTime(Date endTime) {
+		this.endTime = endTime;
 	}
 
 	@Override
 	public String toString() {
 		return "MovieTimeTableDto [cityNo=" + cityNo + ", cityName=" + cityName + ", cinemaName=" + cinemaName
-				+ ", title=" + title + ", genre=" + genre + ", runtime=" + runtime + ", openDate=" + openDate
-				+ ", hallName=" + hallName + ", totalSeats=" + totalSeats + "]";
+				+ ", hallName=" + hallName + ", title=" + title + ", runtime=" + runtime + ", openDate=" + openDate
+				+ ", showDate=" + showDate + ", startTime=" + startTime + ", endTime=" + endTime + "]";
 	}
 
 }

@@ -38,38 +38,42 @@
 			a.cinema_no
 	</select>
 	
-	<!-- 지역별 영화관 이름 List<CinemaNameDto> getCinemaNameByCityNo(); -->
-	<select id="getCinemaNameByCityNo" parameterType="int" resultType="com.jhta.moviefan.dto.CinemaNameDto">
+	<!-- 지역번호로 영화관 조회 List<CinemaNameDto> getCinemaNameByCityNo(); -->
+	<select id="getCinemaListByCityNo" parameterType="int" resultType="com.jhta.moviefan.vo.Cinema">
  		select
- 			a.city_no					as cityNo,
- 			a.city_name					as cityName,
- 			b.cinema_name				as cinemaName
+ 			cinema_no 					as no,
+ 			cinema_name 				as name
  		from
- 			city a, cinema b
+ 			cinema 
  		where
- 			a.city_no = b.city_no
- 		and
- 			a.city_no = #{value}
+ 			city_no = #{value}
 	</select>
 	
-	<!-- 상영시간표 List<MovieTimeTableDto> getAllMovieTimeTables(); -->
-	<select id="getAllMovieTimeTables" resultType="com.jhta.moviefan.dto.MovieTimeTableDto">
+	<!-- 영화관별 상영시간표 List<MovieTimeTableDto> getMovieTimeTableByCinemaNo(int cinemaNo); -->
+	<select id="getMovieTimeTableByCinemaNo" parameterType="int" resultType="com.jhta.moviefan.dto.MovieTimeTableDto">
 		select
-			b.city_no					as cityNo,
-			b.city_name					as cityName,
-			a.cinema_name				as cinemaName,
-			d.movie_title				as title,
-			c.genre_name				as genre,
-			d.movie_runtime				as runtime,
-			d.movie_open_date			as openDate,
-			e.hall_name					as hallName,
-			e.hall_total_seats			as totalSeats
+		    a.city_no 					as cityNo,
+		    a.city_name 				as cityName,
+		    b.cinema_name 				as cinemaName,
+		    c.hall_name 				as hallName,
+		    e.movie_title 				as title,
+		    e.movie_runtime 			as runtime,
+		    e.movie_open_date 			as openDate,
+		    d.show_date 				as showDate,
+		    d.show_start_time 			as startTime,
+		    d.show_end_time 			as endTime
 		from
-			cinema a, city b, genre c, movie d, cinema_hall e
+		    city a, cinema b, cinema_hall c, show d, movie e
 		where
-			a.city_no = b.city_no
+		    a.city_no = b.city_no
 		and
-			a.cinema_no = e.cinema_no
+		    b.cinema_no = c.cinema_no
+		and
+		    c.hall_no = d.hall_no
+		and
+		    d.movie_no = e.movie_no
+		and
+			b.cinema_no = #{value}
 	</select>
 
 </mapper>

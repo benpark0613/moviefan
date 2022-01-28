@@ -7,12 +7,17 @@
 	<meta charset="utf-8">
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css" rel="stylesheet">
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
 	<script src="https://cdn.jsdelivr.net/npm/moment@2.29.1/moment.min.js"></script>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 	<style type="text/css">
 		header {
 			background-color: #1c243c;
+		}
+		body {
+			font-family: NanumBarunGothic;
+			font-size: 16pt;
 		}
 	</style>
 </head>
@@ -28,7 +33,7 @@
 	
 	<!-- 지역, 영화관 선택 -->	
 	<div class="row justify-content-center">
- 		<div class="row g-2">
+ 		<form id="timetable-search" class="row g-2" method="get" action="search">
    			<div class="col-2">
 				<select id="city-select" name="city" class="form-select">
 					<option value="" selected disabled>-- 지역 --</option>
@@ -40,12 +45,14 @@
    			<div class="col-3">
    				<select id="cinema-select" name="cinema" class="form-select">
 					<option value="" selected disabled>-- 지역을 먼저 선택하세요. --</option>
+				<%-- 
    					<c:forEach var="cinema" items="${cinemaList }">
 						<option value="${cinema.cityNo }">${cinema.name }</option>
    					</c:forEach>
+   				--%>
 				</select>
    			</div>
-   		</div>
+   		</form>
    	</div>
 
 	<!-- 선택한 영화관에서 현재 상영중인 영화 목록 -->
@@ -53,7 +60,7 @@
 		<div>
 			<span>MVF 강변</span> :: <span>총 상영관 수</span>/  <span>현재 상영중인 영화 수</span>
 		</div>
-		<table class="table">
+		<table id="timetable" class="table">
 			<thead>
 		    	<tr>
 		      		<th>상영관 이름</th>
@@ -66,39 +73,19 @@
 		    	</tr>
 		  	</thead>
 		  	<tbody>
+		  	<%--
 		    	<tr>
-		     	 	<td>1관</td>
-		      		<td>스파이더맨 : 노 웨이 홈</td>
-		      		<td>2022-01-25</td>
-		      		<td>2022-01-26</td>
-		      		<td>10:00 ~ 12:00</td>
+		     	 	<td>${timetable.hallName }</td>
+		      		<td>${timetable.title }</td>
+		      		<td>${timetable.openDate }</td>
+		      		<td>${timetable.startDate }</td>
+		      		<td>${timetable.startTime } ~ ${timetable.endTime }</td>
 		      		<td>Y</td>
 		      		<td>
 		      			<a href="/admin/schedule/modify" class="btn btn-outline-primary btn-sm">수정</a>
 		      		</td>
 		    	</tr>
-		    	<tr>
-		     	 	<td>2관</td>
-		      		<td>특송</td>
-		      		<td>2022-01-25</td>
-		      		<td>2022-01-26</td>
-		      		<td>10:00 ~ 12:00</td>
-		      		<td>Y</td>
-		      		<td>
-		      			<a href="/admin/schedule/modify" class="btn btn-outline-primary btn-sm">수정</a>
-		      		</td>
-		    	</tr>
-		    	<tr>
-		     	 	<td>3관</td>
-		      		<td>스파이더맨 : 노 웨이 홈</td>
-		      		<td>2022-01-25</td>
-		      		<td>2022-01-26</td>
-		      		<td>10:00 ~ 12:00</td>
-		      		<td>Y</td>
-		      		<td>
-		      			<a href="/admin/schedule/modify" class="btn btn-outline-primary btn-sm">수정</a>
-		      		</td>
-		    	</tr>
+		  	 --%>
 		    </tbody>
 	    </table>
 	</div>
@@ -109,24 +96,51 @@
 <script type="text/javascript">
 
 	$(function () {
+		
 		let $firstSelect = $('#cinema-select').empty();
 		let secondSelect = '<option value="" selected disabled>-- 지역을 먼저 선택하세요. --</option>';
 		$firstSelect.append(secondSelect);
-	})
-
-	$('#city-select').change(function () {
-		let no = $(this).val();
-		
-		let $select = $("#cinema-select").empty();
-		
-		$.getJSON("/rest/cinema/list", {cityNo:no}, function (cinemaList) {
-			$.each (cinemaList, function(index, cinema) {
-				
-				let option = '<option value="${cinema.cityNo }">' + cinema.cinemaName + '</option>';
-				
-				$select.append(option);
+	
+		// 지역이 변경될때마다 실행될 이벤트 핸들러 함수 
+		$('#city-select').change(function () {
+			let no = $(this).val();
+			
+			let $select = $("#cinema-select").empty();
+			
+			$.getJSON("/rest/cinema/list", {cityNo:no}, function (cinemaList) {
+				// [{no:10, name:"신촌점"}, {no:11, name:"홍대점"}]
+				$.each (cinemaList, function(index, cinema) {
+					
+					let option = '<option value="' + cinema.no + '">' + cinema.name + '</option>';
+					
+					$select.append(option);
+				})
 			})
 		})
+		
+		// 상영관이 변경될 때마다 실행될 이벤트 핸들러 함수
+		// http://localhost/rest/cinema/timetable?cinemaNo=342
+		$('#cinema-select').change(function () {
+			let cinemaNo = $(this).val();
+			
+			$.getJSON("/rest/cinema/timetable", {cinemaNo:cinemaNo}, function (timetableList) {
+				
+				$.each (timetableList, function (index, timetable) {
+
+					let table = '<tr>'
+						table += '<td>' + timetable.cinemaName + '<td>'
+						table += '<td>' + timetable.title + '<td>'
+						table += '<td>' + timetable.openDate + '<td>'
+						table += '<td>' + timetable.showDate + '<td>'
+						table += '<td>' + timetable.startTime + '~' + timetable.endTime + '<td>'
+						table += '<td>' + '상영중' + '<td>'
+						table += '<td><a href="/admin/schedule/modify" class="btn btn-outline-primary btn-sm">' + '수정' + '</a></td>'
+						table += '</tr>';
+						
+					$('#timetable').append(table);
+				})
+			})
+		})	
 	})
 
 </script>

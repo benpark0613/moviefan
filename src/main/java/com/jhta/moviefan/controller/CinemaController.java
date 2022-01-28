@@ -27,30 +27,12 @@ public class CinemaController {
 	
 	@GetMapping("/main")
 	public String main(Model model) {
-		List<MovieTimeTableDto> movieTimeTableList = cinemaService.getMovieTimeTableList();
-		List<CinemaDto> cinemaList = cinemaService.getAllCinemaList();
 		List<City> cityList = cinemaService.getAllCityList();
 		
-		model.addAttribute("movieTimeTableList", movieTimeTableList);
-		model.addAttribute("cinemaList", cinemaList);
 		model.addAttribute("cityList", cityList);
 		
 		return "cinema/main";
 	}
-	
-	@GetMapping("/list")
-	public String list(int no, Model model) {
-		List<CinemaNameDto> cinemaNameDtos = cinemaService.getCinemaNameByCityNo(no);
-		model.addAttribute("cinemaNameDtos", cinemaNameDtos);
-		
-		return "cinema/list";
-	}
-	
-	
-	
-	
-	
-	
 	
 	@GetMapping("/location")
 	public String location() {
