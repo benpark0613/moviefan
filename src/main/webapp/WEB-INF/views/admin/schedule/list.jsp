@@ -10,7 +10,9 @@
 	<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
 	<script src="https://cdn.jsdelivr.net/npm/moment@2.29.1/moment.min.js"></script>
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+	<script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
 	<style type="text/css">
 		header {
 			background-color: #1c243c;
@@ -18,6 +20,9 @@
 		body {
 			font-family: NanumBarunGothic;
 			font-size: 16pt;
+		}
+		td {
+			word-break: break-all;
 		}
 	</style>
 </head>
@@ -60,7 +65,7 @@
 		<div>
 			<span>MVF 강변</span> :: <span>총 상영관 수</span>/  <span>현재 상영중인 영화 수</span>
 		</div>
-		<table id="timetable" class="table">
+		<table id="timetable" class="table row w-auto">
 			<thead>
 		    	<tr>
 		      		<th>상영관 이름</th>
@@ -73,6 +78,7 @@
 		    	</tr>
 		  	</thead>
 		  	<tbody>
+			  	
 		  	<%--
 		    	<tr>
 		     	 	<td>${timetable.hallName }</td>
@@ -121,27 +127,38 @@
 		// 상영관이 변경될 때마다 실행될 이벤트 핸들러 함수
 		// http://localhost/rest/cinema/timetable?cinemaNo=342
 		$('#cinema-select').change(function () {
+			
+			$('table tbody').empty();
+			
 			let cinemaNo = $(this).val();
 			
 			$.getJSON("/rest/cinema/timetable", {cinemaNo:cinemaNo}, function (timetableList) {
 				
-				$.each (timetableList, function (index, timetable) {
-
-					let table = '<tr>'
-						table += '<td>' + timetable.cinemaName + '<td>'
-						table += '<td>' + timetable.title + '<td>'
-						table += '<td>' + timetable.openDate + '<td>'
-						table += '<td>' + timetable.showDate + '<td>'
-						table += '<td>' + timetable.startTime + '~' + timetable.endTime + '<td>'
-						table += '<td>' + '상영중' + '<td>'
-						table += '<td><a href="/admin/schedule/modify" class="btn btn-outline-primary btn-sm">' + '수정' + '</a></td>'
-						table += '</tr>';
+				if (timetableList === " ") {
+					$('table tbody').append('<tr><td class="text-center" colspan="7">' + '상영일정이 존재하지 않습니다.' + '</td></tr>');
+					return;
+				}
+				
+					$.each (timetableList, function (index, timetable) {
 						
-					$('#timetable').append(table);
+						
+						
+						let table = '<tr>'
+							table += '<td>' + timetable.cinemaName + '<td>'
+							table += '<td>' + timetable.title + '<td>'
+							table += '<td>' + timetable.openDate + '<td>'
+							table += '<td>' + timetable.showDate + '<td>'
+							table += '<td>' + timetable.startTime + ' ~ ' + timetable.endTime + '<td>'
+							table += '<td>' + '상영중' + '<td>'
+							table += '<td><a href="/admin/schedule/modify" class="btn btn-outline-primary btn-sm">' + '수정' + '</a></td>'
+							table += '</tr>';
+							
+						$('#timetable tbody').append(table);
+					})
 				})
 			})
 		})	
-	})
+	
 
 </script>
 </html>

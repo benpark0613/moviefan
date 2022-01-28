@@ -52,16 +52,16 @@
 	<!-- 영화관별 상영시간표 List<MovieTimeTableDto> getMovieTimeTableByCinemaNo(int cinemaNo); -->
 	<select id="getMovieTimeTableByCinemaNo" parameterType="int" resultType="com.jhta.moviefan.dto.MovieTimeTableDto">
 		select
-		    a.city_no 					as cityNo,
-		    a.city_name 				as cityName,
-		    b.cinema_name 				as cinemaName,
-		    c.hall_name 				as hallName,
-		    e.movie_title 				as title,
-		    e.movie_runtime 			as runtime,
-		    e.movie_open_date 			as openDate,
-		    d.show_date 				as showDate,
-		    d.show_start_time 			as startTime,
-		    d.show_end_time 			as endTime
+		    a.city_no 											as cityNo,
+		    a.city_name 										as cityName,
+		    b.cinema_name 										as cinemaName,
+		    c.hall_name 										as hallName,
+		    e.movie_title 										as title,
+		    e.movie_runtime 									as runtime,
+		     to_char(e.movie_open_date, 'YYYY-MM-DD') 			as openDate,
+		    to_char(d.show_date, 'YYYY-MM-DD')	 				as showDate,
+		    to_char(d.show_start_time, 'HH24:MI:SS') 			as startTime,
+		    to_char(d.show_end_time, 'HH24:MI:SS')  			as endTime
 		from
 		    city a, cinema b, cinema_hall c, show d, movie e
 		where
