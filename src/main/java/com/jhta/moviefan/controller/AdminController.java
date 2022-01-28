@@ -196,8 +196,8 @@ public class AdminController {
 	/**
 	 * 영화인객체와 영화제목을 전달받아 영화진흥위원회 오픈 API에서 영화인목록 정보를 조회한 다음<br>
 	 * 영화인 코드와 이름, 영어이름을 객체에 저장하여 반환한다.  
-	 * @param name 영화인이름
-	 * @param title 영화제목
+	 * @param moviePerson 영화인
+	 * @param movieTitle 영화제목
 	 * @return 영화인 정보
 	 * @throws IOException
 	 */
