@@ -92,7 +92,7 @@ public class AdminController {
 		movie = new Movie();
 		movie.setNo(form.getNo());
 		movie.setTitle(form.getTitle());
-		movie.setTitleEn(form.getTitle());
+		movie.setTitleEn(form.getTitleEn());
 		movie.setRate(form.getRate());
 		movie.setRuntime(form.getRuntime());
 		movie.setOpenDate(form.getOpenDate());
@@ -111,42 +111,46 @@ public class AdminController {
 		}
 		
 		// DIRECTOR, MOVIE_DIRECTOR 테이블 INSERT
-		for (int i = 0; i < directors.length; i++) {
-			Director director = new Director();
-			director.setName(directors[i]);
-			director = (Director)getMoviePersonDetail(director, movie.getTitle());
-			
-			// 이미 등록된 감독인 경우 저장하지 않는다
-			if (movieService.getDirectorByNo(director.getNo()) == null) {
-				movieService.insertDirector(director);
+		if (directors != null) {
+			for (int i = 0; i < directors.length; i++) {
+				Director director = new Director();
+				director.setName(directors[i]);
+				director = (Director)getMoviePersonDetail(director, movie.getTitle());
+				
+				// 이미 등록된 감독인 경우 저장하지 않는다
+				if (movieService.getDirectorByNo(director.getNo()) == null) {
+					movieService.insertDirector(director);
+				}
+				
+				MovieDirector movieDirector = new MovieDirector();
+				movieDirector.setMovieNo(movie.getNo());
+				movieDirector.setDirectorNo(director.getNo());
+				movieDirector.setDirectorName(director.getName());
+				movieDirector.setDirectorNameEn(director.getNameEn());
+				movieService.insertMovieDirector(movieDirector);
 			}
-			
-			MovieDirector movieDirector = new MovieDirector();
-			movieDirector.setMovieNo(movie.getNo());
-			movieDirector.setDirectorNo(director.getNo());
-			movieDirector.setDirectorName(director.getName());
-			movieDirector.setDirectorNameEn(director.getNameEn());
-			movieService.insertMovieDirector(movieDirector);
 		}
 		
 		// ACTOR, MOVIE_ACTOR 테이블 INSERT
-		for (int i = 0; i < actors.length; i++) {
-			Actor actor = new Actor(); 
-			actor.setName(actors[i]);
-			actor = (Actor)getMoviePersonDetail(actor, movie.getTitle());
-
-			// 이미 등록된 배우인 경우 저장하지 않는다
-			if (movieService.getActorByNo(actor.getNo()) == null) {
-				movieService.insertActor(actor);
+		if (actors != null) {
+			for (int i = 0; i < actors.length; i++) {
+				Actor actor = new Actor(); 
+				actor.setName(actors[i]);
+				actor = (Actor)getMoviePersonDetail(actor, movie.getTitle());
+				
+				// 이미 등록된 배우인 경우 저장하지 않는다
+				if (movieService.getActorByNo(actor.getNo()) == null) {
+					movieService.insertActor(actor);
+				}
+				
+				MovieActor movieActor = new MovieActor();
+				movieActor.setMovieNo(movie.getNo());
+				movieActor.setActorNo(actor.getNo());
+				movieActor.setActorName(actor.getName());
+				movieActor.setActorNameEn(actor.getNameEn());
+				movieActor.setActorPriority(i);
+				movieService.insertMovieActor(movieActor);
 			}
-			
-			MovieActor movieActor = new MovieActor();
-			movieActor.setMovieNo(movie.getNo());
-			movieActor.setActorNo(actor.getNo());
-			movieActor.setActorName(actor.getName());
-			movieActor.setActorNameEn(actor.getNameEn());
-			movieActor.setActorPriority(i);
-			movieService.insertMovieActor(movieActor);
 		}
 		
 		// 영화이미지 파일 업로드, MOVIE_IMAGE 테이블 INSERT 
