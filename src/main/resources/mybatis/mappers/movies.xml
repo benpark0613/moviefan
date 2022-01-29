@@ -13,6 +13,7 @@
 		<result column="MOVIE_TOTAL_AUDIENCE" property="totalAudience"/>
 		<result column="MOVIE_SUMMARY" property="summary"/>
 		<result column="MOVIE_PRODUCER" property="producer"/>
+		<result column="MOVIE_POSTER" property="poster"/>
 	</resultMap>
 	
 	<select id="getMovieByMovieNo" parameterType="int" resultMap="MovieResultMap">

@@ -7,8 +7,8 @@ import org.springframework.stereotype.Service;
 
 import com.jhta.moviefan.dao.CinemaDao;
 import com.jhta.moviefan.dto.CinemaDto;
-import com.jhta.moviefan.dto.CinemaNameDto;
 import com.jhta.moviefan.dto.MovieTimeTableDto;
+import com.jhta.moviefan.vo.Cinema;
 import com.jhta.moviefan.vo.City;
 
 @Service
@@ -29,11 +29,11 @@ public class CinemaService {
 		return cinemaDao.getAllCinemas();
 	}
 
-	public List<CinemaNameDto> getCinemaNameByCityNo(int cityNo) {
-		return cinemaDao.getCinemaNameByCityNo(cityNo);
+	public List<Cinema> getCinemaListByCityNo(int cityNo) {
+		return cinemaDao.getCinemaListByCityNo(cityNo);
 	}
 	
-	public List<MovieTimeTableDto> getMovieTimeTableList() {
-		return cinemaDao.getAllMovieTimeTables();
+	public List<MovieTimeTableDto> getMovieTimeTableByCinemaNo(int cinemaNo) {
+		return cinemaDao.getMovieTimeTableByCinemaNo(cinemaNo);
 	}
 }

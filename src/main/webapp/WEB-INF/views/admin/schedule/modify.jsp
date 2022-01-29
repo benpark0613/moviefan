@@ -7,12 +7,17 @@
 	<meta charset="utf-8">
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css" rel="stylesheet">
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
 	<script src="https://cdn.jsdelivr.net/npm/moment@2.29.1/moment.min.js"></script>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 	<style type="text/css">
 		header {
 			background-color: #1c243c;
+		}
+		body {
+			font-family: NanumBarunGothic;
+			font-size: 16pt;
 		}
 	</style>
 </head>
@@ -40,7 +45,7 @@
 		    	</div>
 		  	</div>
 		  	<div class="row mb-3">
-		    	<label for="inputEmail3" class="col-sm-3 col-form-label">런타임</label>
+		    	<label for="inputEmail3" class="col-sm-3 col-form-label">러닝타임</label>
 		    	<div class="col-sm-10">
 		      		<input type="text" readonly class="form-control-plaintext" value="148분" class="form-control-plaintext" id="inputEmail3">
 		    	</div>
@@ -81,9 +86,10 @@
 		    	<label for="inputEmail3" class="form-label">상영시간 변경</label>
 		    	<div class="col-sm-10">
 		      		<select class="form-select">
-						<option value="10:00 ~ 12:00" selected>10:00 ~ 12:00</option>
-						<option value="12:00 ~ 14:00">12:00 ~ 14:00</option>
-						<option value="14:00 ~ 16:00">14:00 ~ 16:00</option>
+						<option value="10:00 ~ 12:40" selected>10:00 ~ 12:40</option>
+						<option value="13:00 ~ 15:40">13:00 ~ 15:40</option>
+						<option value="16:00 ~ 18:40">16:00 ~ 18:40</option>
+						<option value="19:00 ~ 21:40">19:00 ~ 21:40</option>
 					</select>
 		    	</div>
 		  	</div>

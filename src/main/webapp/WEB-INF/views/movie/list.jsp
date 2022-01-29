@@ -11,6 +11,7 @@
    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+   <script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
 </head>
 <style>
 	body, table, div, p, span{
@@ -26,6 +27,23 @@
 	 a:hover { 
 	 color: #444; text-decoration: none;
 	 }
+	 .pic{
+	 position: relative;
+	 }
+	 .pic .summary{
+	 	position: absolute;
+	 	z-index: -1;
+	 	font-size: 16px;
+	 }
+	 .pic .rank{
+	 	position: absolute;
+	 	color : white;
+	 	z-index: 1;
+	 	margin-left: 10px;
+	 	font-size: 2em;
+    	font-style: italic;
+    	text-shadow: 2px 2px 2px rgb(0 0 0 / 80%);
+	 }
 </style>
 <body>
 <%@ include file="/WEB-INF/views/common/header.jsp" %>
@@ -34,9 +52,9 @@
 		<div class="col-10">
 		<h1>무비 차트</h1>
 		</div>
-		<div class="col-2 text-align-right">
-		<a href=""><span class="align-middle" style="font-size: 12pt;">무비차트</span></a>
-		<a href=""><span class="align-middle" style="font-size: 12pt;">상영예정작</span></a>
+		<div class="col-2 text-align-right align-self-center">
+		<a id="movieStatus1" href=""><span class="align-middle" style="font-size: 12pt;">무비차트</span></a>
+		<a id="movieStatus2" href=""><span class="align-middle" style="font-size: 12pt;">상영예정작</span></a>
 		</div>
 		<hr size="3px" color="black">
 	</div>
@@ -63,8 +81,10 @@
 	<div class="row mb-3">
 		<c:forEach var="movie" items="${movie }" varStatus="status">
 			<div class="col-4 mb-3">
-				<div class="row">
-					<img id="img${status.count }" src="/resources/images/movie/spiderman.png" class="rounded float-start" alt="..."> 
+				<div class="row pic">
+					<span class="rank">${status.count }</span>
+					<img class="imgs" src="/resources/images/movie/moviePoster/${movie.no }.jpg" class="rounded float-start" alt="..."> 
+					<span class="summary">${movie.summary }</span>
 				</div>
 				<div class="row">
 					<div class="col-1">
@@ -85,7 +105,7 @@
 				<div class="row mb-3">
 					<div class="col">
 						<button type="button" class="btn btn-outline-dark" style="padding-left:20px; padding-right:20px;"><i class="far fa-heart fa-lg"></i><span> 1234</span></button>
-						<button type="button" class="btn btn-danger btn-block" style="padding-left:75px; padding-right:75px;"><span>예매</span></button>
+						<button type="button" class="btn btn-danger btn-block" style="padding-left:90px; padding-right:90px;"><span>예매</span></button>
 					</div>
 				</div>
 			</div>
@@ -105,10 +125,24 @@ $.getJSON("http://kobis.or.kr/kobisopenapi/webservice/rest/boxoffice/searchDaily
 		
 })
 */
-$("#img1").hover(function(){
-	$(this).css("background-color", "gray");
+
+$("#movieStatus1").prepend($("<span>▶</span>"));
+$("#movieStatus1").find("span").css("color", "#b12e2e");
+
+$(".imgs").hover(function(){
+	$(this).css("opacity", 0.3);
+}, function(){
+	$(this).css("opacity", 1);
 })
 
+
+$("#movieStatus2").hover(function(){
+	$(this).prepend($("<span>▶</span>"))
+	$(this).find("span").css("color", "#b12e2e");
+}, function(){
+	$(this).find("span").first().remove();
+	$(this).find("span").css("color", "#444");
+})
 </script>
 </body>
 </html>

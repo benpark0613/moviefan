@@ -22,7 +22,7 @@
 	</div>
 	<div class="row mb-3">
 		<div class="col-3 mb-3">
-			<img src="/resources/images/movie/spiderman.png" class="rounded float-start" alt="...">
+			<img src="/resources/images/movie/moviePoster/${no }.jpg" width="260px" height="374px" class="rounded float-start" alt="...">
 		</div>
 		<div class="col-9 mb-3">
 			<div class="row mb-3">

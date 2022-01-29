@@ -15,6 +15,7 @@ public class Movie {
 	private int totalAudience;
 	private String summary;
 	private String producer;
+	private String poster;
 	
 	public Movie() {}
 
@@ -98,11 +99,20 @@ public class Movie {
 		this.producer = producer;
 	}
 
+	
+	public String getPoster() {
+		return poster;
+	}
+
+	public void setPoster(String poster) {
+		this.poster = poster;
+	}
+
 	@Override
 	public String toString() {
 		return "Movie [no=" + no + ", title=" + title + ", titleEn=" + titleEn + ", rate=" + rate + ", runtime="
 				+ runtime + ", openDate=" + openDate + ", customerRating=" + customerRating + ", totalAudience="
-				+ totalAudience + ", summary=" + summary + ", producer=" + producer + "]";
+				+ totalAudience + ", summary=" + summary + ", producer=" + producer + ", poster=" + poster + "]";
 	}
 
 	
