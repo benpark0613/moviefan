@@ -1,9 +1,5 @@
 package com.jhta.moviefan.dto;
 
-import java.util.Date;
-
-import com.fasterxml.jackson.annotation.JsonFormat;
-
 public class MovieTimeTableDto {
 
 	private int cityNo;				// 지역 번호
@@ -13,14 +9,11 @@ public class MovieTimeTableDto {
 	private String title;			// 영화 제목
 	//private String genre;			// 장르
 	private int runtime;			// 러닝타임
-	private Date openDate;			// 개봉일
+	private String openDate;			// 개봉일
 	//private String genre;			// 장르
-	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "Asia/Seoul")
-	private Date showDate;			// 상영일
-	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "Asia/Seoul")
-	private Date startTime;			// 상영 시작시간
-	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "Asia/Seoul")
-	private Date endTime;			// 상영 종료시간
+	private String showDate;			// 상영일
+	private String startTime;			// 상영 시작시간
+	private String endTime;			// 상영 종료시간
 	//private int totalSeats;		// 상영관 전체 좌석수
 	//private int reservedSeats;	// 상영관 예약 좌석수
 	
@@ -74,35 +67,35 @@ public class MovieTimeTableDto {
 		this.runtime = runtime;
 	}
 
-	public Date getOpenDate() {
+	public String getOpenDate() {
 		return openDate;
 	}
 
-	public void setOpenDate(Date openDate) {
+	public void setOpenDate(String openDate) {
 		this.openDate = openDate;
 	}
 
-	public Date getShowDate() {
+	public String getShowDate() {
 		return showDate;
 	}
 
-	public void setShowDate(Date showDate) {
+	public void setShowDate(String showDate) {
 		this.showDate = showDate;
 	}
 
-	public Date getStartTime() {
+	public String getStartTime() {
 		return startTime;
 	}
 
-	public void setStartTime(Date startTime) {
+	public void setStartTime(String startTime) {
 		this.startTime = startTime;
 	}
 
-	public Date getEndTime() {
+	public String getEndTime() {
 		return endTime;
 	}
 
-	public void setEndTime(Date endTime) {
+	public void setEndTime(String endTime) {
 		this.endTime = endTime;
 	}
 
