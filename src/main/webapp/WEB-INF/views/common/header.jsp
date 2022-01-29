@@ -148,11 +148,11 @@ $(function() {
 			var $id = $('#form-normal-login input[name=id]');
 			var $password = $('#form-normal-login input[name=password]');
 			
-			if ($id.val() === null || $id.val() === "") {
+			if ($id.val().trim() === null || $id.val().trim() === "") {
 				alert("아이디를 입력해주세요.");
 				return false;
 			}
-			if ($password.val() === null || $password.val() === "") {
+			if ($password.val().trim() === null || $password.val().trim() === "") {
 				alert("비밀번호를 입력해주세요.");
 				return false;
 			}
