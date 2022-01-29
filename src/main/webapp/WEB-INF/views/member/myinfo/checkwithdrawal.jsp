@@ -16,7 +16,7 @@
 <div class="container">
 	<div class="col p-5 my-3">
 		<div class="d-flex justify-content-center">
-			<form class="border p-4 mb-5 bg-white w-75" method="post" action="myinfo/withdrawal-agree">
+			<form class="border p-4 mb-5 bg-white w-75" method="post" action="withdrawal-agree">
 				<div class="row text-center">
 					<p class="fs-1">회원탈퇴</p>
 					<p class="fs-2">회원탈퇴 전 <span class="text-danger">유의사항</span>을 확인해 주세요.</p>	
@@ -63,7 +63,7 @@
 				alert("탈퇴하시기 전 아래 유의사항을 확인해주세요.");
 			}
 			if ($('#checkbox-withdrawal-agree').prop('checked') === true) {
-				$('form[action="myinfo/withdrawal-agree"]').submit();
+				$('form[action="withdrawal-agree"]').submit();
 			}
 		})
 	});

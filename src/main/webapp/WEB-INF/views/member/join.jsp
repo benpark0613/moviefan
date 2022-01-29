@@ -419,7 +419,7 @@
 			</div>
 			<div class="row">
 				<div class="d-grid gap-1 col-6 mx-auto">
-					<a class="btn btn-danger" href="/member/registerform">확인</a>
+					<a class="btn btn-danger" href="/registerform">확인</a>
 				</div>
 				<div class="d-grid gap-1 col-6 mx-auto">
 					<a class="btn btn-light" href="/home">취소</a>
