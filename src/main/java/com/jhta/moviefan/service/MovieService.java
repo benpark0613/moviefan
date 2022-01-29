@@ -2,6 +2,8 @@ package com.jhta.moviefan.service;
 
 import java.util.List;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -22,8 +24,22 @@ import com.jhta.moviefan.vo.Movie_Rate;
 @Transactional
 public class MovieService {
 	
+	static final Logger logger = LogManager.getLogger(MovieService.class);
+	
 	@Autowired
 	private MovieDao movieDao;
+	
+	public int getMoviesTotalRows() {
+		return movieDao.getMoviesTotalRows();
+	}
+	
+	public List<Movie> getMovies(int beginIndex, int endIndex) {
+		return movieDao.getMovies(beginIndex, endIndex);
+	}
+	
+	public List<Movie> getAllMovies() {
+		return movieDao.getAllMovies();
+	}
 	
 	public Movie getMovieByMovieNo(int movieNo) {
 		return movieDao.getMovieByMovieNo(movieNo);

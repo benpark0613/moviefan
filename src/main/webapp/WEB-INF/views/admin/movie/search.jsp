@@ -19,7 +19,7 @@
 <body>
 <%@ include file="/WEB-INF/views/admin/common/header.jsp" %>
 <div class="container">
-	<div class="row my-3">
+	<div class="row mb-3">
 		<div class="col">
 			<h1>영화검색/등록</h1>
 		</div>

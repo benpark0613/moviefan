@@ -16,6 +16,8 @@ public class Movie {
 	private String summary;
 	private String producer;
 	private String poster;
+	private Date createdDate;
+	private Date updatedDate;
 	
 	public Movie() {}
 
@@ -98,7 +100,6 @@ public class Movie {
 	public void setProducer(String producer) {
 		this.producer = producer;
 	}
-
 	
 	public String getPoster() {
 		return poster;
@@ -108,12 +109,31 @@ public class Movie {
 		this.poster = poster;
 	}
 
+	public Date getCreatedDate() {
+		return createdDate;
+	}
+
+	public void setCreatedDate(Date createdDate) {
+		this.createdDate = createdDate;
+	}
+
+	public Date getUpdatedDate() {
+		return updatedDate;
+	}
+
+	public void setUpdatedDate(Date updatedDate) {
+		this.updatedDate = updatedDate;
+	}
+
 	@Override
 	public String toString() {
 		return "Movie [no=" + no + ", title=" + title + ", titleEn=" + titleEn + ", rate=" + rate + ", runtime="
 				+ runtime + ", openDate=" + openDate + ", customerRating=" + customerRating + ", totalAudience="
-				+ totalAudience + ", summary=" + summary + ", producer=" + producer + ", poster=" + poster + "]";
+				+ totalAudience + ", summary=" + summary + ", producer=" + producer + ", poster=" + poster
+				+ ", createdDate=" + createdDate + ", updatedDate=" + updatedDate + "]";
 	}
+
+	
 
 	
 }

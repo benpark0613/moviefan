@@ -22,11 +22,13 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.google.gson.Gson;
 import com.google.gson.internal.LinkedTreeMap;
 import com.jhta.moviefan.form.MovieInsertForm;
+import com.jhta.moviefan.pagination.Pagination;
 import com.jhta.moviefan.vo.Genre;
 import com.jhta.moviefan.vo.Movie;
 import com.jhta.moviefan.vo.MovieActor;
@@ -66,17 +68,31 @@ public class AdminController {
 	}
 	
 	@GetMapping("movie/list")
-	public String movie() {
+	public String list(@RequestParam(name = "page", required = false, defaultValue = "1") String page, 
+			Model model) {
+		logger.info("요청 페이지번호 : " + page);
+		
+		int totalRecords = movieService.getMoviesTotalRows();
+		Pagination pagination = new Pagination(page, totalRecords);
+		
+		int beginIndex = pagination.getBegin();
+		int endIndex = pagination.getEnd();
+		
+		List<Movie> movies = movieService.getMovies(beginIndex, endIndex);
+		
+		model.addAttribute("movies", movies);
+		model.addAttribute("pagination", pagination);
+		
 		return "admin/movie/list";
 	}
 	
 	@GetMapping("movie/search")
-	public String searchMovie() {
+	public String search() {
 		return "admin/movie/search";
 	}
 	
 	@PostMapping("/movie/insert")
-	public String insertMovie(MovieInsertForm form) throws IOException {
+	public String insert(MovieInsertForm form) throws IOException {
 		logger.debug("입력폼 정보: " + form);
 		String saveDirectory = "C:\\workspace\\workspace-moviefan\\moviefan\\src\\main\\webapp\\resources\\images\\movie";
 
