@@ -3,6 +3,7 @@
 import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import com.jhta.moviefan.vo.Actor;
 import com.jhta.moviefan.vo.Director;
@@ -18,6 +19,9 @@ import com.jhta.moviefan.vo.Movie_Rate;
 @Mapper
 public interface MovieDao {
   
+	int getMoviesTotalRows();
+	List<Movie> getAllMovies();
+	List<Movie> getMovies(@Param("beginIndex") int beginIndex, @Param("endIndex") int endIndex);
 	Movie getMovieByMovieNo(int movieNo);
 	List<MovieImage> getMovieImageByMovieNo(int movieNo);
 	List<MovieTrailer> getMovieTrailerByMovieNo(int movieNo);
@@ -33,6 +37,7 @@ public interface MovieDao {
 	void insertMovieRate(Movie_Rate rate);
 	void insertMovieGenre(MovieGenre movieGenre);
 	void insertMovieImage(MovieImage movieImage);
+	void insertMovieTrailer(MovieTrailer movieTrailer);
 	
 	void updateMovie(Movie movie);
 }

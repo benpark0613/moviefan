@@ -2,19 +2,47 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.jhta.moviefan.dao.MovieDao">
 
-	<resultMap type="com.jhta.moviefan.vo.Movie" id="MovieResultMap">
-		<id column="MOIVE_NO"	property="no"/>
-		<result column="MOVIE_TITLE" property="title"/>
-		<result column="MOVIE_TITLE_EN" property="titleEn"/>
-		<result column="MOVIE_RATE" property="rate"/>
-		<result column="MOVIE_RUNTIME" property="runtime"/>
-		<result column="MOVIE_OPEN_DATE" property="openDate"/>
-		<result column="MOVIE_USER_RATING" property="customerRating"/>
-		<result column="MOVIE_TOTAL_AUDIENCE" property="totalAudience"/>
-		<result column="MOVIE_SUMMARY" property="summary"/>
-		<result column="MOVIE_PRODUCER" property="producer"/>
-		<result column="MOVIE_POSTER" property="poster"/>
+	<resultMap id="MovieResultMap" type="com.jhta.moviefan.vo.Movie">
+		<id column="MOIVE_NO"					property="no"/>
+		<result column="MOVIE_TITLE" 			property="title"/>
+		<result column="MOVIE_TITLE_EN" 		property="titleEn"/>
+		<result column="MOVIE_RATE" 			property="rate"/>
+		<result column="MOVIE_RUNTIME" 			property="runtime"/>
+		<result column="MOVIE_OPEN_DATE" 		property="openDate"/>
+		<result column="MOVIE_USER_RATING" 		property="customerRating"/>
+		<result column="MOVIE_TOTAL_AUDIENCE" 	property="totalAudience"/>
+		<result column="MOVIE_SUMMARY" 			property="summary"/>
+		<result column="MOVIE_PRODUCER" 		property="producer"/>
+		<result column="MOVIE_POSTER" 			property="poster"/>
+		<result column="MOVIE_CREATED_DATE"		property="createdDate"/>
+		<result column="MOVIE_UPDATED_DATE"		property="updatedDate"/>	
 	</resultMap>
+	
+	<select id="getMoviesTotalRows" resultType="int">
+		select 
+			count(*)
+		from
+			movie
+	</select>
+	
+	<select id="getAllMovies" resultMap="MovieResultMap">
+		select
+			*
+		from movie
+		order by
+			movie_created_date desc
+	</select>
+	
+	<select id="getMovies" resultMap="MovieResultMap">
+		select
+			*
+		from (
+			select A.*, row_number() over (order by movie_created_date desc) rn
+			from movie A
+		)
+		where 
+			rn between #{beginIndex} and #{endIndex}
+	</select>
 	
 	<select id="getMovieByMovieNo" parameterType="int" resultMap="MovieResultMap">
 		select *
@@ -110,7 +138,12 @@
 		(#{movieNo}, #{filename})
 	</insert>
 	
-
+	<insert id="insertMovieTrailer" parameterType="com.jhta.moviefan.vo.MovieTrailer">
+		insert into movie_trailer
+		(movie_no, movie_trailer_title, movie_trailer_url_address)
+		values
+		(#{movieNo}, #{title}, #{urlAddress})
+	</insert>
 	
 	
 	

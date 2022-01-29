@@ -19,13 +19,73 @@
 <body>
 <%@ include file="/WEB-INF/views/admin/common/header.jsp" %>
 <div class="container">
-	<div class="row my-3">
+	<div class="row mb-3">
 		<div class="col">
-			<h1>영화목록</h1>
+			<h1>영화DB</h1>
 		</div>	
 	</div>
-
+	<div class="row mb-3">
+		<div class="col">
+			<div class="row">
+				<span class="text-start">총 <strong id="totalRecords">${pagination.totalRecords}</strong>건</span>
+			</div>
+			<table class="table" id="table-movie">
+				<thead>
+					<tr>
+						<th class="col-5 text-center">영화명</th>
+						<th class="col-5 text-center">영화명(영문)</th>
+						<th class="col-2 text-center">개봉일</th>
+					</tr>
+				</thead>
+				<tbody>
+				<c:choose>
+					<c:when test="${empty movies }">
+						<tr>
+							<td class="text-center" colspan="7">등록된 영화가 없습니다</td>
+						</tr>
+					</c:when>
+					<c:otherwise>
+						<c:forEach var="movie" items="${movies }" varStatus="loop">
+							<tr>
+								<td class="text-start">${movie.title }</td>
+								<td class="text-start">${movie.titleEn }</td>
+								<td class="text-center">${movie.openDate }</td>
+							</tr>
+						</c:forEach>					
+					</c:otherwise>				
+				</c:choose>
+				</tbody>
+			</table>
+		</div>
+	</div>
+	<!-- 페이지네이션 -->
+	<div class="row mb-3">
+		<div class="col">
+		<c:if test="${pagination.totalRecords gt 0 }">
+			<nav>
+				<ul class="pagination justify-content-center">
+					<li class="page-item ${pagination.existPrev ? '' : 'disabled' }">
+						<a class="page-link" href="list?page=${pagination.prevPage }">이전</a>
+					</li>
+					<c:forEach var="num" begin="${pagination.beginPage }" end="${pagination.endPage }">
+						<li class="page-item ${pagination.pageNo eq num ? 'active' : '' }">
+							<a class="page-link" href="list?page=${num }">${num }</a>
+						</li>
+					</c:forEach>
+					<li class="page-item ${pagination.existNext ? '' : 'disabled' }">
+						<a class="page-link" href="list?page=${pagination.nextPage }">다음</a>
+					</li>
+				</ul>
+			</nav>
+		</c:if>		
+		</div>
+	</div>
+	<!-- 영화상세정보 모달 -->
+	<!-- 트레일러 추가 모달 -->
 </div>
+<script type="text/javascript">
+
+</script>
 <%@ include file="/WEB-INF/views/common/footer.jsp" %>
 </body>
 </html>
