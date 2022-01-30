@@ -262,7 +262,7 @@
 					<p>회원의 정보를 안전하게 보호하기 위해 비밀번호를 다시 한번 확인 합니다.</p>	
 				</div>
 				<div class="row">
-					<form class="col-6 offset-3 border p-4 mb-5 bg-light w-50" method="post" action="check-password">
+					<form class="col-6 offset-3 border p-4 mb-5 bg-light w-50" method="post" action="modifyform">
 						<div class="mb-3 row">
 							<label class="col-3 col-form-label">아이디</label>
 						    <div class="col-9">
@@ -290,7 +290,7 @@
 					<p>회원의 정보를 안전하게 보호하기 위해 비밀번호를 다시 한번 확인 합니다.</p>	
 				</div>
 				<div class="row">
-					<form class="col-6 offset-3 border p-4 mb-5 bg-light w-50" method="post" action="check-withdrawal-password">
+					<form class="col-6 offset-3 border p-4 mb-5 bg-light w-50" method="post" action="check-withdrawal">
 						<div class="mb-3 row">
 							<label class="col-3 col-form-label">아이디</label>
 						    <div class="col-9">

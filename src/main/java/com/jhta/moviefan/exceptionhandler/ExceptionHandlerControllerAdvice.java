@@ -25,38 +25,36 @@ import com.jhta.moviefan.exception.RestLoginErrorException;
 public class ExceptionHandlerControllerAdvice {
 	
 	// rest 응답
-	@ExceptionHandler
-	public @ResponseBody ResponseDto<?> handleRestLoginErrorException(RestLoginErrorException e, Model model) {
+	@ExceptionHandler(RestLoginErrorException.class)
+	public @ResponseBody ResponseDto<?> handleRestLoginErrorException(RestLoginErrorException e) {
 		ResponseDto<?> response = new ResponseDto<>();
 		response.setStatus("FAIL");
-		response.setError("로그인 후 사용가능한 서비스 입니다.");
+		response.setError(e.getMessage());
 		
 		return response;
 	}
 	
 	// 에러페이지 응답
 	@ExceptionHandler(LoginErrorException.class)
-	public String handleLoginErrorException(LoginErrorException e, Model model) {
-		e.printStackTrace();
-		model.addAttribute("error", e.getMessage());
-		return "/error/loginError";
+	public String handleLoginErrorException(LoginErrorException e) {
+		return "error/loginerror";
 	}
 	
 	@ExceptionHandler(CustomException.class)
 	public String handleCustomException(CustomException e) {
 		e.printStackTrace();
-		return "/error/customError";
+		return "error/customerror";
 	}
 	
 	@ExceptionHandler(DataAccessException.class)
 	public String handleDataAccessException(DataAccessException e) {
 
-		return "/error/databaseError";
+		return "error/databaseerror";
 	}
 
 	@ExceptionHandler(Exception.class)
 	public String handleException(Exception e) {
 		e.printStackTrace();
-		return "/error/serverError";
+		return "error/servererror";
 	}
 }

@@ -69,7 +69,7 @@
 								</a>
 							</li>
 							<li>
-								<a href="/member/join" class="nav-link text-secondary">
+								<a href="/join" class="nav-link text-secondary">
 									<i class="bi bi-person-plus d-flex justify-content-center" style="font-size: 2rem;"></i> 회원가입
 								</a>
 							</li>
@@ -142,24 +142,33 @@ $(function() {
 		event.preventDefault();
 		loginModal.show();
 		
+		// 일반 로그인
 		$('#button-normal-login').click(function(event) {
 			event.preventDefault();
 			
-			var $id = $('#form-normal-login input[name=id]');
-			var $password = $('#form-normal-login input[name=password]');
+			let $id = $('#form-normal-login input[name=id]').val();
+			let $password = $('#form-normal-login input[name=password]').val();
 			
-			if ($id.val().trim() === null || $id.val().trim() === "") {
+			if ($id.trim() === null || $id.trim() === "") {
 				alert("아이디를 입력해주세요.");
 				return false;
 			}
-			if ($password.val().trim() === null || $password.val().trim() === "") {
+			if ($password.trim() === null || $password.trim() === "") {
 				alert("비밀번호를 입력해주세요.");
 				return false;
 			}
-		
-			$('form[action="login"]').submit();
+			
+			$.post("/rest/home/logincheck", {id:$id, password:$password}, function(response) {
+				if (response.status == "FAIL") {
+					alert(response.error);
+				} else {
+					window.location.href = "/home";
+				}
+			})
+			
 		});
 		
+		// 카카오 로그인
 		$('#btn-kakao-login').click(function(event) {
 			event.preventDefault();
 			// 사용자키 전달, 카카오 로그인 서비스 초기화

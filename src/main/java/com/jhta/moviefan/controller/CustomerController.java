@@ -34,43 +34,18 @@ public class CustomerController {
 	@Autowired
 	private CustomerService customerService;
 	
-	/**
-	 * 회원가입과 관련된 요청핸들러 메소드
-	 * @return
-	 */
-	@GetMapping("/join")
-	public String join() {
-		return "/member/join";
+	// MY MVF
+	@GetMapping("/myaccount")
+	public String myAccount(@LoginedCustomer Customer customer, Model model) {
+		List<Movie> wishMovies = customerService.getCustomerMovieWishList(customer.getNo());
+			
+		model.addAttribute("wishMovies", wishMovies);
+			
+		return "member/myaccount";
 	}
-	
-	@GetMapping("/registerform")
-	public String registerForm() {
-		return "/member/registerform";
-	}
-	
-	@PostMapping("/register")
-	public String register(CustomerRegisterForm form, RedirectAttributes redirectAttributes) {
-		Customer customer = new Customer();
-		BeanUtils.copyProperties(form, customer);
-		
-		customerService.registerCustomer(customer);
-		redirectAttributes.addFlashAttribute("customer", customer);
-		
-		return "redirect:/member/completed";
-	}
-	
-	@GetMapping("/completed")
-	public String completed(RedirectAttributes redirectAttributes) {
-		return "/member/completed";
-	}
-	
-	/**
-	 * 내 정보와 관련된 요청핸들러 메소드
-	 * @param customer
-	 * @param model
-	 * @return
-	 */
-	@PostMapping("/check-password")
+
+	// 내 정보와 관련된 요청핸들러메소드
+	@PostMapping("/modifyform")
 	public String checkPassword(@LoginedCustomer Customer customer, @Param("id") String id, @Param("password") String password) {
 		if (!customer.getId().equals(id)) {
 			throw new LoginErrorException("아이디를 확인해주세요.");
@@ -80,30 +55,26 @@ public class CustomerController {
 			throw new LoginErrorException("비밀번호가 일치하지 않습니다.");
 		}
 		
-		return "/member/myinfo/modifyform";
+		return "member/myinfo/modifyform";
 	}
 	
-	@GetMapping("/myinfo/modifyform")
-	public String modify() {
-		return "/member/myinfo/modifyform";
-	}
 	
 	@PostMapping("/myinfo/modify-customer-info")
 	public String modifyCustomerInfo(@LoginedCustomer Customer customer, CustomerRegisterForm modifyform) {
 		BeanUtils.copyProperties(modifyform, customer);
-		
 		customerService.updateCustomerInfo(customer);
+		
+		SessionUtils.removeAttribute("LOGINED_CUSTOMER");
 		
 		return "redirect:/member/myinfo/modifycompleted";
 	}
 	
 	@GetMapping("/myinfo/modifycompleted")
 	public String modifyCompleted() {
-		SessionUtils.removeAttribute("LOGINED_CUSTOMER");
-		return "/member/myinfo/modifycompleted";
+		return "member/myinfo/modifycompleted";
 	}
 		
-	@PostMapping("/check-withdrawal-password")
+	@PostMapping("/check-withdrawal")
 	public String checkWithdrawalPassword(@LoginedCustomer Customer customer, @Param("id") String id, @Param("password") String password) {
 		if (!customer.getId().equals(id)) {
 			throw new LoginErrorException("아이디를 확인해주세요.");
@@ -116,20 +87,18 @@ public class CustomerController {
 		return "/member/myinfo/checkwithdrawal";
 	}
 	
-	@GetMapping("/myinfo/checkwithdrawal")
-	public String checkWithdrawalForm(@LoginedCustomer Customer customer) {
-		return "/member/myinfo/checkwithdrawal";
-	}
-	
-	@PostMapping("/myinfo/withdrawal-agree")
+	@PostMapping("/withdrawal-agree")
 	public String withdrawal(@LoginedCustomer Customer customer) {
 		customerService.deleteCustomerInfo(customer.getNo());
+		
+		SessionUtils.removeAttribute("LOGINED_CUSTOMER");
+		
 		return "redirect:/member/myinfo/withdrawal-completed";
 	}
 	
 	@GetMapping("/myinfo/withdrawal-completed")
 	public String withdrawalCompleted() {
-		return "/member/myinfo/withdrawal-completed";
+		return "member/myinfo/withdrawal-completed";
 	}
 	
 }
