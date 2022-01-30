@@ -37,6 +37,7 @@ public class ExceptionHandlerControllerAdvice {
 	// 에러페이지 응답
 	@ExceptionHandler(LoginErrorException.class)
 	public String handleLoginErrorException(LoginErrorException e) {
+		e.printStackTrace();
 		return "error/loginerror";
 	}
 	
