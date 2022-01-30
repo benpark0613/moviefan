@@ -30,7 +30,7 @@ public class HomeController {
 		return "home";
 	}
 	
-//	일반 로그인 요청 처리
+//	일반 로그인 요청 처리 (HomeRestController 에서 처리)
 //	@PostMapping("**/login")
 //	public String login(String id, String password, RedirectAttributes redirectAttributes) {
 //			Customer customer = customerService.login(id, password);
@@ -65,7 +65,7 @@ public class HomeController {
 		return "member/join";
 	}
 	
-	@GetMapping("/registerform")
+	@PostMapping("/registerform")
 	public String registerForm() {
 		return "member/registerform";
 	}
@@ -87,6 +87,23 @@ public class HomeController {
 		return "member/completed";
 	}
 	
+	@GetMapping("/findid")
+	public String findIdForm() {
+		return "member/findid";
+	}
+// TODO 아이디 찾기 작업 중
+//	@PostMapping("/findid")
+//	public String findId(CustomerRegisterForm form, RedirectAttributes redirectAttributes) {
+//		Customer customer = new Customer();
+//		BeanUtils.copyProperties(form, customer);
+//		
+//		customerService.
+//	}
+	
+	@GetMapping("/findpassword")
+	public String findPasswordForm() {
+		return "member/findpassword";
+	}
 	
 	
 }

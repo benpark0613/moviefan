@@ -11,9 +11,9 @@ import com.jhta.moviefan.exception.RestLoginErrorException;
 @RequestMapping("/error")
 public class ErrorController {
 
-	@RequestMapping("/login")
-	public String loginform() {
-		throw new LoginErrorException("로그인 후 사용가능한 서비스 입니다.");
+	@RequestMapping("/login/loginform")
+	public String loginError() {
+		throw new LoginErrorException("로그인 후 사용가능한 서비스입니다.");
 	}
 	
 	@RequestMapping("/login/rest")

@@ -95,7 +95,9 @@ public class CustomerService {
 		}
 		return savedCustomer;
 	}
-
+//	TODO 아이디 찾기 작업중
+//	public Customer getCustomerIdByEmail() {}
+	
 	public List<Movie> getCustomerMovieWishList(int customerNo) {
 		List<CustomerMovieWishList> customerMovieWishList = customerDao.getCustomerMovieWishListByCustomerNo(customerNo);
 		
@@ -116,6 +118,5 @@ public class CustomerService {
 	public void deleteCustomerInfo(int customerNo) {
 		customerDao.deleteCustomerByNo(customerNo);
 	}
-	
 	
 }

@@ -22,11 +22,11 @@
 							<button class="btn btn-danger w-100" id="button-normal-login">로그인</button>
 						</div>
 						<div class="d-flex justify-content-center">
-							<a>아이디 찾기</a>
+							<a class="link-dark" href="/findid">아이디 찾기</a>
 							<p>&nbsp;|&nbsp;</p> 
-							<a>비밀번호 찾기</a>
+							<a class="link-dark" href="/findpassword">비밀번호 찾기</a>
 							<p>&nbsp;|&nbsp;</p> 
-							<a>회원가입</a>
+							<a class="link-dark" href="/join">회원가입</a>
 						</div>
 						<div class="d-flex justify-content-center mb-3">
 							<a id="btn-kakao-login" href="">
@@ -200,6 +200,7 @@ $(function() {
 			});
 		})
 	});
+	
 });
 </script>
 
