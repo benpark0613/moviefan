@@ -29,4 +29,9 @@ public class CinemaRestController {
 		return cinemaService.getMovieTimeTableByCinemaNo(cinemaNo);
 	}
 	
+	@GetMapping("/modify")
+	public List<MovieTimeTableDto> modify(int cinemaNo) {
+		return cinemaService.getMovieTimeTableByCinemaNo(cinemaNo);
+	}
+	
 }

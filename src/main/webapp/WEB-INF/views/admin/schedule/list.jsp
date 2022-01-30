@@ -61,17 +61,14 @@
    	</div>
 
 	<!-- 선택한 영화관에서 현재 상영중인 영화 목록 -->
-	<div class="mt-5 mb-5">
-		<div>
-			<span>MVF 강변</span> :: <span>총 상영관 수</span>/  <span>현재 상영중인 영화 수</span>
-		</div>
+	<div id="list" class="mt-5 mb-5">
 		<table id="timetable" class="table row w-auto">
 			<thead>
 		    	<tr>
-		      		<th>상영관 이름</th>
+		      		<th>상영관</th>
 		      		<th>영화제목</th>
 		      		<th>개봉일</th>
-		      		<th>상영 시작일</th>
+		      		<th>상영시작일</th>
 		      		<th>상영시간</th>
 		      		<th>상영중</th>
 		      		<th>수정</th>
@@ -110,13 +107,11 @@
 		// 지역이 변경될때마다 실행될 이벤트 핸들러 함수 
 		$('#city-select').change(function () {
 			let no = $(this).val();
-			
 			let $select = $("#cinema-select").empty();
 			
 			$.getJSON("/rest/cinema/list", {cityNo:no}, function (cinemaList) {
 				// [{no:10, name:"신촌점"}, {no:11, name:"홍대점"}]
 				$.each (cinemaList, function(index, cinema) {
-					
 					let option = '<option value="' + cinema.no + '">' + cinema.name + '</option>';
 					
 					$select.append(option);
@@ -127,38 +122,35 @@
 		// 상영관이 변경될 때마다 실행될 이벤트 핸들러 함수
 		// http://localhost/rest/cinema/timetable?cinemaNo=342
 		$('#cinema-select').change(function () {
-			
-			$('table tbody').empty();
-			
+			$('#timetable tbody').empty();
 			let cinemaNo = $(this).val();
 			
 			$.getJSON("/rest/cinema/timetable", {cinemaNo:cinemaNo}, function (timetableList) {
 				
-				if (timetableList === " ") {
-					$('table tbody').append('<tr><td class="text-center" colspan="7">' + '상영일정이 존재하지 않습니다.' + '</td></tr>');
-					return;
-				}
-				
+				if (timetableList.length == 0) {
+					let row = '<tr>'
+						+ '<td class="text-center" colspan="7">해당 영화관의 상영일정이 존재하지 않습니다.</td>'
+						+ '</tr>';
+						$('#timetable tbody').append(row);
+				} else {
 					$.each (timetableList, function (index, timetable) {
-						
-						
-						
-						let table = '<tr>'
-							table += '<td>' + timetable.cinemaName + '<td>'
-							table += '<td>' + timetable.title + '<td>'
-							table += '<td>' + timetable.openDate + '<td>'
-							table += '<td>' + timetable.showDate + '<td>'
-							table += '<td>' + timetable.startTime + ' ~ ' + timetable.endTime + '<td>'
-							table += '<td>' + '상영중' + '<td>'
-							table += '<td><a href="/admin/schedule/modify" class="btn btn-outline-primary btn-sm">' + '수정' + '</a></td>'
-							table += '</tr>';
+
+						let result = '<tr>'
+							result += '<td>' + timetable.hallName + '<td>'
+							result += '<td>' + timetable.title + '<td>'
+							result += '<td>' + timetable.openDate + '<td>'
+							result += '<td>' + timetable.showDate + '<td>'
+							result += '<td>' + timetable.startTime + ' ~ ' + timetable.endTime + '<td>'
+							result += '<td>' + '상영중' + '<td>'
+							result += '<td><a href="/admin/schedule/modify?cinemaNo=' + cinemaNo + '" class="btn btn-outline-primary btn-sm">수정</a></td>'
+							result += '</tr>';
 							
-						$('#timetable tbody').append(table);
+						$('#timetable tbody').append(result);
 					})
-				})
+				}	
 			})
-		})	
-	
+		})
+	})	
 
 </script>
 </html>

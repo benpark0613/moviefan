@@ -9,10 +9,10 @@ public class MovieTimeTableDto {
 	private String title;			// 영화 제목
 	//private String genre;			// 장르
 	private int runtime;			// 러닝타임
-	private String openDate;			// 개봉일
+	private String openDate;		// 개봉일
 	//private String genre;			// 장르
-	private String showDate;			// 상영일
-	private String startTime;			// 상영 시작시간
+	private String showDate;		// 상영일
+	private String startTime;		// 상영 시작시간
 	private String endTime;			// 상영 종료시간
 	//private int totalSeats;		// 상영관 전체 좌석수
 	//private int reservedSeats;	// 상영관 예약 좌석수

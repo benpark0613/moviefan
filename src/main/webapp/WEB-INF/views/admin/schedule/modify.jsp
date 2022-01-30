@@ -31,7 +31,7 @@
 		</div>
 	</div>
 	 <!-- 선택한 상영정보 표시 -->
-	 <h3>선택한 영화관 이름 | 상영관 | 몇시에 상영중/ 상영예정</h3>
+	 <h3>${timetable.cinemaName } | ${param.cinemaNo } | 몇시에 상영중/ 상영예정</h3>
 	 <div class="row g-2">
 		 <!-- 영화 간단정보, readonly -->
 		 <div class="col-5 px-5 mx-2">
@@ -39,9 +39,9 @@
 		 		<img src="/resources/images/movie/spiderman.png">
 		 	</div>
 			<div class="row mb-3">
-		    	<label for="inputEmail3" class="col-sm-3 col-form-label">제목</label>
+		    	<label for="inputEmail3" class="col-sm-3 col-form-label">영화 제목</label>
 		    	<div class="col-sm-10">
-		      		<input type="text" readonly class="form-control-plaintext" value="스파이더맨 : 노 웨이 홈" id="inputEmail3">
+		      		<input type="text" readonly class="form-control-plaintext" value="스파이더맨" id="inputEmail3">
 		    	</div>
 		  	</div>
 		  	<div class="row mb-3">
@@ -57,7 +57,8 @@
 				<label for="exampleDataList" class="form-label">상영영화 변경</label>
 				<div class="col-sm-10">
 					<input class="form-control" list="datalistOptions" id="exampleDataList" placeholder="영화 검색">
-					<datalist id="datalistOptions">
+					<!-- 상영중인 영화 리스트 -->
+					<datalist id="movie-options">
 						<option value="San Francisco">
 					  	<option value="New York">
 					  	<option value="Seattle">
@@ -67,9 +68,9 @@
 				</div>
 		  	</div>
 		 	<div class="row mb-3">
-		    	<label for="inputEmail3" class="form-label">상영일 변경</label>
+		    	<label for="show-date" class="form-label">상영일 변경</label>
 		    	<div class="col-sm-10">
-		      		<input type="date" class="form-control" id="inputEmail3">
+		      		<input type="date" class="form-control" id="show-date">
 		    	</div>
 		  	</div>
 		  	<div class="row mb-3">

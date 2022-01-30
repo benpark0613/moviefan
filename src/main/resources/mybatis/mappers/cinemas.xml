@@ -74,6 +74,8 @@
 		    d.movie_no = e.movie_no
 		and
 			b.cinema_no = #{value}
+		order by
+			c.hall_no asc
 	</select>
 
 </mapper>
