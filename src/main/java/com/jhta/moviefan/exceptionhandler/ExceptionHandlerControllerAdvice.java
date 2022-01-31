@@ -38,7 +38,7 @@ public class ExceptionHandlerControllerAdvice {
 	@ExceptionHandler(LoginErrorException.class)
 	public String handleLoginErrorException(LoginErrorException e) {
 		e.printStackTrace();
-		return "error/loginerror";
+		return "member/loginform";
 	}
 	
 	@ExceptionHandler(CustomException.class)

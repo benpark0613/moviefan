@@ -20,7 +20,7 @@
 		</div>
 	</div>
 	<div class="d-flex justify-content-center">
-		<form class="border p-3 bg-white w-50" method="get" action="registerform">
+		<form class="border p-3 bg-white w-50" method="post" action="registerform">
 			<div class="row">
 				<h3 class="text-center">
 					<strong>약관동의</strong>
@@ -28,12 +28,14 @@
 			</div>
 			<div class="d-flex justify-content-between mb-2">
 				<div class="form-check">
-					<label for="agree-all">회원약관에 모두 동의합니다.</label> <input class="form-check-input" type="checkbox" value="1">
+					<label for="agree-all">회원약관에 모두 동의합니다.</label> 
+					<input class="form-check-input" type="checkbox" value="all" id="check-all">
 				</div>
 			</div>
 			<div class="d-flex justify-content-between mb-2">
 				<div class="form-check">
-					<label for="agree-1">이용약관 동의&nbsp;<span class="text-danger">(필수)</span></label> <input class="form-check-input" type="checkbox" value="1">
+					<label for="agree-1">이용약관 동의&nbsp;<span class="text-danger">(필수)</span></label> 
+					<input class="form-check-input" type="checkbox" name="check" value="1">
 				</div>
 			</div>
 			<div class="d-flex justify-content-center mb-2">
@@ -276,7 +278,8 @@
 			</div>
 			<div class="d-flex justify-content-between mb-2">
 				<div class="form-check">
-					<label for="agree-2">개인정보 수집 및 이용 동의&nbsp;<span class="text-danger">(필수)</span></label> <input class="form-check-input" type="checkbox" value="1">
+					<label for="agree-2">개인정보 수집 및 이용 동의&nbsp;<span class="text-danger">(필수)</span></label> 
+					<input class="form-check-input" type="checkbox" name="check" value="2">
 				</div>
 			</div>
 			<div class="d-flex justify-content-center mb-4">
@@ -419,15 +422,65 @@
 			</div>
 			<div class="row">
 				<div class="d-grid gap-1 col-6 mx-auto">
-					<a class="btn btn-danger" href="/registerform">확인</a>
+					<a class="btn btn-danger" href="/registerform" id="agree">확인</a>
 				</div>
 				<div class="d-grid gap-1 col-6 mx-auto">
-					<a class="btn btn-light" href="/home">취소</a>
+					<a class="btn btn-light" href="/home" id="cancle">취소</a>
 				</div>
 			</div>
 		</form>
 	</div>
 </div>
+<script type="text/javascript">
+$(function() {
+	
+	// 체크박스 상호작용
+	$('#check-all').click(function() {
+		if ($('#check-all').prop('checked')) {
+			$('input[name=check]').prop('checked', true);
+		} else {
+			$('input[name=check]').prop('checked', false);
+		}
+	});
+	
+	$('input[name=check]').click(function() {
+		let total = $('input[name=check]').length;
+		let checked = $('input[name=check]:checked').length;
+		
+		if (total != checked) {
+			$('#check-all').prop('checked', false);
+		} else {
+			$('#check-all').prop('checked', true);
+		}
+	});
+	
+	// 사용자 동의 여부 확인
+	$('#agree').click(function(event) {
+		event.preventDefault();
+		
+		if ($('input[name=check]').prop('checked') == false) {
+			alert('회원약관 동의는 필수입니다.');
+			return false;
+		}
+		
+		$('form[action=registerform]').submit();
+	});
+	
+})
+</script>
 <%@ include file="/WEB-INF/views/common/footer.jsp"%>
 </body>
 </html>
+
+
+
+
+
+
+
+
+
+
+
+
+
