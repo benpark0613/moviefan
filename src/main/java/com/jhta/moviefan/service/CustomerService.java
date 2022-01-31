@@ -15,6 +15,7 @@ import com.jhta.moviefan.controller.HomeController;
 import com.jhta.moviefan.dao.CustomerDao;
 import com.jhta.moviefan.dao.MovieDao;
 import com.jhta.moviefan.exception.RestLoginErrorException;
+import com.jhta.moviefan.exception.RestRegisterErrorException;
 import com.jhta.moviefan.vo.Customer;
 import com.jhta.moviefan.vo.CustomerMovieWishList;
 import com.jhta.moviefan.vo.Movie;
@@ -29,25 +30,26 @@ public class CustomerService {
 	@Autowired
 	private MovieDao movieDao;
 	
+	// 일반 회원가입
 	public Customer registerCustomer(Customer customer) {
 		Customer savedCustomer = customerDao.getCustomerById(customer.getId());
 		if (savedCustomer != null) {
-			throw new RuntimeException("사용할 수 없는 아이디입니다.");
+			throw new RestRegisterErrorException("중복되는 아이디입니다.");
 		}
 		
 		savedCustomer = customerDao.getCustomerByEmail(customer.getEmail());
 		if (savedCustomer != null) {
-			throw new RuntimeException("사용할 수 없는 이메일입니다.");
+			throw new RestRegisterErrorException("중복되는 이메일입니다.");
 		}
 		
 		savedCustomer = customerDao.getCustomerByNickName(customer.getNickName());
 		if (savedCustomer != null) {
-			throw new RuntimeException("사용할 수 없는 닉네임입니다.");
+			throw new RestRegisterErrorException("중복되는 닉네임입니다.");
 		}
 		
 		savedCustomer = customerDao.getCustomerByPhoneNumber(customer.getPhoneNumber());
 		if (savedCustomer != null) {
-			throw new RuntimeException("사용할 수 없는 전화번호입니다.");
+			throw new RestRegisterErrorException("중복되는 전화번호입니다.");
 		}
 		
 		customerDao.insertCustomer(customer);
@@ -95,8 +97,23 @@ public class CustomerService {
 		}
 		return savedCustomer;
 	}
-//	TODO 아이디 찾기 작업중
-//	public Customer getCustomerIdByEmail() {}
+	
+	public Customer getCustomerById(String id) {
+		Customer savedCustomer = customerDao.getCustomerById(id);
+		return savedCustomer;
+	}
+	public Customer getCustomerByNickName(String nickName) {
+		Customer savedCustomer = customerDao.getCustomerByNickName(nickName);
+		return savedCustomer;
+	}
+	public Customer getCustomerByEmail(String email) {
+		Customer savedCustomer = customerDao.getCustomerByEmail(email);
+		return savedCustomer;
+	}
+	public Customer getCustomerByPhoneNumber(String phoneNumber) {
+		Customer savedCustomer = customerDao.getCustomerByPhoneNumber(phoneNumber);
+		return savedCustomer;
+	}
 	
 	public List<Movie> getCustomerMovieWishList(int customerNo) {
 		List<CustomerMovieWishList> customerMovieWishList = customerDao.getCustomerMovieWishListByCustomerNo(customerNo);

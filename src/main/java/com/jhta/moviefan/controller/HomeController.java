@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.jhta.moviefan.annotation.LoginedCustomer;
+import com.jhta.moviefan.exception.LoginErrorException;
 import com.jhta.moviefan.form.CustomerRegisterForm;
 import com.jhta.moviefan.form.KakaoLoginForm;
 import com.jhta.moviefan.service.CustomerService;
@@ -29,16 +30,6 @@ public class HomeController {
 	public String home() {
 		return "home";
 	}
-	
-//	일반 로그인 요청 처리 (HomeRestController 에서 처리)
-//	@PostMapping("**/login")
-//	public String login(String id, String password, RedirectAttributes redirectAttributes) {
-//			Customer customer = customerService.login(id, password);
-//			SessionUtils.addAttribute("LOGINED_CUSTOMER", customer);
-//			
-//			return "redirect: /home";				
-//			
-//	}
 	
 	// 카카오 로그인 요청 처리
 	@PostMapping("**/kakao-login")
@@ -91,19 +82,45 @@ public class HomeController {
 	public String findIdForm() {
 		return "member/findid";
 	}
-// TODO 아이디 찾기 작업 중
-//	@PostMapping("/findid")
-//	public String findId(CustomerRegisterForm form, RedirectAttributes redirectAttributes) {
-//		Customer customer = new Customer();
-//		BeanUtils.copyProperties(form, customer);
-//		
-//		customerService.
-//	}
+	
+	@PostMapping("/findid")
+	public String findId(CustomerRegisterForm form, RedirectAttributes redirectAttributes) {
+		Customer savedCustomer = customerService.getCustomerByEmail(form.getEmail());
+		
+		redirectAttributes.addFlashAttribute("customer", savedCustomer);
+		return "redirect:/member/findcompleted";
+	}
+	
+	@GetMapping("/member/findcompleted")
+	public String findCompleted() {
+		return "member/findcompleted";
+	}
 	
 	@GetMapping("/findpassword")
 	public String findPasswordForm() {
 		return "member/findpassword";
 	}
 	
+	@PostMapping("/findpassword")
+	public String findPassword(CustomerRegisterForm form, RedirectAttributes redirectAttributes) {
+		Customer savedCustomer = customerService.getCustomerById(form.getId());
+		
+		redirectAttributes.addFlashAttribute("customer", savedCustomer);
+		return "redirect:/member/newpassword";
+	}
+
+	@PostMapping("**/newpassword")
+	public String changePassword(CustomerRegisterForm form) {
+		Customer savedCustomer = customerService.getCustomerByEmail(form.getEmail());
+		savedCustomer.setPassword(form.getPassword());
+		customerService.updateCustomerInfo(savedCustomer);
+		
+		return "redirect:/member/myinfo/modifycompleted";
+	}
+	
+	@GetMapping("/member/newpassword")
+	public String newPassword() {
+		return "member/newpassword";
+	}
 	
 }

@@ -11,6 +11,7 @@ import com.jhta.moviefan.dto.ResponseDto;
 import com.jhta.moviefan.exception.CustomException;
 import com.jhta.moviefan.exception.LoginErrorException;
 import com.jhta.moviefan.exception.RestLoginErrorException;
+import com.jhta.moviefan.exception.RestRegisterErrorException;
 
 /**
  * 예외처리를 담당하는 controllerAdvice다.
@@ -27,6 +28,15 @@ public class ExceptionHandlerControllerAdvice {
 	// rest 응답
 	@ExceptionHandler(RestLoginErrorException.class)
 	public @ResponseBody ResponseDto<?> handleRestLoginErrorException(RestLoginErrorException e) {
+		ResponseDto<?> response = new ResponseDto<>();
+		response.setStatus("FAIL");
+		response.setError(e.getMessage());
+		
+		return response;
+	}
+	
+	@ExceptionHandler(RestRegisterErrorException.class)
+	public @ResponseBody ResponseDto<?> handleRestRegisterErrorException(RestRegisterErrorException e) {
 		ResponseDto<?> response = new ResponseDto<>();
 		response.setStatus("FAIL");
 		response.setError(e.getMessage());

@@ -20,7 +20,7 @@
 		</div>
 	</div>
 	<div class="d-flex justify-content-center">
-		<form class="border p-4 mb-5 bg-white w-50" method="post" action="register">
+		<form class="border p-4 mb-5 bg-white w-50" method="post" action="" id="register">
 			<div class="d-flex justify-content-between">
 				<p><strong>기본정보</strong></p>
 				<p><i class="bi bi-dot text-danger"></i>필수입력사항</p>
@@ -85,19 +85,22 @@ $(function() {
 	let getMail = RegExp(/^[A-Za-z0-9_\.\-]+@[A-Za-z0-9\-]+\.[A-Za-z0-9\-]+/);
 	let getCheck = RegExp(/^[a-zA-Z0-9]{4,20}$/);	// 4~20자, 영대소문자, 숫자 
 	let getName = RegExp(/^[가-힣]+$/);	// 한글만
+	let getNickName = RegExp(/^[ㄱ-ㅎ|가-힣|a-z|A-Z|0-9|]+$/);	// 한글, 영대소문자, 숫자
 	let getPhoneNumber = RegExp(/^[0-9]+$/);
 	
-	let $id = $('form[action=register] input[name=id]');
-	let $password = $('form[action=register] input[name=password]');
-	let $name = $('form[action=register] input[name=name]');
-	let $nickName = $('form[action=register] input[name=nickName]');
-	let $email = $('form[action=register] input[name=email]');
-	let $phoneNumber = $('form[action=register] input[name=phoneNumber]');
-	
-	$('#confirm').click(function(evenet) {
-		evenet.preventDefault();
+	$('#confirm').click(function(event) {
+		let $id = $('#register input[name=id]');
+		let $name = $('#register input[name=name]');
+		let $nickName = $('#register input[name=nickName]');
+		let $email = $('#register input[name=email]');
+		let $phoneNumber = $('#register input[name=phoneNumber]');
+		let $password = $('#register input[name=password]');
+		let $gender = $('#register input[name=gender]:checked');
+		let $birhday = $('#register input[name=birthday]');
+
+		event.preventDefault();
 		
-		if ($id.val() === '') {
+		if (!$id.val()) {
 			alert('아이디를 입력하세요.');
 			$id.focus();
 			return false;
@@ -109,7 +112,7 @@ $(function() {
 			return false;
 		}
 		
-		if ($password.val() === '') {
+		if (!$password.val()) {
 			alert('비밀번호를 입력하세요.');
 			$password.focus();
 			return false;
@@ -121,7 +124,7 @@ $(function() {
 			return false;
 		}
 		
-		if ($name.val() === '') {
+		if (!$name.val()) {
 			alert('이름을 입력하세요.');
 			$name.focus();
 			return false;
@@ -133,14 +136,16 @@ $(function() {
 			return false;
 		}
 		
-		if (!getName.test($nickName.val())) {
-			alert('닉네임은 한글만 입력 가능합니다.');
-			$nickName.val('');
-			$nickName.focus();
-			return false;
+		if ($nickName.val()) {
+			if (!getNickName.test($nickName.val())) {
+				alert('닉네임은 한글, 영문 대소문자, 숫자만 입력 가능합니다.');
+				$nickName.val('');
+				$nickName.focus();
+				return false;
+			}
 		}
 		
-		if ($email.val() === '') {
+		if (!$email.val()) {
 			alert('이메일을 입력하세요.');
 			$email.focus();
 			return false;
@@ -159,9 +164,26 @@ $(function() {
 			return false;
 		}
 		
-		$('form[action=register]').submit();
-	})
+		let form = {id:$id.val(), name:$name.val(), nickName:$nickName.val(), email:$email.val(),
+					phoneNumber:$phoneNumber.val(), password:$password.val(), gender:$gender.val(), birthday:$birhday.val()};
 	
+		let jsonForm = JSON.stringify(form);
+		
+		$.ajax({
+			type: "POST",
+			url: "/rest/home/register",
+			data: jsonForm,
+			contentType: 'application/json',
+			success: function(response) {
+				if (response.status == "FAIL") {
+					alert(response.error);
+					return;
+				} else {
+					window.location.href = "/home";					
+				}
+			}
+		})
+	});
 });
 </script>
 <%@ include file="/WEB-INF/views/common/footer.jsp"%>
