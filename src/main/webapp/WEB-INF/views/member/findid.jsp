@@ -64,8 +64,8 @@ $(function() {
 	let $name = $('form[action=findid] input[name=name]');
 	let $email = $('form[action=findid] input[name=email]');
 	
-	$('#confirm').click(function(evenet) {
-		evenet.preventDefault();
+	$('#confirm').click(function(event) {
+		event.preventDefault();
 	
 		if ($name.val() === '') {
 			alert('이름을 입력하세요.');
@@ -91,7 +91,15 @@ $(function() {
 			return false;
 		}
 		
-		$('form[action=findid]').submit();
+		$.post("/rest/home/findid", {name:$name.val(), email:$email.val()}, function(response) {
+			if (response.status == "FAIL") {
+				alert(response.error);
+				return false;
+			} else {
+				$('form[action=findid]').submit();
+			}
+		})
+		 		
 	});
 });
 </script>

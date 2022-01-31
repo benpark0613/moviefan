@@ -30,23 +30,16 @@
 		</ul>
 	</div>
 	<div class="row mt-3">
-		<form class="" method="post" action="findpassword">
+		<form class="" method="post" action="newpassword" id="changepassword">
 			<div class="col-6 offset-3">
 				<div class="d-flex justify-content-center">
+					<input type="hidden" class="form-control w-75" name="email" maxlength="25" placeholder="name@example.com" value="${customer.email }"/>
 					<table class="table" style="width: 500px;">
 						<thead></thead>
 						<tbody>
 							<tr>
-								<th class="align-middle bg-light">아이디</th>
-								<td><input type="text" class="form-control w-75" name="id" maxlength="20" placeholder="아이디를 입력해주세요."/></td>
-							</tr>
-							<tr>
-								<th class="align-middle bg-light">이름</th>
-								<td><input type="text" class="form-control w-75" name="name" maxlength="30" placeholder="이름을 입력해주세요."/></td>
-							</tr>
-							<tr>
-								<th class="align-middle bg-light">이메일</th>
-								<td><input type="email" class="form-control w-75" name="email" maxlength="25" placeholder="name@example.com"/></td>
+								<th class="align-middle bg-light">새 비밀번호</th>
+								<td><input type="password" class="form-control w-75" name="password" maxlength="20"/></td>
 							</tr>
 						</tbody>
 					</table>
@@ -62,63 +55,26 @@
 </div>
 <script type="text/javascript">
 $(function() {
-	let getMail = RegExp(/^[A-Za-z0-9_\.\-]+@[A-Za-z0-9\-]+\.[A-Za-z0-9\-]+/);
-	let getName = RegExp(/^[가-힣]+$/);	// 한글만
 	let getCheck = RegExp(/^[a-zA-Z0-9]{4,20}$/);	// 4~20자, 영대소문자, 숫자 
 	
-	let $id = $('form[action=findpassword] input[name=id]');
-	let $name = $('form[action=findpassword] input[name=name]');
-	let $email = $('form[action=findpassword] input[name=email]');
-	
 	$('#confirm').click(function(event) {
-		event.preventDefault();
+		let $password = $('#changepassword input[name=password]');
 		
-		if ($id.val() === '') {
-			alert('아이디를 입력하세요.');
-			$id.focus();
-			return false;
-		}
-		if (!getCheck.test($id.val())) {
-			alert('아이디는 4~20자 이내 영문 대소문자, 숫자만 입력 가능합니다.');
-			$id.val('');
-			$id.focus();
-			return false;
-		}
-	
-		if ($name.val() === '') {
-			alert('이름을 입력하세요.');
-			$name.focus();
+		if (!$password.val()) {
+			alert('비밀번호를 입력하세요.');
+			$password.focus();
 			return false;
 		}		
-		if (!getName.test($name.val())) {
-			alert('한글 이름을 입력해주세요.');
-			$name.val('');
-			$name.focus();
+		if (!getCheck.test($password.val())) {
+			alert('비밀번호는 4~20자 이내 영문 대소문자, 숫자만 입력 가능합니다.');
+			$password.val('');
+			$password.focus();
 			return false;
 		}
 		
-		if ($email.val() === '') {
-			alert('이메일을 입력하세요.');
-			$email.focus();
-			return false;
-		}		
-		if (!getMail.test($email.val())) {
-			alert('이메일 양식에 맞지 않습니다. 다시 확인해주세요.');
-			$email.val('');
-			$email.focus();
-			return false;
-		}
+		$('form[action=newpassword]').submit();
 		
-		$.post("/rest/home/findpassword", {name:$name.val(), email:$email.val(), id:$id.val()}, function(response) {
-			if (response.status == "FAIL") {
-				alert(response.error);
-				return false;
-			} else {
-				$('form[action=findpassword]').submit();
-			}
-		})
-		
-	});
+	})
 });
 </script>
 <%@ include file="/WEB-INF/views/common/footer.jsp" %>

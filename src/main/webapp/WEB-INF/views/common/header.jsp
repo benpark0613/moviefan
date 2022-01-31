@@ -161,6 +161,7 @@ $(function() {
 			$.post("/rest/home/logincheck", {id:$id, password:$password}, function(response) {
 				if (response.status == "FAIL") {
 					alert(response.error);
+					return false;
 				} else {
 					window.location.href = "/home";
 				}
