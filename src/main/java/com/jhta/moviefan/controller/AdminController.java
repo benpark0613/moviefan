@@ -271,10 +271,12 @@ public class AdminController {
 	}
 	
 	@GetMapping("/schedule/modify")
-	public String modify(int cinemaNo, Model model) {
-		List<MovieTimeTableDto> movieTimeTableDtos = cinemaService.getMovieTimeTableByCinemaNo(cinemaNo);
+	public String modify(int showNo, Model model) {
+		List<Movie> movieList = movieService.getAllMovies();
+		MovieTimeTableDto detailSchedule = cinemaService.getMovieTimeTableByShowNo(showNo);
 		
-		model.addAttribute("timetable", movieTimeTableDtos);
+		model.addAttribute("movieList", movieList);
+		model.addAttribute("detailSchedule", detailSchedule);
 		
 		return "admin/schedule/modify";
 	}

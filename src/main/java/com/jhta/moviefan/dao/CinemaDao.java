@@ -20,4 +20,5 @@ public interface CinemaDao {
 	
 	List<MovieTimeTableDto> getAllMovieTimeTables();
 	List<MovieTimeTableDto> getMovieTimeTableByCinemaNo(int cinemaNo);
+	MovieTimeTableDto getMovieTimeTableByShowNo(int showNo);
 }
