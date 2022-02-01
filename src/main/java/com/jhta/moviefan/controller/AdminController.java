@@ -91,7 +91,8 @@ public class AdminController {
 		return "admin/movie/search";
 	}
 	
-	@PostMapping("/movie/insert")
+	/*
+	@PostMapping("movie/insert")
 	public String insert(MovieInsertForm form) throws IOException {
 		logger.debug("입력폼 정보: " + form);
 		String saveDirectory = "C:\\workspace\\workspace-moviefan\\moviefan\\src\\main\\webapp\\resources\\images\\movie";
@@ -116,6 +117,7 @@ public class AdminController {
 		movie.setRate(form.getRate());
 		movie.setRuntime(form.getRuntime());
 		movie.setOpenDate(form.getOpenDate());
+		movie.setProductionYear(form.getProductionYear());
 		movie.setProducer(form.getProducer());
 		movie.setSummary(form.getSummary());
 		movieService.insertMovie(movie);
@@ -206,10 +208,32 @@ public class AdminController {
 		
 		return "redirect:list";
 	}
+	*/
 	
-	@GetMapping("/movie/modify")
-	public String updateMovie() {
-		return "admin/movie/modifyform";
+	
+	@GetMapping("/schedule/list")
+	public String list(Model model) {
+		List<City> cityList = cinemaService.getAllCityList();
+		List<CinemaDto> cinemaList = cinemaService.getAllCinemaList();
+		
+		model.addAttribute("cityList", cityList);
+		model.addAttribute("cinemaList", cinemaList);
+		
+		return "admin/schedule/list";
+	}
+	
+	@GetMapping("/schedule/timetable")
+	public String timetable(int cinemaNo, Model model) {
+		List<MovieTimeTableDto> movieTimeTableDtos = cinemaService.getMovieTimeTableByCinemaNo(cinemaNo);
+		
+		model.addAttribute("movieTimeTableDtos", movieTimeTableDtos);
+		
+		return "admin/schedule/list";
+	}
+	
+	@GetMapping("/schedule/modify")
+	public String modify() {
+		return "admin/schedule/modify";
 	}
 	
 	/**
@@ -220,6 +244,7 @@ public class AdminController {
 	 * @return 영화인 정보
 	 * @throws IOException
 	 */
+	/*
 	private MoviePerson getMoviePersonDetail(MoviePerson moviePerson, String movieTitle) throws IOException {
 		String requestUrl = "http://kobis.or.kr/kobisopenapi/webservice/rest/people/searchPeopleList.json";
 		String key = "f5eef3421c602c6cb7ea224104795888";
@@ -249,30 +274,5 @@ public class AdminController {
 		
 		return moviePerson;
 	}
-	
-	@GetMapping("/schedule/list")
-	public String list(Model model) {
-		List<City> cityList = cinemaService.getAllCityList();
-		List<CinemaDto> cinemaList = cinemaService.getAllCinemaList();
-		
-		model.addAttribute("cityList", cityList);
-		model.addAttribute("cinemaList", cinemaList);
-		
-		return "admin/schedule/list";
-	}
-	
-	@GetMapping("/schedule/timetable")
-	public String timetable(int cinemaNo, Model model) {
-		List<MovieTimeTableDto> movieTimeTableDtos = cinemaService.getMovieTimeTableByCinemaNo(cinemaNo);
-		
-		model.addAttribute("movieTimeTableDtos", movieTimeTableDtos);
-		
-		return "admin/schedule/list";
-	}
-	
-	@GetMapping("/schedule/modify")
-	public String modify() {
-		return "admin/schedule/modify";
-	}
-	
+	*/
 }
