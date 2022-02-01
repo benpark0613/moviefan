@@ -19,9 +19,9 @@
 </style>
 <body>
 <%@ include file="/WEB-INF/views/common/header.jsp" %>
-<div class="container">
-	<div class="row bg-light p-3 mb-2">
-		<div class="col-12">
+<div class="container bg-light mb-3">
+	<div class="d-flex justify-content-evenly px-5 pt-5 pb-2">
+		<div class="col-5 my-auto">
 			<c:choose>
 				<c:when test="${empty LOGINED_CUSTOMER.nickName}">
 					<p class="fs-1">
@@ -44,9 +44,11 @@
 				고객님의 등급은 <span class="text-decoration-underline">${LOGINED_CUSTOMER.gradeCode }</span> 입니다.
 			</p>
 		</div>
+		<div class="vr p-0 bg-light"></div>
+		<div class="col-6"></div>
 	</div>
-	<div class="d-flex justify-content-around mb-2">
-		<div class="col-5 bg-light p-3">
+	<div class="d-flex justify-content-evenly px-5 pt-2 pb-5">
+		<div class="col-5 my-auto">
 			<div class="row">
 				<table class="table table-borderless">
 					<thead>
@@ -56,35 +58,39 @@
 					</thead>
 					<tbody class="mx-3">
 						<tr>
-							<th class="col-7 fs-5 text-start">사용가능 포인트</th>
-							<td class="col-7 fs-5 text-end">${ LOGINED_CUSTOMER.totalPoint } 점</td>
+							<th class="col-6 fs-5 text-start">사용가능 포인트</th>
+							<td class="col-3 fs-5 text-end">${ LOGINED_CUSTOMER.totalPoint } 점</td>
 						</tr>
 						<tr>
-							<th class="col-4 fs-5 text-start">다음 등급까지 남은 포인트</th>
-							<td class="col-4 fs-5 text-end">5000 점</td>
+							<th class="col-6 fs-5 text-start">다음 등급까지 남은 포인트</th>
+							<td class="col-3 fs-5 text-end">5000 점</td>
 						</tr>
 					</tbody>
 				</table>
 			</div>
+			<hr class="w-100 mx-auto"/>
 			<div class="row">
-				<div class="col-12">
-					<div class="row">
-						<h3>MY 영화관
-							<a class="link-secondary" href=""><i class="bi bi-gear" style="font-size: 0.5em;"></i></a>
-						</h3>
-					</div>
-					<div class="d-flex justify-content-evenly">
-						<button type="button" class="btn btn-outline-secondary" style="width: 120px; height: 60px;">MVF 가락</button>
-						<button type="button" class="btn btn-outline-secondary" style="width: 120px; height: 60px;">MVF 용산</button>
-						<button type="button" class="btn btn-outline-secondary" style="width: 120px; height: 60px;">MVF 강남</button>
-					</div>
-				</div>
+				<table class="table table-borderless">
+					<thead>
+						<tr>
+							<td class="fs-4">MY 영화관&nbsp;<a class="link-secondary" href=""><i class="bi bi-gear" style="font-size: 0.5em;"></i></a></td>
+						</tr>
+					</thead>
+					<tbody class="mx-3">
+						<tr>
+							<td class="col-3 fs-5 text-center"><button type="button" class="btn btn-outline-secondary" style="width: 120px; height: 60px;">MVF 가락</button></td>
+							<td class="col-3 fs-5 text-center"><button type="button" class="btn btn-outline-secondary" style="width: 120px; height: 60px;">MVF 용산</button></td>
+							<td class="col-3 fs-5 text-center"><button type="button" class="btn btn-outline-secondary" style="width: 120px; height: 60px;">MVF 강남</button></td>
+						</tr>
+					</tbody>
+				</table>
 			</div>
 		</div>
-		<div class="col-6 bg-light p-4">
+		<div class="vr p-0"></div>
+		<div class="col-6">
 			<div class="row">
 				<div class="col">
-					<div class="d-flex justify-content-between">
+					<div class="d-flex justify-content-between mb-3 mx-3">
 						<span class="h3">찜한 영화</span>
 						<span class="align-self-end"><a href="" class="text-decoration-none link-dark">더 보러 가기</a></span>
 					</div>
@@ -96,14 +102,17 @@
 							</div>
 						</c:when>
 						<c:otherwise>
-							<div class="d-flex justify-content-center">
+							<div class="d-flex justify-content-evenly">
 								<c:forEach var="wishMovie" items="${wishMovies }" varStatus="loop" end="2">
-										<div class="col-4">
-											<div class="card w-75">
-												<img src="https://pds.joongang.co.kr/news/component/htmlphoto_mmdata/201602/19/htm_20160219165732323457.jpg" class="card-img-top" alt="...">
-												<h6 class="card-title mt-1 text-truncate">${wishMovie.title }</h6>
-											</div>
+									<div class="card col-3 p-1 d-flex justify-content-center">
+										<div class="row">
+									  		<img src="https://img.megabox.co.kr/SharedImg/2022/01/04/yqN0gFPGfFRXuLVO9RSEC5gXslCEn22k_420.jpg" class="img-fluid" alt="...">
 										</div>
+										<div class="card-body d-flex justify-content-center p-0">
+											<a type="button" class="btn btn-danger w-100"><span>상세정보</span></a>
+											<a type="button" class="btn btn-outline-secondary"><span class="bi bi-heart-fill"></span></a>
+										</div>
+									</div>
 								</c:forEach>
 							</div>
 						</c:otherwise>
@@ -181,30 +190,32 @@
 		</div>
 		
 		<%-- 서브메뉴: 무비로그 --%>
-		<div class="d-flex justify-content-evenly flex-wrap d-none p-3" id="wish-movie">
-			<c:choose>
-				<c:when test="${empty wishMovies }">
-					<div class="col p-5 my-5">
-						<div class="row text-center"><i class="bi bi-exclamation-square" style="font-size: 5em;"></i></div>
-						<div class="row text-center"><p class="fs-1">찜한 영화가 존재하지 않습니다.</p></div>
-					</div>
-				</c:when>
-				<c:otherwise>
-					<c:forEach var="wishMovie" items="${wishMovies }" varStatus="loop" end="9">
-						<div class="card col-2 p-1 m-1">
-					  		<img src="https://img.megabox.co.kr/SharedImg/2022/01/04/yqN0gFPGfFRXuLVO9RSEC5gXslCEn22k_420.jpg" class="image-fluid" alt="...">
-					  		<div class="card-body p-1 row">
-								<div class="d-flex justify-content-between">
-									<button class="btn btn-lg btn-danger col-9" type="button">상세정보</button>
-									<a href="">
-										<i class="bi bi-heart-fill text-danger align-middle" style="font-size: 2em;"></i>
-									</a>
-								</div>
-					 		</div>
+		<div class="d-flex justify-content-evenly flex-wrap d-none" id="wish-movie">
+			<div class="col-8">
+				<c:choose>
+					<c:when test="${empty wishMovies }">
+						<div class="row">
+							<div class="row text-center"><i class="bi bi-exclamation-square" style="font-size: 5em;"></i></div>
+							<div class="row text-center"><p class="fs-1">찜한 영화가 존재하지 않습니다.</p></div>
 						</div>
-					</c:forEach>
-				</c:otherwise>
-			</c:choose>
+					</c:when>
+					<c:otherwise>
+						<div class="row d-flex justify-content-evenly">
+							<c:forEach var="wishMovie" items="${wishMovies }" varStatus="loop" end="7">
+								<div class="card col-2 p-1 mx-3 mt-3 d-flex justify-content-center">
+									<div class="row">
+								  		<img src="https://img.megabox.co.kr/SharedImg/2022/01/04/yqN0gFPGfFRXuLVO9RSEC5gXslCEn22k_420.jpg" class="img-fluid" alt="...">
+									</div>
+									<div class="card-body d-flex justify-content-center p-0">
+										<a type="button" class="btn btn-danger w-100"><span>상세정보</span></a>
+										<a type="button" class="btn btn-outline-secondary"><span class="bi bi-heart-fill"></span></a>
+									</div>
+								</div>
+							</c:forEach>
+						</div>
+					</c:otherwise>
+				</c:choose>
+			</div>
 		</div>
 		<div class="row d-none" id="watched-movie">
 			<div class="col p-5 my-5">
@@ -240,22 +251,51 @@
 		</div>
 		
 		<%-- 서브메뉴: 포인트 --%>
-		<div class="row d-none" id="point-info">
-			<div class="col p-5 my-5">
-				<div class="row text-center"><i class="bi bi-exclamation-square" style="font-size: 5em;"></i></div>
-				<div class="row text-center"><p class="fs-1">포인트 정보</p></div>
+		<div class="row d-flex justify-content-center d-none mt-3" id="point-info">
+			<div class="col-8 border border-light">
+				<div class="row">
+					<div class="card-header">
+						<span class="ms-2 fw-bold">포인트 적립</span>
+					</div>
+				</div>
+				<div class="row">
+					<div class="card py-3 d-flex justify-content-center">
+						<div class="row d-flex justify-content-center">
+							<div class="col-9">
+								<h4>포인트 기본 적립</h4>
+								<ul>
+									<li>영화 티켓 구매 시 유료 결제 금액의 <em class="font-gblue">10%</em> 적립</li>
+									<li>결제가 완료된 후 적립 예정 포인트로 적립되며 <em class="font-gblue">영화의 경우 상영일 익일</em> 사용 가능한 포인트(가용 포인트) 로 전환됩니다.</li>
+									<li>회원이 로그인 후 온라인 서비스를 이용 하거나 현장 매표소, 키오스크에서 멤버십 카드 제시 또는 회원임을 확인 할 수 있는 정보를 제공하여야 포인트가 적립됩니다.</li>
+									<li>무비팬 및 제휴사 할인, 포인트 결제 등을 통해 할인 받은 금액을 제외한 실제 고객님께서 현금, 신용카드 등으로 유료 결제한 금액 기준으로 적립됩니다.</li>
+									<li>일부 영화, 상품, 극장, 결제 수단의 경우 적립이 되지 않거나 별도의 적립률이 적용될 수 있으며 상세 내용은 해당 상품, 극장 등에 별도 공지합니다.</li>
+									<li>VIP 선정 시 기준이 되는 포인트입니다.</li>
+									<li>포인트 적립은 티켓에 노출된 영화 시작 시간 이전까지만 가능하며, 영화 상영 및 매점 상품 구매 이후 사후 적립은 불가능합니다.</li>
+								</ul>
+								<h4>포인트 사용</h4>
+								<ul>
+									<li>
+										적립된 포인트는 사용 가능한 보유포인트 내에서 <span class="text-danger">영화</span> 구매 시
+										<span class="text-danger">상품 정가 전액을 기준</span>으로 포인트를 차감하여 사용 가능하며,
+										<span class="text-danger">1P단위로</span> 포인트를 차감하여 사용 가능합니다.<br>
+									</li>
+								</ul>
+							</div>
+						</div>
+					</div>
+				</div>
 			</div>
 		</div>
-		<div class="row d-none" id="point-history">
-			<div class="col p-5 my-5">
+		<div class="row d-none justify-content-center d-none" id="point-history">
+			<div class="col-8 p-5 my-5">
 				<div class="row text-center"><i class="bi bi-exclamation-square" style="font-size: 5em;"></i></div>
 				<div class="row text-center"><p class="fs-1">포인트 기록</p></div>
 			</div>
 		</div>
 		
-		<%-- 서브메뉴: MY정보 --%>
-		<div class="row d-none" id="info-modify">
-			<div class="col p-5 my-3">
+		<%-- 서브메뉴: MY정보관리 --%>
+		<div class="row d-flex justify-content-center d-none" id="info-modify">
+			<div class="col-8 p-5 my-3">
 				<div class="row text-center">
 					<p class="fs-1">회원정보 변경</p>
 					<p class="fs-2">비밀번호 재확인</p>
@@ -282,8 +322,8 @@
 				</div>
 			</div>
 		</div>
-		<div class="row d-none" id="info-delete">
-			<div class="col p-5 my-3">
+		<div class="row d-flex justify-content-center d-none" id="info-delete">
+			<div class="col-8 p-5 my-3">
 				<div class="row text-center">
 					<p class="fs-1">회원 탈퇴</p>
 					<p class="fs-2">비밀번호 재확인</p>

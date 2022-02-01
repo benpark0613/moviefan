@@ -179,7 +179,8 @@ $(function() {
 					alert(response.error);
 					return;
 				} else {
-					window.location.href = "/home";					
+					window.location.href = "/home";	
+					alert("회원가입이 완료되었습니다.");
 				}
 			}
 		})

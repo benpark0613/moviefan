@@ -78,6 +78,7 @@ public class HomeController {
 		return "member/completed";
 	}
 	
+	// 회원정보찾기
 	@GetMapping("/findid")
 	public String findIdForm() {
 		return "member/findid";
