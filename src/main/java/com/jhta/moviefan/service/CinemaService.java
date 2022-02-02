@@ -36,4 +36,8 @@ public class CinemaService {
 	public List<MovieTimeTableDto> getMovieTimeTableByCinemaNo(int cinemaNo) {
 		return cinemaDao.getMovieTimeTableByCinemaNo(cinemaNo);
 	}
+	
+	public MovieTimeTableDto getMovieTimeTableByShowNo(int showNo) {
+		return cinemaDao.getMovieTimeTableByShowNo(showNo);
+	}
 }

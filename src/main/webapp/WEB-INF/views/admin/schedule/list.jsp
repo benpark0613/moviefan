@@ -21,9 +21,6 @@
 			font-family: NanumBarunGothic;
 			font-size: 16pt;
 		}
-		td {
-			word-break: break-all;
-		}
 	</style>
 </head>
 <body>
@@ -38,7 +35,7 @@
 	
 	<!-- 지역, 영화관 선택 -->	
 	<div class="row justify-content-center">
- 		<form id="timetable-search" class="row g-2" method="get" action="search">
+ 		<div class="row g-2">
    			<div class="col-2">
 				<select id="city-select" name="city" class="form-select">
 					<option value="" selected disabled>-- 지역 --</option>
@@ -50,56 +47,39 @@
    			<div class="col-3">
    				<select id="cinema-select" name="cinema" class="form-select">
 					<option value="" selected disabled>-- 지역을 먼저 선택하세요. --</option>
-				<%-- 
-   					<c:forEach var="cinema" items="${cinemaList }">
-						<option value="${cinema.cityNo }">${cinema.name }</option>
-   					</c:forEach>
-   				--%>
 				</select>
    			</div>
-   		</form>
+ 		</div>
    	</div>
 
 	<!-- 선택한 영화관에서 현재 상영중인 영화 목록 -->
-	<div id="list" class="mt-5 mb-5">
-		<table id="timetable" class="table row w-auto">
-			<thead>
-		    	<tr>
-		      		<th>상영관</th>
-		      		<th>영화제목</th>
-		      		<th>개봉일</th>
-		      		<th>상영시작일</th>
-		      		<th>상영시간</th>
-		      		<th>상영중</th>
-		      		<th>수정</th>
-		    	</tr>
-		  	</thead>
-		  	<tbody>
+	<div id="list" class="row justify-content-center mt-5 mb-5">
+		<form name="scheduleList" method="get" action="/schedule/modify">
+			<table id="timetable" class="table">
+				<thead>
+			    	<tr>
+			      		<th>상영번호</th>
+			      		<th>상영관</th>
+			      		<th>영화제목</th>
+			      		<th>상영일</th>
+			      		<th>상영시간</th>
+			      		<th>상태</th>
+			      		<th>수정</th>
+			    	</tr>
+			  	</thead>
+			  	<tbody>
 			  	
-		  	<%--
-		    	<tr>
-		     	 	<td>${timetable.hallName }</td>
-		      		<td>${timetable.title }</td>
-		      		<td>${timetable.openDate }</td>
-		      		<td>${timetable.startDate }</td>
-		      		<td>${timetable.startTime } ~ ${timetable.endTime }</td>
-		      		<td>Y</td>
-		      		<td>
-		      			<a href="/admin/schedule/modify" class="btn btn-outline-primary btn-sm">수정</a>
-		      		</td>
-		    	</tr>
-		  	 --%>
-		    </tbody>
-	    </table>
+			    </tbody>
+		    </table>
+	    </form>
 	</div>
-	
 </div>
 <%@ include file="/WEB-INF/views/common/footer.jsp" %>
 </body>
 <script type="text/javascript">
 
 	$(function () {
-		
+
 		let $firstSelect = $('#cinema-select').empty();
 		let secondSelect = '<option value="" selected disabled>-- 지역을 먼저 선택하세요. --</option>';
 		$firstSelect.append(secondSelect);
@@ -128,26 +108,25 @@
 			$.getJSON("/rest/cinema/timetable", {cinemaNo:cinemaNo}, function (timetableList) {
 				
 				if (timetableList.length == 0) {
-					let row = '<tr>'
-						+ '<td class="text-center" colspan="7">해당 영화관의 상영일정이 존재하지 않습니다.</td>'
-						+ '</tr>';
-						$('#timetable tbody').append(row);
+					let row = '<td class="text-center" colspan="8">해당 영화관의 상영일정이 존재하지 않습니다.</td>';
+					$('#timetable tbody').append(row);
+						
 				} else {
 					$.each (timetableList, function (index, timetable) {
-
-						let result = '<tr>'
-							result += '<td>' + timetable.hallName + '<td>'
-							result += '<td>' + timetable.title + '<td>'
-							result += '<td>' + timetable.openDate + '<td>'
-							result += '<td>' + timetable.showDate + '<td>'
-							result += '<td>' + timetable.startTime + ' ~ ' + timetable.endTime + '<td>'
-							result += '<td>' + '상영중' + '<td>'
-							result += '<td><a href="/admin/schedule/modify?cinemaNo=' + cinemaNo + '" class="btn btn-outline-primary btn-sm">수정</a></td>'
+						
+						let	result = '<tr>'
+							result += '<td>' + timetable.showNo + '</td>'
+							result += '<td>' + timetable.hallName + '</td>'
+							result += '<td>' + timetable.title + '</td>'
+							result += '<td>' + timetable.showDate + '</td>'
+							result += '<td>' + timetable.startTime + ' ~ ' + timetable.endTime + '</td>'
+							result += '<td>상영중</td>'
+							result += '<td><a href="/admin/schedule/modify?showNo=' + timetable.showNo + '" class="btn btn-outline-primary btn-sm">수정</a></td>'
 							result += '</tr>';
-							
+						
 						$('#timetable tbody').append(result);
 					})
-				}	
+				}
 			})
 		})
 	})	
