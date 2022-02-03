@@ -30,26 +30,21 @@
 				<i id="prev-button" class="fas fa-chevron-left fa-3x"></i>
 			</div>
 			<div class="col">
-				<iframe id="trailer${status.count }" width="900" height="450" src="${movieTrailer.movieTrailerURLAddress }"></iframe>
+				<video id="trailer" width="800" height="450" src="${movieTrailer.urlAddress }" controls></video>
 			</div>
 			<div class="col align-self-center">
 				<i id="next-button" class="fas fa-chevron-right fa-3x"> </i>
 			</div>
 		</div>
+		<hr color="black">
 	</c:forEach>
 	
-	<div class="row mb-3">
-		<div class="col align-self-center">
-			<i class="fas fa-chevron-left fa-3x"></i>
-		</div>
-		<c:forEach var="movieTrailer" items="${movieTrailer }" varStatus="status" begin="1">
-			<div class="col">
-				<iframe id="trailer${status.count }" width="240" height="136" src="${movieTrailer.movieTrailerURLAddress }"></iframe>
+	<div class="row mb-3 justify-content-center">
+		<c:forEach var="movieTrailer" items="${movieTrailer }" varStatus="status">
+			<div class="col-3 trailer text-center">
+				<video id="trailerSub${status.count }" width="240" height="136" src="${movieTrailer.urlAddress }"></video>
 			</div>
 		</c:forEach>
-		<div class="col align-self-center">
-			<i class="fas fa-chevron-right fa-3x"></i>
-		</div>
 	</div>
 	
 	
@@ -74,24 +69,39 @@
 <script type="text/javascript">
 
 var num = 1;
-var url = $("#trailer"+num).attr("src");
+var length = $("video").length -1;
 
-$("#next-button").click(function(){
-	num++;
-	if(num > 3){
-		num = 1;
-	}
-	alert(num);
-	url = $("#trailer"+num).attr("src"); 
-	$("#trailer1")("src",url);
-})
+var urlOrigin = $("#trailer").attr("src");
 
-$("#prev-button").click(function(){
-	num--;
-	alert(num);
-	url = $("#trailer"+num).attr("src");
-	$("#trailer1").attr("src",url);
-})
+	$("#next-button").click(function() {
+		if (num < length) {
+			num++;
+			url = $("#trailerSub" + num).attr("src");
+			$("#trailer").attr("src", url);
+		} else {
+			num = 1;
+			url = urlOrigin;
+			$("#trailer").attr("src", url);
+		}
+	})
+
+	$("#prev-button").click(function() {
+		if (num > 1) {
+			num--;
+			url = $("#trailerSub" + num).attr("src");
+		} else {
+			num = length;
+			url = $("#trailerSub" + num).attr("src");
+			$("#trailer").attr("src", url);
+		}
+		$("#trailer").attr("src", url);
+	})
+	
+	$(".trailer").children("video").click(function(){
+		var changeUrl = $(this).attr("src");
+		$("#trailer").attr("src", changeUrl);
+	})
+	
 </script>
 </body>
 </html>

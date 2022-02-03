@@ -3,7 +3,7 @@
 <mapper namespace="com.jhta.moviefan.dao.MovieDao">
 
 	<resultMap id="MovieResultMap" type="com.jhta.moviefan.vo.Movie">
-		<id column="MOIVE_NO"					property="no"/>
+		<id column="MOVIE_NO"					property="no"/>
 		<result column="MOVIE_TITLE" 			property="title"/>
 		<result column="MOVIE_TITLE_EN" 		property="titleEn"/>
 		<result column="MOVIE_RATE" 			property="rate"/>
@@ -59,9 +59,9 @@
 	
 	<select id="getMovieTrailerByMovieNo" parameterType="int" resultType="com.jhta.moviefan.vo.MovieTrailer">
 		select 	MOVIE_NO					as movieNo, 
-				MOVIE_TRAILER_URL_ADDRESS	as movieTrailerURLAddress, 
-				MOVIE_TRAILER_TITLE			as movieTrailerTitle, 
-				MOVIE_TRAILER_CREATED_DATE	as movieTrailerCreatedDate
+				MOVIE_TRAILER_URL_ADDRESS	as urlAddress, 
+				MOVIE_TRAILER_TITLE			as title, 
+				MOVIE_TRAILER_CREATED_DATE	as createdDate
 		from MOVIE_TRAILER
 		where MOVIE_NO = #{value}
 	</select>
