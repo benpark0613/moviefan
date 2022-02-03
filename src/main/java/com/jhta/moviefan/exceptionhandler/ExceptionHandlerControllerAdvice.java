@@ -45,7 +45,7 @@ public class ExceptionHandlerControllerAdvice {
 		return response;
 	}
 	
-	@ExceptionHandler
+	@ExceptionHandler(MovieErrorException.class)
 	public @ResponseBody ResponseDto<?> handleMovieErrorException(MovieErrorException e) {
 		e.printStackTrace();
 		ResponseDto<?> response = new ResponseDto<>();
