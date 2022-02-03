@@ -1,5 +1,7 @@
 package com.jhta.moviefan.restcontroller;
 
+import java.util.List;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.BeanUtils;
@@ -84,6 +86,7 @@ public class HomeRestController {
 		}
 		
 		response.setStatus("OK");
+		response.setItem(List.of("회원가입이 완료되었습니다."));
 		
 		return response;
 	}

@@ -2,11 +2,15 @@ package com.jhta.moviefan.vo;
 
 import java.util.Date;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 public class MovieTrailer {
 	
 	private int movieNo;
 	private String title;
-	private String urlAddress;;
+	private String urlAddress;
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
+
 	private Date createdDate;
 	
 	public MovieTrailer() {}

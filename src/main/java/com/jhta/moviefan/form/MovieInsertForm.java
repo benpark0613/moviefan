@@ -16,6 +16,8 @@ public class MovieInsertForm {
 	private int runtime;
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private Date openDate;
+	@DateTimeFormat(pattern = "yyyy")
+	private Date productionYear;
 	private String producer;
 	private String summary;
 	private String[] genres;
@@ -75,6 +77,14 @@ public class MovieInsertForm {
 		this.openDate = openDate;
 	}
 
+	public Date getProductionYear() {
+		return productionYear;
+	}
+
+	public void setProductionYear(Date productionYear) {
+		this.productionYear = productionYear;
+	}
+
 	public String getProducer() {
 		return producer;
 	}
@@ -99,20 +109,20 @@ public class MovieInsertForm {
 		this.genres = genres;
 	}
 
-	public String[] getActors() {
-		return actors;
-	}
-
-	public void setActors(String[] actors) {
-		this.actors = actors;
-	}
-
 	public String[] getDirectors() {
 		return directors;
 	}
 
 	public void setDirectors(String[] directors) {
 		this.directors = directors;
+	}
+
+	public String[] getActors() {
+		return actors;
+	}
+
+	public void setActors(String[] actors) {
+		this.actors = actors;
 	}
 
 	public List<MultipartFile> getImages() {
@@ -122,7 +132,7 @@ public class MovieInsertForm {
 	public void setImages(List<MultipartFile> images) {
 		this.images = images;
 	}
-	
+
 	public String[] getTrailerTitles() {
 		return trailerTitles;
 	}
@@ -142,10 +152,12 @@ public class MovieInsertForm {
 	@Override
 	public String toString() {
 		return "MovieInsertForm [no=" + no + ", title=" + title + ", titleEn=" + titleEn + ", rate=" + rate
-				+ ", runtime=" + runtime + ", openDate=" + openDate + ", producer=" + producer + ", summary=" + summary
-				+ ", genres=" + Arrays.toString(genres) + ", directors=" + Arrays.toString(directors) + ", actors="
-				+ Arrays.toString(actors) + ", images=" + images + ", trailerTitles=" + Arrays.toString(trailerTitles)
-				+ ", trailerUrls=" + Arrays.toString(trailerUrls) + "]";
+				+ ", runtime=" + runtime + ", openDate=" + openDate + ", productionYear=" + productionYear
+				+ ", producer=" + producer + ", summary=" + summary + ", genres=" + Arrays.toString(genres)
+				+ ", directors=" + Arrays.toString(directors) + ", actors=" + Arrays.toString(actors) + ", images="
+				+ images + ", trailerTitles=" + Arrays.toString(trailerTitles) + ", trailerUrls="
+				+ Arrays.toString(trailerUrls) + "]";
 	}
+
 	
 }

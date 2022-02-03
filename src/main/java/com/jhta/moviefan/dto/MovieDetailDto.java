@@ -1,16 +1,26 @@
-package com.jhta.moviefan.vo;
+package com.jhta.moviefan.dto;
 
 import java.util.Date;
+import java.util.List;
 
+import org.springframework.format.annotation.DateTimeFormat;
 
-public class Movie {
-	
+import com.jhta.moviefan.vo.MovieActor;
+import com.jhta.moviefan.vo.MovieDirector;
+import com.jhta.moviefan.vo.MovieGenre;
+import com.jhta.moviefan.vo.MovieImage;
+import com.jhta.moviefan.vo.MovieTrailer;
+
+public class MovieDetailDto {
+
 	private int no;
 	private String title;
 	private String titleEn;
 	private String rate;
 	private int runtime;
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private Date openDate;
+	@DateTimeFormat(pattern = "yyyy")
 	private Date productionYear;
 	private Double customerRating;
 	private int totalAudience;
@@ -19,8 +29,13 @@ public class Movie {
 	private String poster;
 	private Date createdDate;
 	private Date updatedDate;
+	private List<MovieGenre> genres;
+	private List<MovieDirector> directors;
+	private List<MovieActor> actors;
+	private List<MovieImage> images;
+	private List<MovieTrailer> trailers;
 	
-	public Movie() {}
+	public MovieDetailDto() {}
 
 	public int getNo() {
 		return no;
@@ -134,17 +149,60 @@ public class Movie {
 		this.updatedDate = updatedDate;
 	}
 
+	public List<MovieGenre> getGenres() {
+		return genres;
+	}
+
+	public void setGenres(List<MovieGenre> genres) {
+		this.genres = genres;
+	}
+
+	public List<MovieDirector> getDirectors() {
+		return directors;
+	}
+
+	public void setDirectors(List<MovieDirector> directors) {
+		this.directors = directors;
+	}
+
+	public List<MovieActor> getActors() {
+		return actors;
+	}
+
+	public void setActors(List<MovieActor> actors) {
+		this.actors = actors;
+	}
+
+	public List<MovieImage> getImages() {
+		return images;
+	}
+
+	public void setImages(List<MovieImage> images) {
+		this.images = images;
+	}
+
+	public List<MovieTrailer> getTrailers() {
+		return trailers;
+	}
+
+	public void setTrailers(List<MovieTrailer> trailers) {
+		this.trailers = trailers;
+	}
+
 	@Override
 	public String toString() {
-		return "Movie [no=" + no + ", title=" + title + ", titleEn=" + titleEn + ", rate=" + rate + ", runtime="
-				+ runtime + ", openDate=" + openDate + ", productionYear=" + productionYear + ", customerRating="
-				+ customerRating + ", totalAudience=" + totalAudience + ", summary=" + summary + ", producer="
-				+ producer + ", poster=" + poster + ", createdDate=" + createdDate + ", updatedDate=" + updatedDate
-				+ "]";
+		return "MovieDetailDto [no=" + no + ", title=" + title + ", titleEn=" + titleEn + ", rate=" + rate
+				+ ", runtime=" + runtime + ", openDate=" + openDate + ", productionYear=" + productionYear
+				+ ", customerRating=" + customerRating + ", totalAudience=" + totalAudience + ", summary=" + summary
+				+ ", producer=" + producer + ", poster=" + poster + ", createdDate=" + createdDate + ", updatedDate="
+				+ updatedDate + ", genres=" + genres + ", directors=" + directors + ", actors=" + actors + ", images="
+				+ images + ", trailers=" + trailers + "]";
 	}
 
 	
 	
-
+	
+	
+	
 	
 }

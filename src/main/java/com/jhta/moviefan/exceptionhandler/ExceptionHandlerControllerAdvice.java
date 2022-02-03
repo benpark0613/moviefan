@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.jhta.moviefan.dto.ResponseDto;
 import com.jhta.moviefan.exception.CustomException;
 import com.jhta.moviefan.exception.LoginErrorException;
+import com.jhta.moviefan.exception.MovieErrorException;
 import com.jhta.moviefan.exception.RestLoginErrorException;
 import com.jhta.moviefan.exception.RestRegisterErrorException;
 
@@ -44,6 +45,16 @@ public class ExceptionHandlerControllerAdvice {
 		return response;
 	}
 	
+	@ExceptionHandler
+	public @ResponseBody ResponseDto<?> handleMovieErrorException(MovieErrorException e) {
+		e.printStackTrace();
+		ResponseDto<?> response = new ResponseDto<>();
+		response.setStatus("FAIL");
+		response.setError(e.getMessage());
+		
+		return response;
+	}
+	
 	// 에러페이지 응답
 	@ExceptionHandler(LoginErrorException.class)
 	public String handleLoginErrorException(LoginErrorException e) {
@@ -56,7 +67,7 @@ public class ExceptionHandlerControllerAdvice {
 		e.printStackTrace();
 		return "error/customerror";
 	}
-	
+
 	@ExceptionHandler(DataAccessException.class)
 	public String handleDataAccessException(DataAccessException e) {
 

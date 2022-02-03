@@ -3,12 +3,13 @@
 <mapper namespace="com.jhta.moviefan.dao.MovieDao">
 
 	<resultMap id="MovieResultMap" type="com.jhta.moviefan.vo.Movie">
-		<id column="MOIVE_NO"					property="no"/>
+		<id column="MOVIE_NO"					property="no"/>
 		<result column="MOVIE_TITLE" 			property="title"/>
 		<result column="MOVIE_TITLE_EN" 		property="titleEn"/>
 		<result column="MOVIE_RATE" 			property="rate"/>
 		<result column="MOVIE_RUNTIME" 			property="runtime"/>
 		<result column="MOVIE_OPEN_DATE" 		property="openDate"/>
+		<result column="MOVIE_PRODUCTION_YEAR" 	property="productionYear"/>
 		<result column="MOVIE_USER_RATING" 		property="customerRating"/>
 		<result column="MOVIE_TOTAL_AUDIENCE" 	property="totalAudience"/>
 		<result column="MOVIE_SUMMARY" 			property="summary"/>
@@ -50,50 +51,104 @@
 		where movie_no = #{value}
 	</select>
 	
-	<select id="getMovieImageByMovieNo" parameterType="int" resultType="com.jhta.moviefan.vo.MovieImage">
-		select 	MOVIE_NO			 as movieNo, 
-				MOVIE_IMAGE_FILENAME as fileName
-		from MOVIE_IMAGE
-		where MOVIE_NO = #{value}
+	<select id="getMovieImagesByMovieNo" parameterType="int" resultType="com.jhta.moviefan.vo.MovieImage">
+		select 	movie_no			 as movieNo, 
+				movie_image_filename as fileName
+		from movie_image
+		where movie_no = #{value}
 	</select>
 	
-	<select id="getMovieTrailerByMovieNo" parameterType="int" resultType="com.jhta.moviefan.vo.MovieTrailer">
-		select 	MOVIE_NO					as movieNo, 
-				MOVIE_TRAILER_URL_ADDRESS	as movieTrailerURLAddress, 
-				MOVIE_TRAILER_TITLE			as movieTrailerTitle, 
-				MOVIE_TRAILER_CREATED_DATE	as movieTrailerCreatedDate
-		from MOVIE_TRAILER
-		where MOVIE_NO = #{value}
+	<select id="getMovieTrailersByMovieNo" parameterType="int" resultType="com.jhta.moviefan.vo.MovieTrailer">
+		select 	movie_no					as movieNo, 
+				movie_trailer_title			as title, 
+				movie_trailer_url_address	as urlAddress, 
+				movie_trailer_created_date	as createdDate
+		from movie_trailer
+		where movie_no = #{value}
+	</select>
+
+	<select id="getMovieGenresByMovieNo" parameterType="int" resultType="com.jhta.moviefan.vo.MovieGenre">
+		select 
+			mg.movie_no		as movieNo,
+			g.genre_no		as genreNo,
+			g.genre_name	as genreName
+		from 
+			movie_genre mg, 
+			genre g
+		where 
+			mg.movie_no = #{value}
+		and 
+			mg.genre_no = g.genre_no
 	</select>
 	
 	<select id="getGenreByName" parameterType="string" resultType="com.jhta.moviefan.vo.Genre">
-		select genre_no		as no, 
-			   genre_name	as name
-		from genre
-		where genre_name = #{value}
+		select 
+			genre_no		as no, 
+			genre_name		as name
+		from 
+			genre
+		where 
+			genre_name = #{value}
+	</select>
+	
+	<select id="getMovieDirectorsByMovieNo" parameterType="int" resultType="com.jhta.moviefan.vo.MovieDirector">
+		select
+			md.movie_no			as movieNo,
+			d.director_no		as directorNo,
+			d.director_name		as directorName,
+			d.director_name_en	as directorNameEn
+		from
+			movie_director md,
+			director d
+		where
+			md.movie_no = #{value}
+		and
+			md.director_no = d.director_no
 	</select>
 	
 	<select id="getDirectorByNo" parameterType="int" resultType="com.jhta.moviefan.vo.Director">
-		select director_no			as no,
-			   director_name		as name,
-			   director_name_en		as nameEn
-		from director
-		where director_no = #{value}			
+		select 
+			director_no			as no,
+			director_name		as name,
+			director_name_en	as nameEn
+		from 
+			director
+		where 
+			director_no = #{value}			
 	</select>
 	
 	<select id="getActorByNo" parameterType="int" resultType="com.jhta.moviefan.vo.Actor">
-		select actor_no			as no,
-			   actor_name		as name,
-			   actor_name_en	as nameEn
-		from actor
-		where actor_no = #{value}			
+		select 
+			actor_no		as no,
+			actor_name		as name,
+			actor_name_en	as nameEn
+		from 
+			actor
+		where 
+			actor_no = #{value}			
+	</select>
+	
+	<select id="getMovieActorsByMovieNo" parameterType="int" resultType="com.jhta.moviefan.vo.MovieActor">
+		select
+			ma.movie_no			as movieNo,
+			ma.actor_priority	as actorPriority,
+			a.actor_no			as actorNo,
+			a.actor_name		as actorName,
+			a.actor_name_en		as actorNameEn
+		from
+			movie_actor ma,
+			actor a
+		where
+			ma.movie_no = #{value}
+		and
+			ma.actor_no = a.actor_no
 	</select>
 	
 	<insert id="insertMovie" parameterType="com.jhta.moviefan.vo.Movie">
 		insert into movie
-		(movie_no, movie_title, movie_title_en, movie_rate, movie_runtime, movie_open_date, movie_summary, movie_producer)
+		(movie_no, movie_title, movie_title_en, movie_rate, movie_runtime, movie_open_date, movie_production_year, movie_summary, movie_producer, movie_created_date)
 		values
-		(#{no}, #{title}, #{titleEn}, #{rate}, #{runtime}, #{openDate}, #{summary}, #{producer})
+		(#{no}, #{title}, #{titleEn}, #{rate}, #{runtime}, #{openDate}, #{productionYear}, #{summary}, #{producer}, sysdate)
 	</insert>
 	
 	<insert id="insertActor" parameterType="com.jhta.moviefan.vo.Actor">
@@ -105,7 +160,7 @@
 	
 	<insert id="insertMovieActor" parameterType="com.jhta.moviefan.vo.MovieActor">
 		insert into movie_actor
-		(moive_no, actor_no, actor_priority)
+		(movie_no, actor_no, actor_priority)
 		values
 		(#{movieNo}, #{actorNo}, #{actorPriority})
 	</insert>
@@ -119,14 +174,14 @@
 	
 	<insert id="insertMovieDirector" parameterType="com.jhta.moviefan.vo.MovieDirector">
 		insert into movie_director
-		(moive_no, director_no)
+		(movie_no, director_no)
 		values
 		(#{movieNo}, #{directorNo})
 	</insert>
 	
 	<insert id="insertMovieGenre" parameterType="com.jhta.moviefan.vo.MovieGenre">
 		insert into movie_genre 
-		(moive_no, genre_no)
+		(movie_no, genre_no)
 		values 
 		(#{movieNo}, #{genreNo})
 	</insert>
@@ -145,6 +200,22 @@
 		(#{movieNo}, #{title}, #{urlAddress})
 	</insert>
 	
+	<update id="updateMovie" parameterType="com.jhta.moviefan.vo.Movie">
+		update movie
+		set
+			movie_summary = #{summary},
+			movie_updated_date = sysdate
+		where
+			movie_no = #{no}
+	</update>
 	
+	<delete id="deleteMovieImage" parameterType="string">
+		delete from movie_image
+		where movie_image_filename = #{value}
+	</delete>
 	
+	<delete id="deleteMovieTrailer" parameterType="int">
+		delete from movie_trailer
+		where movie_no = #{value}
+	</delete>
 </mapper>
