@@ -95,7 +95,7 @@
 						<span class="align-self-end"><a href="" class="text-decoration-none link-dark">더 보러 가기</a></span>
 					</div>
 					<c:choose>
-						<c:when test="${empty wishMovies }">
+						<c:when test="${empty movieWithImages }">
 							<div class="row text-center mt-4">
 								<p class="fs-1">찜한 영화가 없습니다.</p>
 								<p class="fs-3">보고 싶은 영화를 "찜" 해 보세요.</p>
@@ -103,16 +103,18 @@
 						</c:when>
 						<c:otherwise>
 							<div class="d-flex justify-content-evenly">
-								<c:forEach var="wishMovie" items="${wishMovies }" varStatus="loop" end="2">
-									<div class="card col-3 p-1 d-flex justify-content-center">
-										<div class="row">
-									  		<img src="${movieImages }" class="img-fluid" alt="...">
+								<c:forEach var="entry" items="${movieWithImages }" varStatus="loop" end="2">
+									<c:forEach var="movieImage" items="${entry.value }" end="0">
+										<div class="card col-3 p-1 d-flex justify-content-center">
+											<div class="row">
+										  		<img src="/resources/images/movie/${movieImage.filename }" class="img-fluid" alt="...">
+											</div>
+											<div class="card-body d-flex justify-content-center p-0">
+												<a type="button" class="btn btn-danger w-100"><span>상세정보</span></a>
+												<a type="button" class="btn btn-outline-secondary"><span class="bi bi-heart-fill"></span></a>
+											</div>
 										</div>
-										<div class="card-body d-flex justify-content-center p-0">
-											<a type="button" class="btn btn-danger w-100"><span>상세정보</span></a>
-											<a type="button" class="btn btn-outline-secondary"><span class="bi bi-heart-fill"></span></a>
-										</div>
-									</div>
+									</c:forEach>
 								</c:forEach>
 							</div>
 						</c:otherwise>
@@ -196,7 +198,7 @@
 				<%-- 영화 리스트 --%>
 				<div class="row d-flex justify-content-center">
 					<c:choose>
-						<c:when test="${empty wishMovies }">
+						<c:when test="${empty movieWithImages }">
 							<div class="row">
 								<div class="row text-center"><i class="bi bi-exclamation-square" style="font-size: 5em;"></i></div>
 								<div class="row text-center"><p class="fs-1">찜한 영화가 존재하지 않습니다.</p></div>
@@ -204,19 +206,21 @@
 						</c:when>
 						<c:otherwise>
 							<div class="row d-flex justify-content-evenly p-0 m-0">
-								<c:forEach var="wishMovie" items="${wishMovies }" varStatus="loop" end="7">
-									<div class="card col-2 p-1 mx-3 mt-3 d-flex justify-content-center">
-										<div class="row">
-									  		<img src="${movieImages} }" class="img-fluid" alt="...">
+								<c:forEach var="entry" items="${movieWithImages }" varStatus="loop">
+									<c:forEach var="movieImage" items="${entry.value }" end="0">
+										<div class="card col-2 p-1 mx-3 mt-3 d-flex justify-content-center">
+											<div class="row">
+										  		<img src="/resources/images/movie/${movieImage.filename }" class="img-fluid" alt="...">
+											</div>
+											<div class="card-body d-flex justify-content-center p-0">
+												<a type="button" class="btn btn-danger w-100"><span>상세정보</span></a>
+												<a type="button" class="btn btn-outline-secondary"><span class="bi bi-heart-fill"></span></a>
+											</div>
 										</div>
-										<div class="card-body d-flex justify-content-center p-0">
-											<a type="button" class="btn btn-danger w-100"><span>상세정보</span></a>
-											<a type="button" class="btn btn-outline-secondary"><span class="bi bi-heart-fill"></span></a>
-										</div>
-									</div>
+									</c:forEach>
 								</c:forEach>
 							</div>
-						</c:otherwise>
+						</c:otherwise> 
 					</c:choose>
 					<%-- 페이지 내비게이션 표시 --%>
 					<c:if test="${pagination.totalRecords gt 0 }">

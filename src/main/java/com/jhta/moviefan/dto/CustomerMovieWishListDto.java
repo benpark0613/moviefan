@@ -9,6 +9,9 @@ public class CustomerMovieWishListDto {
 
 	private Movie movie;
 	private List<MovieImage> movieImages;
+	
+	private CustomerMovieWishListDto() {}
+	
 	public Movie getMovie() {
 		return movie;
 	}
