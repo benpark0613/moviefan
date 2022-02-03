@@ -30,12 +30,12 @@
 
 	<div class="row">
 		<div class="col">
-			<h1>상영정보 수정폼</h1>
+			<h1>상영일정 수정</h1>
 		</div>
 	</div>
 	 <!-- 선택한 상영정보 표시 -->
-	 <input type="hidden" id="parameter" value="${param.showNo }">
-	 <h3>MVF 곤지암 | 1관 | 몇시에 상영중/ 상영예정</h3>
+	 <input type="hidden" id="parameter" name="showNo" value="${param.showNo }">
+	 <h3>${detailSchedule.cinemaName } | ${detailSchedule.hallName } | ${detailSchedule.startTime } ~ ${detailSchedule.endTime } 상영</h3>
 	 <div class="row justify-content-evenly mt-5 mb-5">
 		 <!-- 영화 간단정보 -->
 		 <div class="card col-4">
@@ -48,11 +48,11 @@
 		 	</div>
 		 </div>
 		 <!-- 수정폼 -->
-		 <form class="col-6" id="modify-form" action="update">
+		 <form class="col-6" id="modify-form" method="post" action="update">
 		 	<div class="row mb-3">
 				<label for="movie-search" class="form-label">상영영화 변경</label>
 				<div class="col-sm-10">
-					<input class="form-control" list="movie-options" id="movie" placeholder="변경할 영화를 검색하세요.">
+					<input class="form-control" list="movie-options" id="movie" name="movie" placeholder="변경할 영화를 검색하세요.">
 					<!-- 상영중인 영화 리스트 -->
 					<datalist id="movie-options">
 						<c:forEach var="movie" items="${movieList }">
@@ -64,13 +64,13 @@
 		 	<div class="row mb-3">
 		    	<label for="show-date" class="form-label">상영일 변경</label>
 		    	<div class="col-sm-10">
-		      		<input type="date" class="form-control" id="show-date" value="">
+		      		<input type="date" class="form-control" id="show-date" name="showDate" value="">
 		    	</div>
 		  	</div>
 		  	<div class="row mb-3">
 		    	<label for="cinema-hall" class="form-label">상영관 변경</label>
 		    	<div class="col-sm-10">
-					<select class="form-select" id="hall-name">
+					<select class="form-select" id="hall-name" name="hallName">
 						<option value="1관" selected>1관</option>
 						<option value="2관">2관</option>
 						<option value="3관">3관</option>
@@ -80,8 +80,8 @@
 		  	<div class="row mb-3">
 		    	<label for="show-time" class="form-label">상영시간 변경</label>
 		    	<div class="col-sm-10">
-		      		<select class="form-select" id="show-time">
-						<option value="10:00 ~ 12:40" selected>10:00 ~ 12:40</option>
+		      		<select class="form-select" id="show-time" name="showTime">
+						<option value="10:00 ~ 12:40">10:00 ~ 12:40</option>
 						<option value="13:00 ~ 15:40">13:00 ~ 15:40</option>
 						<option value="16:00 ~ 18:40">16:00 ~ 18:40</option>
 						<option value="19:00 ~ 21:40">19:00 ~ 21:40</option>
@@ -91,13 +91,13 @@
 		  	<div class="row mb-3">
 		    	<label for="show-status" class="form-label">상영상태 변경</label>
 		    	<div class="col-sm-10">
-		      		<select class="form-select" id="show-status">
+		      		<select class="form-select" id="show-status" name="showStatus">
 						<option value="Y" selected>상영중</option>
 						<option value="N">상영종료</option>
 					</select>
 		    	</div>
 		  	</div>
-		  		<button class="btn btn-primary align-items-end">수정</button>
+		  		<button class="btn btn-primary align-items-end" id="btn-modify">수정</button>
 		  	
 		</form>
 		
@@ -109,7 +109,6 @@
 	
 	$(function () {
 		let showNo = $('#parameter').val();
-		//console.log(showNo);
 		
 		$.getJSON("/rest/cinema/modify", {showNo:showNo}, function (detailSchedule) {
 			$('#movie-title').text('제목: ' + detailSchedule.title);
@@ -117,12 +116,20 @@
 			$('#movie-runtime').text("러닝타임: " + detailSchedule.runtime + " 분");
 			$('#movie-open-date').text("개봉일: " + detailSchedule.openDate);
 			$('#show-date').val(detailSchedule.showDate).attr("min", detailSchedule.openDate);
-			
 			$('#hall-name').val(detailSchedule.hallName);
-			//$('#show-time').val(detailSchedule.showDate);		상영시간
+			
+			let showTime = '${detailSchedule.startTime} ~ ${detailSchedule.endTime}';
+			$('#show-time').val(showTime);
+			
 			//$('#show-status').val(detailSchedule.showDate);	상영상태
 		})
-	})
+		
+		// 변경할 영화의 개봉일보다 이른 날짜의 캘린더 비활성화하기
+		// 현재 상영중인 영화 장르 표시하기
+		// 상영상태 어떻게 할지
+		
+		
+	});
 	
 	
 

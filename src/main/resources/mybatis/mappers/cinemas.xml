@@ -11,6 +11,7 @@
 			city
 	</select>
 	
+	<!-- 지역번호로 지역명 조회 List<City> getCityByNo(int no); -->
 	<select id="getCityByNo" parameterType="int" resultType="com.jhta.moviefan.vo.City">
 		select
 			city_no						as no,
@@ -59,7 +60,7 @@
 		    c.hall_name 										as hallName,
 		    e.movie_title 										as title,
 		    e.movie_runtime 									as runtime,
-		     to_char(e.movie_open_date, 'YYYY-MM-DD') 			as openDate,
+		    to_char(e.movie_open_date, 'YYYY-MM-DD') 			as openDate,
 		    to_char(d.show_date, 'YYYY-MM-DD')	 				as showDate,
 		    to_char(d.show_start_time, 'HH24:MI') 				as startTime,
 		    to_char(d.show_end_time, 'HH24:MI')  				as endTime
@@ -105,5 +106,10 @@
 		and
 			d.show_no = #{value}
 	</select>
+	
+	<!-- 상영정보 수정 MovieTimeTableDto updateMovieTimeTableByShowNo(int showNo); -->
+	<update id="updateMovieTimeTableByShowNo" parameterType="int">
+		
+	</update>
 
 </mapper>
