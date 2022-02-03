@@ -1,5 +1,6 @@
 package com.jhta.moviefan.controller;
 
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 import org.apache.logging.log4j.LogManager;
@@ -11,7 +12,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.jhta.moviefan.dto.CinemaDto;
-import com.jhta.moviefan.dto.CinemaNameDto;
 import com.jhta.moviefan.dto.MovieTimeTableDto;
 import com.jhta.moviefan.service.CinemaService;
 import com.jhta.moviefan.vo.City;
@@ -28,11 +28,25 @@ public class CinemaController {
 	@GetMapping("/main")
 	public String main(Model model) {
 		List<City> cityList = cinemaService.getAllCityList();
+		List<CinemaDto> cinemaList = cinemaService.getAllCinemaList();
 		
 		model.addAttribute("cityList", cityList);
+		model.addAttribute("cinemaList", cinemaList);
 		
 		return "cinema/main";
 	}
+	
+	@GetMapping("/timetable")
+	public String timetable(int cinemaNo, Model model) {
+		List<MovieTimeTableDto> movieTimeTableDtos = cinemaService.getMovieTimeTableByCinemaNo(cinemaNo);
+		List<CinemaDto> cinemaList = cinemaService.getAllCinemaList();
+		
+		model.addAttribute("movieTimeTableDtos", movieTimeTableDtos);
+		model.addAttribute("cinema", cinemaList);
+		
+		return "cinema/timetable";
+	}
+	
 	
 	@GetMapping("/location")
 	public String location() {
