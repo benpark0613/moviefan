@@ -67,8 +67,7 @@
 			customer_nickname = #{nickName}
 	</select>
 	
-  // 주성
-	<select id="getCustomerMovieWishListByCustomerNo" parameterType="int" resultType="com.jhta.moviefan.vo.CustomerMovieWishList">
+	<select id="getAllCustomerMovieWishListByCustomerNo" parameterType="int" resultType="com.jhta.moviefan.vo.CustomerMovieWishList">
 		select 
 			movie_no	as	movieNo,
 			customer_no	as	customerNo
@@ -119,15 +118,7 @@
 	</update>
 	
 
-	<select id="getAllCustomerMovieWishListByCustomerNo" parameterType="int" resultType="com.jhta.moviefan.vo.CustomerMovieWishList">
-		select 
-			movie_no	as	movieNo,
-			customer_no	as	customerNo
-		from
-			customer_movie_wishlist
-		where
-			customer_no = #{customerNo}
-	</select>
+	
 	
 	<select id="getCustomerMovieWishListTotalRows" parameterType="com.jhta.moviefan.form.CriteriaMyAccount" resultType="int">
 		select count(*)
@@ -187,7 +178,7 @@
 		where rn between #{beginIndex} and #{endIndex}
 	</select>
 
-  // 주성
+	<!-- 주성 -->
 	<insert id="insertCustomerMovieWishListByMovieNo" parameterType="com.jhta.moviefan.vo.CustomerMovieWishList">
 		insert into CUSTOMER_MOVIE_WISHLIST
 		(MOVIE_NO, CUSTOMER_NO)

@@ -12,7 +12,6 @@ import com.jhta.moviefan.dto.MovieTimeTableDto;
 import com.jhta.moviefan.form.ScheduleUpdateForm;
 import com.jhta.moviefan.vo.Cinema;
 import com.jhta.moviefan.vo.City;
-import com.jhta.moviefan.vo.Show;
 
 @Service
 @Transactional
