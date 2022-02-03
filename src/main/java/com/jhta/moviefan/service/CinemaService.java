@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.jhta.moviefan.dao.CinemaDao;
 import com.jhta.moviefan.dto.CinemaDto;
@@ -12,6 +13,7 @@ import com.jhta.moviefan.vo.Cinema;
 import com.jhta.moviefan.vo.City;
 
 @Service
+@Transactional
 public class CinemaService {
 	
 	@Autowired

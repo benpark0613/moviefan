@@ -95,4 +95,9 @@ public class AdminController {
 		
 		return "admin/schedule/modify";
 	}
+	
+//	@PostMapping("/schedule/update")
+//	public String modify(int showNo) {
+//		
+//	}
 }
