@@ -30,11 +30,10 @@
 	</div>
 	<div class="row">
 		<div class="col">
-			<div id="chart"></div>
+			<div id="donutChart"></div>
 		</div>
 		<div class="col">
-			<div id="bar"></div>
-		
+			<div id="barChart"></div>
 		</div>
 	</div>
 	<div class="row mb-3 bg-light ">
@@ -59,7 +58,7 @@
 		  <div class="carousel-inner">
 		  	<c:forEach var="movieImage" items="${movieImage }" varStatus="status">
 			    <div class="carousel-item ${status.count eq 1 ? 'active' : '' }">
-			      <img src="/resources/images/movie/${movieImage.filename }" class="d-block w-100" alt="...">
+			      <img src="/resources/images/movie/${movieImage.filename }" alt="...">
 			    </div>
 		  	</c:forEach>
 		  </div>
@@ -128,42 +127,63 @@
 
 
 
-const Chart = toastui.Chart;
+var chart = bb.generate({
+	size: {
+    	height: 200,
+    	width: 400
+   },
+	  data: {
+	    columns: [
+		["남", 30],
+		["여", 120]
+	    ],
+	    type: "donut", // for ESM specify as: donut()
+	    onclick: function(d, i) {
+		console.log("onclick", d, i);
+	   },
+	    onover: function(d, i) {
+		console.log("onover", d, i);
+	   },
+	    onout: function(d, i) {
+		console.log("onout", d, i);
+	   }
+	  },
+	  bindto: "#donutChart"
+	});
 
-const el = document.getElementById('chart');
-
-
-const data = {
-		  categories: ['Browser'],
-		  series: [
-		    {
-		      name: '남',
-		      data: 300,
-		    },
-		    {
-		      name: '여',
-		      data: 192,
+var chart = bb.generate({
+	   size: {
+	    	height: 200,
+	    	width: 400
+	   },
+	  data: {
+	    columns: [
+		["10대", 200],
+		["20대", 180],
+		["30대", 200],
+		["40대", 30],
+		["50대", 50]
+	    ],
+	    type: "bar", // for ESM specify as: bar()
+	  },
+	  color: {
+		    pattern: [
+		      "#33a1b8",
+		      "#33a1b8",
+		      "#33a1b8",
+		      "#33a1b8",
+		      "#33a1b8"	
+		    ]
+		  },
+	  bar: {
+		  padding: 50,
+		  width: {
+		      ratio: 0.9,
+		      max: 30
 		    }
-		  ]
-		};
-const options = {
-	chart: { width: 400, height: 400 },
-	series: {
-    	dataLabels: {
-   			visible: true,
-	      	pieSeriesName: {
-	        visible: true,
-	        anchor: 'outer'
-	      	}
-		},
-		radiusRange: {
-	    	inner: '40%',
-	    	outer: '100%',
-	    }
-	}
-};
-const chart = Chart.pieChart({el, data, options});
-
+	  },
+	  bindto: "#barChart"
+	});
 
 
 </script>
