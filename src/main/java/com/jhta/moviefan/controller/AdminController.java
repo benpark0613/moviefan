@@ -4,11 +4,13 @@ import java.util.List;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -16,6 +18,7 @@ import com.jhta.moviefan.pagination.Pagination;
 import com.jhta.moviefan.vo.Movie;
 import com.jhta.moviefan.dto.CinemaDto;
 import com.jhta.moviefan.dto.MovieTimeTableDto;
+import com.jhta.moviefan.form.ScheduleUpdateForm;
 import com.jhta.moviefan.service.CinemaService;
 import com.jhta.moviefan.service.MovieService;
 import com.jhta.moviefan.vo.City;
@@ -96,8 +99,18 @@ public class AdminController {
 		return "admin/schedule/modify";
 	}
 	
-//	@PostMapping("/schedule/update")
-//	public String modify(int showNo) {
-//		
-//	}
+	@PostMapping("/schedule/update")
+	public String update(int showNo, ScheduleUpdateForm form) {
+		
+		MovieTimeTableDto timetable = new MovieTimeTableDto();
+		
+		BeanUtils.copyProperties(form, timetable);
+		
+		System.out.println(timetable);
+		
+		
+		cinemaService.updateSchedule(showNo, form);
+		return "redirect:schedule/list?no=" + showNo;
+	}
+	
 }

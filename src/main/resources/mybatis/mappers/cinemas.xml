@@ -57,7 +57,9 @@
 		    a.city_name 										as cityName,
 		    b.cinema_name 										as cinemaName,
 		    d.show_no                                    		as showNo,
+		    d.hall_no											as hallNo,
 		    c.hall_name 										as hallName,
+		    e.movie_no											as movieNo,
 		    e.movie_title 										as title,
 		    e.movie_runtime 									as runtime,
 		    to_char(e.movie_open_date, 'YYYY-MM-DD') 			as openDate,
@@ -86,7 +88,9 @@
 		    a.city_name 										as cityName,
 		    b.cinema_name 										as cinemaName,
 		    d.show_no                                    		as showNo,
+		    d.hall_no											as hallNo,
 		    c.hall_name 										as hallName,
+		    e.movie_no											as movieNo,
 		    e.movie_title 										as title,
 		    e.movie_runtime 									as runtime,
 		    to_char(e.movie_open_date, 'YYYY-MM-DD') 			as openDate,
@@ -108,8 +112,12 @@
 	</select>
 	
 	<!-- 상영정보 수정 MovieTimeTableDto updateMovieTimeTableByShowNo(int showNo); -->
-	<update id="updateMovieTimeTableByShowNo" parameterType="int">
-		
+	<update id="updateSchedule" parameterType="com.jhta.moviefan.dto.MovieTimeTableDto">
+		update show
+		set
+			hall_no = #{hallNo}
+		where
+			show_no = #{showNo}
 	</update>
 
 </mapper>
