@@ -61,9 +61,6 @@
 			</div>
 		</c:forEach>
 	</div>
-	<div class="row">
-		페이지네이션
-	</div>
 </div>
 <%@ include file="/WEB-INF/views/common/footer.jsp" %>
 <script type="text/javascript">

@@ -76,6 +76,11 @@
 		where
 			customer_no = #{customerNo}
 	</select>
+	
+	<select id="countCustomerMovieWishListByMovieNo" parameterType="int" resultType="int">
+		select count(*) from CUSTOMER_MOVIE_WISHLIST
+		where MOVIE_NO = #{value}
+	</select>
 
 	<insert id="insertCustomer" parameterType="com.jhta.moviefan.vo.Customer">
 		<selectKey keyProperty="no" resultType="int" order="BEFORE">
@@ -112,6 +117,12 @@
 			customer_no = #{customerNo}
 	</update>
 	
+	<insert id="insertCustomerMovieWishListByMovieNo" parameterType="com.jhta.moviefan.vo.CustomerMovieWishList">
+		insert into CUSTOMER_MOVIE_WISHLIST
+		(MOVIE_NO, CUSTOMER_NO)
+		values
+		(#{movieNo}, #{customerNo})
+	</insert>
 </mapper>
 
 

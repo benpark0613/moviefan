@@ -22,4 +22,7 @@ public interface CustomerDao {
 	void insertCustomer(Customer customer);
 	void updateCustomer(Customer customer);
 	
+	int countCustomerMovieWishListByMovieNo(int movieNo);
+	void insertCustomerMovieWishListByMovieNo(CustomerMovieWishList wishList);
+	
 }
