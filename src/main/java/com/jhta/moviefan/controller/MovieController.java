@@ -20,7 +20,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.jhta.moviefan.service.CustomerService;
 import com.jhta.moviefan.service.MovieService;
+import com.jhta.moviefan.vo.CustomerMovieWishList;
 import com.jhta.moviefan.vo.Movie;
 import com.jhta.moviefan.vo.MovieImage;
 import com.jhta.moviefan.vo.MovieTrailer;
@@ -33,6 +35,8 @@ public class MovieController {
 
 	@Autowired
 	MovieService movieService;
+	@Autowired
+	CustomerService customerService;
 
 	@GetMapping("/list")
 	public String list(Model model) {
@@ -58,17 +62,19 @@ public class MovieController {
 			JSONArray jsonObject3 = (JSONArray) jsonObject2.get("dailyBoxOfficeList");
 
 			List<Movie> movieList = new ArrayList<>();
+			List<Integer> wishList = new ArrayList<>();
 			for(int i=0; i<jsonObject3.size(); i++) {
 				JSONObject movies = (JSONObject) jsonObject3.get(i);
 				Movie movie = new Movie();
 
 				int movieCd = (Integer.parseInt((String)movies.get("movieCd")));
 				movie = movieService.getMovieByMovieNo(movieCd);
+				int countWishList = customerService.countCustomerMovieWishListByMovieNo(movieCd);
 				movieList.add(movie);
+				wishList.add(countWishList);
 			}
-			
 			model.addAttribute("movie", movieList);
-		
+			model.addAttribute("wishList", wishList);
 
 
 		}catch(Exception e) {

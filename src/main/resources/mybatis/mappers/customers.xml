@@ -67,6 +67,22 @@
 			customer_nickname = #{nickName}
 	</select>
 	
+  // 주성
+	<select id="getCustomerMovieWishListByCustomerNo" parameterType="int" resultType="com.jhta.moviefan.vo.CustomerMovieWishList">
+		select 
+			movie_no	as	movieNo,
+			customer_no	as	customerNo
+		from
+			customer_movie_wishlist
+		where
+			customer_no = #{customerNo}
+	</select>
+	
+	<select id="countCustomerMovieWishListByMovieNo" parameterType="int" resultType="int">
+		select count(*) from CUSTOMER_MOVIE_WISHLIST
+		where MOVIE_NO = #{value}
+	</select>
+
 	<insert id="insertCustomer" parameterType="com.jhta.moviefan.vo.Customer">
 		<selectKey keyProperty="no" resultType="int" order="BEFORE">
 			select customer_seq.nextval
@@ -102,6 +118,7 @@
 			customer_no = #{customerNo}
 	</update>
 	
+
 	<select id="getAllCustomerMovieWishListByCustomerNo" parameterType="int" resultType="com.jhta.moviefan.vo.CustomerMovieWishList">
 		select 
 			movie_no	as	movieNo,
@@ -169,6 +186,15 @@
 		)
 		where rn between #{beginIndex} and #{endIndex}
 	</select>
+
+  // 주성
+	<insert id="insertCustomerMovieWishListByMovieNo" parameterType="com.jhta.moviefan.vo.CustomerMovieWishList">
+		insert into CUSTOMER_MOVIE_WISHLIST
+		(MOVIE_NO, CUSTOMER_NO)
+		values
+		(#{movieNo}, #{customerNo})
+	</insert>
+
 </mapper>
 
 

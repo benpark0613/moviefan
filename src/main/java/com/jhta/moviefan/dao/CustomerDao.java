@@ -21,11 +21,17 @@ public interface CustomerDao {
 	void insertCustomer(Customer customer);
 	void updateCustomer(Customer customer);
 	
+
 	// 찜한 영화 전체 데이터
 	List<CustomerMovieWishList> getAllCustomerMovieWishListByCustomerNo(int customerNo);
 	// 찜한 영화 페이지네이션
 	int getCustomerMovieWishListTotalRows(CriteriaMyAccount criteriaMyAccount);
 	// 찜한 영화 검색
 	List<CustomerMovieWishList> searchCustomerMovieWishList(CriteriaMyAccount criteriaMyAccount);
+
+  // 주성
+	int countCustomerMovieWishListByMovieNo(int movieNo);
+	void insertCustomerMovieWishListByMovieNo(CustomerMovieWishList wishList);
+
 	
 }

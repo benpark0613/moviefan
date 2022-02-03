@@ -67,7 +67,6 @@
 		    예매율순
 		  </button>
 		  <ul class="dropdown-menu">
-		  	<li><a class="dropdown-item active" href="#">예매율순</a></li>
 		  	<li><a class="dropdown-item" href="#">평점순</a></li>
 		  	<li><a class="dropdown-item" href="#">관람객순</a></li>
 		  </ul>
@@ -94,16 +93,38 @@
 				</div>
 				<div class="row">
 					<div class="col">
-						<span style="font-size: 12pt; color:#444;">예매율 35%</span>
-					</div>
-					<div class="col-7">
 						<span style="font-size: 12pt;">개봉일 <fmt:formatDate value="${movies.openDate }" pattern="yyyy.MM.dd" /></span>
 					</div>
 				</div>
 				<div class="row mb-3">
 					<div class="col">
-						<button type="button" class="btn btn-outline-dark" style="padding-left:10px; padding-right:10px;"><i class="far fa-heart fa-lg"></i><span> 1234</span></button>
-						<button type="button" class="btn btn-danger btn-block" style="padding-left:75px; padding-right:75px;"><span>예매</span></button>
+						<!-- Button trigger modal -->
+						<button type="button" class="btn btn-primary wishListBtn" data-bs-toggle="modal" style="padding-left:10px; padding-right:10px;">
+							<i class="far fa-heart fa-lg"></i><span> ${wishList[status.index] }</span>
+						</button>
+							<input type="hidden" value="${movies.no}" /> 
+						
+						<!-- Modal 
+						<div class="modal fade" id="ratingModal" tabindex="-1" aria-hidden="true">
+						  <div class="modal-dialog">
+						    <div class="modal-content">
+						      <div class="modal-header">
+						        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+						        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+						      </div>
+						      <div class="modal-body">
+						      	<span id="message"></span>
+						      </div>
+						      <div class="modal-footer">
+						        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+						      </div>
+						    </div>
+						  </div>
+						</div>
+						-->
+					</div>
+					<div class="col">
+						<button type="button" class="btn btn-danger btn-block" style="padding-left:50px; padding-right:50px;"><span>예매</span></button>
 					</div>
 				</div>
 			</div>
@@ -142,6 +163,26 @@ $("#movieStatus2").hover(function(){
 }, function(){
 	$(this).find("span").first().remove();
 	$(this).find("span").css("color", "#444");
+})
+
+$(".wishListBtn").click(function(){
+	var movieNo = $(this).next().val();
+	var count = $(this).next();
+	
+	$.ajax({
+		url : "/rest/movie/wishList",
+		type : "post",
+		dataType : "json",
+		data: {
+			movieNo : movieNo,
+		},
+		success : function(data){
+			alert("성공");
+		},
+		error : function(response){
+			alert("실패");
+		}
+	})
 })
 </script>
 </body>

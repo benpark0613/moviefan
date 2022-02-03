@@ -154,6 +154,16 @@ public class CustomerService {
 		return movies;
 	}
 	
+	public int countCustomerMovieWishListByMovieNo(int movieNo) {
+		int countWishList = customerDao.countCustomerMovieWishListByMovieNo(movieNo);
+		
+		return countWishList;
+	}
+	
+	public void insertCustomerMovieWishListByMovieNo(CustomerMovieWishList wishList) {
+		customerDao.insertCustomerMovieWishListByMovieNo(wishList);
+	}
+	
 }
 
 
