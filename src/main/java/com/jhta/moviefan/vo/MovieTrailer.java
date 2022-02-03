@@ -6,7 +6,7 @@ public class MovieTrailer {
 	
 	private int movieNo;
 	private String title;
-	private String urlAddress;;
+	private String urlAddress;
 	private Date createdDate;
 	
 	public MovieTrailer() {}

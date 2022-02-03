@@ -34,6 +34,7 @@
 	 	position: absolute;
 	 	z-index: -1;
 	 	font-size: 16px;
+	 	color:white;
 	 }
 	 .pic .rank{
 	 	position: absolute;
@@ -44,54 +45,51 @@
     	font-style: italic;
     	text-shadow: 2px 2px 2px rgb(0 0 0 / 80%);
 	 }
+	 .pic .customerRating{
+		position: absolute;
+	 	z-index: -1;
+	 	font-size: 16px;
+	 	
+	 }
 </style>
 <body>
 <%@ include file="/WEB-INF/views/common/header.jsp" %>
 <div class="container">
 	<div class="row mb-3">
-		<div class="col-10">
+		<div class="col-9">
 		<h1>무비 차트</h1>
 		</div>
-		<div class="col-2 text-align-right align-self-center">
+		<div class="col-3 text-align-right align-self-center">
 		<a id="movieStatus1" href=""><span class="align-middle" style="font-size: 12pt;">무비차트</span></a>
 		<a id="movieStatus2" href=""><span class="align-middle" style="font-size: 12pt;">상영예정작</span></a>
+		<div class="btn-group">
+		  <button class="btn btn-secondary btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+		    예매율순
+		  </button>
+		  <ul class="dropdown-menu">
+		  	<li><a class="dropdown-item active" href="#">예매율순</a></li>
+		  	<li><a class="dropdown-item" href="#">평점순</a></li>
+		  	<li><a class="dropdown-item" href="#">관람객순</a></li>
+		  </ul>
+		</div>
 		</div>
 		<hr size="3px" color="black">
 	</div>
 	<div class="row mb-3">
-		<div class="col-10">
-			<input class="form-check-input" type="checkbox">
-			<label class="form-check-label">
-				현재 상영작만 보기
-			</label>	
-		</div>
-		<div class="col-2">
-			<div class="btn-group">
-			  <button class="btn btn-secondary btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-			    예매율순
-			  </button>
-			  <ul class="dropdown-menu">
-			  	<li><a class="dropdown-item active" href="#">예매율순</a></li>
-			  	<li><a class="dropdown-item" href="#">평점순</a></li>
-			  	<li><a class="dropdown-item" href="#">관람객순</a></li>
-			  </ul>
-			</div>
-		</div>
-	</div>
-	<div class="row mb-3">
-		<c:forEach var="movie" items="${movie }" varStatus="status">
-			<div class="col-4 mb-3">
+		<c:forEach var="movies" items="${movie }" varStatus="status">
+			<div class="col-3 mb-3">
 				<div class="row pic">
 					<span class="rank">${status.count }</span>
-					<img class="imgs" src="/resources/images/movie/moviePoster/${movie.no }.jpg" class="rounded float-start" alt="..."> 
-					<span class="summary">${movie.summary }</span>
+					<img class="imgs" src="/resources/images/movie/moviePoster/${movies.no }.jpg" class="rounded float-start" alt="..."> 
+					<span class="summary">${movies.summary }</span>
+					<span class="customerRating">평점</span>
 				</div>
 				<div class="row">
 					<div class="col-1">
 						<img alt="" src="/resources/images/movie/age/age_15.png">
 					</div>
 					<div class="col">
-						<a href="detail?no=${movie.no }"><span style="font-size: 15pt"><strong>${movie.title }</strong></span></a>
+						<a href="detail?no=${movies.no }"><span style="font-size: 15pt"><strong>${movies.title }</strong></span></a>
 					</div>
 				</div>
 				<div class="row">
@@ -99,13 +97,13 @@
 						<span style="font-size: 12pt; color:#444;">예매율 35%</span>
 					</div>
 					<div class="col-7">
-						<span style="font-size: 12pt;">개봉일 <fmt:formatDate value="${movie.openDate }" pattern="yyyy.MM.dd" /></span>
+						<span style="font-size: 12pt;">개봉일 <fmt:formatDate value="${movies.openDate }" pattern="yyyy.MM.dd" /></span>
 					</div>
 				</div>
 				<div class="row mb-3">
 					<div class="col">
-						<button type="button" class="btn btn-outline-dark" style="padding-left:20px; padding-right:20px;"><i class="far fa-heart fa-lg"></i><span> 1234</span></button>
-						<button type="button" class="btn btn-danger btn-block" style="padding-left:90px; padding-right:90px;"><span>예매</span></button>
+						<button type="button" class="btn btn-outline-dark" style="padding-left:10px; padding-right:10px;"><i class="far fa-heart fa-lg"></i><span> 1234</span></button>
+						<button type="button" class="btn btn-danger btn-block" style="padding-left:75px; padding-right:75px;"><span>예매</span></button>
 					</div>
 				</div>
 			</div>
@@ -131,8 +129,10 @@ $("#movieStatus1").find("span").css("color", "#b12e2e");
 
 $(".imgs").hover(function(){
 	$(this).css("opacity", 0.3);
+	$(this).nextAll().css("color", "black");
 }, function(){
 	$(this).css("opacity", 1);
+	$(this).nextAll().css("color", "white");
 })
 
 
