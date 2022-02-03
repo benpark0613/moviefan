@@ -10,22 +10,25 @@ public class CustomerMovieWishList {
 	public int getCustomerNo() {
 		return customerNo;
 	}
-	
+
 	public void setCustomerNo(int customerNo) {
 		this.customerNo = customerNo;
 	}
-	
+
 	public int getMovieNo() {
 		return movieNo;
 	}
-	
+
 	public void setMovieNo(int movieNo) {
 		this.movieNo = movieNo;
 	}
 
 	@Override
 	public String toString() {
-		return "CustomerMovieWishList [movieNo=" + movieNo + ", customerNo=" + customerNo + "]";
+		return "CustomerMovieWishList [customerNo=" + customerNo + ", movieNo=" + movieNo + "]";
 	}
+
 	
+	
+
 }

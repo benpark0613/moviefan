@@ -25,7 +25,7 @@
 			<c:choose>
 				<c:when test="${empty LOGINED_CUSTOMER.nickName}">
 					<p class="fs-1">
-						<span class="fs-1 fw-bolder">${ LOGINED_CUSTOMER.name}</span>님&nbsp; 반갑습니다.&nbsp;
+						<span class="fs-1 fw-bolder">${LOGINED_CUSTOMER.name}</span>님&nbsp; 반갑습니다.&nbsp;
 						<a href="" class="link-secondary" data-bs-toggle="tooltip" data-bs-placement="top" title="닉네임을 설정해주세요.">
 							<i class="bi bi-pen" style="font-size: 0.5em;" ></i>
 						</a>
@@ -33,7 +33,7 @@
 				</c:when>
 				<c:otherwise>
 					<p class="fs-1">
-						<span class="fs-1 fw-bolder">${ LOGINED_CUSTOMER.nickName}</span>님&nbsp; 반갑습니다.&nbsp;
+						<span class="fs-1 fw-bolder">${LOGINED_CUSTOMER.nickName}</span>님&nbsp; 반갑습니다.&nbsp;
 						<a href="" class="link-secondary" data-bs-toggle="tooltip" data-bs-placement="top" title="닉네임 바꾸러 가기">
 							<i class="bi bi-pen" style="font-size: 0.5em;" ></i>
 						</a>
@@ -59,7 +59,7 @@
 					<tbody class="mx-3">
 						<tr>
 							<th class="col-6 fs-5 text-start">사용가능 포인트</th>
-							<td class="col-3 fs-5 text-end">${ LOGINED_CUSTOMER.totalPoint } 점</td>
+							<td class="col-3 fs-5 text-end">${LOGINED_CUSTOMER.totalPoint } 점</td>
 						</tr>
 						<tr>
 							<th class="col-6 fs-5 text-start">다음 등급까지 남은 포인트</th>
@@ -106,7 +106,7 @@
 								<c:forEach var="wishMovie" items="${wishMovies }" varStatus="loop" end="2">
 									<div class="card col-3 p-1 d-flex justify-content-center">
 										<div class="row">
-									  		<img src="https://img.megabox.co.kr/SharedImg/2022/01/04/yqN0gFPGfFRXuLVO9RSEC5gXslCEn22k_420.jpg" class="img-fluid" alt="...">
+									  		<img src="${movieImages }" class="img-fluid" alt="...">
 										</div>
 										<div class="card-body d-flex justify-content-center p-0">
 											<a type="button" class="btn btn-danger w-100"><span>상세정보</span></a>
@@ -190,33 +190,78 @@
 		</div>
 		
 		<%-- 서브메뉴: 무비로그 --%>
-		<div class="d-flex justify-content-evenly flex-wrap d-none" id="wish-movie">
+		<%-- 찜한 영화 --%>
+		<div class="d-flex justify-content-evenly d-none" id="wish-movie">
 			<div class="col-8">
-				<c:choose>
-					<c:when test="${empty wishMovies }">
-						<div class="row">
-							<div class="row text-center"><i class="bi bi-exclamation-square" style="font-size: 5em;"></i></div>
-							<div class="row text-center"><p class="fs-1">찜한 영화가 존재하지 않습니다.</p></div>
-						</div>
-					</c:when>
-					<c:otherwise>
-						<div class="row d-flex justify-content-evenly">
-							<c:forEach var="wishMovie" items="${wishMovies }" varStatus="loop" end="7">
-								<div class="card col-2 p-1 mx-3 mt-3 d-flex justify-content-center">
-									<div class="row">
-								  		<img src="https://img.megabox.co.kr/SharedImg/2022/01/04/yqN0gFPGfFRXuLVO9RSEC5gXslCEn22k_420.jpg" class="img-fluid" alt="...">
+				<%-- 영화 리스트 --%>
+				<div class="row d-flex justify-content-center">
+					<c:choose>
+						<c:when test="${empty wishMovies }">
+							<div class="row">
+								<div class="row text-center"><i class="bi bi-exclamation-square" style="font-size: 5em;"></i></div>
+								<div class="row text-center"><p class="fs-1">찜한 영화가 존재하지 않습니다.</p></div>
+							</div>
+						</c:when>
+						<c:otherwise>
+							<div class="row d-flex justify-content-evenly p-0 m-0">
+								<c:forEach var="wishMovie" items="${wishMovies }" varStatus="loop" end="7">
+									<div class="card col-2 p-1 mx-3 mt-3 d-flex justify-content-center">
+										<div class="row">
+									  		<img src="${movieImages} }" class="img-fluid" alt="...">
+										</div>
+										<div class="card-body d-flex justify-content-center p-0">
+											<a type="button" class="btn btn-danger w-100"><span>상세정보</span></a>
+											<a type="button" class="btn btn-outline-secondary"><span class="bi bi-heart-fill"></span></a>
+										</div>
 									</div>
-									<div class="card-body d-flex justify-content-center p-0">
-										<a type="button" class="btn btn-danger w-100"><span>상세정보</span></a>
-										<a type="button" class="btn btn-outline-secondary"><span class="bi bi-heart-fill"></span></a>
-									</div>
-								</div>
-							</c:forEach>
+								</c:forEach>
+							</div>
+						</c:otherwise>
+					</c:choose>
+					<%-- 페이지 내비게이션 표시 --%>
+					<c:if test="${pagination.totalRecords gt 0 }">
+						<div class="row d-flex justify-content-center p-0 m-0 mt-4">
+							<div class="col">
+								<nav id="page-navigation">
+						  			<ul class="pagination pagination-sm justify-content-center m-0">
+						    			<li class="page-item ${pagination.existPrev ? '' : 'disabled' }">
+						      				<a class="page-link link-dark" href="list.do?page=${pagination.prevPage }" data-page="${pagination.prevPage }"><span aria-hidden="true">&laquo;</span></a>
+						    			</li>
+						    			<c:forEach var="num" begin="${pagination.beginPage }" end="${pagination.endPage }">
+							    			<li class="page-item ${pagination.pageNo eq num ? 'active' : '' }">
+							    				<a class="page-link link-dark" href="list.do?page=${num }" data-page="${num }">${num }</a>
+							    			</li>	    			
+						    			</c:forEach>
+						    			<li class="page-item ${pagination.existNext ? '' : 'disabled' }">
+						      				<a class="page-link link-dark" href="list.do?page=${pagination.nextPage }" data-page="${pagination.nextPage }"><span aria-hidden="true">&raquo;</span></a>
+						    			</li>
+						  			</ul>
+								</nav>
+							</div>
 						</div>
-					</c:otherwise>
-				</c:choose>
+					</c:if>
+					<%-- 검색 표시 --%>
+					<div class="row d-flex justify-content-center p-0 m-0 mt-2">
+						<form class="row d-flex justify-content-center gx-1" id="form-search-movie" method="get" action="/rest/member/movie-wish-list">
+							<input type="hidden" name="page" value="1" />
+							<div class="col-2">
+								<select class="form-select" name="opt">
+									<option value="title" ${'title' eq param.opt ? 'selected' : ''} selected="selected"> 제목 검색</option>
+									<option value="actor" ${'actor' eq param.opt ? 'selected' : ''}> 배우 검색</option>
+								</select>
+							</div>
+							<div class="col-3">
+								<input type="text" class="form-control" name="value" value="${param.value }" placeholder="영화 검색">
+							</div>
+							<div class="col-1">
+								<button type="button" class="btn btn-outline-dark w-100 h-100" id="btn-search-movie">검색</button>
+							</div>
+						</form>
+					</div>
+				</div>
 			</div>
 		</div>
+		<%-- 내가 본 영화 --%>
 		<div class="row d-none" id="watched-movie">
 			<div class="col p-5 my-5">
 				<div class="row text-center"><i class="bi bi-exclamation-square" style="font-size: 5em;"></i></div>
@@ -264,13 +309,28 @@
 							<div class="col-9">
 								<h4>포인트 기본 적립</h4>
 								<ul>
-									<li>영화 티켓 구매 시 유료 결제 금액의 <em class="font-gblue">10%</em> 적립</li>
+									<li>영화 티켓 구매 시 유료 결제 금액의 <em class="font-gblue">3% ~ 10%</em> 적립</li>
+									<ul>
+										<li>브론즈 등급:	3%</li>
+										<li>실버 등급:		5%</li>
+										<li>골드 등급:		7%</li>
+										<li>플래티넘 등급:	10%</li>
+									</ul>
 									<li>결제가 완료된 후 적립 예정 포인트로 적립되며 <em class="font-gblue">영화의 경우 상영일 익일</em> 사용 가능한 포인트(가용 포인트) 로 전환됩니다.</li>
 									<li>회원이 로그인 후 온라인 서비스를 이용 하거나 현장 매표소, 키오스크에서 멤버십 카드 제시 또는 회원임을 확인 할 수 있는 정보를 제공하여야 포인트가 적립됩니다.</li>
 									<li>무비팬 및 제휴사 할인, 포인트 결제 등을 통해 할인 받은 금액을 제외한 실제 고객님께서 현금, 신용카드 등으로 유료 결제한 금액 기준으로 적립됩니다.</li>
 									<li>일부 영화, 상품, 극장, 결제 수단의 경우 적립이 되지 않거나 별도의 적립률이 적용될 수 있으며 상세 내용은 해당 상품, 극장 등에 별도 공지합니다.</li>
-									<li>VIP 선정 시 기준이 되는 포인트입니다.</li>
 									<li>포인트 적립은 티켓에 노출된 영화 시작 시간 이전까지만 가능하며, 영화 상영 및 매점 상품 구매 이후 사후 적립은 불가능합니다.</li>
+								</ul>
+								<h4>등급 산정 기준</h4>
+								<ul>
+									<li>등급 산정은 티켓 구매 횟수를 기준으로 합니다.</li>
+									<ul>
+										<li>브론즈 등급: 기본 등급</li>
+										<li>실버 등급: 티켓 구매 횟수가 6장 이상인 경우</li>
+										<li>골드 등급: 티켓 구매 횟수가 11장 이상인 경우</li>
+										<li>플래티넘 등급: 티켓 구매 횟수가 16장 이상인 경우</li>
+									</ul>
 								</ul>
 								<h4>포인트 사용</h4>
 								<ul>
@@ -391,6 +451,21 @@ $(function() {
 		$('#wish-movie-item').addClass('fw-bolder')
 		$('#my-movie-tab').addClass('fw-bolder')
 		$('#wish-movie').removeClass("d-none")
+		
+		$(".pagination a").click(function(event) {
+			event.preventDefault();
+			$("#form-search-movie :input[name=page]").val(pageNo);
+			$("#form-search-movie").trigger("submit");
+			
+			$.get("/rest/member/movie-wish-list", function(response) {
+				
+			})
+			
+		})
+		
+		
+		
+		
 	});
 	$('#watched-movie-item').click(function(event) {
 		event.preventDefault();

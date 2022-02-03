@@ -16,6 +16,7 @@ import com.jhta.moviefan.dao.CustomerDao;
 import com.jhta.moviefan.dao.MovieDao;
 import com.jhta.moviefan.exception.RestLoginErrorException;
 import com.jhta.moviefan.exception.RestRegisterErrorException;
+import com.jhta.moviefan.form.CriteriaMyAccount;
 import com.jhta.moviefan.vo.Customer;
 import com.jhta.moviefan.vo.CustomerMovieWishList;
 import com.jhta.moviefan.vo.Movie;
@@ -115,8 +116,16 @@ public class CustomerService {
 		return savedCustomer;
 	}
 	
-	public List<Movie> getCustomerMovieWishList(int customerNo) {
-		List<CustomerMovieWishList> customerMovieWishList = customerDao.getCustomerMovieWishListByCustomerNo(customerNo);
+	public void updateCustomerInfo(Customer customer) {
+		customerDao.updateCustomer(customer);
+	}
+	
+	public void deleteCustomerInfo(int customerNo) {
+		customerDao.deleteCustomerByNo(customerNo);
+	}
+	
+	public List<Movie> getAllCustomerMovieWishList(int customerNo) {
+		List<CustomerMovieWishList> customerMovieWishList = customerDao.getAllCustomerMovieWishListByCustomerNo(customerNo);
 		
 		List<Movie> movies = new ArrayList<Movie>();
 
@@ -128,12 +137,43 @@ public class CustomerService {
 		return movies;
 	}
 	
-	public void updateCustomerInfo(Customer customer) {
-		customerDao.updateCustomer(customer);
+	public int getTotalRows(CriteriaMyAccount criteriaMyAccount) {
+		return customerDao.getCustomerMovieWishListTotalRows(criteriaMyAccount);
 	}
 	
-	public void deleteCustomerInfo(int customerNo) {
-		customerDao.deleteCustomerByNo(customerNo);
+	public List<Movie> searchCustomerMovieWishList(CriteriaMyAccount criteriaMyAccount) {
+		List<CustomerMovieWishList> customerMovieWishList = customerDao.searchCustomerMovieWishList(criteriaMyAccount);
+		
+		List<Movie> movies = new ArrayList<Movie>();
+		
+		for (CustomerMovieWishList item : customerMovieWishList) {
+			Movie movie = movieDao.getMovieByMovieNo(item.getMovieNo());
+			movies.add(movie);
+		}
+		
+		return movies;
 	}
 	
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

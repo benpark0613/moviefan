@@ -48,7 +48,7 @@
 	</div>
 </div>
 <%--상영예정작 표시 --%>
-<div class="container-fluid bg-black">
+<div class="container-fluid bg-black mt-0">
 	<div class="d-flex justify-content-center">
 		<div class="col-6">
 			<div class="ratio ratio-16x9">
@@ -150,6 +150,7 @@
 	</div>
 </div>
 
+<%--영화평점순위 --%>
 <div class="container mt-3">
 	<div class="row d-flex justify-content-center">
 		<div class="col-8 border border-light">
