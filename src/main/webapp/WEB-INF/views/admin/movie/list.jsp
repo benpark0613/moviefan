@@ -132,7 +132,7 @@
 	      			<div class="modal-header">
 	        			<h5 class="modal-title"><strong id="modal-title"></strong></h5>
 	        			<div class="ms-2" id="modal-spinner-box"></div>
-	        			<button type="button" class="btn-close ms-0" data-bs-dismiss="modal" aria-label="Close"></button>
+	        			<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 	      			</div>
 	      			<div class="modal-body">
 	        			<table class="table">
