@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -30,7 +31,8 @@ public class CinemaRestController {
 		return cinemaService.getMovieTimeTableByCinemaNo(cinemaNo);
 	}
 	
-	@GetMapping("/modify")
+	// http://localhost/rest/cinema/modify?showNo=9000
+	@PostMapping("/modify")
 	public MovieTimeTableDto modify(int showNo) {
 		return cinemaService.getMovieTimeTableByShowNo(showNo);
 	}
