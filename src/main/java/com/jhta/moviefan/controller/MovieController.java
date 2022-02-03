@@ -81,10 +81,10 @@ public class MovieController {
 	@GetMapping("/detail")
 	public String detail(int no, Model model) {
 		Movie movie = movieService.getMovieByMovieNo(no);
-		List<MovieImage> movieImage = movieService.getMovieImageByMovieNo(no);
-		List<MovieTrailer> movieTrailer = movieService.getMovieTrailerByMovieNo(no);
-		int countTrailer = movieService.getMovieTrailerByMovieNo(no).size();
-		int countImage = movieService.getMovieImageByMovieNo(no).size();
+		List<MovieImage> movieImage = movieService.getMovieImagesByMovieNo(no);
+		List<MovieTrailer> movieTrailer = movieService.getMovieTrailersByMovieNo(no);
+		int countTrailer = movieService.getMovieTrailersByMovieNo(no).size();
+		int countImage = movieService.getMovieImagesByMovieNo(no).size();
 		model.addAttribute("countTrailer", countTrailer);
 		model.addAttribute("countImage", countImage);
 		model.addAttribute("movie", movie);
@@ -97,10 +97,10 @@ public class MovieController {
 	@GetMapping("/trailer")
 	public String trailer(int no, Model model) {
 		Movie movie = movieService.getMovieByMovieNo(no);
-		List<MovieImage> movieImage = movieService.getMovieImageByMovieNo(no);
-		List<MovieTrailer> movieTrailer = movieService.getMovieTrailerByMovieNo(no);
-		int countTrailer = movieService.getMovieTrailerByMovieNo(no).size();
-		int countImage = movieService.getMovieImageByMovieNo(no).size();
+		List<MovieImage> movieImage = movieService.getMovieImagesByMovieNo(no);
+		List<MovieTrailer> movieTrailer = movieService.getMovieTrailersByMovieNo(no);
+		int countTrailer = movieService.getMovieTrailersByMovieNo(no).size();
+		int countImage = movieService.getMovieImagesByMovieNo(no).size();
 		model.addAttribute("countTrailer", countTrailer);
 		model.addAttribute("countImage", countImage);
 		model.addAttribute("movie", movie);

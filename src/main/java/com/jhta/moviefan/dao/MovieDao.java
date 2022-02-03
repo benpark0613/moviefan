@@ -20,15 +20,21 @@ import com.jhta.moviefan.vo.Movie_Rate;
 public interface MovieDao {
   
 	int getMoviesTotalRows();
+	
+	Movie getMovieByMovieNo(int movieNo);
 	List<Movie> getAllMovies();
 	List<Movie> getMovies(@Param("beginIndex") int beginIndex, @Param("endIndex") int endIndex);
-	Movie getMovieByMovieNo(int movieNo);
-	List<MovieImage> getMovieImageByMovieNo(int movieNo);
-	List<MovieTrailer> getMovieTrailerByMovieNo(int movieNo);
+	
+	List<MovieImage> getMovieImagesByMovieNo(int movieNo);
+	List<MovieTrailer> getMovieTrailersByMovieNo(int movieNo);
+	List<MovieGenre> getMovieGenresByMovieNo(int movieNo);
+	List<MovieDirector> getMovieDirectorsByMovieNo(int movieNo);
+	List<MovieActor> getMovieActorsByMovieNo(int movieNo);
+	
 	Genre getGenreByName(String genreName);
 	Director getDirectorByNo(int directorNo);
 	Actor getActorByNo(int actorNo);
-
+	
 	void insertMovie(Movie movie);
 	void insertActor(Actor actor);
 	void insertMovieActor(MovieActor movieActor);
@@ -40,4 +46,7 @@ public interface MovieDao {
 	void insertMovieTrailer(MovieTrailer movieTrailer);
 	
 	void updateMovie(Movie movie);
+	
+	void deleteMovieImage(String filename);
+	void deleteMovieTrailer(int movieNo);
 }

@@ -14,9 +14,26 @@
 		header {
 			background-color: #1c243c;
 		}
+		#overlay {
+			position: fixed; /* Sit on top of the page content */
+		 	width: 100%; /* Full width (cover the whole page) */
+		  	height: 100%; /* Full height (cover the whole page) */
+		  	top: 0;
+		  	left: 0;
+		  	right: 0;
+		  	bottom: 0;
+		  	background-color: rgba(0,0,0,0.5); /* Black background with opacity */
+		  	z-index: 10000000 !important; /* Specify a stack order in case you're using a different order for other elements */
+		  	cursor: pointer; /* Add a pointer on hover */
+		}
 	</style>
 </head>
 <body>
+<div class="d-flex justify-content-center align-items-center d-none" id="overlay">
+	<div class="spinner-border text-light" style="width: 15rem; height: 15rem; border: 1em solid; border-right-color: transparent;">
+		<span class="visually-hidden">Loading...</span>
+	</div>
+</div>
 <%@ include file="/WEB-INF/views/admin/common/header.jsp" %>
 <div class="container">
 	<div class="row mb-3">
@@ -92,7 +109,7 @@
 	<div class="row mb-3">
 		<div class="col">
 			<div class="row">
-				<span class="text-start">총 <strong id="totalRecords">0</strong>건</span>
+				<span>총 <strong id="totalRecords">0</strong>건</span>
 			</div>
 			<table class="table" id="table-movie">
 				<thead>
@@ -123,13 +140,14 @@
 	<div class="modal" tabindex="-1" id="modal-movie">
   		<div class="modal-dialog modal-xl">
     		<div class="modal-content">
-    			<form id="form-insert-book" method="post" action="insert" enctype="multipart/form-data">
+    			<form id="form-insert-book" method="post" enctype="multipart/form-data">
 	    			<input type="hidden" name="no" value="">
 	    			<input type="hidden" name="title" value="">
 	    			<input type="hidden" name="titleEn" value="">
 	    			<input type="hidden" name="rate" value="">
 	    			<input type="hidden" name="runtime" value="">
 	    			<input type="hidden" name="openDate" value="">
+	    			<input type="hidden" name="productionYear" value="">
 	    			<input type="hidden" name="producer" value="">
     				<div id="modal-input-box"></div>
 	      			<div class="modal-header">
@@ -200,8 +218,8 @@
 						</div>
 	      			</div>
 					<div class="modal-footer">
-	    				<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
-	    				<button type="submit" class="btn btn-primary">확인</button>
+	    				<!-- <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button> -->
+	    				<button type="submit" class="btn btn-primary" id="btn-insert-movie">확인</button>
 					</div>
 				</form>
    			</div>
@@ -370,7 +388,10 @@
 			$(this).closest(".input-group").remove();
 		});
 		
-		
+		$("#btn-insert-movie").click(function(event) {
+			event.preventDefault();
+			insertMovie();
+		});
 		
 	});
 	
@@ -512,6 +533,9 @@
 				if (movie.openDt != "") {
 					$("input[name=openDate]").val(moment(movie.openDt).format('YYYY-MM-DD'));
 				}
+				if (movie.prdtYear != "") {
+					$("input[name=productionYear]").val(movie.prdtYear);
+				}
 				if (movie.companys.length > 0 ) {
 					$("input[name=producer]").val(movie.companys[0].companyNm);
 				}
@@ -529,8 +553,43 @@
 				}
 			},
 			error: function() {
+				$modalSpinnerBox.empty();
 				alert("오류가 발생하였습니다.");
 			}
+		});
+	}
+	
+	function insertMovie() {
+		var form = $("#form-insert-book")[0];
+		var data = new FormData(form);
+		
+		$.ajax({
+			type: "post",
+			enctype: "multipart/form-data",
+			url: "/rest/admin/movie/insert",
+			data: data,
+			processData: false,
+			contentType: false,
+	        cache: false,
+	        timeout: 600000,
+	        beforeSend: function() {
+				$("#overlay").removeClass("d-none");
+			},
+            success: function(response) {
+            	$("#overlay").addClass("d-none");
+            	if (response.status == "OK") {
+	            	var no = response.item[0];
+	            	alert("영화코드: [" + no + "] 가 성공적으로 등록 되었습니다.");
+	            	$("#modal-movie").modal("toggle");
+            	} else {
+            		alert(response.error);
+            		$("#modal-movie").modal("toggle");
+            	}
+            }, 
+            error: function() {
+            	$("#overlay").addClass("d-none");
+            	alert("오류가 발생하였습니다.");
+            }
 		});
 	}
 	
@@ -632,18 +691,18 @@
 	
 	var myModalEl = document.getElementById("modal-movie");
 	myModalEl.addEventListener("hide.bs.modal", function(event) {
-		$("#modal-movie-code").val("");
-		$("#modal-movie-name").val("");
-		$("#modal-movie-name-en").val("");
-		$("#modal-movie-production-year").val("");
-		$("#modal-movie-show-time").val("");
-		$("#modal-movie-open-date").val("");
-		$("#modal-movie-production-status").val("");
-		$("#modal-movie-genre").val("");
-		$("#modal-movie-watch-grade").val("");
-		$("#modal-movie-directors").val("");
-		$("#modal-movie-actors").val("");
-		$("#modal-movie-companys").val("");
+		$("#modal-movie-code").empty();
+		$("#modal-movie-name").empty();
+		$("#modal-movie-name-en").empty();
+		$("#modal-movie-production-year").empty();
+		$("#modal-movie-show-time").empty();
+		$("#modal-movie-open-date").empty();
+		$("#modal-movie-production-status").empty();
+		$("#modal-movie-genre").empty();
+		$("#modal-movie-watch-grade").empty();
+		$("#modal-movie-directors").empty();
+		$("#modal-movie-actors").empty();
+		$("#modal-movie-companys").empty();
 		$("textarea[name=summary]").val("");
 		$("input[name=images]").val("");
 		$("#trailer-box").empty();
