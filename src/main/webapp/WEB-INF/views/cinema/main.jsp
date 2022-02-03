@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-   <title>MovieFan</title>
+   <title>MovieFan :: 극장 및 상영정보</title>
    <link type="image/png" href="/resources/images/logo/moviefan-favicon.png" rel="icon"/>
    <meta charset="utf-8">
    <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -45,7 +45,7 @@
 							<c:if test="${cinema.cityNo eq 20 }">
 					    		<div id="cinema-select" class="col">
 									<div id="cinema" class="p-4 border bg-light text-center">
-							      		<a href="#" id="${cinema.cityNo }">${cinema.name }</a>
+							      		<a href="#" id="${cinema.no }">${cinema.name }</a>
 							      	</div>
 					    		</div>
 							</c:if>
@@ -55,103 +55,30 @@
 			</div>
 		</div>
 	</div>
-	<!-- 안내버튼 -->
-	<div class="row mt-5 mb-5 justify-content-center hstack gap-2">
-		<a href="/theater/price" id="price-info" class="col-2 btn btn-success" data-bs-toggle="modal" data-bs-target="#exampleModal">
-		관람가격 안내</a>
-		<a href="/cinema/location" id="location-info" class="col-2 btn btn-success">위치/주차 안내</a>
-	</div>
-	<!-- 관람가격 모달창 -->
-	<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-		<div class="modal-dialog modal-lg">
-	    	<div class="modal-content">
-	      		<div class="modal-header">
-	        		<h5 class="modal-title">관람가격 안내</h5>
-	      		</div>
-	      		<div class="row justify-content-center modal-body">
-			        <table class="table w-75 text-center">
-			        	<thead>
-							<tr>
-								<th>성인</th>
-								<th>청소년</th>
-								<th>경로우대</th>
-							</tr>			
-						</thead>
-						<tbody>
-							<tr>
-								<td>10,000원</td>
-								<td>8,000원</td>
-								<td>6,000원</td>
-							</tr>
-						</tbody>
-			        </table>
-	      		</div>
-	      		<div class="modal-footer">
-	        		<button type="button" class="btn btn-dark" data-bs-dismiss="modal">닫기</button>
-	      		</div>
-	    	</div>
-	  	</div>
-	</div>
-	<!-- 상영시간표 -->
-	<div id="movie-timetable" class="row justify-content-center mt-5 mb-5">
-		<c:forEach var="movieTimeTable" items="${movieTimeTableList }">
-			<div class="col-10 px-0">
-			
-				<table class="table">
-					<thead>
-						<tr>
-							<th>
-								<span class="fs-2">${movieTimeTable.title }</span>
-<%-- 								<span class="ml-3">${movieTimeTable.genre } | </span> --%>
-								<span><fmt:formatDate value="${movieTimeTable.openDate }" pattern="yyyy년 M월 d일"/> 개봉</span>
-							</th>
-						</tr>
-					</thead>
-					<tbody>
-						<tr>
-							<td>
-								<div class="mx-5 my-3">
-									<span class="fs-4">${movieTimeTable.hallName }</span>
-<%-- 									<span>총 ${movieTimeTable.totalSeats }석</span> --%>
-								</div>
-								<div class="d-flex align-items-center mx-5">
-									<ul class="list-group list-group-horizontal">
-									  <li class="list-group-item mt-2 mb-3 text-center">상영시작시간<br>잔여좌석수</li>
-									  <li class="list-group-item mt-2 mb-3 text-center">상영시작시간<br>잔여좌석수</li>
-									  <li class="list-group-item mt-2 mb-3 text-center">상영시작시간<br>잔여좌석수</li>
-									</ul>
-								</div>
-							</td>
-						</tr>
-					</tbody>
-				</table>
-			</div>
-		</c:forEach>
-		<p class="col-10 text-end">* 입장 지연에 따른 관람 불편을 최소화하기 위해, 상영시간 10분 후부터 영화가 시작됩니다.</p>
-	</div>
 </div>	
 <%@ include file="/WEB-INF/views/common/footer.jsp" %>
 </body>
 <script type="text/javascript">
 
-	$('#city-select').change(function () {
-		let no = $(this).val();
-		//alert(cityNo);
+	$(function () {
 		
-		let $box = $("#cinemaBox").empty();
-		
-		$.getJSON("/rest/cinema/list", {cityNo:no}, function (cinemaList) {
-			//console.log(response);
-			$.each (cinemaList, function(index, cinema) {
-				//console.log(cinema)
-				
-				let content = '<div id="cinema-select" class="col">';
-					content += '<div id="cinema" class="p-4 border bg-light text-center">';
-		      		content += '<a href="#" id="' + cinema.cityNo + '">' + cinema.cinemaName + '</a>';
-		      		content += '</div>';
-    				content += '</div>';
-    			
-    			$box.append(content);
+		// 지역선택시 해당 지역의 영화관목록 조회
+		// 영화관 선택하면 해당 영화관의 상영시간표 페이지로 이동
+		$('#city-select').change(function () {
+			let cityNo = $(this).val();
+			let $box = $("#cinemaBox").empty();
+			
+			$.getJSON("/rest/cinema/list", {cityNo:cityNo}, function(cinemaList) {
+				$.each (cinemaList, function(index, cinema) {
+					
+					let content = '<div id="cinema-select" class="col">';
+						content += '<div id="cinema" class="p-4 border bg-light text-center">';
+			      		content += '<a href="/cinema/timetable?cinemaNo=' + cinema.no + '" data-cinemaNo="' + cinema.no + '">' + cinema.name + '</a>';
+			      		content += '</div>';
+	    				content += '</div>';
+	    			
+	    			$box.append(content);
+				})
 			})
 		})
 	})
