@@ -22,7 +22,7 @@
 	</div>
 	<div class="row mb-3">
 		<div class="col-3 mb-3">
-			<img src="/resources/images/movie/moviePoster/${no }.jpg" width="260px" height="374px" class="rounded float-start" alt="...">
+			<img src="/resources/images/movie/moviePoster/${movie.no }.jpg" width="260px" height="374px" class="rounded float-start" alt="...">
 		</div>
 		<div class="col-9 mb-3">
 			<div class="row mb-3">
@@ -51,13 +51,13 @@
 	<div class="row">
 		<ul class="nav nav-tabs nav-justified">
 		  <li class="nav-item">
-		    <a class="nav-link ${movieNav eq '주요정보' ? 'active' : ''}" href="detail?no=20210028">주요정보</a>
+		    <a class="nav-link ${movieNav eq '주요정보' ? 'active' : ''}" href="detail?no=${movie.no }">주요정보</a>
 		  </li>
 		  <li class="nav-item">
-		    <a class="nav-link ${movieNav eq '트레일러' ? 'active' : ''}" href="trailer?no=20210028">트레일러/스틸컷</a>
+		    <a class="nav-link ${movieNav eq '트레일러' ? 'active' : ''}" href="trailer?no=${movie.no }">트레일러/스틸컷</a>
 		  </li>
 		  <li class="nav-item">
-		    <a class="nav-link ${movieNav eq '평점' ? 'active' : ''}" href="customerrating?no=20210028">평점/리뷰</a>
+		    <a class="nav-link ${movieNav eq '평점' ? 'active' : ''}" href="customerrating?no=${movie.no }">평점/리뷰</a>
 		  </li>
 		  <li class="nav-item">
 		    <a class="nav-link">상영시간표</a>

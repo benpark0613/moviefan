@@ -9,9 +9,15 @@
    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css" rel="stylesheet">
    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+   <link rel="stylesheet" href="https://naver.github.io/billboard.js/release/latest/dist/theme/datalab.min.css">
+   <script src="https://naver.github.io/billboard.js/release/latest/dist/billboard.pkgd.min.js"></script>
    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
    <script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
+   
+   <link rel="stylesheet" href="https://uicdn.toast.com/chart/latest/toastui-chart.min.css" />
+   <script src="https://uicdn.toast.com/chart/latest/toastui-chart.min.js"></script>
+   
 </head>
 <body>
 <c:set var="movieNav" value="주요정보"/>
@@ -23,31 +29,29 @@
 	  <p style="font-size: 15px;">${movie.summary }</p>
 	</div>
 	<div class="row">
-		<table class="table table-bordered">
-			<tbody>
-				<tr>
-					<td>
-						성별 예매분포
-						내용내용내용
-					</td>
-					<td>연령별 예매분포</td>
-				</tr>
-			</tbody>
-		</table>
+		<div class="col">
+			<div id="chart"></div>
+		</div>
+		<div class="col">
+			<div id="bar"></div>
+		
+		</div>
 	</div>
-	<div class="row mb-3 border">
-		트레일러 ${countTrailer } 건
+	<div class="row mb-3 bg-light ">
+		<span>트레일러 <strong>${countTrailer } 건</strong></span>
 	</div>
 	<!-- 트레일러 유튜브링크-->
-	<div class="row mb-3">
+	<div class="row mb-3 justify-content-center">
 		<c:forEach var="movieTrailer" items="${movieTrailer }">
-			<div class="col">
-				<iframe width="260" height="142" src="${movieTrailer.movieTrailerURLAddress }"></iframe>
+			<div class="col-3 trailer text-center">
+				<video width="260" height="142" src="${movieTrailer.urlAddress }"></video>
+				<br>
+				<span>${movieTrailer.title }</span>
 			</div>
 		</c:forEach>
 	</div>
-	<div class="row mb-3 border">
-		스틸컷 ${countImage } 건
+	<div class="row mb-3 bg-light">
+		<span>스틸컷 <strong>${countImage } 건</strong></span>
 	</div>
 	<!-- 캐러셀 -->
 	<div class="row mb-3">
@@ -120,5 +124,48 @@
 	</div>
 </div>
 <%@ include file="/WEB-INF/views/common/footer.jsp" %>
+<script type="text/javascript">
+
+
+
+const Chart = toastui.Chart;
+
+const el = document.getElementById('chart');
+
+
+const data = {
+		  categories: ['Browser'],
+		  series: [
+		    {
+		      name: '남',
+		      data: 300,
+		    },
+		    {
+		      name: '여',
+		      data: 192,
+		    }
+		  ]
+		};
+const options = {
+	chart: { width: 400, height: 400 },
+	series: {
+    	dataLabels: {
+   			visible: true,
+	      	pieSeriesName: {
+	        visible: true,
+	        anchor: 'outer'
+	      	}
+		},
+		radiusRange: {
+	    	inner: '40%',
+	    	outer: '100%',
+	    }
+	}
+};
+const chart = Chart.pieChart({el, data, options});
+
+
+
+</script>
 </body>
 </html>

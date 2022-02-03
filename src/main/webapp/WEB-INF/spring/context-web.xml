@@ -19,25 +19,25 @@
 	<!-- 
 		사용자정의 MethodInterceptor를 설정한다.
 	 -->
-	<mvc:interceptors>
-		<!-- 
+	 <mvc:interceptors>
+	 	<!-- 
 			사용자정의 MethodInterceptor를 빈으로 등록한다.
 		 -->
-		<!-- 
-			웹페이지 요청에 대한 로그인체크를 담당하는 인터셉터
-		 -->
-		<mvc:interceptor>
-			<mvc:mapping path="myaccount/**"/>
-			<bean class="com.jhta.moviefan.interceptor.LoginCheckInterceptor"></bean>
-		</mvc:interceptor>
-		<!-- 
-			ajax 요청에 대한 로그인체크를 담당하는 인터셉터
-		 -->
-		<mvc:interceptor>
-			<mvc:mapping path="/rest/**/*"/>
-			<bean class="com.jhta.moviefan.interceptor.RestLoginCheckInterceptor"></bean>
-		</mvc:interceptor>
-	</mvc:interceptors>
+	 	<mvc:interceptor>
+			<!-- 
+				웹페이지 요청에 대한 로그인체크를 담당하는 인터셉터
+			 -->
+	 		<mvc:mapping path="/member/**"/>
+	 		<bean class="com.jhta.moviefan.interceptor.LoginCheckInterceptor"></bean>
+	 	</mvc:interceptor>
+	 	<mvc:interceptor>
+		 	<!-- 
+				ajax 요청에 대한 로그인체크를 담당하는 인터셉터
+			 -->
+	 		<mvc:mapping path="/rest/**"/>
+	 		<bean class="com.jhta.moviefan.interceptor.RestLoginCheckInterceptor"></bean>
+	 	</mvc:interceptor>
+	 </mvc:interceptors>
 	
 	<!-- 정적리소스 관련 매핑 -->
 	<mvc:resources location="/resources/" mapping="/resources/**"></mvc:resources>

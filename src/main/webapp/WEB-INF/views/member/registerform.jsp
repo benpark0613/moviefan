@@ -20,42 +20,42 @@
 		</div>
 	</div>
 	<div class="d-flex justify-content-center">
-		<form class="border p-4 mb-5 bg-white w-50" method="post" action="register">
+		<form class="border p-4 mb-5 bg-white w-50" method="post" action="" id="register">
 			<div class="d-flex justify-content-between">
 				<p><strong>기본정보</strong></p>
 				<p><i class="bi bi-dot text-danger"></i>필수입력사항</p>
 			</div>
 			<div class="mb-3">
    				<label class="form-label"><i class="bi bi-dot text-danger"></i>아이디</label>
-   				<input type="text" class="form-control" name="id"/>
+   				<input type="text" class="form-control" name="id" maxlength="20" placeholder="아이디는 4~20자 이내 영문, 숫자로 입력해주세요."/>
     		</div>
 			<div class="mb-3">
    				<label class="form-label"><i class="bi bi-dot text-danger"></i>비밀번호</label>
-   				<input type="password" class="form-control" name="password"/>
+   				<input type="password" class="form-control" name="password" maxlength="20" placeholder="비밀번호는 4~20자 이내 영문, 숫자로 입력해주세요."/>
    			</div>
    			<div class="mb-3 row">
 	   			<div class="col-6">
 	   				<label class="form-label"><i class="bi bi-dot text-danger"></i>이름</label>
-	   				<input type="text" class="form-control" name="name"/>
+	   				<input type="text" class="form-control" name="name" maxlength="30" placeholder="이름을 입력해주세요."/>
 	   			</div>
 	   			<div class="col-6">
 	   				<label class="form-label">닉네임</label>
-	   				<input type="text" class="form-control" name="nickName"/>
+	   				<input type="text" class="form-control" name="nickName" maxlength="30" placeholder="닉네임을 입력해주세요." />
 	   			</div>
    			</div>
    			<div class="mb-3">
    				<label class="form-label"><i class="bi bi-dot text-danger"></i>이메일</label>
-   				<input type="text" class="form-control" name="email"/>
+   				<input type="email" class="form-control" name="email" maxlength="25" placeholder="name@example.com"/>
    			</div>
    			<div class="mb-3">
    				<label class="form-label"><i class="bi bi-dot text-danger"></i>휴대전화</label>
-   				<input type="text" class="form-control" name="phoneNumber"/>
+   				<input type="tel" class="form-control" name="phoneNumber" pattern="[0-9]" maxlength="20" placeholder="숫자만 입력해주세요."/>
    			</div>
    			<div class="mb-3 row">
    				<div class="col-6">
    					<p>성별</p>
 	   				<div class="form-check form-check-inline">
-						<input class="form-check-input" type="radio" name="gender" value="male" checked>
+						<input class="form-check-input" type="radio" name="gender" value="male">
 						<label class="form-check-label" >남자</label>
 					</div>
 					<div class="form-check form-check-inline">
@@ -70,7 +70,7 @@
    			</div>
    			<div class="row">
 				<div class="d-grid gap-1 col-6 mx-auto">
-					<button type="submit" class="btn btn-danger">회원가입</button>
+					<button type="button" class="btn btn-danger" id="confirm">회원가입</button>
 				</div>
 				<div class="d-grid gap-1 col-6 mx-auto">
 					<a class="btn btn-light" href="/home">취소</a>
@@ -79,6 +79,137 @@
 		</form>
 	</div>
 </div>
+<script type="text/javascript">
+$(function() {
+	
+	let getMail = RegExp(/^[A-Za-z0-9_\.\-]+@[A-Za-z0-9\-]+\.[A-Za-z0-9\-]+/);
+	let getCheck = RegExp(/^[a-zA-Z0-9]{4,20}$/);	// 4~20자, 영대소문자, 숫자 
+	let getName = RegExp(/^[가-힣]+$/);	// 한글만
+	let getNickName = RegExp(/^[ㄱ-ㅎ|가-힣|a-z|A-Z|0-9|]+$/);	// 한글, 영대소문자, 숫자
+	let getPhoneNumber = RegExp(/^[0-9]+$/);
+	
+	$('#confirm').click(function(event) {
+		let $id = $('#register input[name=id]');
+		let $name = $('#register input[name=name]');
+		let $nickName = $('#register input[name=nickName]');
+		let $email = $('#register input[name=email]');
+		let $phoneNumber = $('#register input[name=phoneNumber]');
+		let $password = $('#register input[name=password]');
+		let $gender = $('#register input[name=gender]:checked');
+		let $birhday = $('#register input[name=birthday]');
+
+		event.preventDefault();
+		
+		if (!$id.val()) {
+			alert('아이디를 입력하세요.');
+			$id.focus();
+			return false;
+		}
+		if (!getCheck.test($id.val())) {
+			alert('아이디는 4~20자 이내 영문 대소문자, 숫자만 입력 가능합니다.');
+			$id.val('');
+			$id.focus();
+			return false;
+		}
+		
+		if (!$password.val()) {
+			alert('비밀번호를 입력하세요.');
+			$password.focus();
+			return false;
+		}		
+		if (!getCheck.test($password.val())) {
+			alert('비밀번호는 4~20자 이내 영문 대소문자, 숫자만 입력 가능합니다.');
+			$password.val('');
+			$password.focus();
+			return false;
+		}
+		
+		if (!$name.val()) {
+			alert('이름을 입력하세요.');
+			$name.focus();
+			return false;
+		}		
+		if (!getName.test($name.val())) {
+			alert('한글 이름을 입력해주세요.');
+			$name.val('');
+			$name.focus();
+			return false;
+		}
+		
+		if ($nickName.val()) {
+			if (!getNickName.test($nickName.val())) {
+				alert('닉네임은 한글, 영문 대소문자, 숫자만 입력 가능합니다.');
+				$nickName.val('');
+				$nickName.focus();
+				return false;
+			}
+		}
+		
+		if (!$email.val()) {
+			alert('이메일을 입력하세요.');
+			$email.focus();
+			return false;
+		}		
+		if (!getMail.test($email.val())) {
+			alert('이메일 양식에 맞지 않습니다. 다시 확인해주세요.');
+			$email.val('');
+			$email.focus();
+			return false;
+		}
+		
+		if (!getPhoneNumber.test($phoneNumber.val())) {
+			alert('전화번호는 숫자만 입력해주세요.');
+			$phoneNumber.val('');
+			$phoneNumber.focus();
+			return false;
+		}
+		
+		let form = {id:$id.val(), name:$name.val(), nickName:$nickName.val(), email:$email.val(),
+					phoneNumber:$phoneNumber.val(), password:$password.val(), gender:$gender.val(), birthday:$birhday.val()};
+	
+		let jsonForm = JSON.stringify(form);
+		
+		$.ajax({
+			type: "POST",
+			url: "/rest/home/register",
+			data: jsonForm,
+			contentType: 'application/json',
+			success: function(response) {
+				if (response.status == "FAIL") {
+					alert(response.error);
+					return;
+				} else {
+					window.location.href = "/home";	
+					alert("회원가입이 완료되었습니다.");
+				}
+			}
+		})
+	});
+});
+</script>
 <%@ include file="/WEB-INF/views/common/footer.jsp"%>
 </body>
 </html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

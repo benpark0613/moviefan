@@ -55,13 +55,14 @@
 		    a.city_no 											as cityNo,
 		    a.city_name 										as cityName,
 		    b.cinema_name 										as cinemaName,
+		    d.show_no                                    		as showNo,
 		    c.hall_name 										as hallName,
 		    e.movie_title 										as title,
 		    e.movie_runtime 									as runtime,
 		     to_char(e.movie_open_date, 'YYYY-MM-DD') 			as openDate,
 		    to_char(d.show_date, 'YYYY-MM-DD')	 				as showDate,
-		    to_char(d.show_start_time, 'HH24:MI:SS') 			as startTime,
-		    to_char(d.show_end_time, 'HH24:MI:SS')  			as endTime
+		    to_char(d.show_start_time, 'HH24:MI') 				as startTime,
+		    to_char(d.show_end_time, 'HH24:MI')  				as endTime
 		from
 		    city a, cinema b, cinema_hall c, show d, movie e
 		where
@@ -74,6 +75,35 @@
 		    d.movie_no = e.movie_no
 		and
 			b.cinema_no = #{value}
+		order by
+			c.hall_no asc
+	</select>
+
+	<select id="getMovieTimeTableByShowNo" parameterType="int" resultType="com.jhta.moviefan.dto.MovieTimeTableDto">
+		select
+		    a.city_no 											as cityNo,
+		    a.city_name 										as cityName,
+		    b.cinema_name 										as cinemaName,
+		    d.show_no                                    		as showNo,
+		    c.hall_name 										as hallName,
+		    e.movie_title 										as title,
+		    e.movie_runtime 									as runtime,
+		    to_char(e.movie_open_date, 'YYYY-MM-DD') 			as openDate,
+		    to_char(d.show_date, 'YYYY-MM-DD')	 				as showDate,
+		    to_char(d.show_start_time, 'HH24:MI') 				as startTime,
+		    to_char(d.show_end_time, 'HH24:MI')  				as endTime
+		from
+		    city a, cinema b, cinema_hall c, show d, movie e
+		where
+		    a.city_no = b.city_no
+		and
+		    b.cinema_no = c.cinema_no
+		and
+		    c.hall_no = d.hall_no
+		and
+		    d.movie_no = e.movie_no
+		and
+			d.show_no = #{value}
 	</select>
 
 </mapper>

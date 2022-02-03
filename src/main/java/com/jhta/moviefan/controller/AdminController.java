@@ -86,7 +86,13 @@ public class AdminController {
 	}
 	
 	@GetMapping("/schedule/modify")
-	public String modify() {
+	public String modify(int showNo, Model model) {
+		List<Movie> movieList = movieService.getAllMovies();
+		MovieTimeTableDto detailSchedule = cinemaService.getMovieTimeTableByShowNo(showNo);
+		
+		model.addAttribute("movieList", movieList);
+		model.addAttribute("detailSchedule", detailSchedule);
+		
 		return "admin/schedule/modify";
 	}
 }

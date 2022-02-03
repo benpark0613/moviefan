@@ -12,6 +12,7 @@ import com.jhta.moviefan.exception.CustomException;
 import com.jhta.moviefan.exception.LoginErrorException;
 import com.jhta.moviefan.exception.MovieErrorException;
 import com.jhta.moviefan.exception.RestLoginErrorException;
+import com.jhta.moviefan.exception.RestRegisterErrorException;
 
 /**
  * 예외처리를 담당하는 controllerAdvice다.
@@ -26,11 +27,20 @@ import com.jhta.moviefan.exception.RestLoginErrorException;
 public class ExceptionHandlerControllerAdvice {
 	
 	// rest 응답
-	@ExceptionHandler
-	public @ResponseBody ResponseDto<?> handleRestLoginErrorException(RestLoginErrorException e, Model model) {
+	@ExceptionHandler(RestLoginErrorException.class)
+	public @ResponseBody ResponseDto<?> handleRestLoginErrorException(RestLoginErrorException e) {
 		ResponseDto<?> response = new ResponseDto<>();
 		response.setStatus("FAIL");
-		response.setError("로그인 후 사용가능한 서비스 입니다.");
+		response.setError(e.getMessage());
+		
+		return response;
+	}
+	
+	@ExceptionHandler(RestRegisterErrorException.class)
+	public @ResponseBody ResponseDto<?> handleRestRegisterErrorException(RestRegisterErrorException e) {
+		ResponseDto<?> response = new ResponseDto<>();
+		response.setStatus("FAIL");
+		response.setError(e.getMessage());
 		
 		return response;
 	}
@@ -47,27 +57,26 @@ public class ExceptionHandlerControllerAdvice {
 	
 	// 에러페이지 응답
 	@ExceptionHandler(LoginErrorException.class)
-	public String handleLoginErrorException(LoginErrorException e, Model model) {
+	public String handleLoginErrorException(LoginErrorException e) {
 		e.printStackTrace();
-		model.addAttribute("error", e.getMessage());
-		return "/error/loginError";
+		return "member/loginform";
 	}
 	
 	@ExceptionHandler(CustomException.class)
 	public String handleCustomException(CustomException e) {
 		e.printStackTrace();
-		return "/error/customError";
+		return "error/customerror";
 	}
-	
-//	@ExceptionHandler(DataAccessException.class)
-//	public String handleDataAccessException(DataAccessException e) {
-//
-//		return "/error/databaseError";
-//	}
-//
-//	@ExceptionHandler(Exception.class)
-//	public String handleException(Exception e) {
-//		e.printStackTrace();
-//		return "/error/serverError";
-//	}
+
+	@ExceptionHandler(DataAccessException.class)
+	public String handleDataAccessException(DataAccessException e) {
+
+		return "error/databaseerror";
+	}
+
+	@ExceptionHandler(Exception.class)
+	public String handleException(Exception e) {
+		e.printStackTrace();
+		return "error/servererror";
+	}
 }

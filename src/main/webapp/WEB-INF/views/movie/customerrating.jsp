@@ -21,7 +21,7 @@
 	
 	<div class="row mb-3">
 		<div class="col-10">
-			<p>[영화제목]에 대한 [갯수]개의 이야기가 있어요!</p>
+			<p><strong>${movie.title }</strong>에 대한 [갯수]개의 이야기가 있어요!</p>
 		</div>
 		<div class="col-2">
 			<div class="row">
@@ -47,7 +47,7 @@
 			<div class="row">
 				<div class="col-10">
 				 	<p class="" style="font-size:1.2em; color:#503396;">
-				 		[영화제목] 재미있게 보셨나요? 영화의 어떤 점이 좋았는지 이야기해주세요.
+				 		<strong>${movie.title }</strong> 재미있게 보셨나요? 영화의 어떤 점이 좋았는지 이야기해주세요.
 					</p>
 				</div>
 				<div class="col-2">

@@ -50,7 +50,8 @@ public class LoginCheckInterceptor implements HandlerInterceptor {
 		// 사용자 정보가 세션에 있고 사용자 정보가 필요한 요청핸들러 메소드를 요청함 > 해당 요청핸들러 메소드 실행
 		Customer customer = (Customer) SessionUtils.getAttribute("LOGINED_CUSTOMER");
 		if (customer == null) {
-			throw new LoginErrorException("로그인 후 이용해주세요.");
+			response.sendRedirect("/error/login/loginform");
+			return false;
 		}
 		
 		return true;

@@ -24,9 +24,15 @@ public class CinemaRestController {
 		return cinemaService.getCinemaListByCityNo(cityNo);
 	}
 	
+	// http://localhost/rest/cinema/list?cinemaNo=342
 	@GetMapping("/timetable")
 	public List<MovieTimeTableDto> timetable(int cinemaNo) {
 		return cinemaService.getMovieTimeTableByCinemaNo(cinemaNo);
+	}
+	
+	@GetMapping("/modify")
+	public MovieTimeTableDto modify(int showNo) {
+		return cinemaService.getMovieTimeTableByShowNo(showNo);
 	}
 	
 }

@@ -115,20 +115,20 @@
 	 -->
 	<!-- <error-page>
 		<error-code>404</error-code>
-		<location>/WEB-INF/views/error/notFoundError.jsp</location>
+		<location>/WEB-INF/views/error/notfounderror.jsp</location>
 	</error-page> -->
 	<!-- <error-page>
 		<error-code>500</error-code>
-		<location>/WEB-INF/views/error/serverError.jsp</location>
+		<location>/WEB-INF/views/error/servererror.jsp</location>
 	</error-page> -->
 	<!-- 
 	<error-page>
 		<exception-type>org.springframework.dao.DataAccessException</exception-type>
-		<location>/WEB-INF/jsp/error/databaseError.jsp</location>
+		<location>/WEB-INF/jsp/error/databaseerror.jsp</location>
 	</error-page>
 	<error-page>
 		<exception-type>java.lang.Exception</exception-type>
-		<location>/WEB-INF/jsp/error/unknownError.jsp</location>
+		<location>/WEB-INF/jsp/error/unknownerror.jsp</location>
 	</error-page> 
 	-->
 

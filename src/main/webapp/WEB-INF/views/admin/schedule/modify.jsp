@@ -19,6 +19,9 @@
 			font-family: NanumBarunGothic;
 			font-size: 16pt;
 		}
+		.card {
+			border: none;
+		}
 	</style>
 </head>
 <body>
@@ -31,51 +34,43 @@
 		</div>
 	</div>
 	 <!-- 선택한 상영정보 표시 -->
-	 <h3>선택한 영화관 이름 | 상영관 | 몇시에 상영중/ 상영예정</h3>
-	 <div class="row g-2">
-		 <!-- 영화 간단정보, readonly -->
-		 <div class="col-5 px-5 mx-2">
-		 	<div class="row mb-3">
-		 		<img src="/resources/images/movie/spiderman.png">
+	 <input type="hidden" id="parameter" value="${param.showNo }">
+	 <h3>MVF 곤지암 | 1관 | 몇시에 상영중/ 상영예정</h3>
+	 <div class="row justify-content-evenly mt-5 mb-5">
+		 <!-- 영화 간단정보 -->
+		 <div class="card col-4">
+		 	<img src="..." class="card-img-top" name="movie-image">
+		 	<div class="card-body">
+		    	<p class="card-text" id="movie-title"></p>
+		    	<p class="card-text" id="movie-genre">액션</p>
+		    	<p class="card-text" id="movie-runtime"></p>
+		    	<p class="card-text" id="movie-open-date"></p>
 		 	</div>
-			<div class="row mb-3">
-		    	<label for="inputEmail3" class="col-sm-3 col-form-label">제목</label>
-		    	<div class="col-sm-10">
-		      		<input type="text" readonly class="form-control-plaintext" value="스파이더맨 : 노 웨이 홈" id="inputEmail3">
-		    	</div>
-		  	</div>
-		  	<div class="row mb-3">
-		    	<label for="inputEmail3" class="col-sm-3 col-form-label">러닝타임</label>
-		    	<div class="col-sm-10">
-		      		<input type="text" readonly class="form-control-plaintext" value="148분" class="form-control-plaintext" id="inputEmail3">
-		    	</div>
-		  	</div>
 		 </div>
 		 <!-- 수정폼 -->
-		 <div class="col-5 px-5 mx-2">
+		 <form class="col-6" id="modify-form" action="update">
 		 	<div class="row mb-3">
-				<label for="exampleDataList" class="form-label">상영영화 변경</label>
+				<label for="movie-search" class="form-label">상영영화 변경</label>
 				<div class="col-sm-10">
-					<input class="form-control" list="datalistOptions" id="exampleDataList" placeholder="영화 검색">
-					<datalist id="datalistOptions">
-						<option value="San Francisco">
-					  	<option value="New York">
-					  	<option value="Seattle">
-					  	<option value="Los Angeles">
-					  	<option value="Chicago">
+					<input class="form-control" list="movie-options" id="movie" placeholder="변경할 영화를 검색하세요.">
+					<!-- 상영중인 영화 리스트 -->
+					<datalist id="movie-options">
+						<c:forEach var="movie" items="${movieList }">
+							<option value="${movie.title }">
+						</c:forEach>
 					</datalist>		 		
 				</div>
 		  	</div>
 		 	<div class="row mb-3">
-		    	<label for="inputEmail3" class="form-label">상영일 변경</label>
+		    	<label for="show-date" class="form-label">상영일 변경</label>
 		    	<div class="col-sm-10">
-		      		<input type="date" class="form-control" id="inputEmail3">
+		      		<input type="date" class="form-control" id="show-date" value="">
 		    	</div>
 		  	</div>
 		  	<div class="row mb-3">
-		    	<label for="inputEmail3" class="form-label">상영관 변경</label>
+		    	<label for="cinema-hall" class="form-label">상영관 변경</label>
 		    	<div class="col-sm-10">
-					<select class="form-select">
+					<select class="form-select" id="hall-name">
 						<option value="1관" selected>1관</option>
 						<option value="2관">2관</option>
 						<option value="3관">3관</option>
@@ -83,9 +78,9 @@
 		    	</div>
 		  	</div>
 		  	<div class="row mb-3">
-		    	<label for="inputEmail3" class="form-label">상영시간 변경</label>
+		    	<label for="show-time" class="form-label">상영시간 변경</label>
 		    	<div class="col-sm-10">
-		      		<select class="form-select">
+		      		<select class="form-select" id="show-time">
 						<option value="10:00 ~ 12:40" selected>10:00 ~ 12:40</option>
 						<option value="13:00 ~ 15:40">13:00 ~ 15:40</option>
 						<option value="16:00 ~ 18:40">16:00 ~ 18:40</option>
@@ -94,18 +89,42 @@
 		    	</div>
 		  	</div>
 		  	<div class="row mb-3">
-		    	<label for="inputEmail3" class="form-label">상영상태 변경</label>
+		    	<label for="show-status" class="form-label">상영상태 변경</label>
 		    	<div class="col-sm-10">
-		      		<select class="form-select">
+		      		<select class="form-select" id="show-status">
 						<option value="Y" selected>상영중</option>
 						<option value="N">상영종료</option>
 					</select>
 		    	</div>
 		  	</div>
-		</div>
+		  		<button class="btn btn-primary align-items-end">수정</button>
+		  	
+		</form>
+		
 	</div>
-	
 </div>
 <%@ include file="/WEB-INF/views/common/footer.jsp" %>
 </body>
+<script type="text/javascript">
+	
+	$(function () {
+		let showNo = $('#parameter').val();
+		//console.log(showNo);
+		
+		$.getJSON("/rest/cinema/modify", {showNo:showNo}, function (detailSchedule) {
+			$('#movie-title').text('제목: ' + detailSchedule.title);
+			//$('#movie-genre').text(detailSchedule.title);		장르
+			$('#movie-runtime').text("러닝타임: " + detailSchedule.runtime + " 분");
+			$('#movie-open-date').text("개봉일: " + detailSchedule.openDate);
+			$('#show-date').val(detailSchedule.showDate).attr("min", detailSchedule.openDate);
+			
+			$('#hall-name').val(detailSchedule.hallName);
+			//$('#show-time').val(detailSchedule.showDate);		상영시간
+			//$('#show-status').val(detailSchedule.showDate);	상영상태
+		})
+	})
+	
+	
+
+</script>
 </html>

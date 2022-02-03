@@ -66,7 +66,7 @@
 		from movie_trailer
 		where movie_no = #{value}
 	</select>
-	
+
 	<select id="getMovieGenresByMovieNo" parameterType="int" resultType="com.jhta.moviefan.vo.MovieGenre">
 		select 
 			mg.movie_no		as movieNo,

@@ -10,6 +10,7 @@ public class MovieTrailer {
 	private String title;
 	private String urlAddress;
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
+
 	private Date createdDate;
 	
 	public MovieTrailer() {}

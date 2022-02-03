@@ -43,7 +43,7 @@ public class RestLoginCheckInterceptor implements HandlerInterceptor {
 		
 		Customer customer = (Customer) SessionUtils.getAttribute("LOGIN_USER");
 		if (customer == null) {
-			response.sendRedirect("/error/login/form.do");
+			response.sendRedirect("/error/login/rest");
 			return false;
 		}
 		
