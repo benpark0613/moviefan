@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -25,6 +26,7 @@ import com.google.gson.Gson;
 import com.google.gson.internal.LinkedTreeMap;
 import com.jhta.moviefan.dao.MovieDao;
 import com.jhta.moviefan.dto.MovieDetailDto;
+import com.jhta.moviefan.dto.MovieWithImages;
 import com.jhta.moviefan.exception.MovieErrorException;
 import com.jhta.moviefan.form.MovieInsertForm;
 import com.jhta.moviefan.form.MovieUpdateForm;
@@ -38,7 +40,7 @@ import com.jhta.moviefan.vo.MovieImage;
 import com.jhta.moviefan.vo.MoviePerson;
 import com.jhta.moviefan.vo.MovieTrailer;
 import com.jhta.moviefan.vo.MovieActor;
-import com.jhta.moviefan.vo.Movie_Rate;
+import com.jhta.moviefan.vo.MovieRate;
 
 @Service
 @Transactional
@@ -55,6 +57,22 @@ public class MovieService {
 	
 	public List<Movie> getMovies(int beginIndex, int endIndex) {
 		return movieDao.getMovies(beginIndex, endIndex);
+	}
+	
+	public List<MovieWithImages> getMoviesNowPlaying() {
+		List<MovieWithImages> movies = new ArrayList<>();
+		List<Movie> moviesNowPlaying = movieDao.getMoviesNowPlaying();
+		
+		for (Movie movie : moviesNowPlaying) {
+			MovieWithImages movieWithImages = new MovieWithImages();
+		
+			List<MovieImage> images = movieDao.getMovieImagesByMovieNo(movie.getNo());
+			BeanUtils.copyProperties(movie, movieWithImages);
+			movieWithImages.setImages(images);
+			movies.add(movieWithImages);
+		}
+		
+		return movies;
 	}
 	
 	public MovieDetailDto getMovieDetail(int movieNo) {
@@ -124,7 +142,7 @@ public class MovieService {
 		movieDao.insertMovieDirector(movieDirector);
 	}
 	
-	public void insertRate(Movie_Rate rate) {
+	public void insertRate(MovieRate rate) {
 		movieDao.insertMovieRate(rate);
 	}
 	

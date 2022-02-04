@@ -1,4 +1,4 @@
-	package com.jhta.moviefan.dao;
+package com.jhta.moviefan.dao;
 
 import java.util.List;
 
@@ -14,7 +14,7 @@ import com.jhta.moviefan.vo.MovieGenre;
 import com.jhta.moviefan.vo.MovieImage;
 import com.jhta.moviefan.vo.MovieTrailer;
 import com.jhta.moviefan.vo.MovieActor;
-import com.jhta.moviefan.vo.Movie_Rate;
+import com.jhta.moviefan.vo.MovieRate;
 
 @Mapper
 public interface MovieDao {
@@ -24,7 +24,8 @@ public interface MovieDao {
 	Movie getMovieByMovieNo(int movieNo);
 	List<Movie> getAllMovies();
 	List<Movie> getMovies(@Param("beginIndex") int beginIndex, @Param("endIndex") int endIndex);
-	
+	List<Movie> getMoviesNowPlaying();
+ 	
 	List<MovieImage> getMovieImagesByMovieNo(int movieNo);
 	List<MovieTrailer> getMovieTrailersByMovieNo(int movieNo);
 	List<MovieGenre> getMovieGenresByMovieNo(int movieNo);
@@ -40,7 +41,7 @@ public interface MovieDao {
 	void insertMovieActor(MovieActor movieActor);
 	void insertDirector(Director director);
 	void insertMovieDirector(MovieDirector movieDirector);
-	void insertMovieRate(Movie_Rate rate);
+	void insertMovieRate(MovieRate rate);
 	void insertMovieGenre(MovieGenre movieGenre);
 	void insertMovieImage(MovieImage movieImage);
 	void insertMovieTrailer(MovieTrailer movieTrailer);

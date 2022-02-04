@@ -16,7 +16,7 @@
 		}
 		.list-group-item.active, .btn.active {
 			color: #fff !important;
-    		background-color: #333 !important;
+    		background-color: #212529 !important;
 		}
 		.btn:focus {
 		 	outline: none !important;
@@ -48,30 +48,22 @@
 			<tbody>
 				<tr>
 					<td class="col-3 bg-light border-start-0">
-						<div class="list-group" id="">
-							<a class="list-group-item list-group-item-action bg-light border-light" id="" data-bs-toggle="list" href="#"><span class="badge bg-primary rounded-pill">12</span> 스파이더맨-노웨이홈</a>
-							<a class="list-group-item list-group-item-action bg-light border-light" id="" data-bs-toggle="list" href="#"><span class="badge bg-primary rounded-pill">12</span> 해적-도깨비깃발</a>
-							<a class="list-group-item list-group-item-action bg-light border-light" id="" data-bs-toggle="list" href="#"><span class="badge bg-warning rounded-pill">15</span> 킹메이커</a>
-							<a class="list-group-item list-group-item-action bg-light border-light" id="" data-bs-toggle="list" href="#"><span class="badge bg-warning rounded-pill">15</span> 특송</a>
-							<a class="list-group-item list-group-item-action bg-light border-light" id="" data-bs-toggle="list" href="#"><span class="badge bg-success rounded-pill">전체</span> 씽2게더</a>
-							<a class="list-group-item list-group-item-action bg-light border-light" id="" data-bs-toggle="list" href="#"><span class="badge bg-warning rounded-pill">15</span> 어나더라운드</a>
-							<a class="list-group-item list-group-item-action bg-light border-light" id="" data-bs-toggle="list" href="#"><span class="badge bg-success rounded-pill">전체</span> 장민호드라마최종회</a>
-							<a class="list-group-item list-group-item-action bg-light border-light" id="" data-bs-toggle="list" href="#"><span class="badge bg-warning rounded-pill">15</span> 하우스오브구찌</a>
-							<a class="list-group-item list-group-item-action bg-light border-light" id="" data-bs-toggle="list" href="#"><span class="badge bg-success rounded-pill">전체</span> 비욘드라이브더무비:엔시티레조넌스</a>
-							<a class="list-group-item list-group-item-action bg-light border-light" id="" data-bs-toggle="list" href="#"><span class="badge bg-warning rounded-pill">15</span> 경관의피</a>
-							<a class="list-group-item list-group-item-action bg-light border-light" id="" data-bs-toggle="list" href="#"><span class="badge bg-primary rounded-pill">12</span> 웨스트사이드스토리</a>
-							<a class="list-group-item list-group-item-action bg-light border-light" id="" data-bs-toggle="list" href="#"><span class="badge bg-primary rounded-pill">12</span> 블루버스데이</a>
-							<a class="list-group-item list-group-item-action bg-light border-light" id="" data-bs-toggle="list" href="#"><span class="badge bg-success rounded-pill">전체</span> 러브레터</a>
-							<a class="list-group-item list-group-item-action bg-light border-light" id="" data-bs-toggle="list" href="#"><span class="badge bg-primary rounded-pill">12</span> 청춘적니</a>
-							<a class="list-group-item list-group-item-action bg-light border-light" id="" data-bs-toggle="list" href="#"><span class="badge bg-danger rounded-pill">청불</span> 킹스맨-퍼스트에이전트</a>
-							<a class="list-group-item list-group-item-action bg-light border-light" id="" data-bs-toggle="list" href="#"><span class="badge bg-warning rounded-pill">15</span> 드라이브마이카</a>
-							<a class="list-group-item list-group-item-action bg-light border-light" id="" data-bs-toggle="list" href="#"><span class="badge bg-warning rounded-pill">15</span> 도쿄리벤저스</a>
-							<a class="list-group-item list-group-item-action bg-light border-light" id="" data-bs-toggle="list" href="#"><span class="badge bg-primary rounded-pill">12</span> 극장판소드아트온라인-프로그레시브-별없는밤의아리아</a>
-							<a class="list-group-item list-group-item-action bg-light border-light" id="" data-bs-toggle="list" href="#"><span class="badge bg-primary rounded-pill">12</span> 프랑스</a>
+						<div class="list-group rounded-0" id="">
+							<c:forEach var="movie" items="${movies }" varStatus="loop">
+								<a class="list-group-item list-group-item-action bg-light border-light d-flex align-items-center" id="" data-bs-toggle="list" href="#">
+									<c:choose>
+										<c:when test="${movie.rate == '전체관람가' }"><span class="badge bg-success rounded-pill me-1">전체</span></c:when>
+										<c:when test="${movie.rate == '12세이상관람가' }"><span class="badge bg-primary rounded-pill me-1">12</span></c:when>
+										<c:when test="${movie.rate == '15세이상관람가' }"><span class="badge bg-warning rounded-pill me-1">15</span></c:when>
+										<c:when test="${movie.rate == '청소년관람불가' }"><span class="badge bg-danger rounded-pill me-1">청불</span></c:when>
+									</c:choose>
+									${movie.title }
+								</a>
+							</c:forEach>
 						</div>
 					</td>
 					<td class="col-2 bg-light pe-0 border-end-0">
-						<div class="list-group" id="">
+						<div class="list-group rounded-0" id="">
 							<a class="list-group-item list-group-item-action bg-secondary bg-opacity-10 border-light" id="" data-bs-toggle="list" href="#">서울(30)</a>
 							<a class="list-group-item list-group-item-action bg-secondary bg-opacity-10 border-light" id="" data-bs-toggle="list" href="#">경기(53)</a>
 							<a class="list-group-item list-group-item-action bg-secondary bg-opacity-10 border-light" id="" data-bs-toggle="list" href="#">인천(11)</a>
@@ -84,7 +76,7 @@
 						</div>
 					</td>
 					<td class="col-2 bg-light ps-0 border-start-0">
-						<div class="list-group" id="">
+						<div class="list-group rounded-0" id="">
 							<a class="list-group-item list-group-item-action bg-light border-light" id="" data-bs-toggle="list" href="#">강남</a>
 							<a class="list-group-item list-group-item-action bg-light border-light" id="" data-bs-toggle="list" href="#">강변</a>
 							<a class="list-group-item list-group-item-action bg-light border-light" id="" data-bs-toggle="list" href="#">건대입구</a>
@@ -105,7 +97,7 @@
 						</div>
 					</td>
 					<td class="col-1 bg-light">
-						<div class="list-group" id="">
+						<div class="list-group rounded-0" id="">
 							<a class="list-group-item list-group-item-action bg-light border-light text-center disabled" id="" data-bs-toggle="list" href="#">
 								<span>2022</span>
 								<span>1월</span>
@@ -250,6 +242,24 @@
 	</div>
 </div>
 <script type="text/javascript">
+	$(function() {
+		
+		
+		
+		
+	});
+
+
+
+
+
+
+
+
+
+
+
+
 
 </script>
 <%@ include file="/WEB-INF/views/common/footer.jsp" %>
