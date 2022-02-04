@@ -45,5 +45,7 @@ public class CommentService {
 	public List<Comment> getCustomerId(int customerNo) {
 		return commentDao.getCustomerIdBycustomerNo(customerNo);
 	}
+	
+	
 
 }
