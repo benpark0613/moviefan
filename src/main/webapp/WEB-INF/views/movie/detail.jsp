@@ -54,70 +54,64 @@
 	</div>
 	<!-- 캐러셀 -->
 	<div class="row mb-3">
-		<div id="carouselExampleControls" class="carousel slide" data-bs-touch="false" data-interval="false">
-		  <div class="carousel-inner">
-		  	<c:forEach var="movieImage" items="${movieImage }" varStatus="status">
-			    <div class="carousel-item ${status.count eq 1 ? 'active' : '' }">
-			      <img src="/resources/images/movie/${movieImage.filename }" alt="...">
-			    </div>
-		  	</c:forEach>
-		  </div>
-		  <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
-		    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-		    <span class="visually-hidden">Previous</span>
-		  </button>
-		  <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
-		    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-		    <span class="visually-hidden">Next</span>
-		  </button>
-		</div>
+		<c:forEach var="movieImage" items="${movieImage }" varStatus="status">
+			<div class="col">
+				<img src="/resources/images/movie/${movieImage.filename }" alt="...">
+			</div>
+		</c:forEach>
 	</div>
 	
 	<div class="row mb-3">
-		<p><strong>${movie.title }</strong>에 대한 [갯수]개의 이야기가 있어요!</p>
+		<p><strong>${movie.title }</strong>에 대한 <strong>${size }</strong>개의 이야기가 있어요!</p>
 	</div>
-	<div class="row mb-3">
-		<div class="col-2 text-align-center">
-			<img alt="" src="/resources/images/movie/ex.png">
-			<p>MOVIEFAN</p>
-		</div>
-		<div class="col-10 border bg-light align-self-center">
-			<div class="row">
-				<div class="col-10">
-				 	<span class="" style="font-size:1.2em; color:#503396;">
-				 		[영화제목] 재미있게 보셨나요? 영화의 어떤 점이 좋았는지 이야기해주세요.
-					</span>
-				</div>
-				<div class="col-2">
-					<i class="fas fa-pen fa-lg"></i><span> 관람평 쓰기</span>
-				</div>
-			</div>
-		</div>
-	</div>
-	<div class="row mb-3">
+	<div class="row-6 mb-3">
 		<div class="row mb-3">
-			<div class="col-2">
-				<img alt="" src="/resources/images/movie/bg-profile.png">
-				<p>user id</p>
+			<div class="col-2 text-center">
+				<img alt="" src="/resources/images/movie/ex.png">
+				<p>MOVIEFAN</p>
 			</div>
-			<div class="col-10 rounded-pill bg-light align-self-center">
+			<div class="col-10 border bg-light align-self-center">
 				<div class="row">
-					<div class="col-1 align-self-center">
-					 	<span class="" style="font-size:1.2em; color:#503396;">관람평</span>
+					<div class="col-10">
+					 	<span class="" style="font-size:1.2em; color:#503396;">
+					 		[영화제목] 재미있게 보셨나요? 영화의 어떤 점이 좋았는지 이야기해주세요.
+						</span>
 					</div>
-					<div class="col-1 align-self-center">
-						<span style="font-size:1.5em; color:#503396;">10</span>
-					</div>
-					<div class="col-9 align-self-center">
-						<span> 화려한 액션과 시원시원한 바다배경이 좋았습니다.</span>
-					</div>
-					<div class="col-1 align-self-center">
-						<i class="far fa-thumbs-up fa-lg"></i>
+					<div class="col-2">
+						<i class="fas fa-pen fa-lg"></i><span> 관람평 쓰기</span>
 					</div>
 				</div>
 			</div>
 		</div>
 	</div>
+	<c:forEach var="comment" items="${comment }">
+		<div class="row-6 mb-3">
+			<div class="row mb-3">
+				<div class="col-2 text-center">
+					<img alt="" src="/resources/images/movie/bg-profile.png">
+					<p>&nbsp;&nbsp;${comment.customerId }</p>
+				</div>
+				<div class="col-10 rounded-pill bg-light align-self-center">
+					<div class="row">
+						<div class="col-1 align-self-center">
+						 	<span class="" style="font-size:1.2em; color:#503396;">관람평</span>
+						</div>
+						<div class="col-1 align-self-center">
+							<span style="font-size:1.5em; color:#503396;">${comment.rating }</span>
+						</div>
+						<div class="col-9 align-self-center">
+							<span>${comment.content }</span>
+						</div>
+						<div class="col-1 align-self-center">
+							<i class="far fa-thumbs-up fa-lg"></i>
+							<br>
+							<span>${comment.likeCount }</span>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</c:forEach>
 	<div class="row">
 		페이지네이션
 	</div>

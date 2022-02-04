@@ -30,6 +30,7 @@ public interface MovieDao {
 	List<MovieGenre> getMovieGenresByMovieNo(int movieNo);
 	List<MovieDirector> getMovieDirectorsByMovieNo(int movieNo);
 	List<MovieActor> getMovieActorsByMovieNo(int movieNo);
+	List<Movie> getMovieOrderByRating();
 	
 	Genre getGenreByName(String genreName);
 	Director getDirectorByNo(int directorNo);

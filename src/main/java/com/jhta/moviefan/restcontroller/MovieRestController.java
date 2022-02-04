@@ -30,17 +30,18 @@ public class MovieRestController {
 	CustomerService customerService;
 	
 	@PostMapping("wishList")
-	public ResponseDto<?> wishList(int movieNo, @LoginedCustomer Customer customer){
+	public ResponseDto<?> wishList(int movieNo){
 		
 		CustomerMovieWishList wishList = new CustomerMovieWishList();
-		
+		Customer customer = (Customer) SessionUtils.getAttribute("LOGINED_CUSTOMER");
+		logger.info("로그인 된 사용자 정보 : " + customer);
+		if(customer == null) {
+			throw new LoginErrorException("위시리스트는 로그인 후 사용할 수 있습니다.");
+		}
 		wishList.setCustomerNo(customer.getNo());
 		wishList.setMovieNo(movieNo);
-		logger.info("로그인 된 사용자 정보 : "+customer);
-		System.out.println(customer.getNo());
-		System.out.println(customer.getName());
-		
 		customerService.insertCustomerMovieWishListByMovieNo(wishList);
+		
 		int countWishList = customerService.countCustomerMovieWishListByMovieNo(movieNo);
 		
 		ResponseDto<Integer> response = new ResponseDto<>();

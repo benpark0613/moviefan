@@ -78,19 +78,22 @@
 	
 	<select id="searchCommentsByMovieNo" parameterType="int" resultType="com.jhta.moviefan.vo.Comment">
 		select 
-			comment_no				as commentNo,				
-			customer_no				as customerNo,
-			movie_no				as movieNo,
-			customer_rating			as rating,
-			comment_content			as content,
-			comment_created_date	as creDate,
-			comment_report_count	as reportCount,
-			comment_like_count		as likeCount,
-			comment_updated_date	as upDate
+			m.comment_no			as commentNo,				
+			m.customer_no			as customerNo,
+			c.customer_id			as customerId,
+			m.movie_no				as movieNo,
+			m.customer_rating		as rating,
+			m.comment_content		as content,
+			m.comment_created_date	as creDate,
+			m.comment_report_count	as reportCount,
+			m.comment_like_count	as likeCount,
+			m.comment_updated_date	as updatedDate
 		from 
-			movie_customer_comment
+			movie_customer_comment m, customer c
 		where
 			movie_no = #{value}
+		and
+			m.customer_no = c.customer_no
 		order by
 			comment_no desc
 	</select>

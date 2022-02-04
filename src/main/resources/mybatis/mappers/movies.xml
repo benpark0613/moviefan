@@ -144,6 +144,13 @@
 			ma.actor_no = a.actor_no
 	</select>
 	
+	<select id="getMovieOrderByRating" resultMap="MovieResultMap">
+		select *
+		from movie
+		where rownum &lt;= 10
+		order by MOVIE_CUSTOMER_RATING desc
+	</select>
+	
 	<insert id="insertMovie" parameterType="com.jhta.moviefan.vo.Movie">
 		insert into movie
 		(movie_no, movie_title, movie_title_en, movie_rate, movie_runtime, movie_open_date, movie_production_year, movie_summary, movie_producer, movie_created_date)

@@ -48,7 +48,7 @@
 	<!-- 
 		상단 네비바
 	 -->
-	<div class="row">
+	<div class="row mb-3">
 		<ul class="nav nav-tabs nav-justified">
 		  <li class="nav-item">
 		    <a class="nav-link ${movieNav eq '주요정보' ? 'active' : ''}" href="detail?no=${movie.no }">주요정보</a>
