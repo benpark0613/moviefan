@@ -67,10 +67,10 @@
 							<span class="align-middle" style="font-size: 12pt; color:#b12e2e;">▶ 무비차트</span>
 						</li>
 						<li class="subMenu" style="visibility: hidden;">
-							<a href="list"><span id="audience" style="color:#b12e2e; font-size: 10pt;">&nbsp;&nbsp;▶ 관람객순</span></a>
+							<a href="list"><span id="audience" style="font-size: 10pt;">&nbsp;&nbsp;▶ 관람객순</span></a>
 						</li>
 						<li class="subMenu" style="visibility: hidden;">
-							<a href="listbyrating"><span id="rating" style="font-size: 10pt;">&nbsp;&nbsp;▶ 평점순</span></a>
+							<a href="listbyrating"><span id="rating" style="color:#b12e2e; font-size: 10pt;">&nbsp;&nbsp;▶ 평점순</span></a>
 						</li>
 					</ul>
 				</div>
@@ -154,7 +154,7 @@
 	
 	$("#sort").hover(function(){
 		$(".subMenu").css("visibility", "")
-		$("#rating").hover(function(){
+		$("#audience").hover(function(){
 				$(this).css("color", "red");
 			}, function(){
 				$(this).css("color", "black");

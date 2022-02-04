@@ -20,8 +20,10 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.jhta.moviefan.service.CommentService;
 import com.jhta.moviefan.service.CustomerService;
 import com.jhta.moviefan.service.MovieService;
+import com.jhta.moviefan.vo.Comment;
 import com.jhta.moviefan.vo.CustomerMovieWishList;
 import com.jhta.moviefan.vo.Movie;
 import com.jhta.moviefan.vo.MovieImage;
@@ -37,6 +39,8 @@ public class MovieController {
 	MovieService movieService;
 	@Autowired
 	CustomerService customerService;
+	@Autowired
+	CommentService commentService;
 
 	@GetMapping("/list")
 	public String list(Model model) {
@@ -87,15 +91,20 @@ public class MovieController {
 	@GetMapping("/detail")
 	public String detail(int no, Model model) {
 		Movie movie = movieService.getMovieByMovieNo(no);
+		List<Comment> commentList = commentService.searchCommentsByMovieNo(no);
 		List<MovieImage> movieImage = movieService.getMovieImagesByMovieNo(no);
 		List<MovieTrailer> movieTrailer = movieService.getMovieTrailersByMovieNo(no);
 		int countTrailer = movieService.getMovieTrailersByMovieNo(no).size();
 		int countImage = movieService.getMovieImagesByMovieNo(no).size();
+		int size = commentList.size();
+		
 		model.addAttribute("countTrailer", countTrailer);
 		model.addAttribute("countImage", countImage);
 		model.addAttribute("movie", movie);
 		model.addAttribute("movieImage", movieImage);
 		model.addAttribute("movieTrailer", movieTrailer);
+		model.addAttribute("comment", commentList);
+		model.addAttribute("size", size);
 
 		return "movie/detail";
 	}
@@ -119,11 +128,38 @@ public class MovieController {
 	@GetMapping("/customerrating")
 	public String customerrating(int no, Model model) {
 		Movie movie = movieService.getMovieByMovieNo(no);
+		List<Comment> commentList = commentService.searchCommentsByMovieNo(no);
+		int size = commentList.size();
 		model.addAttribute("movie", movie);
+		model.addAttribute("comment", commentList);
+		model.addAttribute("size", size);
 
 		return "movie/customerrating";
 	}
+	
+	@GetMapping("/listbyrating")
+	public String listbyrating(Model model) {
+		List<Movie> movieList = movieService.getMovieOrderByRating();
+		List<Integer> wishList = new ArrayList<>();
+		for(Movie movie : movieList) {
+			int movieNo = movie.getNo();
+			int countWishList = customerService.countCustomerMovieWishListByMovieNo(movieNo);
+			wishList.add(countWishList);
+		}
+		
+		model.addAttribute("movie", movieList);
+		model.addAttribute("wishList", wishList);
+		
+		return "movie/listbyrating";
+	}
+	
 
+	@GetMapping("/commingsoon")
+	public String commingsoon(Model model) {
+		
+		
+		return "movie/commingsoon";
+	}
 
 
 }

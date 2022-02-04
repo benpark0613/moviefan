@@ -378,4 +378,8 @@ public class MovieService {
 		
 		return moviePerson;
 	}
+	
+	public List<Movie> getMovieOrderByRating(){
+		return movieDao.getMovieOrderByRating();
+	}
 }
