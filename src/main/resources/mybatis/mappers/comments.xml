@@ -38,6 +38,7 @@
 	<select id="getAllComments" resultType="com.jhta.moviefan.vo.Comment">
 		select 
 			comment_no	 			as commentNo,
+			movie_image_filename	as movieFileName,
 			movie_title				as movieTitle, 
 			customer_rating			as rating, 
 			comment_content			as content, 
@@ -48,12 +49,34 @@
 		from 
 			movie_customer_comment c, 
 			movie m, 
-			customer cus
+			customer cus,
+			movie_image img
 		where 
 			c.movie_no = m.movie_no
    		and c.customer_no = cus.customer_no
+   		and m.movie_no = img.movie_no
 		order by
 			comment_no asc
+	</select>
+	
+	<select id="commentAllRows" resultType="com.jhta.moviefan.vo.Comment">
+		select count(*)
+		from (select 
+				comment_no	 			as commentNo,
+				movie_title				as movieTitle, 
+				customer_rating			as rating, 
+				comment_content			as content, 
+				customer_id				as customerId, 
+				comment_created_date	as creDate, 
+				comment_like_count		as likeCount, 
+				comment_report_count	as reprtCount
+			from 
+				movie_customer_comment c, 
+				movie m, 
+				customer cus
+			where 
+				c.movie_no = m.movie_no
+   			and c.customer_no = cus.customer_no)
 	</select>
 	
 	<select id="getMovieTitle" parameterType="int" resultType="com.jhta.moviefan.vo.Comment">

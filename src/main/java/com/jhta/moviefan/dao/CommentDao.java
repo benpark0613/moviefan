@@ -18,4 +18,5 @@ public interface CommentDao {
 	List<Comment> searchCommentsByMovieNo(int movieNo);
 	List<Comment> searchCommnetsByCustomerNo(int customerNo);
 	Comment getCommentByCommentNo(int commentNo);
+	Comment commentAllRows();
 }

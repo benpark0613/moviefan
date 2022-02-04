@@ -19,10 +19,36 @@ public class Comment {
 	private int likeCount;
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private Date updatedDate;
+	private int commentRow;
+	private String movieFileName;
 	
 	public Comment() {}
 	
 	
+
+	public String getMovieFileName() {
+		return movieFileName;
+	}
+
+
+
+	public void setMovieFileName(String movieFileName) {
+		this.movieFileName = movieFileName;
+	}
+
+
+
+	public int getCommentRow() {
+		return commentRow;
+	}
+
+
+
+	public void setCommentRow(int commentRow) {
+		this.commentRow = commentRow;
+	}
+
+
 
 	public String getCustomerId() {
 		return customerId;
@@ -127,8 +153,17 @@ public class Comment {
 		return "Comment [commentNo=" + commentNo + ", customerNo=" + customerNo + ", customerId=" + customerId
 				+ ", movieNo=" + movieNo + ", movieTitle=" + movieTitle + ", rating=" + rating + ", content=" + content
 				+ ", creDate=" + creDate + ", reportCount=" + reportCount + ", likeCount=" + likeCount
-				+ ", updatedDate=" + updatedDate + "]";
+				+ ", updatedDate=" + updatedDate + ", commentRow=" + commentRow + ", movieFileName=" + movieFileName
+				+ "]";
 	}
+
+
+
+	
+
+
+
+	
 
 	
 	

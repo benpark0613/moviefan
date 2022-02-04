@@ -35,9 +35,11 @@
 			</div>
 			<div class="row mb-1">
 				<h5 class="col">전체리스트</h5>
-				<div class="col text-end">
-					총 <strong>10,000</strong>개의 평점이 있습니다.
-				</div>
+				
+					<div class="col text-end">
+						총 <strong>${comment.commentRow }</strong>개의 평점이 있습니다.
+					</div>
+				
 			</div>
 			<table class="table table-bordered">
 				<thead>
@@ -60,7 +62,8 @@
 									<td class="text-center">${comment.commentNo }</td>
 									<td>
 										<div class="row">
-											<div class="col-2">${comment.movieTitle }</div>
+											<img src="/resources/images/movie/${comment.movieFileName }" style="width: 74px; height:54px;">
+											<a href="" class="col-2">${comment.movieTitle }</a>
 											<div class="col-4">별점 ${comment.rating } /5</div>
 										</div>
 										<div class="col pe-3">${comment.content }</div>
