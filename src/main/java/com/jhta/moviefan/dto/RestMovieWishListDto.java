@@ -2,16 +2,20 @@ package com.jhta.moviefan.dto;
 
 import java.util.List;
 
-import com.jhta.moviefan.pagination.PaginationMyAccount;
+import com.jhta.moviefan.pagination.Pagination;
+import com.jhta.moviefan.vo.Movie;
+import com.jhta.moviefan.vo.MovieImage;
 
 public class RestMovieWishListDto {
 
 	private String status;
 	private String error;
-	private PaginationMyAccount paginationMyAccount; 
-	private List<?> item;
-	
-	public RestMovieWishListDto() {}
+	private Pagination pagination;
+	private List<Movie> wishMovies;
+	private List<MovieImage> movieImages;
+
+	public RestMovieWishListDto() {
+	}
 
 	public String getStatus() {
 		return status;
@@ -29,30 +33,34 @@ public class RestMovieWishListDto {
 		this.error = error;
 	}
 
-	public PaginationMyAccount getPaginationMyAccount() {
-		return paginationMyAccount;
+	public Pagination getPagination() {
+		return pagination;
 	}
 
-	public void setPaginationMyAccount(PaginationMyAccount paginationMyAccount) {
-		this.paginationMyAccount = paginationMyAccount;
+	public void setPagination(Pagination pagination) {
+		this.pagination = pagination;
 	}
 
-	public List<?> getItem() {
-		return item;
+	public List<Movie> getWishMovies() {
+		return wishMovies;
 	}
 
-	public void setItem(List<?> item) {
-		this.item = item;
+	public void setWishMovies(List<Movie> wishMovies) {
+		this.wishMovies = wishMovies;
+	}
+
+	public List<MovieImage> getMovieImages() {
+		return movieImages;
+	}
+
+	public void setMovieImages(List<MovieImage> movieImages) {
+		this.movieImages = movieImages;
 	}
 
 	@Override
 	public String toString() {
-		return "RestMovieWishListDto [status=" + status + ", error=" + error + ", paginationMyAccount="
-				+ paginationMyAccount + ", item=" + item + "]";
+		return "RestMovieWishListDto [status=" + status + ", error=" + error + ", pagination=" + pagination
+				+ ", wishMovies=" + wishMovies + ", movieImages=" + movieImages + "]";
 	}
 
-	
-	
-	
-	
 }

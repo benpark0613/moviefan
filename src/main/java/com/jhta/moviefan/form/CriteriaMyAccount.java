@@ -2,12 +2,21 @@ package com.jhta.moviefan.form;
 
 public class CriteriaMyAccount {
 
+	private int customerNo;
 	private String opt;
 	private String value;
 	private int beginIndex;
 	private int endIndex;
 	
 	public CriteriaMyAccount() {}
+
+	public int getCustomerNo() {
+		return customerNo;
+	}
+
+	public void setCustomerNo(int customerNo) {
+		this.customerNo = customerNo;
+	}
 
 	public String getOpt() {
 		return opt;
@@ -43,10 +52,8 @@ public class CriteriaMyAccount {
 
 	@Override
 	public String toString() {
-		return "CriteriaMyAccount [opt=" + opt + ", value=" + value + ", beginIndex=" + beginIndex + ", endIndex="
-				+ endIndex + "]";
+		return "CriteriaMyAccount [customerNo=" + customerNo + ", opt=" + opt + ", value=" + value + ", beginIndex="
+				+ beginIndex + ", endIndex=" + endIndex + "]";
 	}
-	
-	
-	
+
 }

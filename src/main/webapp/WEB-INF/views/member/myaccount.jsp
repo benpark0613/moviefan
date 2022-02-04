@@ -105,9 +105,9 @@
 							<div class="d-flex justify-content-evenly">
 								<c:forEach var="entry" items="${movieWithImages }" varStatus="loop" end="2">
 									<c:forEach var="movieImage" items="${entry.value }" end="0">
-										<div class="card col-3 p-1 d-flex justify-content-center">
+										<div class="card col-3 p-1 d-flex justify-content-center align-self-center">
 											<div class="row">
-										  		<img src="/resources/images/movie/${movieImage.filename }" class="img-fluid" alt="...">
+										  		<img src="/resources/images/movie/${movieImage.filename }" class="w-100 my-auto" alt="...">
 											</div>
 											<div class="card-body d-flex justify-content-center p-0">
 												<a type="button" class="btn btn-danger w-100"><span>상세정보</span></a>
@@ -196,7 +196,8 @@
 		<div class="d-flex justify-content-evenly d-none" id="wish-movie">
 			<div class="col-8">
 				<%-- 영화 리스트 --%>
-				<div class="row d-flex justify-content-center">
+				<div class="row d-flex justify-content-center" id="div-wishlist">
+					<h1>테스트</h1>
 					<c:choose>
 						<c:when test="${empty movieWithImages }">
 							<div class="row">
@@ -208,12 +209,12 @@
 							<div class="row d-flex justify-content-evenly p-0 m-0">
 								<c:forEach var="entry" items="${movieWithImages }" varStatus="loop">
 									<c:forEach var="movieImage" items="${entry.value }" end="0">
-										<div class="card col-2 p-1 mx-3 mt-3 d-flex justify-content-center">
+										<div class="card col-2 p-1 mx-3 mt-3 d-flex justify-content-center align-self-center">
 											<div class="row">
-										  		<img src="/resources/images/movie/${movieImage.filename }" class="img-fluid" alt="...">
+										  		<img src="/resources/images/movie/${movieImage.filename }" class="w-100 my-auto" alt="...">
 											</div>
 											<div class="card-body d-flex justify-content-center p-0">
-												<a type="button" class="btn btn-danger w-100"><span>상세정보</span></a>
+												<a type="button" class="btn btn-danger w-100"><span class="fs-6">상세정보</span></a>
 												<a type="button" class="btn btn-outline-secondary"><span class="bi bi-heart-fill"></span></a>
 											</div>
 										</div>
@@ -222,46 +223,46 @@
 							</div>
 						</c:otherwise> 
 					</c:choose>
-					<%-- 페이지 내비게이션 표시 --%>
+				</div>
+				<%-- 페이지 내비게이션 표시 --%>
+				<div class="row d-flex justify-content-center p-0 m-0 mt-4">
 					<c:if test="${pagination.totalRecords gt 0 }">
-						<div class="row d-flex justify-content-center p-0 m-0 mt-4">
-							<div class="col">
-								<nav id="page-navigation">
-						  			<ul class="pagination pagination-sm justify-content-center m-0">
-						    			<li class="page-item ${pagination.existPrev ? '' : 'disabled' }">
-						      				<a class="page-link link-dark" href="list.do?page=${pagination.prevPage }" data-page="${pagination.prevPage }"><span aria-hidden="true">&laquo;</span></a>
-						    			</li>
-						    			<c:forEach var="num" begin="${pagination.beginPage }" end="${pagination.endPage }">
-							    			<li class="page-item ${pagination.pageNo eq num ? 'active' : '' }">
-							    				<a class="page-link link-dark" href="list.do?page=${num }" data-page="${num }">${num }</a>
-							    			</li>	    			
-						    			</c:forEach>
-						    			<li class="page-item ${pagination.existNext ? '' : 'disabled' }">
-						      				<a class="page-link link-dark" href="list.do?page=${pagination.nextPage }" data-page="${pagination.nextPage }"><span aria-hidden="true">&raquo;</span></a>
-						    			</li>
-						  			</ul>
-								</nav>
-							</div>
+						<div class="col">
+							<nav id="page-navigation">
+					  			<ul class="pagination pagination-sm justify-content-center m-0">
+					    			<li class="page-item ${pagination.existPrev ? '' : 'disabled' }">
+					      				<a class="page-link link-dark" href="list.do?page=${pagination.prevPage }" data-page="${pagination.prevPage }"><span aria-hidden="true">&laquo;</span></a>
+					    			</li>
+					    			<c:forEach var="num" begin="${pagination.beginPage }" end="${pagination.endPage }">
+						    			<li class="page-item ${pagination.pageNo eq num ? 'active' : '' }">
+						    				<a class="page-link link-dark" href="list.do?page=${num }" data-page="${num }">${num }</a>
+						    			</li>	    			
+					    			</c:forEach>
+					    			<li class="page-item ${pagination.existNext ? '' : 'disabled' }">
+					      				<a class="page-link link-dark" href="list.do?page=${pagination.nextPage }" data-page="${pagination.nextPage }"><span aria-hidden="true">&raquo;</span></a>
+					    			</li>
+					  			</ul>
+							</nav>
 						</div>
 					</c:if>
-					<%-- 검색 표시 --%>
-					<div class="row d-flex justify-content-center p-0 m-0 mt-2">
-						<form class="row d-flex justify-content-center gx-1" id="form-search-movie" method="get" action="/rest/member/movie-wish-list">
-							<input type="hidden" name="page" value="1" />
-							<div class="col-2">
-								<select class="form-select" name="opt">
-									<option value="title" ${'title' eq param.opt ? 'selected' : ''} selected="selected"> 제목 검색</option>
-									<option value="actor" ${'actor' eq param.opt ? 'selected' : ''}> 배우 검색</option>
-								</select>
-							</div>
-							<div class="col-3">
-								<input type="text" class="form-control" name="value" value="${param.value }" placeholder="영화 검색">
-							</div>
-							<div class="col-1">
-								<button type="button" class="btn btn-outline-dark w-100 h-100" id="btn-search-movie">검색</button>
-							</div>
-						</form>
-					</div>
+				</div>
+				<%-- 검색 표시 --%>
+				<div class="row d-flex justify-content-center p-0 m-0 mt-2">
+					<form class="row d-flex justify-content-center gx-1" id="form-search-movie">
+						<input type="hidden" name="page" value="1" />
+						<div class="col-2">
+							<select class="form-select" name="opt">
+								<option value="title" ${'title' eq param.opt ? 'selected' : ''} selected="selected"> 제목 검색</option>
+								<option value="actor" ${'actor' eq param.opt ? 'selected' : ''}> 배우 검색</option>
+							</select>
+						</div>
+						<div class="col-3">
+							<input type="text" class="form-control" name="value" value="${param.value }" placeholder="영화 검색">
+						</div>
+						<div class="col-1">
+							<button type="button" class="btn btn-outline-dark w-100 h-100" id="btn-search-movie">검색</button>
+						</div>
+					</form>
 				</div>
 			</div>
 		</div>
@@ -458,12 +459,55 @@ $(function() {
 		
 		$(".pagination a").click(function(event) {
 			event.preventDefault();
+			// 클릭한 페이지내비게이션의 페이지번호 조회하기
+			let pageNo = $(this).attr('data-page');
+			// 검색폼의 히든필드에 클릭한 페이지내비게이션의 페이지번호 설정
 			$("#form-search-movie :input[name=page]").val(pageNo);
-			$("#form-search-movie").trigger("submit");
 			
-			$.get("/rest/member/movie-wish-list", function(response) {
-				
+			$.ajax({
+				type: 'GET',
+				url: '/rest/member/movie-wish-list',
+				data: {page:pageNo},
+				contentType: 'application/json',
+				success: function(response) {
+					if (response.status == "FAIL") {
+						alert(response.error);
+						return;
+					} else {
+						$('#div-wishlist>div').empty();
+						$('#page-navigation').empty();
+						
+						let wishMovies = response.wishMovies;
+						let filename = new Array();
+						let pagination = response.pagination;
+						
+						$.each(wishMovies, function(index, wishMovie) {
+							let filename = new Array();
+							for (let movieImage of response.movieImages) {
+								if (movieImage.movieNo === wishMovie.no) {
+									filename.push(movieImage.filename);
+								}
+							}
+							wishMovie.filename = filename;
+						});
+						
+						$.each(wishMovies, function(index, wishMovie) {
+							let row = '<div class="card col-2 p-1 mx-3 mt-3 d-flex justify-content-center align-self-center">';
+							row += '<div class="row">';
+							row += '<img src="/resources/images/movie/' + wishMovie.filename[0] + '" class="w-100 my-auto" alt="...">';
+							row += '</div>';
+							row += '<div class="card-body d-flex justify-content-center p-0">';
+							row += '<a type="button" class="btn btn-danger w-100"><span class="fs-6">상세정보</span></a>';
+							row += '<a type="button" class="btn btn-outline-secondary"><span class="bi bi-heart-fill"></span></a>';
+							row += '</div>';
+							row += '</div>';
+								
+							$('#div-wishlist>div').append(row);
+						});
+					}
+				}
 			})
+			
 			
 		})
 		

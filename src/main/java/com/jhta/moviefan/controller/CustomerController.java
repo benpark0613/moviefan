@@ -42,10 +42,10 @@ public class CustomerController {
 	
 	// MY MVF
 	@GetMapping("/myaccount")
-	public String myAccount(@LoginedCustomer Customer customer, @RequestParam(name = "page", required = false, defaultValue = "1") String page,
-			CriteriaMyAccount criteriaMyAccount, Model model) {
-		LOGGER.info("요청 페이지번호 : " + page);
+	public String myAccount(@LoginedCustomer Customer customer, 
+			@RequestParam(name = "page", required = false, defaultValue = "1") String page,	CriteriaMyAccount criteriaMyAccount, Model model) {
 		
+		criteriaMyAccount.setCustomerNo(customer.getNo());
 		// 검색조건에 해당하는 총 데이터 갯수 조회
 		int totalRecords = customerService.getTotalRows(criteriaMyAccount);
 		// 현재 페이지번호와 총 데이터 갯수를 전달해서 페이징 처리에 필요한 정보를 제공하는 Pagination객체 생성
@@ -68,10 +68,6 @@ public class CustomerController {
 				movieWithImages.put(wishMovie, movieService.getMovieImagesByMovieNo(wishMovie.getNo()));
 			}
 		}
-		
-		LOGGER.info("movieWithImages의 값: " + movieWithImages);
-		LOGGER.info("pagination의 값: " + pagination);
-		
 		
 		model.addAttribute("movieWithImages", movieWithImages);
 		model.addAttribute("pagination", pagination);
