@@ -101,6 +101,15 @@
 		</jsp-property-group>
 	</jsp-config>
 	
+	<!-- samesite 문제 해결용 -->
+	<session-config>
+    <session-timeout>30</session-timeout>
+    <cookie-config>
+            <http-only>true</http-only>
+            <secure>true</secure>
+    </cookie-config>
+</session-config>
+	
 	<!-- 
 		에러 페이지 설정
 		<error-page>
