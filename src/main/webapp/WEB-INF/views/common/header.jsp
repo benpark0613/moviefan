@@ -170,36 +170,36 @@ $(function() {
 		});
 		
 		// 카카오 로그인
-// 		$('#btn-kakao-login').click(function(event) {
-// 			event.preventDefault();
-// 			// 사용자키 전달, 카카오 로그인 서비스 초기화
-// 			Kakao.init('01646474eb0f93b6d4faadcbe95c79ea');
-// 			// 카카오 로그인 서비스 실행, 사용자 정보 가져오기
-// 			Kakao.Auth.login({
-// 				success: function(auth) {
-// 					Kakao.API.request({
-// 						url: '/v2/user/me',
-// 						success: function(response) {
-// 							// 사용자 정보를 가져와서 폼에 추가
-// 							let account = response.kakao_account;
+		$('#btn-kakao-login').click(function(event) {
+			event.preventDefault();
+			// 사용자키 전달, 카카오 로그인 서비스 초기화
+			Kakao.init('01646474eb0f93b6d4faadcbe95c79ea');
+			// 카카오 로그인 서비스 실행, 사용자 정보 가져오기
+			Kakao.Auth.login({
+				success: function(auth) {
+					Kakao.API.request({
+						url: '/v2/user/me',
+						success: function(response) {
+							// 사용자 정보를 가져와서 폼에 추가
+							let account = response.kakao_account;
 							
-// 							$('#form-kakao-login input[name=id]').val(response.id);
-// 							$('#form-kakao-login input[name=nickName]').val(account.profile.nickname);
-// 							$('#form-kakao-login input[name=email]').val(account.email);
-// 							$('#form-kakao-login input[name=gender]').val(account.gender);
-// 							// 사용자 정보가 포함된 폼을 서버로 제출한다.
-// 							document.querySelector('#form-kakao-login').submit()
-// 						},
-// 						fail: function(error) {
-// 							alert('카카오 로그인 처리 중 오류가 발생하였습니다.');
-// 						}
-// 					});
-// 				},
-// 				fail: function(error) {
-// 					alert('카카오 로그인 처리 중 오류가 발생하였습니다.')
-// 				}
-// 			});
-// 		})
+							$('#form-kakao-login input[name=id]').val(response.id);
+							$('#form-kakao-login input[name=nickName]').val(account.profile.nickname);
+							$('#form-kakao-login input[name=email]').val(account.email);
+							$('#form-kakao-login input[name=gender]').val(account.gender);
+							// 사용자 정보가 포함된 폼을 서버로 제출한다.
+							document.querySelector('#form-kakao-login').submit()
+						},
+						fail: function(error) {
+							alert('카카오 로그인 처리 중 오류가 발생하였습니다.');
+						}
+					});
+				},
+				fail: function(error) {
+					alert('카카오 로그인 처리 중 오류가 발생하였습니다.')
+				}
+			});
+		})
 	});
 	
 });

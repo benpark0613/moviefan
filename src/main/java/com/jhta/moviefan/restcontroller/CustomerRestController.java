@@ -1,5 +1,6 @@
 package com.jhta.moviefan.restcontroller;
 
+import java.io.Console;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -58,6 +59,8 @@ public class CustomerRestController {
 				movieImages.addAll(movieService.getMovieImagesByMovieNo(wishMovie.getNo()));
 			}
 		}
+		
+		logger.info("페이지네이션 정보: " + pagination);
 		
 		response.setStatus("OK");
 		response.setPagination(pagination);
