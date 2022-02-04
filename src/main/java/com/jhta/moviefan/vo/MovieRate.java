@@ -1,13 +1,13 @@
 package com.jhta.moviefan.vo;
 
-public class Movie_Rate {
+public class MovieRate {
 	
 	private int movieNo;
 	private int rateNo;
 	private String rate;
 	
 	
-	public Movie_Rate() {}
+	public MovieRate() {}
 	
 	public int getMovieNo() {
 		return movieNo;
@@ -27,10 +27,12 @@ public class Movie_Rate {
 	public void setRate(String rate) {
 		this.rate = rate;
 	}
+
 	@Override
 	public String toString() {
-		return "Movie_Rate [movieNo=" + movieNo + ", rateNo=" + rateNo + ", rate=" + rate + "]";
+		return "MovieRate [movieNo=" + movieNo + ", rateNo=" + rateNo + ", rate=" + rate + "]";
 	}
+	
 
 	
 

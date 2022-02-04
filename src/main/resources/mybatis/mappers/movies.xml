@@ -29,7 +29,8 @@
 	<select id="getAllMovies" resultMap="MovieResultMap">
 		select
 			*
-		from movie
+		from 
+			movie
 		order by
 			movie_created_date desc
 	</select>
@@ -45,6 +46,16 @@
 			rn between #{beginIndex} and #{endIndex}
 	</select>
 	
+	<select id="getMoviesNowPlaying" resultMap="MovieResultMap">
+		select 
+			m.*
+		from 
+			movie m, show s
+		where
+			s.show_start_time > current_date
+		and s.movie_no = m.movie_no 
+	</select>
+	
 	<select id="getMovieByMovieNo" parameterType="int" resultMap="MovieResultMap">
 		select *
 		from movie
@@ -52,19 +63,25 @@
 	</select>
 	
 	<select id="getMovieImagesByMovieNo" parameterType="int" resultType="com.jhta.moviefan.vo.MovieImage">
-		select 	movie_no			 as movieNo, 
-				movie_image_filename as fileName
-		from movie_image
-		where movie_no = #{value}
+		select 	
+			movie_no			 as movieNo, 
+			movie_image_filename as fileName
+		from 
+			movie_image
+		where
+			movie_no = #{value}
 	</select>
 	
 	<select id="getMovieTrailersByMovieNo" parameterType="int" resultType="com.jhta.moviefan.vo.MovieTrailer">
-		select 	movie_no					as movieNo, 
-				movie_trailer_title			as title, 
-				movie_trailer_url_address	as urlAddress, 
-				movie_trailer_created_date	as createdDate
-		from movie_trailer
-		where movie_no = #{value}
+		select 	
+			movie_no					as movieNo, 
+			movie_trailer_title			as title, 
+			movie_trailer_url_address	as urlAddress, 
+			movie_trailer_created_date	as createdDate
+		from 
+			movie_trailer
+		where 
+			movie_no = #{value}
 	</select>
 
 	<select id="getMovieGenresByMovieNo" parameterType="int" resultType="com.jhta.moviefan.vo.MovieGenre">
