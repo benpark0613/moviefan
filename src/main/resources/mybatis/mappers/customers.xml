@@ -118,18 +118,18 @@
 	</update>
 	
 	<select id="getCustomerMovieWishListTotalRows" parameterType="com.jhta.moviefan.form.CriteriaMyAccount" resultType="int">
-		select count(distinct cmw.movie_no)
+		select count(*)
 		from 
-			customer_movie_wishlist	cmw,
-			movie 					m,
-			movie_actor				ma,
-			actor					a
-		<where>
-			cmw.movie_no = m.movie_no
-		and
-			m.movie_no = ma.movie_no
-		and
-			ma.actor_no = a.actor_no
+		    customer_movie_wishlist	cmw,
+		    movie 					m,
+		    movie_actor				ma,
+		    actor					a
+		<where>	
+				m.movie_no = cmw.movie_no
+			and m.movie_no = ma.movie_no(+)
+			and ma.actor_no = a.actor_no(+)
+			and cmw.customer_no = #{customerNo}
+			and (ma.actor_priority = 0 or ma.actor_priority is null)
 			<if test="opt != null and value != null">
 				<choose>
 					<when test="opt == 'title'">
@@ -144,22 +144,23 @@
 	</select>
 	
 	<select id="searchCustomerMovieWishList" parameterType="com.jhta.moviefan.form.CriteriaMyAccount" resultType="com.jhta.moviefan.vo.CustomerMovieWishList">
-		select distinct 
-			movie_no	as	movieNo, 
-			customer_no	as	customerNo			
+		select 
+			*			
 		from (
-			select cmw.*, row_number() over (order by cmw.movie_no desc) rn
+			select cmw.customer_no as customerNo, 
+			cmw.movie_no as movieNo, 
+			row_number() over (order by cmw.movie_no desc) rn
 			from 
-				customer_movie_wishlist cmw,
-				movie 				 	m,
-				movie_actor			 	ma,
-				actor				 	a
+		        customer_movie_wishlist cmw,
+		        movie 				 	m,
+		        movie_actor			 	ma,
+		        actor				 	a
 			<where>
-				cmw.movie_no = m.movie_no
-			and
-				m.movie_no = ma.movie_no
-			and
-				ma.actor_no = a.actor_no
+				m.movie_no = cmw.movie_no
+			and m.movie_no = ma.movie_no(+)
+			and ma.actor_no = a.actor_no(+)
+			and cmw.customer_no = #{customerNo}
+			and (ma.actor_priority = 0 or ma.actor_priority is null)
 				<if test="opt != null and value != null">
 					<choose>
 						<when test="opt == 'title'">

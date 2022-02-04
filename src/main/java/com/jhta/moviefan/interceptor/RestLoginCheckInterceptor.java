@@ -25,23 +25,23 @@ public class RestLoginCheckInterceptor implements HandlerInterceptor {
 		HandlerMethod handlerMethod = (HandlerMethod) handler;
 		MethodParameter[] methodParameters = handlerMethod.getMethodParameters();
 		
-		boolean hasLogineUser = false;
+		boolean hasLoginedCustomer = false;
 		for (MethodParameter methodParameter : methodParameters) {
 			if (methodParameter.hasParameterAnnotation(LoginedCustomer.class)) {
-				hasLogineUser = true;
+				hasLoginedCustomer = true;
 				break;
 			}
 		}
 		
-		logger.info("로그인 체크 여부: " + hasLogineUser);
+		logger.info("로그인 체크 여부: " + hasLoginedCustomer);
 		
 		// 요청핸들러메소드의 파라미터값에 @loginedCustomer가 없으면 사용자 정보가 필요한게 아니까 그냥 보낸다.
 		// 있으면 세션에 로그인 정보가 있는지 확인한다.
-		if (!hasLogineUser) {
+		if (!hasLoginedCustomer) {
 			return true;
 		}
 		
-		Customer customer = (Customer) SessionUtils.getAttribute("LOGIN_USER");
+		Customer customer = (Customer) SessionUtils.getAttribute("LOGINED_CUSTOMER");
 		if (customer == null) {
 			response.sendRedirect("/error/login/rest");
 			return false;

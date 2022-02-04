@@ -1,17 +1,13 @@
 package com.jhta.moviefan.service;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.jhta.moviefan.annotation.LoginedCustomer;
-import com.jhta.moviefan.controller.HomeController;
 import com.jhta.moviefan.dao.CustomerDao;
 import com.jhta.moviefan.dao.MovieDao;
 import com.jhta.moviefan.exception.RestLoginErrorException;
@@ -137,10 +133,20 @@ public class CustomerService {
 		return movies;
 	}
 	
+	/**
+	 * 찜한 영화 페이지네이션, 검색 처리를 위한 메소드, 전체 데이터 행 갯수를 반환한다. 
+	 * @param criteriaMyAccount
+	 * @return
+	 */
 	public int getTotalRows(CriteriaMyAccount criteriaMyAccount) {
 		return customerDao.getCustomerMovieWishListTotalRows(criteriaMyAccount);
 	}
 	
+	/**
+	 * 찜한 영화 페이지네이션, 검색 처리를 위한 메소드, 검색 조건에 맞는 데이터를 반환한다.
+	 * @param criteriaMyAccount
+	 * @return
+	 */
 	public List<Movie> searchCustomerMovieWishList(CriteriaMyAccount criteriaMyAccount) {
 		List<CustomerMovieWishList> customerMovieWishList = customerDao.searchCustomerMovieWishList(criteriaMyAccount);
 		

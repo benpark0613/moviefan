@@ -34,7 +34,7 @@
 		 	<!-- 
 				ajax 요청에 대한 로그인체크를 담당하는 인터셉터
 			 -->
-	 		<mvc:mapping path="/rest/**"/>
+	 		<mvc:mapping path="/rest/member/**"/>
 	 		<bean class="com.jhta.moviefan.interceptor.RestLoginCheckInterceptor"></bean>
 	 	</mvc:interceptor>
 	 </mvc:interceptors>

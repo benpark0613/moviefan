@@ -100,45 +100,45 @@
 				</div>
 			</div>
 			<div class="row d-flex justify-content-evenly">
-				<div class="card col-2 p-1 d-flex justify-content-center">
+				<div class="card col-2 p-1 d-flex justify-content-center align-self-center">
 					<div class="row">
-				  		<img src="https://img.megabox.co.kr/SharedImg/2022/01/04/yqN0gFPGfFRXuLVO9RSEC5gXslCEn22k_420.jpg" class="img-fluid" alt="...">
+				  		<img src="https://img.megabox.co.kr/SharedImg/2022/01/04/yqN0gFPGfFRXuLVO9RSEC5gXslCEn22k_420.jpg" class="w-100 my-auto" alt="...">
 					</div>
 					<div class="card-body d-flex justify-content-center p-0">
 						<a type="button" class="btn btn-danger w-100"><span>예매</span></a>
 						<a type="button" class="btn btn-outline-secondary"><span class="bi bi-heart-fill"></span></a>
 					</div>
 				</div>
-				<div class="card col-2 p-1 d-flex justify-content-center">
+				<div class="card col-2 p-1 d-flex justify-content-center align-self-center">
 					<div class="row">
-				  		<img src="https://img.megabox.co.kr/SharedImg/2022/01/04/yqN0gFPGfFRXuLVO9RSEC5gXslCEn22k_420.jpg" class="img-fluid" alt="...">
+				  		<img src="https://img.megabox.co.kr/SharedImg/2022/01/04/yqN0gFPGfFRXuLVO9RSEC5gXslCEn22k_420.jpg" class="w-100 my-auto" alt="...">
 					</div>
 					<div class="card-body d-flex justify-content-center p-0">
 						<a type="button" class="btn btn-danger w-100"><span>예매</span></a>
 						<a type="button" class="btn btn-outline-secondary"><span class="bi bi-heart-fill"></span></a>
 					</div>
 				</div>
-				<div class="card col-2 p-1 d-flex justify-content-center">
+				<div class="card col-2 p-1 d-flex justify-content-center align-self-center">
 					<div class="row">
-				  		<img src="https://img.megabox.co.kr/SharedImg/2022/01/04/yqN0gFPGfFRXuLVO9RSEC5gXslCEn22k_420.jpg" class="img-fluid" alt="...">
+				  		<img src="https://img.megabox.co.kr/SharedImg/2022/01/04/yqN0gFPGfFRXuLVO9RSEC5gXslCEn22k_420.jpg" class="w-100 my-auto" alt="...">
 					</div>
 					<div class="card-body d-flex justify-content-center p-0">
 						<a type="button" class="btn btn-danger w-100"><span>예매</span></a>
 						<a type="button" class="btn btn-outline-secondary"><span class="bi bi-heart-fill"></span></a>
 					</div>
 				</div>
-				<div class="card col-2 p-1 d-flex justify-content-center">
+				<div class="card col-2 p-1 d-flex justify-content-center align-self-center">
 					<div class="row">
-				  		<img src="https://img.megabox.co.kr/SharedImg/2022/01/04/yqN0gFPGfFRXuLVO9RSEC5gXslCEn22k_420.jpg" class="img-fluid" alt="...">
+				  		<img src="https://img.megabox.co.kr/SharedImg/2022/01/04/yqN0gFPGfFRXuLVO9RSEC5gXslCEn22k_420.jpg" class="w-100 my-auto" alt="...">
 					</div>
 					<div class="card-body d-flex justify-content-center p-0">
 						<a type="button" class="btn btn-danger w-100"><span>예매</span></a>
 						<a type="button" class="btn btn-outline-secondary"><span class="bi bi-heart-fill"></span></a>
 					</div>
 				</div>
-				<div class="card col-2 p-1 d-flex justify-content-center">
+				<div class="card col-2 p-1 d-flex justify-content-center align-self-center">
 					<div class="row">
-				  		<img src="https://img.megabox.co.kr/SharedImg/2022/01/04/yqN0gFPGfFRXuLVO9RSEC5gXslCEn22k_420.jpg" class="img-fluid" alt="...">
+				  		<img src="https://img.megabox.co.kr/SharedImg/2022/01/04/yqN0gFPGfFRXuLVO9RSEC5gXslCEn22k_420.jpg" class="w-100 my-auto" alt="...">
 					</div>
 					<div class="card-body d-flex justify-content-center p-0">
 						<a type="button" class="btn btn-danger w-100"><span>예매</span></a>
@@ -176,18 +176,18 @@
 				</ul>
 			</div>
 			<div class="row">
-				<div class="card col-3 p-1 d-flex justify-content-center">
+				<div class="card col-3 p-1 d-flex justify-content-center align-self-center">
 					<div class="carousel slide carousel-fade" id="carouselExampleFade" data-bs-ride="carousel">
 						<div class="row">
 							<div class="carousel-inner">
 						    	<div class="carousel-item active">
-						      		<img src="https://movie-phinf.pstatic.net/20190109_149/1546998123676c6LjJ_JPEG/movie_image.jpg" class="d-block w-100" alt="...">
+						      		<img src="https://movie-phinf.pstatic.net/20190109_149/1546998123676c6LjJ_JPEG/movie_image.jpg" class="d-block w-100 my-auto" alt="...">
 						    	</div>
 						    	<div class="carousel-item">
-						      		<img src="https://movie-phinf.pstatic.net/20200914_150/1600046531864xvhtF_JPEG/movie_image.jpg" class="d-block w-100" alt="...">
+						      		<img src="https://movie-phinf.pstatic.net/20200914_150/1600046531864xvhtF_JPEG/movie_image.jpg" class="d-block w-100 my-auto" alt="...">
 						    	</div>
 						    	<div class="carousel-item">
-						      		<img src="https://img.cgv.co.kr/Movie/Thumbnail/Poster/000085/85291/85291_1000.jpg" class="d-block w-100" alt="...">
+						      		<img src="https://img.cgv.co.kr/Movie/Thumbnail/Poster/000085/85291/85291_1000.jpg" class="d-block w-100 my-auto" alt="...">
 						    	</div>
 						  	</div>
 						</div>
