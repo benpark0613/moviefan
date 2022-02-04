@@ -32,7 +32,7 @@ public class CinemaRestController {
 	}
 	
 	// http://localhost/rest/cinema/modify?showNo=9000
-	@PostMapping("/modify")
+	@GetMapping("/modify")
 	public MovieTimeTableDto modify(int showNo) {
 		return cinemaService.getMovieTimeTableByShowNo(showNo);
 	}

@@ -3,7 +3,7 @@ package com.jhta.moviefan.form;
 public class ScheduleUpdateForm {
 	
 	private int showNo;
-	private int movieOptNo;
+	private int movieNo;
 	private String showDate;
 	private int hallNo;
 	private String startTime;
@@ -20,12 +20,12 @@ public class ScheduleUpdateForm {
 		this.showNo = showNo;
 	}
 
-	public int getMovieOptNo() {
-		return movieOptNo;
+	public int getMovieNo() {
+		return movieNo;
 	}
 
-	public void setMovieOptNo(int movieOptNo) {
-		this.movieOptNo = movieOptNo;
+	public void setMovieNo(int movieNo) {
+		this.movieNo = movieNo;
 	}
 
 	public String getShowDate() {
@@ -70,9 +70,8 @@ public class ScheduleUpdateForm {
 
 	@Override
 	public String toString() {
-		return "ScheduleUpdateForm [showNo=" + showNo + ", movieOptNo=" + movieOptNo + ", showDate=" + showDate
-				+ ", hallNo=" + hallNo + ", startTime=" + startTime + ", endTime=" + endTime + ", showStatus="
-				+ showStatus + "]";
+		return "ScheduleUpdateForm [showNo=" + showNo + ", movieNo=" + movieNo + ", showDate=" + showDate + ", hallNo="
+				+ hallNo + ", startTime=" + startTime + ", endTime=" + endTime + ", showStatus=" + showStatus + "]";
 	}
 
 }

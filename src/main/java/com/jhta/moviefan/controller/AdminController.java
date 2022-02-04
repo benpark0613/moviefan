@@ -99,18 +99,15 @@ public class AdminController {
 		return "admin/schedule/modify";
 	}
 	
-	@PostMapping("/schedule/update")
-	public String update(int showNo, ScheduleUpdateForm form) {
+	@PostMapping("/schedule/updateMovie")
+	public String update(int showNo, int movieNo) {
 		
-		MovieTimeTableDto timetable = new MovieTimeTableDto();
-		
-		BeanUtils.copyProperties(form, timetable);
-		
-		System.out.println(timetable);
+		cinemaService.updateSchedule(showNo, movieNo);
 		
 		
-		cinemaService.updateSchedule(showNo, form);
-		return "redirect:schedule/list?no=" + showNo;
+		return "redirect:schedule/modify";
 	}
+	
+	
 	
 }

@@ -115,7 +115,11 @@
 	<update id="updateSchedule" parameterType="com.jhta.moviefan.dto.MovieTimeTableDto">
 		update show
 		set
+			movie_no = #{movieNo}
+			show_date = #{showDate}
 			hall_no = #{hallNo}
+			show_start_time = #{startTime}
+			show_end_time = #{endTime}
 		where
 			show_no = #{showNo}
 	</update>

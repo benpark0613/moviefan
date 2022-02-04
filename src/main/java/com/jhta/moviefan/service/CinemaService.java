@@ -19,6 +19,7 @@ public class CinemaService {
 	
 	@Autowired
 	private CinemaDao cinemaDao;
+	private CinemaService cinemaService;
 	
 	public List<City> getAllCityList() {
 		return cinemaDao.getAllCities();
@@ -45,17 +46,11 @@ public class CinemaService {
 	}
 	
 	
-	public void updateSchedule(int showNo, ScheduleUpdateForm form) {
+	public void updateSchedule(int showNo, int movieNo) {
 		
 		MovieTimeTableDto timetable = cinemaDao.getMovieTimeTableByShowNo(showNo);
-		
-		//timetable.setMovieNo(form.getMovieOptNo());
-		//timetable.setShowDate(form.getShowDate());
-		timetable.setHallNo(form.getHallNo());
-		//timetable.setStartTime(form.getStartTime());
-		//timetable.setEndTime(form.getEndTime());
-		//상영상태
-		
-		cinemaDao.updateSchedule(timetable);
+		timetable.setMovieNo(showNo);
+		cinemaService.updateSchedule(showNo, movieNo);
 	}
+	
 }

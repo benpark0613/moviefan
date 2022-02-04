@@ -6,6 +6,7 @@ import org.apache.ibatis.annotations.Mapper;
 
 import com.jhta.moviefan.dto.CinemaDto;
 import com.jhta.moviefan.dto.MovieTimeTableDto;
+import com.jhta.moviefan.form.ScheduleUpdateForm;
 import com.jhta.moviefan.vo.Cinema;
 import com.jhta.moviefan.vo.City;
 
