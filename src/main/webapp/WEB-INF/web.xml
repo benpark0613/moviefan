@@ -103,12 +103,13 @@
 	
 	<!-- samesite 문제 해결용 -->
 	<session-config>
-    <session-timeout>30</session-timeout>
-    <cookie-config>
-            <http-only>true</http-only>
-            <secure>true</secure>
-    </cookie-config>
-</session-config>
+	    <session-timeout>600</session-timeout>
+	    <cookie-config>
+	    		<name>JSESSIONID</name>
+	            <http-only>true</http-only>
+	            <secure>true</secure>
+	    </cookie-config>
+	</session-config>
 	
 	<!-- 
 		에러 페이지 설정
