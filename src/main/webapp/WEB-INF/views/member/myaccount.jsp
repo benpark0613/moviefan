@@ -207,13 +207,13 @@
 						<nav id="page-navigation">
 				  			<ul class="pagination pagination-sm justify-content-center m-0">
 				    			<li class="page-item" id="li-prev">
-				      				<a class="btn page-link link-dark disabled" data-page=""><span aria-hidden="true">&laquo;</span></a>
+				      				<a class="btn page-link link-dark disabled" data-page="1"><span aria-hidden="true">&laquo;</span></a>
 				    			</li>
 				    			<li class="page-item" id="li-num">
-				    				<a class="btn page-link link-dark disabled" data-page="">1</a>
+				    				<a class="btn page-link link-dark disabled" data-page="1">1</a>
 				    			</li>	    			
 				    			<li class="page-item"  id="li-next">
-				      				<a class="btn page-link link-dark disabled" data-page=""><span aria-hidden="true">&raquo;</span></a>
+				      				<a class="btn page-link link-dark disabled" data-page="1"><span aria-hidden="true">&raquo;</span></a>
 				    			</li>
 				  			</ul>
 						</nav>
@@ -430,7 +430,8 @@ $(function() {
 		$('#my-movie-tab').addClass('fw-bolder')
 		$('#wish-movie').removeClass("d-none")
 
-		let pageNo = $('#page-navigation a').attr('data-page');
+		// 현재 페이지 번호 확인용
+		let pageNo = $('#form-search-movie input[type=hidden]').attr('value');
 		
 			$.ajax({
 				type: 'GET',
@@ -458,6 +459,7 @@ $(function() {
 							wishMovie.filename = filename;
 						});
 						
+						// 찜한 영화가 없는 경우
 						if (jQuery.isEmptyObject(wishMovies)) {
 							$('#page-navigation').click(function(event) {
 								event.preventDefault();
@@ -471,14 +473,26 @@ $(function() {
 							
 							$('#div-wishlist').append(row);
 							return;
-						};
+						} else {
+							// 찜한 영화 리스트 추가
+							$.each(wishMovies, function(index, wishMovie) {
+								let row = '<div class="card col-2 p-1 mx-3 mt-3 d-flex justify-content-center align-self-center">';
+								row += '<div class="row">';
+								row += '<img src="/resources/images/movie/' + wishMovie.filename[0] + '" class="w-100 my-auto" alt="...">';
+								row += '</div>';
+								row += '<div class="card-body d-flex justify-content-center p-0">';
+								row += '<a type="button" class="btn btn-danger w-100"><span class="fs-6">상세정보</span></a>';
+								row += '<a type="button" class="btn btn-outline-secondary"><span class="bi bi-heart-fill"></span></a>';
+								row += '</div>';
+								row += '</div>';
+									
+								$('#div-wishlist').append(row);
+							});
+						}
 						
-						console.log("totalRecords: " + pagination.totalRecords);
-						console.log("beginPage: " + pagination.beginPage);
-						console.log("endPage: " + pagination.endPage);
-						
-						if (pagination.totalRecords > 8) {
-							$('#li-num').remove();
+						// 페이지네이션 추가
+						if (pagination.totalRecords > 8 && (pageNo%5 === 1 || pageNo%5 === 0)) {
+							$('#li-num*').remove();
 							let row = "";
 							for (var i = pagination.beginPage; i <= pagination.endPage; i++) {
 								row += `<li class="page-item" id="li-num">
@@ -486,29 +500,32 @@ $(function() {
 										</li>`;
 							}
 							$('#li-prev').after(row);
+							if (pageNo%5 === 1) {
+								$('#li-num').first().children().addClass('fw-bold');
+							}
+							if (pageNo%5 === 0) {
+								$('#li-num:eq(0)').last().children().addClass('fw-bold');
+							}
+							if (pagination.existPrev) {
+								$('#li-prev a').removeClass('disabled');
+							}
+							if (pagination.existNext) {
+								$('#li-next a').removeClass('disabled');
+							}
 						}
 						
-						$.each(wishMovies, function(index, wishMovie) {
-							let row = '<div class="card col-2 p-1 mx-3 mt-3 d-flex justify-content-center align-self-center">';
-							row += '<div class="row">';
-							row += '<img src="/resources/images/movie/' + wishMovie.filename[0] + '" class="w-100 my-auto" alt="...">';
-							row += '</div>';
-							row += '<div class="card-body d-flex justify-content-center p-0">';
-							row += '<a type="button" class="btn btn-danger w-100"><span class="fs-6">상세정보</span></a>';
-							row += '<a type="button" class="btn btn-outline-secondary"><span class="bi bi-heart-fill"></span></a>';
-							row += '</div>';
-							row += '</div>';
-								
-							$('#div-wishlist').append(row);
-						});
+						// 페이지 클릭할 시 이벤트
+						$('#li-num a').click(function(event) {
+							event.preventDefault();
+							$('#li-num a').removeClass('fw-bold');
+							$(this).addClass('fw-bold');
+							console.log('현재페이지: ' + $(this).attr('data-page'));
+							$('#form-search-movie input[type=hidden]').attr('value', $(this).attr('data-page')); 
+							$('#wish-movie-item').click();
+						})
 					}
 				}
 			});
-			
-			
-			
-			
-			
 			
 	});
 	$('#watched-movie-item').click(function(event) {
