@@ -193,6 +193,26 @@ public class Pagination {
 	public int getNextPage() {
 		return nextPage;
 	}
+	
+	public int getRowsPerPage() {
+		return rowsPerPage;
+	}
+
+	public int getPagesPerBlock() {
+		return pagesPerBlock;
+	}
+
+	public int getCurrentPageNo() {
+		return currentPageNo;
+	}
+
+	public int getTotalBlocks() {
+		return totalBlocks;
+	}
+
+	public int getCurrentBlock() {
+		return currentBlock;
+	}
 
 	@Override
 	public String toString() {
