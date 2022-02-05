@@ -118,13 +118,19 @@
 							result += '<td>' + timetable.showNo + '</td>'
 							result += '<td>' + timetable.hallName + '</td>'
 							result += '<td>' + timetable.title + '</td>'
-							result += '<td>' + timetable.showDate + '</td>'
-							result += '<td>' + timetable.startTime + ' ~ ' + timetable.endTime + '</td>'
+							result += '<td>' + moment(timetable.showDate).format('YYYY-MM-DD') + '</td>'
+							result += '<td>' + moment(timetable.startTime).format('HH:mm') + ' ~ ' + moment(timetable.endTime).format('HH:mm') + '</td>'
 							result += '<td>상영중</td>'
 							result += '<td><a href="/admin/schedule/modify?showNo=' + timetable.showNo + '" class="btn btn-outline-primary btn-sm">수정</a></td>'
 							result += '</tr>';
 						
 						$('#timetable tbody').append(result);
+						
+						moment(timetable.startTime).format('HH:mm')
+						
+// 						let date = moment(timetable.showDate).format('YYYY-MM-DD');
+// 						$('#;
+// 							result += '<td>' + moment(timetable.showDate).format('YYYY-MM-DD') + '</td>'
 					})
 				}
 			})

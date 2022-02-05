@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.jhta.moviefan.pagination.Pagination;
 import com.jhta.moviefan.vo.Movie;
+import com.jhta.moviefan.vo.Show;
 import com.jhta.moviefan.dto.CinemaDto;
 import com.jhta.moviefan.dto.MovieTimeTableDto;
 import com.jhta.moviefan.form.ScheduleUpdateForm;
@@ -90,24 +91,21 @@ public class AdminController {
 	
 	@GetMapping("/schedule/modify")
 	public String modify(int showNo, Model model) {
-		List<Movie> movieList = movieService.getAllMovies();
 		MovieTimeTableDto detailSchedule = cinemaService.getMovieTimeTableByShowNo(showNo);
 		
-		model.addAttribute("movieList", movieList);
 		model.addAttribute("detailSchedule", detailSchedule);
 		
 		return "admin/schedule/modify";
 	}
 	
-	@PostMapping("/schedule/updateMovie")
-	public String update(int showNo, int movieNo) {
+	@PostMapping("/schedule/update")
+	public String update(ScheduleUpdateForm form) {
 		
-		cinemaService.updateSchedule(showNo, movieNo);
+		Show show = new Show();
+		BeanUtils.copyProperties(form, show);
+		cinemaService.updateSchedule(show);
 		
-		
-		return "redirect:schedule/modify";
+		return "redirect:/admin/schedule/modify?showNo=" + form.getShowNo();
 	}
-	
-	
 	
 }

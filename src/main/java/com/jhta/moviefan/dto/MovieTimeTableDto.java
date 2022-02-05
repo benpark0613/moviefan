@@ -1,5 +1,7 @@
 package com.jhta.moviefan.dto;
 
+import java.util.Date;
+
 public class MovieTimeTableDto {
 
 	private int cityNo;				// 지역 번호
@@ -12,11 +14,11 @@ public class MovieTimeTableDto {
 	private String title;			// 영화 제목
 	//private String genre;			// 장르
 	private int runtime;			// 러닝타임
-	private String openDate;		// 개봉일
-	//private String genre;			// 장르
-	private String showDate;		// 상영일
-	private String startTime;		// 상영 시작시간
-	private String endTime;			// 상영 종료시간
+	private Date openDate;		// 개봉일
+	private Date showDate;		// 상영일
+	private Date startTime;		// 상영 시작시간
+	private Date endTime;			// 상영 종료시간
+	//private String status;		// 상영상태
 	//private int totalSeats;		// 상영관 전체 좌석수
 	//private int reservedSeats;	// 상영관 예약 좌석수
 	
@@ -94,35 +96,35 @@ public class MovieTimeTableDto {
 		this.runtime = runtime;
 	}
 
-	public String getOpenDate() {
+	public Date getOpenDate() {
 		return openDate;
 	}
 
-	public void setOpenDate(String openDate) {
+	public void setOpenDate(Date openDate) {
 		this.openDate = openDate;
 	}
 
-	public String getShowDate() {
+	public Date getShowDate() {
 		return showDate;
 	}
 
-	public void setShowDate(String showDate) {
+	public void setShowDate(Date showDate) {
 		this.showDate = showDate;
 	}
 
-	public String getStartTime() {
+	public Date getStartTime() {
 		return startTime;
 	}
 
-	public void setStartTime(String startTime) {
+	public void setStartTime(Date startTime) {
 		this.startTime = startTime;
 	}
 
-	public String getEndTime() {
+	public Date getEndTime() {
 		return endTime;
 	}
 
-	public void setEndTime(String endTime) {
+	public void setEndTime(Date endTime) {
 		this.endTime = endTime;
 	}
 

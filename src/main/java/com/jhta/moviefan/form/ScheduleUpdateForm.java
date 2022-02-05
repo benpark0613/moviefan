@@ -1,13 +1,20 @@
 package com.jhta.moviefan.form;
 
+import java.util.Date;
+
+import org.springframework.format.annotation.DateTimeFormat;
+
 public class ScheduleUpdateForm {
 	
 	private int showNo;
 	private int movieNo;
-	private String showDate;
+	private Date showDate;
 	private int hallNo;
-	private String startTime;
-	private String endTime;
+	@DateTimeFormat(pattern = "hh:mm")
+	private Date startTime;
+	@DateTimeFormat(pattern = "hh:mm")
+	private Date endTime;
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private String showStatus;
 	
 	public ScheduleUpdateForm() {}
@@ -28,11 +35,11 @@ public class ScheduleUpdateForm {
 		this.movieNo = movieNo;
 	}
 
-	public String getShowDate() {
+	public Date getShowDate() {
 		return showDate;
 	}
 
-	public void setShowDate(String showDate) {
+	public void setShowDate(Date showDate) {
 		this.showDate = showDate;
 	}
 
@@ -44,19 +51,19 @@ public class ScheduleUpdateForm {
 		this.hallNo = hallNo;
 	}
 
-	public String getStartTime() {
+	public Date getStartTime() {
 		return startTime;
 	}
 
-	public void setStartTime(String startTime) {
+	public void setStartTime(Date startTime) {
 		this.startTime = startTime;
 	}
 
-	public String getEndTime() {
+	public Date getEndTime() {
 		return endTime;
 	}
 
-	public void setEndTime(String endTime) {
+	public void setEndTime(Date endTime) {
 		this.endTime = endTime;
 	}
 
