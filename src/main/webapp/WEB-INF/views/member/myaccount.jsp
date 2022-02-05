@@ -20,29 +20,45 @@
 <body>
 <%@ include file="/WEB-INF/views/common/header.jsp" %>
 <div class="container bg-light mb-3">
-	<div class="d-flex justify-content-evenly px-5 pt-5 pb-2">
+	<%-- 닉네임 변경 모달 --%>
+	<div class="modal fade" id="modal-update-nickname" tabindex="-1" aria-labelledby="nickNameModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="nickNameModalLabel">Modal title</h5>
+				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+			</div>
+			<div class="modal-body">
+			...
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+				<button type="button" class="btn btn-primary">Save changes</button>
+			</div>
+			</div>
+		</div>
+	</div>
+	<%-- 나의 정보 패널 --%>
+	<div class="d-flex justify-content-evenly px-5 pt-5 pb-2" id="div-myinfo-panel">
 		<div class="col-5 my-auto">
 			<c:choose>
 				<c:when test="${empty LOGINED_CUSTOMER.nickName}">
 					<p class="fs-1">
 						<span class="fs-1 fw-bolder">${LOGINED_CUSTOMER.name}</span>님&nbsp; 반갑습니다.&nbsp;
-						<a href="" class="link-secondary" data-bs-toggle="tooltip" data-bs-placement="top" title="닉네임을 설정해주세요.">
-							<i class="bi bi-pen" style="font-size: 0.5em;" ></i>
+						<a href="" class="link-secondary" data-bs-toggle="modal" data-bs-target="#modal-update-nickname">
+							<i class="bi bi-pen" style="font-size: 0.5em;" data-bs-toggle="tooltip" data-bs-placement="top" title="닉네임을 설정해주세요."></i>
 						</a>
 					</p>
 				</c:when>
 				<c:otherwise>
 					<p class="fs-1">
 						<span class="fs-1 fw-bolder">${LOGINED_CUSTOMER.nickName}</span>님&nbsp; 반갑습니다.&nbsp;
-						<a href="" class="link-secondary" data-bs-toggle="tooltip" data-bs-placement="top" title="닉네임 바꾸러 가기">
-							<i class="bi bi-pen" style="font-size: 0.5em;" ></i>
+						<a href="" class="link-secondary" data-bs-toggle="modal" data-bs-target="#modal-update-nickname">
+							<i class="bi bi-pen" style="font-size: 0.5em;" data-bs-toggle="tooltip" data-bs-placement="top" title="닉네임 변경"></i>
 						</a>
 					</p>
 				</c:otherwise>
 			</c:choose>
-			<p class="fs-3">
-				고객님의 등급은 <span class="text-decoration-underline">${LOGINED_CUSTOMER.gradeCode }</span> 입니다.
-			</p>
 		</div>
 		<div class="vr p-0 bg-light"></div>
 		<div class="col-6"></div>
@@ -53,17 +69,17 @@
 				<table class="table table-borderless">
 					<thead>
 						<tr>
-							<td class="fs-4"><a class="text-decoration-none text-decoration-underline link-dark" href="/myaccount/mypoint/history">MVF POINT +</a></td>
+							<td class="fs-4"><a class="text-decoration-none text-decoration-underline link-dark" href="" id="link-mvfpoint-history">MVF POINT +</a></td>
 						</tr>
 					</thead>
 					<tbody class="mx-3">
 						<tr>
-							<th class="col-6 fs-5 text-start">사용가능 포인트</th>
-							<td class="col-3 fs-5 text-end">${LOGINED_CUSTOMER.totalPoint } 점</td>
+							<th class="col-6 fs-5 text-start">나의 현재 등급</th>
+							<td class="col-3 fs-5 text-end">${LOGINED_CUSTOMER.gradeCode }</td>
 						</tr>
 						<tr>
-							<th class="col-6 fs-5 text-start">다음 등급까지 남은 포인트</th>
-							<td class="col-3 fs-5 text-end">5000 점</td>
+							<th class="col-6 fs-5 text-start">사용가능 포인트</th>
+							<td class="col-3 fs-5 text-end">${LOGINED_CUSTOMER.totalPoint } 점</td>
 						</tr>
 					</tbody>
 				</table>
@@ -92,7 +108,7 @@
 				<div class="col">
 					<div class="d-flex justify-content-between mb-3 mx-3">
 						<span class="h3">찜한 영화</span>
-						<span class="align-self-end"><a href="" class="text-decoration-none link-dark">더 보러 가기</a></span>
+						<span class="align-self-end"><a class="btn text-decoration-none link-dark" id="link-wishlist-show">더 보러 가기</a></span>
 					</div>
 					<c:choose>
 						<c:when test="${empty movieWithImages }">
@@ -197,43 +213,27 @@
 			<div class="col-8">
 				<%-- 영화 리스트 --%>
 				<div class="row d-flex justify-content-center" id="div-wishlist">
-					<div class="spinner-border text-danger my-5" role="status">
-					 	<span class="visually-hidden">Loading...</span>
-					</div>
 				</div>
 				<%-- 페이지 내비게이션 표시 --%>
 				<div class="row d-flex justify-content-center p-0 m-0 mt-4">
-					<div class="col">
-						<nav id="page-navigation">
-				  			<ul class="pagination pagination-sm justify-content-center m-0">
-				    			<li class="page-item" id="li-prev">
-				      				<a class="btn page-link link-dark disabled" data-page="1"><span aria-hidden="true">&laquo;</span></a>
-				    			</li>
-				    			<li class="page-item" id="li-num">
-				    				<a class="btn page-link link-dark disabled" data-page="1">1</a>
-				    			</li>	    			
-				    			<li class="page-item"  id="li-next">
-				      				<a class="btn page-link link-dark disabled" data-page="1"><span aria-hidden="true">&raquo;</span></a>
-				    			</li>
-				  			</ul>
-						</nav>
+					<div class="col" id="div-paination">
 					</div>
 				</div>
 				<%-- 검색 표시 --%>
 				<div class="row d-flex justify-content-center p-0 m-0 mt-2">
 					<form class="row d-flex justify-content-center gx-1" id="form-search-movie">
-						<input type="hidden" name="page" value="1" />
+						<input type="hidden" name="current-page" value="1" />
 						<div class="col-2">
-							<select class="form-select" name="opt" disabled="disabled">
+							<select class="form-select" name="opt">
 								<option value="title" selected="selected"> 제목 검색</option>
 								<option value="actor"> 배우 검색</option>
 							</select>
 						</div>
 						<div class="col-3">
-							<input type="text" class="form-control" name="value" value="" placeholder="영화 검색" disabled="disabled">
+							<input type="text" class="form-control" name="value" placeholder="영화 검색">
 						</div>
 						<div class="col-1">
-							<button type="button" class="btn btn-outline-dark w-100 h-100" id="btn-search-movie" disabled="disabled">검색</button>
+							<button type="button" class="btn btn-outline-dark w-100 h-100" id="btn-search-movie">검색</button>
 						</div>
 					</form>
 				</div>
@@ -395,6 +395,26 @@
 <%@ include file="/WEB-INF/views/common/footer.jsp" %>
 <script type="text/javascript">
 $(function() {
+	
+	$('div-myinfo-panel').click(function(event) {
+		
+	})
+	
+	$('#link-wishlist-show').click(function(event) {
+		event.preventDefault();
+		$('#wish-movie-item').click();
+		var offset = $('#div-wishlist').offset();
+		$('html').animate({scrollTop : offset.top}, 400);
+	});
+	
+	$('#link-mvfpoint-history').click(function(event) {
+		event.preventDefault();
+		$('#point-history-item').click();
+		var offset = $('#point-history').offset();
+		$('html').animate({scrollTop : offset.top}, 400);
+	});
+	
+	
 	// 결제내역
 	$('#booking-list-item').click(function(event) {
 		event.preventDefault();
@@ -429,104 +449,133 @@ $(function() {
 		$('#wish-movie-item').addClass('fw-bolder')
 		$('#my-movie-tab').addClass('fw-bolder')
 		$('#wish-movie').removeClass("d-none")
-
-		// 현재 페이지 번호 확인용
-		let pageNo = $('#form-search-movie input[type=hidden]').attr('value');
 		
+		getMovieWishList();
+		
+		$("#btn-search-movie").click(function(event) {
+			event.preventDefault();
+			$('#form-search-movie input[name=current-page]').val("1");
+			getMovieWishList();
+		});
+		
+	// 찜한 영화와 페이지네이션
+	function getMovieWishList() {
+			let $divWishList = $('#div-wishlist').empty();
+			let pagination;
+			let currentPage = $('#form-search-movie input[name=current-page]').val();
+			let searchOption = $("#form-search-movie select[name=opt]").val();
+			let searchValue = $.trim($("#form-search-movie :input[name=value]").val());
+			
 			$.ajax({
 				type: 'GET',
 				url: '/rest/member/movie-wish-list',
-				data: {page:pageNo},
-				contentType: 'application/json',
+				data: {
+					page: currentPage,
+					opt: searchOption,
+					value: searchValue
+				},
+				beforeSend: function() {
+					let row =
+						`<div class="spinner-border text-danger my-5" role="status">
+					 	<span class="visually-hidden">Loading...</span>
+						</div>`
+					$divWishList.append(row);
+				},
 				success: function(response) {
-					if (response.status === "FAIL") {
-						alert(response.error);
-						window.location.href = "/home";	
-						return;
+					$divWishList.empty();
+
+					let wishMovies = response.wishMovies;
+					let movieImages = response.movieImages;
+					pagination = response.pagination;
+					
+					// 찜한 영화가 없는 경우
+					if (wishMovies.length == 0) {
+						let row = 
+							`<div class="row">
+							<div class="row text-center"><i class="bi bi-exclamation-square" style="font-size: 5em;"></i></div>
+							<div class="row text-center"><p class="fs-1">찜한 영화가 존재하지 않습니다.</p></div>
+							</div>`;
+						$divWishList.append(row);
 					} else {
-						$('#div-wishlist').empty();
-						let wishMovies = response.wishMovies;
-						let filename = new Array();
-						let pagination = response.pagination;
-						
+						// 찜한 영화가 있는 경우
+						// 찜한 영화에 영화 이미지를 추가한다.
 						$.each(wishMovies, function(index, wishMovie) {
-							let filename = new Array();
-							for (let movieImage of response.movieImages) {
+							let filenames = new Array();
+							for(let movieImage of movieImages) {
 								if (movieImage.movieNo === wishMovie.no) {
-									filename.push(movieImage.filename);
+									filenames.push(movieImage.filename);
 								}
 							}
-							wishMovie.filename = filename;
+							wishMovie.filenames = filenames;
 						});
-						
-						// 찜한 영화가 없는 경우
-						if (jQuery.isEmptyObject(wishMovies)) {
-							$('#page-navigation').click(function(event) {
-								event.preventDefault();
-							})
-							
-							let row = 
-								`<div class="row">
-									<div class="row text-center"><i class="bi bi-exclamation-square" style="font-size: 5em;"></i></div>
-									<div class="row text-center"><p class="fs-1">찜한 영화가 존재하지 않습니다.</p></div>
-								</div>`;
-							
-							$('#div-wishlist').append(row);
-							return;
-						} else {
-							// 찜한 영화 리스트 추가
-							$.each(wishMovies, function(index, wishMovie) {
-								let row = '<div class="card col-2 p-1 mx-3 mt-3 d-flex justify-content-center align-self-center">';
+						$.each(wishMovies, function(index, wishMovie) {
+							let row = '<div class="card col-2 p-1 mx-3 mt-3 d-flex justify-content-center align-self-center">';
 								row += '<div class="row">';
-								row += '<img src="/resources/images/movie/' + wishMovie.filename[0] + '" class="w-100 my-auto" alt="...">';
+								row += '<img src="/resources/images/movie/' + wishMovie.filenames[0] + '" class="w-100 my-auto" alt="...">';
 								row += '</div>';
 								row += '<div class="card-body d-flex justify-content-center p-0">';
 								row += '<a type="button" class="btn btn-danger w-100"><span class="fs-6">상세정보</span></a>';
 								row += '<a type="button" class="btn btn-outline-secondary"><span class="bi bi-heart-fill"></span></a>';
 								row += '</div>';
 								row += '</div>';
-									
-								$('#div-wishlist').append(row);
-							});
-						}
-						
-						// 페이지네이션 추가
-						if (pagination.totalRecords > 8 && (pageNo%5 === 1 || pageNo%5 === 0)) {
-							$('#li-num*').remove();
-							let row = "";
-							for (var i = pagination.beginPage; i <= pagination.endPage; i++) {
-								row += `<li class="page-item" id="li-num">
-										<a class="btn page-link link-dark" data-page="`+i+`">`+i+`</a>
-										</li>`;
-							}
-							$('#li-prev').after(row);
-							if (pageNo%5 === 1) {
-								$('#li-num').first().children().addClass('fw-bold');
-							}
-							if (pageNo%5 === 0) {
-								$('#li-num:eq(0)').last().children().addClass('fw-bold');
-							}
-							if (pagination.existPrev) {
-								$('#li-prev a').removeClass('disabled');
-							}
-							if (pagination.existNext) {
-								$('#li-next a').removeClass('disabled');
-							}
-						}
-						
-						// 페이지 클릭할 시 이벤트
-						$('#li-num a').click(function(event) {
-							event.preventDefault();
-							$('#li-num a').removeClass('fw-bold');
-							$(this).addClass('fw-bold');
-							console.log('현재페이지: ' + $(this).attr('data-page'));
-							$('#form-search-movie input[type=hidden]').attr('value', $(this).attr('data-page')); 
-							$('#wish-movie-item').click();
-						})
+								
+							$divWishList.append(row);
+							getPaginationNav(currentPage, pagination);
+						});
 					}
+					
+				},
+				error: function() {
+					alert('오류가 발생했습니다. 잠시 후 다시 시도해주세요.');
 				}
 			});
+		}
+		
+		// 페이지네이션
+		function getPaginationNav(currentPage, pagination) {
+			let $pagination = $("#div-paination").empty();
 			
+			if (pagination.totalRecords > 0) {
+				let row = `<nav id="page-navigation">`;
+				row += `<ul class="pagination pagination-sm justify-content-center m-0">`;
+				if (pagination.existPrev) {
+					row += `<li class="page-item" id="li-prev">`;
+				} else {
+					row += `<li class="page-item disabled" id="li-prev">`;
+				}
+					row += `<a class="page-link link-dark" data-page="` + pagination.prevPage + `"><span aria-hidden="true">&laquo;</span></a>`;
+	    			row += `</li>`;
+	    			
+	    		for (var i = pagination.beginPage; i <= pagination.endPage; i++) {
+					if (i == currentPage) {
+						row += `<li class="page-item fw-bold" id="li-num">`;
+					} else {
+						row += `<li class="page-item" id="li-num">`;
+					}
+					row += `<a class="page-link link-dark" data-page="` + i + `">` + i + `</a>`;
+					row += `</li>`;
+				}
+				if (pagination.existNext) {
+					row += `<li class="page-item"  id="li-next">`;
+				} else {
+					row += `<li class="page-item disabled"  id="li-next">`;
+				}
+					row += `<a class="page-link link-dark" data-page="` + pagination.nextPage + `"><span aria-hidden="true">&raquo;</span></a>`;
+					row += `</li>`;
+				
+					row += `</ul>`
+					row += `</nav>`
+				
+					$pagination.append(row);
+					
+				$('#page-navigation a').click(function(event) {
+					event.preventDefault();
+					let pageNo = $(this).attr('data-page');
+					$('#form-search-movie input[name=current-page]').val(pageNo);
+					getMovieWishList();
+				})
+			}
+		}
 	});
 	$('#watched-movie-item').click(function(event) {
 		event.preventDefault();

@@ -38,6 +38,8 @@ public class CustomerRestController {
 	public RestMovieWishListDto movieWishList(@LoginedCustomer Customer customer, 
 			@RequestParam(name = "page", required = false, defaultValue = "1") String page, CriteriaMyAccount criteriaMyAccount) {
 		
+		logger.info("검색조건: " + criteriaMyAccount);
+		
 		RestMovieWishListDto response = new RestMovieWishListDto();
 		MovieImage movieImage = new MovieImage();
 		List<MovieImage> movieImages = new ArrayList<MovieImage>();
@@ -60,7 +62,6 @@ public class CustomerRestController {
 			}
 		}
 		
-		logger.info("페이지네이션 정보: " + pagination);
 		
 		response.setStatus("OK");
 		response.setPagination(pagination);
