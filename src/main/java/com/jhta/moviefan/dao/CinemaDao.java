@@ -6,9 +6,9 @@ import org.apache.ibatis.annotations.Mapper;
 
 import com.jhta.moviefan.dto.CinemaDto;
 import com.jhta.moviefan.dto.MovieTimeTableDto;
-import com.jhta.moviefan.form.ScheduleUpdateForm;
 import com.jhta.moviefan.vo.Cinema;
 import com.jhta.moviefan.vo.City;
+import com.jhta.moviefan.vo.Show;
 
 @Mapper
 public interface CinemaDao {
@@ -22,7 +22,8 @@ public interface CinemaDao {
 	List<MovieTimeTableDto> getAllMovieTimeTables();
 	List<MovieTimeTableDto> getMovieTimeTableByCinemaNo(int cinemaNo);
 	MovieTimeTableDto getMovieTimeTableByShowNo(int showNo);
+	Show getShowByShowNo(int showNo);
 	
-	void updateSchedule(MovieTimeTableDto timetable);
+	void updateSchedule(Show show);
 	
 }

@@ -12,6 +12,7 @@ import com.jhta.moviefan.dto.MovieTimeTableDto;
 import com.jhta.moviefan.form.ScheduleUpdateForm;
 import com.jhta.moviefan.vo.Cinema;
 import com.jhta.moviefan.vo.City;
+import com.jhta.moviefan.vo.Show;
 
 @Service
 @Transactional
@@ -19,7 +20,6 @@ public class CinemaService {
 	
 	@Autowired
 	private CinemaDao cinemaDao;
-	private CinemaService cinemaService;
 	
 	public List<City> getAllCityList() {
 		return cinemaDao.getAllCities();
@@ -45,12 +45,20 @@ public class CinemaService {
 		return cinemaDao.getMovieTimeTableByShowNo(showNo);
 	}
 	
-	
-	public void updateSchedule(int showNo, int movieNo) {
+	public Show getShowByShowNo(int showNo) {
+		return cinemaDao.getShowByShowNo(showNo);
+	}
+
+	public void updateSchedule(Show show) {
+		Show savedShow = cinemaDao.getShowByShowNo(show.getShowNo());
+		ScheduleUpdateForm form = new ScheduleUpdateForm();
 		
-		MovieTimeTableDto timetable = cinemaDao.getMovieTimeTableByShowNo(showNo);
-		timetable.setMovieNo(showNo);
-		cinemaService.updateSchedule(showNo, movieNo);
+		savedShow.setShowDate(form.getShowDate());
+		savedShow.setHallNo(form.getHallNo());
+		savedShow.setStartTime(form.getStartTime());
+		savedShow.setEndTime(form.getEndTime());
+		
+		cinemaDao.updateSchedule(savedShow);
 	}
 	
 }
