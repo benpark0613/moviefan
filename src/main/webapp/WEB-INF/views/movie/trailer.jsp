@@ -19,12 +19,11 @@
 <div class="container">
 	<%@ include file="top.jsp" %>
 	<div class="row mb-3">
-		<hr color="black">
-		<p style="color:#351f67; font-weight:bold; ">티저 예고편</p>
+		<span style="font-size:1.6em; color:#503396;"><strong>티저 예고편</strong></span>
 		<hr color="black">
 	</div>
 
-	<c:forEach var="movieTrailer" items="${movieTrailer }" varStatus="status" end="0">
+	<c:forEach var="movieTrailer" items="${movieDetail.trailers }" varStatus="status" end="0">
 		<div class="row mb-3">
 			<div class="col align-self-center">
 				<i id="prev-button" class="fas fa-chevron-left fa-3x"></i>
@@ -40,7 +39,7 @@
 	</c:forEach>
 	
 	<div class="row mb-3 justify-content-center">
-		<c:forEach var="movieTrailer" items="${movieTrailer }" varStatus="status">
+		<c:forEach var="movieTrailer" items="${movieDetail.trailers }" varStatus="status">
 			<div class="col-3 trailer text-center">
 				<video id="trailerSub${status.count }" width="240" height="136" src="${movieTrailer.urlAddress }"></video>
 			</div>
@@ -52,10 +51,10 @@
 	
 	<div class="row">
 		<hr color="black">
-		<p> []영화제목]에 대한 [?]개의 스틸컷이 있어요!
+		<span style="font-size:1.3em; color:#503396;"> <strong>${movieDetail.title }</strong>에 대한 <strong>${countImage }개</strong>의 스틸컷이 있어요! </span>
 	</div>
 	<div class="row">
-		<c:forEach var="movieImage" items="${movieImage }">
+		<c:forEach var="movieImage" items="${movieDetail.images }">
 			<div class="col">
 				<img src="/resources/images/movie/${movieImage.filename }" class="d-block w-100" alt="...">
 			</div>

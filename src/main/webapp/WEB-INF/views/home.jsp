@@ -99,53 +99,19 @@
 					<a class="link-light" href="">더 많은 영화보기+</a>
 				</div>
 			</div>
-			<div class="row d-flex justify-content-evenly">
-				<div class="card col-2 p-1 d-flex justify-content-center align-self-center">
-					<div class="row">
-				  		<img src="https://img.megabox.co.kr/SharedImg/2022/01/04/yqN0gFPGfFRXuLVO9RSEC5gXslCEn22k_420.jpg" class="w-100 my-auto" alt="...">
-					</div>
-					<div class="card-body d-flex justify-content-center p-0">
-						<a type="button" class="btn btn-danger w-100"><span>예매</span></a>
-						<a type="button" class="btn btn-outline-secondary"><span class="bi bi-heart-fill"></span></a>
-					</div>
-				</div>
-				<div class="card col-2 p-1 d-flex justify-content-center align-self-center">
-					<div class="row">
-				  		<img src="https://img.megabox.co.kr/SharedImg/2022/01/04/yqN0gFPGfFRXuLVO9RSEC5gXslCEn22k_420.jpg" class="w-100 my-auto" alt="...">
-					</div>
-					<div class="card-body d-flex justify-content-center p-0">
-						<a type="button" class="btn btn-danger w-100"><span>예매</span></a>
-						<a type="button" class="btn btn-outline-secondary"><span class="bi bi-heart-fill"></span></a>
+			<c:forEach var="movie" items="movie" end="4">
+				<div class="row d-flex justify-content-evenly">
+					<div class="card col-2 p-1 d-flex justify-content-center align-self-center">
+						<div class="row">
+					  		<img src="/resources/images/movie/moviePoster/${movie.no }.jpg" class="w-100 my-auto" alt="...">
+						</div>
+						<div class="card-body d-flex justify-content-center p-0">
+							<a type="button" class="btn btn-danger w-100"><span>예매</span></a>
+							<a type="button" class="btn btn-outline-secondary"><span class="bi bi-heart-fill"></span></a>
+						</div>
 					</div>
 				</div>
-				<div class="card col-2 p-1 d-flex justify-content-center align-self-center">
-					<div class="row">
-				  		<img src="https://img.megabox.co.kr/SharedImg/2022/01/04/yqN0gFPGfFRXuLVO9RSEC5gXslCEn22k_420.jpg" class="w-100 my-auto" alt="...">
-					</div>
-					<div class="card-body d-flex justify-content-center p-0">
-						<a type="button" class="btn btn-danger w-100"><span>예매</span></a>
-						<a type="button" class="btn btn-outline-secondary"><span class="bi bi-heart-fill"></span></a>
-					</div>
-				</div>
-				<div class="card col-2 p-1 d-flex justify-content-center align-self-center">
-					<div class="row">
-				  		<img src="https://img.megabox.co.kr/SharedImg/2022/01/04/yqN0gFPGfFRXuLVO9RSEC5gXslCEn22k_420.jpg" class="w-100 my-auto" alt="...">
-					</div>
-					<div class="card-body d-flex justify-content-center p-0">
-						<a type="button" class="btn btn-danger w-100"><span>예매</span></a>
-						<a type="button" class="btn btn-outline-secondary"><span class="bi bi-heart-fill"></span></a>
-					</div>
-				</div>
-				<div class="card col-2 p-1 d-flex justify-content-center align-self-center">
-					<div class="row">
-				  		<img src="https://img.megabox.co.kr/SharedImg/2022/01/04/yqN0gFPGfFRXuLVO9RSEC5gXslCEn22k_420.jpg" class="w-100 my-auto" alt="...">
-					</div>
-					<div class="card-body d-flex justify-content-center p-0">
-						<a type="button" class="btn btn-danger w-100"><span>예매</span></a>
-						<a type="button" class="btn btn-outline-secondary"><span class="bi bi-heart-fill"></span></a>
-					</div>
-				</div>
-			</div>
+			</c:forEach>
 		</div>
 	</div>
 </div>
