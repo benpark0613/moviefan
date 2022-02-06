@@ -21,7 +21,7 @@
 	
 	<div class="row mb-3">
 		<div class="col-10">
-			<span style="font-size:1.6em; color:#503396;"><strong>${movie.title }</strong>에 대한 <strong>${size }</strong>개의 이야기가 있어요!</span>
+			<span style="font-size:1.6em; color:#503396;"><strong>${movieDetail.title }</strong>에 대한 <strong>${size }</strong>개의 이야기가 있어요!</span>
 		</div>
 		<div class="col-2">
 			<div class="row">
@@ -31,7 +31,6 @@
 	</div>
 	<div class="row">
 		<div class="col-10">
-			<p>전체${size }건</p>
 		</div>
 		<div class="col-2">
 			<span><a href="">최신순</a> <a href="">공감순</a> <a href="">평점순</a></span>
@@ -43,15 +42,17 @@
 				<img alt="" src="/resources/images/movie/ex.png">
 				<p>MOVIEFAN</p>
 			</div>
-			<div class="col-10 border bg-light align-self-center">
+			<div class="col-10 rounded-pill bg-light align-self-center">
 				<div class="row">
 					<div class="col-10">
 					 	<span class="" style="font-size:1.2em; color:#503396;">
-					 		<strong>${movie.title }</strong> 재미있게 보셨나요? 영화의 어떤 점이 좋았는지 이야기해주세요.
+					 		<br>
+					 		<strong>${movieDetail.title }</strong> 재미있게 보셨나요? 영화의 어떤 점이 좋았는지 이야기해주세요.
+					 		<br><br>
 						</span>
 					</div>
-					<div class="col-2">
-						<i class="fas fa-pen fa-lg"></i><span> 관람평 쓰기</span>
+					<div class="col-2 align-self-center">
+						<a href=""><i class="fas fa-pen fa-lg"></i><span> 관람평 쓰기</span></a>
 					</div>
 				</div>
 			</div>
