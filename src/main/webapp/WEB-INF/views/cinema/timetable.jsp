@@ -69,16 +69,16 @@
 	</div>
 	<!-- 상영시간표 -->
 	<div id="movie-timetable" class="row justify-content-center mt-5 mb-5">
-		<c:forEach var="timetable" items="${movieTimeTableDtos }">
-			<div class="col-10 px-0">
-			
+		<div class="col-10 px-0">
+			<c:forEach var="timetable" items="${movieTimeTableDtos }">
 				<table class="table" id="schedule-list">
 					<thead>
 						<tr>
 							<th>
-								<span class="fs-2">${timetable.title }</span>
-<%-- 								<span class="ml-3">${movieTimeTable.genre } | </span> --%>
-								<span>${timetable.openDate } 개봉 | ${timetable.runtime }분</span>
+								<span class="fs-2">${timetable.title } &nbsp; &nbsp;</span>
+<%-- 							<span class="ml-3">${movieTimeTable.genre } | </span> --%>
+								<span><fmt:formatDate value="${timetable.openDate }" pattern="yyyy-MM-dd"/> 개봉 &nbsp;|</span>
+								<span>${timetable.runtime }분</span>
 							</th>
 						</tr>
 					</thead>
@@ -87,13 +87,16 @@
 							<td class="show-info" data-td-hall-name="${timetable.hallName }">
 								<div class="mx-5 my-3">
 									<span class="fs-4" id="hall-name" data-span-hall-name="${timetable.hallName }"><strong>${timetable.hallName }</strong></span>
-<%-- 									<span>총 ${movieTimeTable.totalSeats }석</span> --%>
+<%-- 								<span>총 ${movieTimeTable.totalSeats }석</span> --%>
 								</div>
 								<div class="d-flex align-items-center mx-5">
 									<ul class="list-group list-group-horizontal">
 										<li class="list-group-item mt-0 mb-3 text-center">
 											<a href="#">
-												<strong>${timetable.startTime } ~ ${timetable.endTime }</strong>
+												<strong>
+												<fmt:formatDate value="${timetable.startTime }" pattern="HH:mm"/> ~ 
+												<fmt:formatDate value="${timetable.endTime }" pattern="HH:mm"/> 
+												</strong>
 												<br>잔여좌석수/전체좌석수
 											</a>
 										</li>
@@ -103,8 +106,8 @@
 						</tr>
 					</tbody>
 				</table>
-			</div>
-		</c:forEach>
+			</c:forEach>
+		</div>
 		<p class="col-10 text-end mt-2">* 입장 지연에 따른 관람 불편을 최소화하기 위해, 상영시간 10분 후부터 영화가 시작됩니다.</p>
 	</div>
 </div>	
