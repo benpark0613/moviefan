@@ -22,6 +22,10 @@
 		.card {
 			border: none;
 		}
+		.wrapper {
+			 margin-left:auto; 
+    		margin-right:auto;
+		}
 	</style>
 </head>
 <body>
@@ -31,9 +35,10 @@
 	<div class="row">
 		<div class="col">
 			<h1>상영일정 수정</h1>
-			<h3>${detailSchedule.cinemaName } | ${detailSchedule.hallName } 
-			| <fmt:formatDate value="${detailSchedule.startTime}" pattern="HH:ss" />
-			~ <fmt:formatDate value="${detailSchedule.endTime}" pattern="HH:ss" /></h3>
+			<h3>
+				${detailSchedule.cinemaName } &nbsp;|&nbsp; ${detailSchedule.hallName } &nbsp;|&nbsp;
+				<fmt:formatDate value="${detailSchedule.startTime}" pattern="HH:ss" /> ~ <fmt:formatDate value="${detailSchedule.endTime}" pattern="HH:ss" /> 상영
+			</h3>
 		</div>
 	</div>
 	 <!-- 선택한 상영정보 표시 -->
@@ -61,14 +66,14 @@
 		 
 		 <!-- 수정폼 -->
 		 <form class="col-7" id="modify-form" method="post" action="update">
-		 
+
 			 <input type="hidden" name="showNo" value="${detailSchedule.showNo }" />
 			 <input type="hidden" name="movieNo" value="${detailSchedule.movieNo }" />
 		 
 		 	<div class="row mb-3">
 		    	<label for="show-date" class="form-label">상영일</label>
 		    	<div class="col-sm-8">
-		      		<input type="date" class="form-control" id="show-select" name="showDate" 
+		      		<input type="date" class="form-control" id="show-date" name="showDate" 
 		      		value="<fmt:formatDate value="${detailSchedule.showDate}" pattern="yyyy-MM-dd" />" 
 		      		min="<fmt:formatDate value="${detailSchedule.openDate}" pattern="yyyy-MM-dd" />">
 		    	</div>
@@ -90,33 +95,22 @@
 		  		<div class="row g-0 align-items-center mb-3">
 					<!-- 시작시간 -->
 					<div class="col-sm-4">
-						<input type="time" class="form-control" id="start-time-select" name="startTime" 
-						<%-- 패턴 년월일 시분초 까지 변경하기 --%>
-						value="<fmt:formatDate value="${detailSchedule.startTime}" pattern="HH:mm" />">
+						<input type="datetime" class="form-control" id="start-time" name="startTime" value="<fmt:formatDate value="${detailSchedule.startTime}" pattern="yyyy-MM-dd HH:mm:ss" />">
 					</div>
-					<span class="col-1 text-center">~</span>
+						<span class="col-sm-1 text-center">~</span>
 					<!-- 종료시간 -->
 					<div class="col-sm-4">
-						<input type="time" class="form-control" id="end-time-select" name="endTime" 
-						<%-- 패턴 년월일 시분초 까지 변경하기 --%>
-						value="<fmt:formatDate value="${detailSchedule.endTime}" pattern="HH:mm" />">
+						<input type="datetime" class="form-control" id="end-time" name="endTime" value="<fmt:formatDate value="${detailSchedule.endTime}" pattern="yyyy-MM-dd HH:mm:ss" />">
 					</div>
 				</div>
 		  	</div>
-		  		
-		  	<div class="row mb-3">
-		    	<label for="show-status" class="form-label">상영상태</label>
-		    	<div class="col-sm-8">
-		      		<select class="form-select" id="show-status" name="showStatus">
-						<option value="Y">상영중</option>
-						<option value="N">상영종료</option>
-					</select>
-		    	</div>
-		  	</div>
-		    	<div class="col-sm-3">
-					<button type="submit" class="btn btn-outline-primary align-items-end mt-5" id="btn-modify-status">수정</button>
-				</div>
+
+	    	<div class="col-sm-3 ms-0">
+				<button type="submit" class="btn btn-primary align-items-end mt-5" id="btn-modify-status">수정</button>
+			</div>
+			
 		</form>
+		
 	</div>	 
 </div>
 <%@ include file="/WEB-INF/views/common/footer.jsp" %>

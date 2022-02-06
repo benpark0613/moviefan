@@ -11,9 +11,9 @@ public class ScheduleUpdateForm {
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private Date showDate;
 	private int hallNo;
-	@DateTimeFormat(pattern = "yyyy-MM-dd hh:mm:ss")
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private Date startTime;
-	@DateTimeFormat(pattern = "yyyy-MM-dd hh:mm:ss")
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private Date endTime;
 	
 	public ScheduleUpdateForm() {}

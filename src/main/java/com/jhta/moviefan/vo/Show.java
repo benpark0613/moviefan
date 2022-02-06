@@ -2,11 +2,16 @@ package com.jhta.moviefan.vo;
 
 import java.util.Date;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 public class Show {
 	
 	private int showNo;
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private Date showDate;
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private Date startTime;
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private Date endTime;
 	private int movieNo;
 	private int hallNo;
