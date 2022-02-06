@@ -21,23 +21,87 @@
 <%@ include file="/WEB-INF/views/common/header.jsp" %>
 <div class="container bg-light mb-3">
 	<%-- 닉네임 변경 모달 --%>
-	<div class="modal fade" id="modal-update-nickname" tabindex="-1" aria-labelledby="nickNameModalLabel" aria-hidden="true">
-		<div class="modal-dialog">
-		<div class="modal-content">
-			<div class="modal-header">
-				<h5 class="modal-title" id="nickNameModalLabel">Modal title</h5>
-				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-			</div>
-			<div class="modal-body">
-			...
-			</div>
-			<div class="modal-footer">
-				<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-				<button type="button" class="btn btn-primary">Save changes</button>
-			</div>
+	<div class="modal fade" tabindex="-1" aria-labelledby="nickNameModalLabel" id="modal-update-nickname" >
+		<div class="modal-dialog modal-dialog-centered">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="nickNameModalLabel"><strong>${LOGINED_CUSTOMER.nickName }님</strong>&nbsp;<span class="fs-6 fw-lighter">${LOGINED_CUSTOMER.id }</span></h5>
+					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+				</div>
+				<div class="modal-body">
+					<form method="post" id="form-update-nickname">
+						<div class="row">
+							<div class="col d-flex justify-content-center input-group input-group-sm">
+								<label class="form-label input-group-text my-auto">닉네임</label>
+								<input type="text" class="form-control" name="nickName" maxlength="30" data-is-checked="N" placeholder="한글, 영문, 숫자 혼용가능(한글 기준 10자 이내)" id="input-nickname"/>
+								<button type="button" class="btn btn-outline-dark btn-sm" id="btn-check-nickname">중복확인</button>
+							</div>
+						</div>
+					</form>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-dark" id="btn-update-nickname">등록하기</button>
+					<button type="button" class="btn btn-outline-dark" data-bs-dismiss="modal">취소</button>
+				</div>
 			</div>
 		</div>
 	</div>
+	<%-- MY영화관 모달 --%>
+	<div class="modal fade" tabindex="-1" aria-labelledby="cinemaModalLabel" id="modal-update-mycinema">
+		<div class="modal-dialog modal-dialog-centered">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h6 class="modal-title small">영화관을 선택하여 등록해주세요.<strong> 최대 3개까지</strong> 등록하실 수 있습니다.</h6>
+					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+				</div>
+				<div class="modal-body">
+					<div class="row">
+						<form class="d-flex justify-content-start" method="post" id="">
+							<div class="col-3">
+								<select class="form-select form-select-sm" name="city">
+							  		<option selected="selected">지역선택</option>
+							  		<option value="1">One</option>
+							  		<option value="2">Two</option>
+							  		<option value="3">Three</option>
+								</select>
+							</div>
+							<div class="col-3">
+								<select class="form-select form-select-sm" name="cinema">
+							  		<option selected="selected">극장선택</option>
+							  		<option value="1">One</option>
+							  		<option value="2">Two</option>
+							  		<option value="3">Three</option>
+								</select>
+							</div>
+							<div class="col">
+								<button class="btn btn-outline-secondary btn-sm" type="button">자주가는 극장 추가</button>
+							</div>
+						</form>
+					</div>
+					<div class="row">
+						<p><span class="bolder align-middle">${LOGINED_CUSTOMER.nickName }님이 자주가는 극장</span></p>
+					</div>
+					<div class="row">
+						<table class="table table-borderless">
+							<tbody class="mx-3">
+								<tr>
+									<td class="col-3 fs-5 text-center"><button type="button" class="btn btn-outline-secondary" style="width: 120px; height: 60px;">MVF 가락</button></td>
+									<td class="col-3 fs-5 text-center"><button type="button" class="btn btn-outline-secondary" style="width: 120px; height: 60px;">MVF 용산</button></td>
+									<td class="col-3 fs-5 text-center"><button type="button" class="btn btn-outline-secondary" style="width: 120px; height: 60px;">MVF 강남</button></td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+					
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-danger" id="">등록하기</button>
+					<button type="button" class="btn btn-outline-dark" data-bs-dismiss="modal">취소</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	
 	<%-- 나의 정보 패널 --%>
 	<div class="d-flex justify-content-evenly px-5 pt-5 pb-2" id="div-myinfo-panel">
 		<div class="col-5 my-auto">
@@ -89,7 +153,7 @@
 				<table class="table table-borderless">
 					<thead>
 						<tr>
-							<td class="fs-4">MY 영화관&nbsp;<a class="link-secondary" href=""><i class="bi bi-gear" style="font-size: 0.5em;"></i></a></td>
+							<td class="fs-4">MY 영화관&nbsp;<a class="link-secondary" href="" data-bs-toggle="modal" data-bs-target="#modal-update-mycinema" id="link-update-mycinema"><i class="bi bi-gear" style="font-size: 0.5em;"></i></a></td>
 						</tr>
 					</thead>
 					<tbody class="mx-3">
@@ -395,25 +459,78 @@
 <%@ include file="/WEB-INF/views/common/footer.jsp" %>
 <script type="text/javascript">
 $(function() {
+	// 내정보 패널 > 닉네임 변경 모달
+	$('#div-myinfo-panel a').click(function(event) {
+		event.preventDefault();
+
+		let getNickName = RegExp(/^[ㄱ-ㅎ|가-힣|a-z|A-Z|0-9|]+$/);	// 한글, 영대소문자, 숫자
+		let $nickName = $('#input-nickname');
+		
+		$('#btn-check-nickname').click(function(event) {
+			event.preventDefault();
+			checkNickName();
+		});
+		
+		$('#btn-update-nickname').click(function(event) {
+			event.preventDefault();
+			updateNickName();
+		})
+		
+		function checkNickName() {
+			if (!getNickName.test($nickName.val())) {
+				alert('닉네임은 한글, 영문 대소문자, 숫자만 입력 가능합니다.');
+				$nickName.val('');
+				$nickName.focus();
+				return false;
+			};
+			$.post('/rest/member/check-nickname', {nickName: $nickName.val()}, function(response) {
+				if (response.status == "FAIL") {
+					alert(response.error);
+					$nickName.val('');
+					$nickName.focus();
+				} else {
+					alert(response.item[0]);
+					$nickName.attr("data-is-checked", "Y");
+				}
+			});
+		}
+		
+		function updateNickName() {
+			if ($nickName.attr("data-is-checked") === "N") {
+				alert('닉네임 중복체크를 해주세요.');
+				$nickName.focus();
+				return false;
+			};
+			$.post('/rest/member/update-nickname', {nickName: $nickName.val()}, function(response) {
+				if (response.status == "OK") {
+					alert("닉네임 변경이 완료되었습니다.");
+					location.reload();
+				}
+			});
+		}
+	});
 	
-	$('div-myinfo-panel').click(function(event) {
+	// 내 정보 패널 > 내 영화관 설정 모달
+	$('#link-update-mycinema').click(function(event) {
+		event.preventDefault();
+		
 		
 	})
 	
+	// 나의 정보 패널에서 찜한 영화로 이동
 	$('#link-wishlist-show').click(function(event) {
 		event.preventDefault();
 		$('#wish-movie-item').click();
 		var offset = $('#div-wishlist').offset();
 		$('html').animate({scrollTop : offset.top}, 400);
 	});
-	
+	// 나의 정보 패널에서 포인트 내역으로 이동
 	$('#link-mvfpoint-history').click(function(event) {
 		event.preventDefault();
 		$('#point-history-item').click();
 		var offset = $('#point-history').offset();
 		$('html').animate({scrollTop : offset.top}, 400);
 	});
-	
 	
 	// 결제내역
 	$('#booking-list-item').click(function(event) {
@@ -656,8 +773,6 @@ $(function() {
 		$('#info-delete').removeClass("d-none")
 	});
 })
-
-
 
 	
 </script>

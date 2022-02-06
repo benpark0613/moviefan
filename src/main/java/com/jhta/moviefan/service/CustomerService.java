@@ -1,6 +1,7 @@
 package com.jhta.moviefan.service;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import org.apache.logging.log4j.LogManager;
@@ -8,11 +9,15 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.jhta.moviefan.dao.CinemaDao;
 import com.jhta.moviefan.dao.CustomerDao;
 import com.jhta.moviefan.dao.MovieDao;
+import com.jhta.moviefan.dto.MyAccountCinemaDto;
 import com.jhta.moviefan.exception.RestLoginErrorException;
 import com.jhta.moviefan.exception.RestRegisterErrorException;
 import com.jhta.moviefan.form.CriteriaMyAccount;
+import com.jhta.moviefan.vo.Cinema;
+import com.jhta.moviefan.vo.City;
 import com.jhta.moviefan.vo.Customer;
 import com.jhta.moviefan.vo.CustomerMovieWishList;
 import com.jhta.moviefan.vo.Movie;
@@ -26,6 +31,8 @@ public class CustomerService {
 	private CustomerDao customerDao;
 	@Autowired
 	private MovieDao movieDao;
+	@Autowired
+	private CinemaDao cinemaDao;
 	
 	// 일반 회원가입
 	public Customer registerCustomer(Customer customer) {
@@ -168,6 +175,21 @@ public class CustomerService {
 	
 	public void insertCustomerMovieWishListByMovieNo(CustomerMovieWishList wishList) {
 		customerDao.insertCustomerMovieWishListByMovieNo(wishList);
+	}
+	
+	public List<MyAccountCinemaDto> getCityWithCinema() {
+		List<MyAccountCinemaDto> myAccountCinemaDtos = new ArrayList<MyAccountCinemaDto>();
+		MyAccountCinemaDto myAccountCinemaDto = new MyAccountCinemaDto();
+		
+		List<City> cityList = cinemaDao.getAllCities();
+		for (City city : cityList) {
+			myAccountCinemaDto.setCityNo(city.getNo());
+			myAccountCinemaDto.setCityName(city.getName());
+			myAccountCinemaDto.setCinemalist(cinemaDao.getCinemaListByCityNo(city.getNo()));
+			myAccountCinemaDtos.add(myAccountCinemaDto);
+		}
+		
+		return myAccountCinemaDtos;
 	}
 	
 }
