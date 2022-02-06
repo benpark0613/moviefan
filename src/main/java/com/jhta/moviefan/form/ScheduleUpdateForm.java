@@ -8,14 +8,13 @@ public class ScheduleUpdateForm {
 	
 	private int showNo;
 	private int movieNo;
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private Date showDate;
 	private int hallNo;
-	@DateTimeFormat(pattern = "hh:mm")
+	@DateTimeFormat(pattern = "yyyy-MM-dd hh:mm:ss")
 	private Date startTime;
-	@DateTimeFormat(pattern = "hh:mm")
+	@DateTimeFormat(pattern = "yyyy-MM-dd hh:mm:ss")
 	private Date endTime;
-	@DateTimeFormat(pattern = "yyyy-MM-dd")
-	private String showStatus;
 	
 	public ScheduleUpdateForm() {}
 
@@ -67,18 +66,12 @@ public class ScheduleUpdateForm {
 		this.endTime = endTime;
 	}
 
-	public String getShowStatus() {
-		return showStatus;
-	}
-
-	public void setShowStatus(String showStatus) {
-		this.showStatus = showStatus;
-	}
-
 	@Override
 	public String toString() {
 		return "ScheduleUpdateForm [showNo=" + showNo + ", movieNo=" + movieNo + ", showDate=" + showDate + ", hallNo="
-				+ hallNo + ", startTime=" + startTime + ", endTime=" + endTime + ", showStatus=" + showStatus + "]";
+				+ hallNo + ", startTime=" + startTime + ", endTime=" + endTime + "]";
 	}
+
+	
 
 }

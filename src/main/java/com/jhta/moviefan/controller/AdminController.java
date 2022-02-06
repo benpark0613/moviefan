@@ -101,6 +101,8 @@ public class AdminController {
 	@PostMapping("/schedule/update")
 	public String update(ScheduleUpdateForm form) {
 		
+		logger.info("form 정보: " + form);
+		
 		Show show = new Show();
 		BeanUtils.copyProperties(form, show);
 		cinemaService.updateSchedule(show);
