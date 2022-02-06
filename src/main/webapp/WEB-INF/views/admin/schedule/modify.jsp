@@ -64,17 +64,12 @@
 		 
 			 <input type="hidden" name="showNo" value="${detailSchedule.showNo }" />
 			 <input type="hidden" name="movieNo" value="${detailSchedule.movieNo }" />
-			 <input type="hidden" name="showDate" value="" />
-			 <input type="hidden" name="startTime" value="" />
-			 <input type="hidden" name="endTime" value="" />
-		 
-		 
 		 
 		 	<div class="row mb-3">
 		    	<label for="show-date" class="form-label">상영일</label>
 		    	<div class="col-sm-8">
-		      		<input type="date" onchange="formatShowdate()" class="form-control" id="show-select" name="showSelect" 
-		      		value="<fmt:formatDate value="${detailSchedule.showDate}" pattern="yyyyy-MM-dd" />" 
+		      		<input type="date" class="form-control" id="show-select" name="showDate" 
+		      		value="<fmt:formatDate value="${detailSchedule.showDate}" pattern="yyyy-MM-dd" />" 
 		      		min="<fmt:formatDate value="${detailSchedule.openDate}" pattern="yyyy-MM-dd" />">
 		    	</div>
 		  	</div>
@@ -95,13 +90,15 @@
 		  		<div class="row g-0 align-items-center mb-3">
 					<!-- 시작시간 -->
 					<div class="col-sm-4">
-						<input type="time" onchange="formatStartTime()" class="form-control" id="start-time-select" name="startSelect" 
+						<input type="time" class="form-control" id="start-time-select" name="startTime" 
+						<%-- 패턴 년월일 시분초 까지 변경하기 --%>
 						value="<fmt:formatDate value="${detailSchedule.startTime}" pattern="HH:mm" />">
 					</div>
 					<span class="col-1 text-center">~</span>
 					<!-- 종료시간 -->
 					<div class="col-sm-4">
-						<input type="time" onchange="formatEndTime()" class="form-control" id="end-time-select" name="endSelect" 
+						<input type="time" class="form-control" id="end-time-select" name="endTime" 
+						<%-- 패턴 년월일 시분초 까지 변경하기 --%>
 						value="<fmt:formatDate value="${detailSchedule.endTime}" pattern="HH:mm" />">
 					</div>
 				</div>
@@ -117,7 +114,7 @@
 		    	</div>
 		  	</div>
 		    	<div class="col-sm-3">
-					<button type="button" class="btn btn-outline-primary align-items-end mt-5" id="btn-modify-status">수정</button>
+					<button type="submit" class="btn btn-outline-primary align-items-end mt-5" id="btn-modify-status">수정</button>
 				</div>
 		</form>
 	</div>	 
@@ -139,25 +136,25 @@
 // 	console.log('종료시간: ', endTime);
 	
 	
-	// 변환한 상영날짜
-	function formatShowdate() {
-		let date = $('#show-select').val()+' 00:00:00';
-		$('input[name=showDate]').val(date)
-	}
+// 	// 변환한 상영날짜
+// 	function formatShowdate() {
+// 		let date = $('#show-select').val()+' 00:00:00';
+// 		$('input[name=showDate]').val(date)
+// 	}
 	
-	// 변환한 영화 시작시간
-	function formatStartTime() {
-		let date = $('#show-select').val();
-		let start = date + ' ' + $('input[name=startSelect]').val()+':00';
-		$('input[name=startTime]').val(start);
-	}
+// 	// 변환한 영화 시작시간
+// 	function formatStartTime() {
+// 		let date = $('#show-select').val();
+// 		let start = date + ' ' + $('input[name=startSelect]').val()+':00';
+// 		$('input[name=startTime]').val(start);
+// 	}
 	
-	// 변환한 영화 종료시간
-	function formatEndTime() {
-		let date = $('#show-select').val();
-		let end = date + ' ' + $('input[name=endSelect]').val()+':00';
-		$('input[name=endTime]').val(end);
-	}
+// 	// 변환한 영화 종료시간
+// 	function formatEndTime() {
+// 		let date = $('#show-select').val();
+// 		let end = date + ' ' + $('input[name=endSelect]').val()+':00';
+// 		$('input[name=endTime]').val(end);
+// 	}
 
 </script>
 </html>
