@@ -14,7 +14,6 @@ import com.jhta.moviefan.dao.CinemaDao;
 import com.jhta.moviefan.dto.CinemaDto;
 import com.jhta.moviefan.dto.CityWithCinemasDto;
 import com.jhta.moviefan.dto.MovieTimeTableDto;
-import com.jhta.moviefan.form.ScheduleUpdateForm;
 import com.jhta.moviefan.vo.Cinema;
 import com.jhta.moviefan.vo.City;
 import com.jhta.moviefan.vo.Show;
@@ -74,12 +73,12 @@ public class CinemaService {
 
 	public void updateSchedule(Show show) {
 		Show savedShow = cinemaDao.getShowByShowNo(show.getNo());
-		ScheduleUpdateForm form = new ScheduleUpdateForm();
 		
-		savedShow.setDate(form.getShowDate());
-		savedShow.setHallNo(form.getHallNo());
-		savedShow.setStartTime(form.getStartTime());
-		savedShow.setEndTime(form.getEndTime());
+		savedShow.setNo(show.getNo());
+		savedShow.setShowDate(show.getShowDate());
+		savedShow.setHallNo(show.getHallNo());
+		savedShow.setStartTime(new java.sql.Date(show.getStartTime().getTime()));
+		savedShow.setEndTime(new java.sql.Date(show.getEndTime().getTime()));
 		
 		cinemaDao.updateSchedule(savedShow);
 	}
