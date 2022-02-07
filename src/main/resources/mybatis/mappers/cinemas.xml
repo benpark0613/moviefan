@@ -146,5 +146,18 @@
 		where
 			show_no = #{showNo}
 	</update>
+	
+	<!-- 성근 -->
+	<select id="getCinemaByCinemaNo" parameterType="int" resultType="com.jhta.moviefan.vo.Cinema">
+		select 
+			cinema_no 				as no,
+			cinema_name 			as name,
+			cinema_address 			as address,
+			cinema_total_halls 		as totalHalls,
+			city_no					as cityNo
+		from cinema
+		where cinema_no = #{cinemaNo}
+	</select>
+	
 
 </mapper>

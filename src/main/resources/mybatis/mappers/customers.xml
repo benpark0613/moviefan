@@ -23,58 +23,41 @@
 	</resultMap>
 
 	<select id="getCustomerByNo" parameterType="int" resultMap="CustomerResultMap">
-		select 
-			*
-		from
-			customer
-		where
-			customer_no = #{no}
+		select *
+		from customer
+		where customer_no = #{no}
 	</select>
 	
 	<select id="getCustomerById" parameterType="String" resultMap="CustomerResultMap">
-		select 
-			*
-		from
-			customer
-		where
-			customer_id = #{id}
+		select *
+		from customer
+		where customer_id = #{id}
 	</select>
 	
 	<select id="getCustomerByEmail" parameterType="String" resultMap="CustomerResultMap">
-		select 
-			*
-		from
-			customer
-		where
-			customer_email = #{email}
+		select *
+		from customer
+		where customer_email = #{email}
 	</select>
 	
 	<select id="getCustomerByPhoneNumber" parameterType="String" resultMap="CustomerResultMap">
-		select 
-			*
-		from
-			customer
-		where
-			customer_phone_number = #{phoneNumber}
+		select *
+		from customer
+		where customer_phone_number = #{phoneNumber}
 	</select>
 	
 	<select id="getCustomerByNickName" parameterType="String" resultMap="CustomerResultMap">
-		select 
-			*
-		from
-			customer
-		where
-			customer_nickname = #{nickName}
+		select *
+		from customer
+		where customer_nickname = #{nickName}
 	</select>
 	
 	<select id="getAllCustomerMovieWishListByCustomerNo" parameterType="int" resultType="com.jhta.moviefan.vo.CustomerMovieWishList">
 		select 
 			movie_no	as	movieNo,
 			customer_no	as	customerNo
-		from
-			customer_movie_wishlist
-		where
-			customer_no = #{customerNo}
+		from customer_movie_wishlist
+		where customer_no = #{customerNo}
 	</select>
 	
 	<select id="countCustomerMovieWishListByMovieNo" parameterType="int" resultType="int">
@@ -175,7 +158,7 @@
 		)
 		where rn between #{beginIndex} and #{endIndex}
 	</select>
-
+	
 	<!-- 주성 -->
 	<insert id="insertCustomerMovieWishListByMovieNo" parameterType="com.jhta.moviefan.vo.CustomerMovieWishList">
 		insert into CUSTOMER_MOVIE_WISHLIST
@@ -184,6 +167,14 @@
 		(#{movieNo}, #{customerNo})
 	</insert>
 
+	<select id="getCustomerCinemaFavoritesByCustomerNo" parameterType="int" resultType="com.jhta.moviefan.vo.CustomerCinemaFavorites">
+		select 
+			customer_no as customerNo,
+			cinema_no as cinemaNo
+		from customer_cinema_favorites
+		where customer_no = #{customerNo}
+	</select>
+	
 </mapper>
 
 
