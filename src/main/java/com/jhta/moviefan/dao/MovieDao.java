@@ -5,6 +5,8 @@ import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
+import com.jhta.moviefan.dto.HomeTrailerDetailDto;
+import com.jhta.moviefan.dto.HomeTrailerDto;
 import com.jhta.moviefan.vo.Actor;
 import com.jhta.moviefan.vo.Director;
 import com.jhta.moviefan.vo.Genre;
@@ -22,10 +24,14 @@ public interface MovieDao {
 	int getMoviesTotalRows();
 	
 	Movie getMovieByMovieNo(int movieNo);
+	HomeTrailerDetailDto getHomeMovieDetail();
+	List<HomeTrailerDto> getHomeTrailer();
+	
+	
 	List<Movie> getAllMovies();
 	List<Movie> getMovies(@Param("beginIndex") int beginIndex, @Param("endIndex") int endIndex);
 	List<Movie> getMoviesNowPlaying();
- 	
+	
 	List<MovieImage> getMovieImagesByMovieNo(int movieNo);
 	List<MovieTrailer> getMovieTrailersByMovieNo(int movieNo);
 	List<MovieGenre> getMovieGenresByMovieNo(int movieNo);
@@ -51,4 +57,6 @@ public interface MovieDao {
 	
 	void deleteMovieImage(String filename);
 	void deleteMovieTrailer(int movieNo);
+	void updateHomeTrailer(String url);
+	
 }

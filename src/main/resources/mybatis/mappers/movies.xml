@@ -63,6 +63,29 @@
 		where movie_no = #{value}
 	</select>
 	
+	<!-- 홈에 뿌려줄 것 -->
+	<select id="getHomeMovieDetail" resultType="com.jhta.moviefan.dto.HomeTrailerDetailDto">
+		select  m.MOVIE_TITLE					as title, 
+				m.MOVIE_SUMMARY					as summary, 
+				m.MOVIE_TITLE_EN				as titleEn, 
+				t.MOVIE_TRAILER_URL_ADDRESS		as urlAddress, 
+				m.MOVIE_OPEN_DATE				as openDate
+		from MOVIE m, MOVIE_TRAILER t
+		where m.movie_no = t.movie_no
+		and t.IS_HOMETRAILER = 'Y'
+	</select>
+	
+	<!-- 모달에 뿌려줄 것 -->
+	<select id="getHomeTrailer" resultType="com.jhta.moviefan.dto.HomeTrailerDto">
+		select  m.MOVIE_TITLE					as title, 
+				m.MOVIE_SUMMARY					as summary, 
+				m.MOVIE_TITLE_EN				as titleEn, 
+				t.MOVIE_TRAILER_URL_ADDRESS		as urlAddress, 
+				m.MOVIE_OPEN_DATE				as openDate
+		from MOVIE m, MOVIE_TRAILER t
+		where m.movie_no = t.movie_no
+	</select>
+	
 	<select id="getMovieImagesByMovieNo" parameterType="int" resultType="com.jhta.moviefan.vo.MovieImage">
 		select 	
 			movie_no			 as movieNo, 
@@ -243,4 +266,12 @@
 		delete from movie_trailer
 		where movie_no = #{value}
 	</delete>
+	
+	<update id="updateHomeTrailer" parameterType="string">
+		update MOVIE_TRAILER
+		set
+			IS_HOMETRAILER = 'Y'
+		where
+			MOVIE_TRAILER_URL_ADDRESS = #{value}
+	</update>
 </mapper>

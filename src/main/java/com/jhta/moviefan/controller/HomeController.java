@@ -23,7 +23,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.jhta.moviefan.annotation.LoginedCustomer;
-import com.jhta.moviefan.exception.LoginErrorException;
+import com.jhta.moviefan.dto.HomeTrailerDetailDto;
 import com.jhta.moviefan.form.CustomerRegisterForm;
 import com.jhta.moviefan.form.KakaoLoginForm;
 import com.jhta.moviefan.service.CustomerService;
@@ -66,19 +66,18 @@ public class HomeController {
 			JSONArray jsonObject3 = (JSONArray) jsonObject2.get("dailyBoxOfficeList");
 
 			List<Movie> movieList = new ArrayList<>();
-			List<Integer> wishList = new ArrayList<>();
 			for(int i=0; i<jsonObject3.size(); i++) {
 				JSONObject movies = (JSONObject) jsonObject3.get(i);
 				Movie movie = new Movie();
 
 				int movieCd = (Integer.parseInt((String)movies.get("movieCd")));
 				movie = movieService.getMovieByMovieNo(movieCd);
-				int countWishList = customerService.countCustomerMovieWishListByMovieNo(movieCd);
 				movieList.add(movie);
-				wishList.add(countWishList);
 			}
+			
+			HomeTrailerDetailDto dto = movieService.getHomeMovieDetail();
+			model.addAttribute("movieTrailer", dto);
 			model.addAttribute("movie", movieList);
-			model.addAttribute("wishList", wishList);
 
 
 		}catch(Exception e) {
@@ -179,6 +178,16 @@ public class HomeController {
 	@GetMapping("/member/newpassword")
 	public String newPassword() {
 		return "member/newpassword";
+	}
+	
+	@PostMapping("/home/registerTrailer")
+	public String registerTrailer(String url) {
+		//movieService.updateHomeTrailer(url);
+		System.out.println("========================");
+		System.out.println(url);
+		System.out.println("========================");
+		
+		return "home";
 	}
 	
 }

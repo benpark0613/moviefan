@@ -17,7 +17,7 @@
 <%@ include file="/WEB-INF/views/common/header.jsp" %>
 <%-- 상영예정작 트레일러 등록 모달 --%>
 <div class="modal fade" id="modal-register-trailer" data-bs-backdrop="static" tabindex="-1" aria-labelledby="로그인 모달" aria-hidden="true">
-  	<div class="modal-dialog modal-dialog-centered">
+  	<div class="modal-dialog modal-dialog-centered modal-lg">
     	<div class="modal-content">
    			<div class="modal-header">
      			<h5 class="modal-title" id="exampleModalLabel">상영예정작 트레일러 등록</h5>
@@ -25,18 +25,26 @@
    			</div>
       		<div class="modal-body">
 				<div class="row">
-					<form class="border bg-light" method="post" action="" id="form-register-trailer">
+					<form class="border bg-light" method="post" action="home/registerTrailer" id="form-register-trailer">
 						<div class="mb-3 mt-3">
+							
 							<label class="form-label">영화 제목</label>
-							<input type="text" class="form-control" name="title">
-						</div>
-						<div class="mb-3">
-							<label class="form-label">시놉시스</label>
-							<input type="password" class="form-control" name="summary">
+							<select id="titleSelect" class="form-select" aria-label="Default select example">
+								<option selected disabled="disabled">영화 선택하세요</option>
+							</select>
 						</div>
 						<div class="mb-3">
 							<label class="form-label">트레일러</label>
-							<input type="password" class="form-control" name="password">
+						</div>
+						<div class="row">
+							<div class="col" id="trailerInput">
+								
+							</div>
+						</div>
+						
+						<div class="mb-3">
+							<label class="form-label">시놉시스</label>
+							<textarea id="summaryText" class="form-control" cols="40" rows="7"></textarea>
 						</div>
 						<div class="mb-1">
 							<button class="btn btn-danger w-100" id="button-apply-form">등록</button>
@@ -53,7 +61,7 @@
 		<div class="col-6">
 			<div class="ratio ratio-16x9">
 			  	<video autoplay="autoplay" loop="loop" muted="muted">
-				    <source src="http://h.vod.cgv.co.kr/vodCGVa/84949/84949_199155_1200_128_960_540.mp4" type="video/mp4">
+				    <source src="${movieTrailer.urlAddress }" type="video/mp4">
 				</video>
 			</div>
 		</div>
@@ -61,11 +69,11 @@
 			<form action="">
 				<div class="row">
 			            <p class="fs-1 text-start text-white fw-bolder text-truncate">
-			            	<a href="" class="link-light text-decoration-none" data-bs-toggle="tooltip" title="스파이더맨-노 웨이 홈">스파이더맨-노 웨이 홈</a>
+			            	<a href="" class="link-light text-decoration-none" data-bs-toggle="tooltip" title="스파이더맨-노 웨이 홈">${movieTrailer.title }</a>
 			            </p>
 			            <p class="text-start text-white fw-bolder">
-			            	어둠을 뚫고 그가 온다<br>
-			            	3월 IMAX 대개봉<br>
+			            	${movieTrailer.summary }<br>
+			            	<fmt:formatDate value="${movieTrailer.openDate }" pattern="M"/>월 IMAX 대개봉<br>
 			            </p>
 		        </div>
 		        <div class="row">
@@ -98,6 +106,19 @@
 				<div class="col text-end">
 					<a class="link-light" href="">더 많은 영화보기+</a>
 				</div>
+			</div>
+			<div class="row d-flex justify-content-evenly">
+				<c:forEach var="movie" items="${movie }" end="4">
+					<div class="card col-2 p-1 d-flex justify-content-center align-self-center">
+						<div class="row">
+					  		<img src="/resources/images/movie/moviePoster/${movie.no }.jpg" class="w-100 my-auto" alt="...">
+						</div>
+						<div class="card-body d-flex justify-content-center p-0">
+							<a type="button" class="btn btn-danger w-100"><span>예매</span></a>
+							<a type="button" class="btn btn-outline-secondary"><span class="bi bi-heart-fill"></span></a>
+						</div>
+					</div>
+				</c:forEach>
 			</div>
 		</div>
 	</div>
@@ -351,8 +372,47 @@ $(function() {
 	});
 	
 	// 상영예정작 등록
+	var modal = new bootstrap.Modal(document.getElementById('modal-register-trailer'), {
+		keyboard: false
+	});
 	
-	
+	$('#button-register-trailer').click(function(event){
+		event.preventDefault();
+		
+		$.ajax({
+			type: 'get',
+			url: 'rest/home/trailer',
+			dataType: 'json',
+			success: function(response, response2){
+				modal.show();
+				for(var i=0; i<response.item.length;i++){
+					var title = '<option value=' + response.item[i].title + '>'+ response.item[i].title + '</option>';
+					$("#titleSelect").append(title);
+					
+				}
+				$("#titleSelect").change(function(){
+					for(var i=0; i<response.item.length;i++){
+						if($(this).children("option:selected").text() == response.item[i].title){
+							var summary = response.item[i].summary;
+							$("#summaryText").val(summary);
+							for(var j=0; j<response.item[i].trailers.length;j++){
+								var trailer = response.item[i].trailers[j].urlAddress;
+								var url = '<div class="mb-3 form-check">'
+										+ '<input class="form-check-input" type="radio" name="=url" value="'+trailer+'">'
+										+ '<label class="form-check-label" for="flexRadioDefault1">'
+										+ '<video id="trailerUrl" src="'+trailer+'" controls width="240" height="136"></video>'
+										+ '</label> </div>';
+							
+								$("#trailerInput").append(url);
+							}
+								
+						}
+					}
+				})
+			}
+		})
+		$("#button-apply-form").click
+	})
 })
 </script>
 <%@ include file="/WEB-INF/views/common/footer.jsp" %>
