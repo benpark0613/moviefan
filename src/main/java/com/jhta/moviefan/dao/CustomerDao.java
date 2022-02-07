@@ -6,6 +6,7 @@ import org.apache.ibatis.annotations.Mapper;
 
 import com.jhta.moviefan.form.CriteriaMyAccount;
 import com.jhta.moviefan.vo.Customer;
+import com.jhta.moviefan.vo.CustomerCinemaFavorites;
 import com.jhta.moviefan.vo.CustomerMovieWishList;
 
 @Mapper
@@ -20,7 +21,6 @@ public interface CustomerDao {
 	void deleteCustomerByNo(int no);
 	void insertCustomer(Customer customer);
 	void updateCustomer(Customer customer);
-	
 
 	// 찜한 영화 전체 데이터
 	List<CustomerMovieWishList> getAllCustomerMovieWishListByCustomerNo(int customerNo);
@@ -28,10 +28,10 @@ public interface CustomerDao {
 	int getCustomerMovieWishListTotalRows(CriteriaMyAccount criteriaMyAccount);
 	// 찜한 영화 검색
 	List<CustomerMovieWishList> searchCustomerMovieWishList(CriteriaMyAccount criteriaMyAccount);
-
-  // 주성
+	// 주성
 	int countCustomerMovieWishListByMovieNo(int movieNo);
 	void insertCustomerMovieWishListByMovieNo(CustomerMovieWishList wishList);
-
 	
+	// my영화관
+	List<CustomerCinemaFavorites> getCustomerCinemaFavoritesByCustomerNo(int customerNo);
 }

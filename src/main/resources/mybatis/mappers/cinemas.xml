@@ -121,7 +121,7 @@
 	
 	<select id="getShowByShowNo" parameterType="int"  resultType="com.jhta.moviefan.vo.Show">
 		select
-			show_no						as showNo,
+			show_no						as no,
 			show_date					as showDate,
 			show_start_time				as startTime,
 			show_end_time				as endTime,
@@ -144,7 +144,20 @@
 			show_start_time = #{startTime},
 			show_end_time = #{endTime}
 		where
-			show_no = #{showNo}
+			show_no = #{no}
 	</update>
+	
+	<!-- 성근 -->
+	<select id="getCinemaByCinemaNo" parameterType="int" resultType="com.jhta.moviefan.vo.Cinema">
+		select 
+			cinema_no 				as no,
+			cinema_name 			as name,
+			cinema_address 			as address,
+			cinema_total_halls 		as totalHalls,
+			city_no					as cityNo
+		from cinema
+		where cinema_no = #{cinemaNo}
+	</select>
+	
 
 </mapper>

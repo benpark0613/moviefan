@@ -4,6 +4,8 @@ import java.util.Date;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 public class ScheduleUpdateForm {
 	
 	private int showNo;
@@ -11,9 +13,9 @@ public class ScheduleUpdateForm {
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private Date showDate;
 	private int hallNo;
-	@DateTimeFormat(pattern = "yyyy-MM-dd")
+	@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
 	private Date startTime;
-	@DateTimeFormat(pattern = "yyyy-MM-dd")
+	@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
 	private Date endTime;
 	
 	public ScheduleUpdateForm() {}

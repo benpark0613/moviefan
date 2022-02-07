@@ -68,7 +68,7 @@
 			    	</tr>
 			  	</thead>
 			  	<tbody>
-			  	
+			  		<tr></tr>
 			    </tbody>
 		    </table>
 	    </form>
@@ -79,7 +79,6 @@
 <script type="text/javascript">
 
 	$(function () {
-
 		let $firstSelect = $('#cinema-select').empty();
 		let secondSelect = '<option value="" selected disabled>-- 지역을 먼저 선택하세요. --</option>';
 		$firstSelect.append(secondSelect);
@@ -88,6 +87,7 @@
 		$('#city-select').change(function () {
 			let no = $(this).val();
 			let $select = $("#cinema-select").empty();
+			$select.prepend('<option value="" disabled selected>--영화관을 선택하세요. --</option>');
 			
 			$.getJSON("/rest/cinema/list", {cityNo:no}, function (cinemaList) {
 				// [{no:10, name:"신촌점"}, {no:11, name:"홍대점"}]
@@ -108,7 +108,8 @@
 			$.getJSON("/rest/cinema/timetable", {cinemaNo:cinemaNo}, function (timetableList) {
 				
 				if (timetableList.length == 0) {
-					let row = '<td class="text-center" colspan="8">해당 영화관의 상영일정이 존재하지 않습니다.</td>';
+					let row = '<td class="pt-4 text-center" colspan="8">해당 영화관의 상영일정이 존재하지 않습니다.</td>';
+					
 					$('#timetable tbody').append(row);
 						
 				} else {
@@ -125,17 +126,11 @@
 							result += '</tr>';
 						
 						$('#timetable tbody').append(result);
-						
-						moment(timetable.startTime).format('HH:mm')
-						
-// 						let date = moment(timetable.showDate).format('YYYY-MM-DD');
-// 						$('#;
-// 							result += '<td>' + moment(timetable.showDate).format('YYYY-MM-DD') + '</td>'
 					})
 				}
 			})
 		})
 	})	
-
+	
 </script>
 </html>

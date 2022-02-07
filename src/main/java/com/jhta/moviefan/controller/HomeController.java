@@ -16,6 +16,7 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -38,9 +39,11 @@ public class HomeController {
 	static final Logger LOGGER = LogManager.getLogger(HomeController.class);
 
 	@Autowired
-	CustomerService customerService;
+	private CustomerService customerService;
 	@Autowired
-	MovieService movieService;
+	private MovieService movieService;
+	@Autowired
+	private BCryptPasswordEncoder bCryptPasswordEncoder;
 	
 	@GetMapping(value = {"/", "/home", "/index"})
 	public String home(Model model) {
@@ -121,7 +124,11 @@ public class HomeController {
 	public String register(CustomerRegisterForm form, RedirectAttributes redirectAttributes) {
 		Customer customer = new Customer();
 		BeanUtils.copyProperties(form, customer);
+		
+		System.out.println("암호화 전 : " + customer.getPassword());
+		customer.setPassword(bCryptPasswordEncoder.encode(customer.getPassword()));
 		customer.setLoginType("NORMAL");
+		System.out.println("암호화 후 " + customer.getPassword());
 		
 		customerService.registerCustomer(customer);
 		redirectAttributes.addFlashAttribute("customer", customer);

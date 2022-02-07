@@ -7,6 +7,7 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -31,6 +32,9 @@ public class HomeRestController {
 	private CustomerService customerService;
 	@Autowired
 	private MovieService movieService;
+  @Autowired
+	private BCryptPasswordEncoder bCryptPasswordEncoder;
+
 
 	// 일반 로그인 요청 처리
 	@PostMapping("/logincheck")
@@ -50,9 +54,12 @@ public class HomeRestController {
 	public ResponseDto<String> register(@RequestBody CustomerRegisterForm form) {
 		ResponseDto<String> response = new ResponseDto<String>();
 		Customer customer = new Customer();
-		
 		BeanUtils.copyProperties(form, customer);
+		
+		System.out.println("암호화 전 : " + customer.getPassword());
+		customer.setPassword(bCryptPasswordEncoder.encode(customer.getPassword()));
 		customer.setLoginType("NORMAL");
+		System.out.println("암호화 후 " + customer.getPassword());
 		
 		customerService.registerCustomer(customer);
 		response.setStatus("OK");

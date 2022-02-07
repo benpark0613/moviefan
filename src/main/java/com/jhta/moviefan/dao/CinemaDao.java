@@ -8,6 +8,7 @@ import com.jhta.moviefan.dto.CinemaDto;
 import com.jhta.moviefan.dto.MovieTimeTableDto;
 import com.jhta.moviefan.vo.Cinema;
 import com.jhta.moviefan.vo.City;
+import com.jhta.moviefan.vo.CustomerCinemaFavorites;
 import com.jhta.moviefan.vo.Show;
 
 @Mapper
@@ -25,5 +26,8 @@ public interface CinemaDao {
 	Show getShowByShowNo(int showNo);
 	
 	void updateSchedule(Show show);
+	
+	// 성근
+	Cinema getCinemaByCinemaNo(int CinemaNo);
 	
 }

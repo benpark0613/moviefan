@@ -1,24 +1,25 @@
 package com.jhta.moviefan.service;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.jhta.moviefan.dao.CinemaDao;
 import com.jhta.moviefan.dao.CustomerDao;
 import com.jhta.moviefan.dao.MovieDao;
-import com.jhta.moviefan.dto.MyAccountCinemaDto;
+import com.jhta.moviefan.dto.CityWithCinemasDto;
 import com.jhta.moviefan.exception.RestLoginErrorException;
 import com.jhta.moviefan.exception.RestRegisterErrorException;
 import com.jhta.moviefan.form.CriteriaMyAccount;
 import com.jhta.moviefan.vo.Cinema;
 import com.jhta.moviefan.vo.City;
 import com.jhta.moviefan.vo.Customer;
+import com.jhta.moviefan.vo.CustomerCinemaFavorites;
 import com.jhta.moviefan.vo.CustomerMovieWishList;
 import com.jhta.moviefan.vo.Movie;
 
@@ -33,6 +34,8 @@ public class CustomerService {
 	private MovieDao movieDao;
 	@Autowired
 	private CinemaDao cinemaDao;
+	@Autowired
+	private BCryptPasswordEncoder bCryptPasswordEncoder;
 	
 	// 일반 회원가입
 	public Customer registerCustomer(Customer customer) {
@@ -77,8 +80,8 @@ public class CustomerService {
 		if ("Y".equals(savedCustomer.getIsBanned())) {
 			throw new RestLoginErrorException("이용 정지된 아이디입니다.");
 		}
-		if (!password.equals(savedCustomer.getPassword())) {
-			throw new RestLoginErrorException("비밀번호가 일치하지 않습니다.");
+		if (!bCryptPasswordEncoder.matches(password, savedCustomer.getPassword())) {
+			throw new RestLoginErrorException("비밀번호가 일치하지 않습니다.");	
 		}
 		
 		return savedCustomer;
@@ -120,6 +123,7 @@ public class CustomerService {
 	}
 	
 	public void updateCustomerInfo(Customer customer) {
+		
 		customerDao.updateCustomer(customer);
 	}
 	
@@ -177,21 +181,32 @@ public class CustomerService {
 		customerDao.insertCustomerMovieWishListByMovieNo(wishList);
 	}
 	
-	public List<MyAccountCinemaDto> getCityWithCinema() {
-		List<MyAccountCinemaDto> myAccountCinemaDtos = new ArrayList<MyAccountCinemaDto>();
-		MyAccountCinemaDto myAccountCinemaDto = new MyAccountCinemaDto();
+	public List<Cinema> getCustomerFavoriteCinemaList(int customerNo) {
+		List<Cinema> myCinemaList = new ArrayList<Cinema>();
 		
-		List<City> cityList = cinemaDao.getAllCities();
-		for (City city : cityList) {
-			myAccountCinemaDto.setCityNo(city.getNo());
-			myAccountCinemaDto.setCityName(city.getName());
-			myAccountCinemaDto.setCinemalist(cinemaDao.getCinemaListByCityNo(city.getNo()));
-			myAccountCinemaDtos.add(myAccountCinemaDto);
+		List<CustomerCinemaFavorites> customerCinemaFavorites = customerDao.getCustomerCinemaFavoritesByCustomerNo(customerNo);
+		
+		for (CustomerCinemaFavorites customerCinemaFavorite  : customerCinemaFavorites) {
+			myCinemaList.add(cinemaDao.getCinemaByCinemaNo(customerCinemaFavorite.getCinemaNo()));
 		}
 		
-		return myAccountCinemaDtos;
+		return myCinemaList;
 	}
 	
+	public List<CityWithCinemasDto> getCityWithCinemas() {
+		List<City> cities = cinemaDao.getAllCities();
+		List<CityWithCinemasDto> dtos = new ArrayList<CityWithCinemasDto>();
+		
+		for (City city : cities) {
+			CityWithCinemasDto dto = new CityWithCinemasDto();
+			dto.setCityNo(city.getNo());
+			dto.setCityName(city.getName());
+			dto.setCinemas(cinemaDao.getCinemaListByCityNo(city.getNo()));
+			dtos.add(dto);
+		}
+		
+		return dtos;
+	}
 }
 
 
