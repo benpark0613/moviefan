@@ -6,26 +6,26 @@ import com.jhta.moviefan.vo.Cinema;
 
 public class CityWithCinemasDto {
 
-	private int cityNo;
-	private String cityName;
+	private int no;
+	private String name;
 	private List<Cinema> cinemas;
 	
 	public CityWithCinemasDto() {}
 
-	public int getCityNo() {
-		return cityNo;
+	public int getNo() {
+		return no;
 	}
 
-	public void setCityNo(int cityNo) {
-		this.cityNo = cityNo;
+	public void setNo(int no) {
+		this.no = no;
 	}
 
-	public String getCityName() {
-		return cityName;
+	public String getName() {
+		return name;
 	}
 
-	public void setCityName(String cityName) {
-		this.cityName = cityName;
+	public void setName(String name) {
+		this.name = name;
 	}
 
 	public List<Cinema> getCinemas() {
@@ -38,8 +38,9 @@ public class CityWithCinemasDto {
 
 	@Override
 	public String toString() {
-		return "CityWithCinemasDto [cityNo=" + cityNo + ", cityName=" + cityName + ", cinemas=" + cinemas + "]";
+		return "CityWithCinemasDto [no=" + no + ", name=" + name + ", cinemas=" + cinemas + "]";
 	}
 
+	
 	
 }
