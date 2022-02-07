@@ -19,7 +19,7 @@
 </style>
 <body>
 <%@ include file="/WEB-INF/views/common/header.jsp" %>
-<div class="container bg-light mb-3">
+<div class="container bg-light mb-3 p-4">
 	<%-- 닉네임 변경 모달 --%>
 	<div class="modal fade" tabindex="-1" aria-labelledby="nickNameModalLabel" id="modal-update-nickname" >
 		<div class="modal-dialog modal-dialog-centered">
@@ -40,7 +40,7 @@
 					</form>
 				</div>
 				<div class="modal-footer">
-					<button type="button" class="btn btn-dark" id="btn-update-nickname">등록하기</button>
+					<button type="button" class="btn btn-danger" id="btn-update-nickname">등록하기</button>
 					<button type="button" class="btn btn-outline-dark" data-bs-dismiss="modal">취소</button>
 				</div>
 			</div>
@@ -55,22 +55,16 @@
 					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 				</div>
 				<div class="modal-body">
-					<div class="row">
-						<form class="d-flex justify-content-start" method="post" id="">
+					<div class="row mb-3">
+						<form class="d-flex justify-content-start" method="post" id="form-select-mycinema">
 							<div class="col-3">
-								<select class="form-select form-select-sm" name="city">
+								<select class="form-select form-select-sm" name="cityNo">
 							  		<option selected="selected">지역선택</option>
-							  		<option value="1">One</option>
-							  		<option value="2">Two</option>
-							  		<option value="3">Three</option>
 								</select>
 							</div>
 							<div class="col-3">
-								<select class="form-select form-select-sm" name="cinema">
+								<select class="form-select form-select-sm" name="cinemaNo">
 							  		<option selected="selected">극장선택</option>
-							  		<option value="1">One</option>
-							  		<option value="2">Two</option>
-							  		<option value="3">Three</option>
 								</select>
 							</div>
 							<div class="col">
@@ -79,15 +73,26 @@
 						</form>
 					</div>
 					<div class="row">
-						<p><span class="bolder align-middle">${LOGINED_CUSTOMER.nickName }님이 자주가는 극장</span></p>
+						<p class="m-0">
+							<span class="fw-bolder">${LOGINED_CUSTOMER.nickName }님이 자주가는 극장</span>
+						</p>
 					</div>
 					<div class="row">
-						<table class="table table-borderless">
+						<table class="table table-borderless my-auto" id="modal-table-mycinema">
 							<tbody class="mx-3">
 								<tr>
-									<td class="col-3 fs-5 text-center"><button type="button" class="btn btn-outline-secondary" style="width: 120px; height: 60px;">MVF 가락</button></td>
-									<td class="col-3 fs-5 text-center"><button type="button" class="btn btn-outline-secondary" style="width: 120px; height: 60px;">MVF 용산</button></td>
-									<td class="col-3 fs-5 text-center"><button type="button" class="btn btn-outline-secondary" style="width: 120px; height: 60px;">MVF 강남</button></td>
+									<c:choose>
+										<c:when test="${empty myCinemaList}">
+											<td class="col-3 fs-5 text-center"><button type="button" class="btn btn-outline-secondary" style="width: 120px; height: 60px;"></button></td>
+											<td class="col-3 fs-5 text-center"><button type="button" class="btn btn-outline-secondary" style="width: 120px; height: 60px;"></button></td>
+											<td class="col-3 fs-5 text-center"><button type="button" class="btn btn-outline-secondary" style="width: 120px; height: 60px;"></button></td>
+										</c:when>
+										<c:otherwise>
+											<c:forEach var="cinema" items="${myCinemaList}">
+												<td class="col-3 fs-5 text-center"><button type="button" class="btn btn-outline-secondary" data-cinema-no="${cinema.no }" style="width: 120px; height: 60px;">${cinema.name}<i class="bi bi-x-square"></i></button></td>
+											</c:forEach>
+										</c:otherwise>
+									</c:choose>
 								</tr>
 							</tbody>
 						</table>
@@ -95,15 +100,15 @@
 					
 				</div>
 				<div class="modal-footer">
-					<button type="button" class="btn btn-danger" id="">등록하기</button>
-					<button type="button" class="btn btn-outline-dark" data-bs-dismiss="modal">취소</button>
+					<button type="button" class="btn btn-danger btn-sm" id="">등록하기</button>
+					<button type="button" class="btn btn-outline-dark btn-sm" data-bs-dismiss="modal">취소</button>
 				</div>
 			</div>
 		</div>
 	</div>
 	
 	<%-- 나의 정보 패널 --%>
-	<div class="d-flex justify-content-evenly px-5 pt-5 pb-2" id="div-myinfo-panel">
+	<div class="d-flex justify-content-evenly my-2" id="div-myinfo-panel">
 		<div class="col-5 my-auto">
 			<c:choose>
 				<c:when test="${empty LOGINED_CUSTOMER.nickName}">
@@ -127,7 +132,7 @@
 		<div class="vr p-0 bg-light"></div>
 		<div class="col-6"></div>
 	</div>
-	<div class="d-flex justify-content-evenly px-5 pt-2 pb-5">
+	<div class="d-flex justify-content-evenly">
 		<div class="col-5 my-auto">
 			<div class="row">
 				<table class="table table-borderless">
@@ -150,38 +155,64 @@
 			</div>
 			<hr class="w-100 mx-auto"/>
 			<div class="row">
-				<table class="table table-borderless">
-					<thead>
-						<tr>
-							<td class="fs-4">MY 영화관&nbsp;<a class="link-secondary" href="" data-bs-toggle="modal" data-bs-target="#modal-update-mycinema" id="link-update-mycinema"><i class="bi bi-gear" style="font-size: 0.5em;"></i></a></td>
-						</tr>
-					</thead>
-					<tbody class="mx-3">
-						<tr>
-							<td class="col-3 fs-5 text-center"><button type="button" class="btn btn-outline-secondary" style="width: 120px; height: 60px;">MVF 가락</button></td>
-							<td class="col-3 fs-5 text-center"><button type="button" class="btn btn-outline-secondary" style="width: 120px; height: 60px;">MVF 용산</button></td>
-							<td class="col-3 fs-5 text-center"><button type="button" class="btn btn-outline-secondary" style="width: 120px; height: 60px;">MVF 강남</button></td>
-						</tr>
-					</tbody>
-				</table>
+				<c:choose>
+					<c:when test="${empty myCinemaList}">
+						<table class="table table-borderless">
+							<thead>
+								<tr>
+									<td class="fs-4">MY 영화관&nbsp;<a class="link-secondary" href="" data-bs-toggle="modal" data-bs-target="#modal-update-mycinema" id="link-update-mycinema"  data-bs-toggle="tooltip" data-bs-placement="top" title="자주 가는 영화관 설정"><i class="bi bi-gear" style="font-size: 0.5em;"></i></a></td>
+								</tr>
+							</thead>
+							<tbody class="mx-3">
+								<tr>
+									<td class="text-center"><span class="fs-5 fw-bold">등록된 자주가는 극장이 없습니다.</span></td>
+								</tr>
+								<tr>
+									<td class="text-center"><span class="fs-5">자주가는 영화관을 등록해보세요.</span></td>
+								</tr>
+							</tbody>
+						</table>
+					</c:when>
+					<c:otherwise>
+						<table class="table table-borderless" id="table-mycinema">
+							<thead>
+								<tr>
+									<td class="fs-4">MY 영화관&nbsp;<a class="link-secondary" href="" data-bs-toggle="modal" data-bs-target="#modal-update-mycinema" id="link-update-mycinema"  data-bs-toggle="tooltip" data-bs-placement="top" title="자주 가는 영화관 설정"><i class="bi bi-gear" style="font-size: 0.5em;"></i></a></td>
+								</tr>
+							</thead>
+							<tbody class="mx-3">
+								<tr>
+									<c:forEach var="cinema" items="${myCinemaList}" varStatus="loop">
+										<td class="col-3 fs-5 text-center"><button type="button" class="btn btn-outline-secondary" data-cinema-no="${cinema.no }" style="width: 120px; height: 60px;">${cinema.name }</button></td>
+									</c:forEach>
+								</tr>
+							</tbody>
+						</table>
+					</c:otherwise>
+				</c:choose>
+				
 			</div>
 		</div>
 		<div class="vr p-0"></div>
 		<div class="col-6">
 			<div class="row">
 				<div class="col">
-					<div class="d-flex justify-content-between mb-3 mx-3">
-						<span class="h3">찜한 영화</span>
-						<span class="align-self-end"><a class="btn text-decoration-none link-dark" id="link-wishlist-show">더 보러 가기</a></span>
-					</div>
 					<c:choose>
 						<c:when test="${empty movieWithImages }">
+							<div class="d-flex justify-content-between mb-3 mx-3">
+								<span class="h3">찜한 영화</span>
+								<span class="align-self-end"><a href="/movie/list" class="btn text-decoration-none link-dark" id="link-moveto-movie">찜 하러 가기</a></span>
+							</div>
 							<div class="row text-center mt-4">
-								<p class="fs-1">찜한 영화가 없습니다.</p>
-								<p class="fs-3">보고 싶은 영화를 "찜" 해 보세요.</p>
+								<p class="fs-1 fw-bold">찜한 영화가 없습니다.</p>
+								<p class="fs-4">보고 싶은 영화를 "찜" 해 보세요.</p>
 							</div>
 						</c:when>
 						<c:otherwise>
+							<div class="d-flex justify-content-between mb-3 mx-3">
+								<span class="h3">찜한 영화</span>
+								<span class="align-self-end"><a href="/movie/list" class="btn text-decoration-none link-dark" id="link-wishlist-show">더 보러 가기</a></span>
+							</div>
 							<div class="d-flex justify-content-evenly">
 								<c:forEach var="entry" items="${movieWithImages }" varStatus="loop" end="2">
 									<c:forEach var="movieImage" items="${entry.value }" end="0">
@@ -488,6 +519,7 @@ $(function() {
 					alert(response.error);
 					$nickName.val('');
 					$nickName.focus();
+					return;
 				} else {
 					alert(response.item[0]);
 					$nickName.attr("data-is-checked", "Y");
@@ -501,19 +533,84 @@ $(function() {
 				$nickName.focus();
 				return false;
 			};
-			$.post('/rest/member/update-nickname', {nickName: $nickName.val()}, function(response) {
-				if (response.status == "OK") {
-					alert("닉네임 변경이 완료되었습니다.");
-					location.reload();
+			$.post('/rest/member/check-nickname', {nickName: $nickName.val()}, function(response) {
+				if (response.status == "FAIL") {
+					alert(response.error);
+					$nickName.val('');
+					$nickName.focus();
+					return;
 				}
+				$.post('/rest/member/update-nickname', {nickName: $nickName.val()}, function(response) {
+					if (response.status == "OK") {
+						alert("닉네임 변경이 완료되었습니다.");
+						location.reload();
+					}
+				});
 			});
+			
 		}
 	});
 	
-	// 내 정보 패널 > 내 영화관 설정 모달
+	// 나의 정보 패널 > my영화관
+	if ($('#table-mycinema tbody tr').children().length < 3) {
+		let row = `<td class="col-3 fs-5 text-center"><button type="button" class="btn btn-outline-secondary" style="width: 120px; height: 60px;"></button></td>`
+		for (var i = 0; i < 3 - $('#table-mycinema tbody tr').children().length; i++) {
+			$('#table-mycinema tbody tr').append(row);
+		}
+	}
+	// 나의 정보 패널 > my영화관 모달	
 	$('#link-update-mycinema').click(function(event) {
 		event.preventDefault();
+		let $selectCityNo = $('#form-select-mycinema select[name=cityNo]');
+		let $selectCinemaNo = $('#form-select-mycinema select[name=cinemaNo]');
 		
+		if ($('#modal-table-mycinema tbody tr').children().length < 3) {
+			let row = `<td class="col-3 fs-5 text-center"><button type="button" class="btn btn-outline-secondary" style="width: 120px; height: 60px;"></button></td>`
+			for (var i = 0; i < 3 - $('#modal-table-mycinema tbody tr').children().length; i++) {
+				$('#modal-table-mycinema tbody tr').append(row);
+			}
+		}
+
+		$.ajax({
+			type: 'GET',
+			url: '/rest/member/mycinema',
+			dataType: 'json',
+			success: function(response) {
+				let cityWithCinemas = response.item;
+				
+				$selectCityNo.empty();
+				let cityRow = `<option selected="selected">지역선택</option>`;
+				$selectCityNo.append(cityRow);
+				
+				for(let cityWithCinema of cityWithCinemas) {
+					cityRow = '<option value="'+cityWithCinema.cityNo+'">'+cityWithCinema.cityName+'</option>';
+					$selectCityNo.append(cityRow);
+				}
+				
+				$selectCityNo.change(function(event) {
+					cityNo = $selectCityNo.children('option:selected').val();
+					
+					$selectCinemaNo.empty();
+					let cinemaRow = `<option selected="selected">극장선택</option>`;
+					$selectCinemaNo.append(cityRow);
+					
+					for (let cityWithCinema of cityWithCinemas) {
+						for (let cinema of cityWithCinema.cinemas) {
+							if (cityNo == cinema.cityNo) {
+								cinemaRow = '<option value="'+cinema.no+'">'+cinema.name+'</option>';
+								$selectCinemaNo.append(cinemaRow);
+							}
+						}
+					}
+					
+				})
+				
+
+			}
+		});
+		
+		
+
 		
 	})
 	

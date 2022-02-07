@@ -10,6 +10,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.jhta.moviefan.annotation.LoginedCustomer;
+import com.jhta.moviefan.dto.CinemaDto;
 import com.jhta.moviefan.exception.LoginErrorException;
 import com.jhta.moviefan.form.CriteriaMyAccount;
 import com.jhta.moviefan.form.CustomerRegisterForm;
@@ -25,6 +27,7 @@ import com.jhta.moviefan.pagination.Pagination;
 import com.jhta.moviefan.service.CustomerService;
 import com.jhta.moviefan.service.MovieService;
 import com.jhta.moviefan.utils.SessionUtils;
+import com.jhta.moviefan.vo.Cinema;
 import com.jhta.moviefan.vo.Customer;
 import com.jhta.moviefan.vo.Movie;
 import com.jhta.moviefan.vo.MovieImage;
@@ -39,6 +42,8 @@ public class CustomerController {
 	private CustomerService customerService;
 	@Autowired
 	private MovieService movieService;
+	@Autowired
+	private BCryptPasswordEncoder bCryptPasswordEncoder;
 	
 	// MY MVF
 	@GetMapping("/myaccount")
@@ -46,18 +51,14 @@ public class CustomerController {
 			@RequestParam(name = "page", required = false, defaultValue = "1") String page,	CriteriaMyAccount criteriaMyAccount, Model model) {
 		
 		criteriaMyAccount.setCustomerNo(customer.getNo());
-		// 검색조건에 해당하는 총 데이터 갯수 조회
 		int totalRecords = customerService.getTotalRows(criteriaMyAccount);
-		// 현재 페이지번호와 총 데이터 갯수를 전달해서 페이징 처리에 필요한 정보를 제공하는 Pagination객체 생성
 		Pagination pagination = new Pagination(page, totalRecords, 8);
-		
 		criteriaMyAccount.setBeginIndex(pagination.getBegin());
 		criteriaMyAccount.setEndIndex(pagination.getEnd());
 		
 		List<Movie> wishMovies = customerService.searchCustomerMovieWishList(criteriaMyAccount);
 		List<MovieImage> movieImages = new ArrayList<MovieImage>();
 		Map<Movie, List<MovieImage>> movieWithImages = new HashMap<Movie, List<MovieImage>>();
-		
 		for (Movie wishMovie : wishMovies) {
 			if (movieService.getMovieImagesByMovieNo(wishMovie.getNo()).isEmpty()) {
 				MovieImage movieImage = new MovieImage();
@@ -69,6 +70,9 @@ public class CustomerController {
 			}
 		}
 		
+		List<Cinema> myCinemaList = customerService.getCustomerFavoriteCinemaList(customer.getNo());
+		
+		model.addAttribute("myCinemaList", myCinemaList);
 		model.addAttribute("movieWithImages", movieWithImages);
 		model.addAttribute("pagination", pagination);
 		

@@ -1,7 +1,6 @@
 package com.jhta.moviefan.restcontroller;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 import org.apache.logging.log4j.LogManager;
@@ -14,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.jhta.moviefan.annotation.LoginedCustomer;
-import com.jhta.moviefan.dto.MyAccountCinemaDto;
+import com.jhta.moviefan.dto.CityWithCinemasDto;
 import com.jhta.moviefan.dto.ResponseDto;
 import com.jhta.moviefan.dto.RestMovieWishListDto;
 import com.jhta.moviefan.form.CriteriaMyAccount;
@@ -37,10 +36,16 @@ public class CustomerRestController {
 	MovieService movieService;
 	
 
-	@GetMapping
-	public List<MyAccountCinemaDto> getCityWithCinemaList() {
-		List<MyAccountCinemaDto> dto = customerService.getCityWithCinema();
-		return dto;
+	@GetMapping("/mycinema")
+	public ResponseDto<?> getCityWithCinemaList(@LoginedCustomer Customer customer) {
+		ResponseDto<?> response = new ResponseDto<>();
+		List<CityWithCinemasDto> dtos = customerService.getCityWithCinemas();
+		
+		response.setStatus("OK");
+		response.setItem(dtos);
+
+		logger.info(response);
+		return response;
 	}
 	
 	@PostMapping("/check-nickname")
@@ -75,8 +80,6 @@ public class CustomerRestController {
 	@GetMapping("/movie-wish-list")
 	public RestMovieWishListDto movieWishList(@LoginedCustomer Customer customer, 
 			@RequestParam(name = "page", required = false, defaultValue = "1") String page, CriteriaMyAccount criteriaMyAccount) {
-		
-		logger.info("검색조건: " + criteriaMyAccount);
 		
 		RestMovieWishListDto response = new RestMovieWishListDto();
 		MovieImage movieImage = new MovieImage();
