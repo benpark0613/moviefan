@@ -9,6 +9,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.jhta.moviefan.form.CommentInsertForm;
 import com.jhta.moviefan.service.CommentService;
@@ -22,7 +23,9 @@ public class ReviewController {
 	CommentService commentService;
 	
 	@GetMapping("/commentScore")
-	public String commentSocre(Model model) {
+	public String commentSocre(@RequestParam(name = "page", required = false, defaultValue = "1") int page, Model model) {
+		
+		
 		List<Comment> comments = commentService.getCommentList();
 		model.addAttribute("comments", comments);
 		
