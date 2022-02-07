@@ -69,8 +69,8 @@
 			let $box = $("#cinemaBox").empty();
 			
 			$.getJSON("/rest/cinema/list", {cityNo:cityNo}, function(cinemaList) {
-				$.each (cinemaList, function(index, cinema) {
 					
+				$.each (cinemaList, function(index, cinema) {
 					let content = '<div id="cinema-select" class="col">';
 						content += '<div id="cinema" class="p-4 border bg-light text-center">';
 			      		content += '<a href="/cinema/timetable?cinemaNo=' + cinema.no + '" data-cinemaNo="' + cinema.no + '">' + cinema.name + '</a>';

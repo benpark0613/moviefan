@@ -1,6 +1,5 @@
 package com.jhta.moviefan.controller;
 
-import java.text.SimpleDateFormat;
 import java.util.List;
 
 import org.apache.logging.log4j.LogManager;

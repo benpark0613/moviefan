@@ -2,11 +2,16 @@ package com.jhta.moviefan.vo;
 
 import java.util.Date;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 public class Show {
 
 	private int no;
-	private Date date;
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
+	private Date showDate;
+	@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
 	private Date startTime;
+	@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
 	private Date endTime;
 	private int movieNo;
 	private int hallNo;
@@ -21,12 +26,12 @@ public class Show {
 		this.no = no;
 	}
 
-	public Date getDate() {
-		return date;
+	public Date getShowDate() {
+		return showDate;
 	}
 
-	public void setDate(Date date) {
-		this.date = date;
+	public void setShowDate(Date showDate) {
+		this.showDate = showDate;
 	}
 
 	public Date getStartTime() {
@@ -63,7 +68,7 @@ public class Show {
 
 	@Override
 	public String toString() {
-		return "Show [no=" + no + ", date=" + date + ", startTime=" + startTime + ", endTime=" + endTime + ", movieNo="
+		return "Show [no=" + no + ", showDate=" + showDate + ", startTime=" + startTime + ", endTime=" + endTime + ", movieNo="
 				+ movieNo + ", hallNo=" + hallNo + "]";
 	}
   

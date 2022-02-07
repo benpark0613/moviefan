@@ -26,6 +26,10 @@
 			 margin-left:auto; 
     		margin-right:auto;
 		}
+		form {
+			margin-right: 0px;
+			padding-right: 0px;	
+		}
 	</style>
 </head>
 <body>
@@ -35,82 +39,86 @@
 	<div class="row">
 		<div class="col">
 			<h1>상영일정 수정</h1>
-			<h3>
-				${detailSchedule.cinemaName } &nbsp;|&nbsp; ${detailSchedule.hallName } &nbsp;|&nbsp;
-				<fmt:formatDate value="${detailSchedule.startTime}" pattern="HH:ss" /> ~ <fmt:formatDate value="${detailSchedule.endTime}" pattern="HH:ss" /> 상영
-			</h3>
+			<div class="d-flex d-flex justify-content-between">
+				<div>
+					<h3>
+						${detailSchedule.cinemaName } &nbsp;|&nbsp; ${detailSchedule.hallName } &nbsp;|&nbsp;
+						<fmt:formatDate value="${detailSchedule.startTime}" pattern="HH:ss" /> ~ <fmt:formatDate value="${detailSchedule.endTime}" pattern="HH:ss" /> 상영
+					</h3>
+				</div>
+				<div>
+					<button type="button" class="btn btn-dark btn-sm" onclick="history.go(-1)">목록으로 돌아가기</button>
+				</div>
+			</div>
 		</div>
 	</div>
 	 <!-- 선택한 상영정보 표시 -->
-	 <div class="row justify-content-evenly mt-5 mb-5 align-center">
+	 <div class="row d-flex justify-content-evenly mt-5 mb-5 align-center">
 		 <!-- 영화 간단정보 표시 -->
 		 <div class="card col-5">
 		 	<img src="/resources/images/movie/moviePoster/${detailSchedule.movieNo }.jpg" class="card-img-top" id="movie-image">
-		 	<div class="card-body">
-		 		<h4 class="card-title">${detailSchedule.title }</h4>
-				<table class="table">
-					<tbody>
-						<tr>
-							<th>장르</th><td id="movie-genre">액션</td>
-						</tr>
-						<tr>
-							<th>러닝타임</th><td id="movie-runtime">${detailSchedule.runtime } 분</td>
-						</tr>
-						<tr>
-							<th>개봉일</th><td id="movie-open-date"><fmt:formatDate value="${detailSchedule.openDate}" pattern="yyyy-MM-dd" /></td>
-						</tr>
-					</tbody>
-				</table>
-		 	</div>
 		 </div>
-		 
-		 <!-- 수정폼 -->
-		 <form class="col-7" id="modify-form" method="post" action="update">
-
-			 <input type="hidden" name="showNo" value="${detailSchedule.showNo }" />
-			 <input type="hidden" name="movieNo" value="${detailSchedule.movieNo }" />
-		 
-		 	<div class="row mb-3">
-		    	<label for="show-date" class="form-label">상영일</label>
-		    	<div class="col-sm-8">
-		      		<input type="date" class="form-control" id="show-date" name="showDate" 
-		      		value="<fmt:formatDate value="${detailSchedule.showDate}" pattern="yyyy-MM-dd" />" 
-		      		min="<fmt:formatDate value="${detailSchedule.openDate}" pattern="yyyy-MM-dd" />">
-		    	</div>
-		  	</div>
-		  	
-		  	<div class="row mb-3">
-		    	<label for="cinema-hall" class="form-label">상영관</label>
-		    	<div class="col-sm-8">
-					<select class="form-select" id="hall-no" name="hallNo">
-						<option value="1" ${detailSchedule.hallNo eq 1 ? 'selected' : ''}>1관</option>
-						<option value="2" ${detailSchedule.hallNo eq 2 ? 'selected' : ''}>2관</option>
-						<option value="3" ${detailSchedule.hallNo eq 3 ? 'selected' : ''}>3관</option>
-					</select>
-		    	</div>
-		  	</div>
-		  	
-		  	<div class="col-sm-10 justify-content-evenly">
-		  		<label for="show-time" class="form-label">상영시간</label>
-		  		<div class="row g-0 align-items-center mb-3">
-					<!-- 시작시간 -->
-					<div class="col-sm-4">
-						<input type="datetime" class="form-control" id="start-time" name="startTime" value="<fmt:formatDate value="${detailSchedule.startTime}" pattern="yyyy-MM-dd HH:mm:ss" />">
-					</div>
-						<span class="col-sm-1 text-center">~</span>
-					<!-- 종료시간 -->
-					<div class="col-sm-4">
-						<input type="datetime" class="form-control" id="end-time" name="endTime" value="<fmt:formatDate value="${detailSchedule.endTime}" pattern="yyyy-MM-dd HH:mm:ss" />">
-					</div>
-				</div>
-		  	</div>
-
-	    	<div class="col-sm-3 ms-0">
-				<button type="submit" class="btn btn-primary align-items-end mt-5" id="btn-modify-status">수정</button>
-			</div>
+		 <div class="col-5 mt-5">
+	 		<h4>${detailSchedule.title }</h4>
+			<table class="table mb-5">
+				<tbody>
+					<tr>
+						<th class="col-3">장르</th><td id="movie-genre">액션</td>
+					</tr>
+					<tr>
+						<th class="col-3">러닝타임</th><td id="movie-runtime">${detailSchedule.runtime } 분</td>
+					</tr>
+					<tr>
+						<th class="col-3">개봉일</th><td id="movie-open-date"><fmt:formatDate value="${detailSchedule.openDate}" pattern="yyyy-MM-dd" /></td>
+					</tr>
+				</tbody>
+			</table>
 			
-		</form>
-		
+			<!-- 수정폼 -->
+			<div>
+			 <form id="modify-form" method="post" action="update">
+				 <input type="hidden" name="no" value="${detailSchedule.showNo }" />
+				 <input type="hidden" name="movieNo" value="${detailSchedule.movieNo }" />
+			 	<div class="row-sm-10 mb-3">
+			    	<label for="show-date" class="form-label">상영일</label>
+			    	<div class="col">
+			      		<input type="date" class="form-control" id="show-date" name="showDate" 
+			      		value="<fmt:formatDate value="${detailSchedule.showDate}" pattern="yyyy-MM-dd" />" 
+			      		min="<fmt:formatDate value="${detailSchedule.openDate}" pattern="yyyy-MM-dd" />">
+			    	</div>
+			  	</div>
+			  	<div class="row-sm-10 mb-3">
+			    	<label for="cinema-hall" class="form-label">상영관</label>
+			    	<div class="col">
+						<select class="form-select" id="hall-no" name="hallNo">
+							<option value="1" ${detailSchedule.hallNo eq 1 ? 'selected' : ''}>1관</option>
+							<option value="2" ${detailSchedule.hallNo eq 2 ? 'selected' : ''}>2관</option>
+							<option value="3" ${detailSchedule.hallNo eq 3 ? 'selected' : ''}>3관</option>
+							<option value="4" ${detailSchedule.hallNo eq 4 ? 'selected' : ''}>4관</option>
+							<option value="5" ${detailSchedule.hallNo eq 5 ? 'selected' : ''}>5관</option>
+						</select>
+			    	</div>
+			  	</div>
+			  	<div class="row-sm-10">
+			  		<label for="show-time" class="form-label">상영시간</label>
+			  		<div class="col d-flex justify-content-between mb-3">
+						<!-- 시작시간 -->
+						<div class="col-sm-5">
+							<input type="datetime" class="form-control" id="start-time" name="startTime" value="<fmt:formatDate value="${detailSchedule.startTime}" pattern="yyyy-MM-dd HH:mm:ss" />">
+						</div>
+							<span class="col-sm-1 text-center">~</span>
+						<!-- 종료시간 -->
+						<div class="col-sm-5">
+							<input type="datetime" class="form-control" id="end-time" name="endTime" value="<fmt:formatDate value="${detailSchedule.endTime}" pattern="yyyy-MM-dd HH:mm:ss" />">
+						</div>
+					</div>
+			  	</div>
+			  	<div class="row-sm-10 d-flex justify-content-end">
+					<button type="submit" class="btn btn-primary align-items-end mt-5" id="btn-modify-status">수정</button>
+				</div>
+			</form>
+			</div>
+		</div>
 	</div>	 
 </div>
 <%@ include file="/WEB-INF/views/common/footer.jsp" %>

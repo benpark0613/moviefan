@@ -24,17 +24,78 @@
 		tr {
 			border-color: white;
 		}
+		#cinemaName, #warning {
+			font-weight: bold;
+			font-size: xx-large;
+		}
+		ul {
+			display: inline-block
+		}
 	</style>
 </head>
 <body>
 <%@ include file="/WEB-INF/views/common/header.jsp" %>
 <div class="container">
-	<input type="hidden" id="parameter" value="${param.cinemaNo }">
-	<!-- 안내버튼 -->
-	<div class="row mt-5 mb-5 justify-content-center hstack gap-2">
-		<a href="/theater/price" id="price-info" class="col-2 btn btn-success" data-bs-toggle="modal" data-bs-target="#priceInfoModal">
-		관람가격 안내</a>
-		<a href="/cinema/location" id="location-info" class="col-2 btn btn-success">위치/주차 안내</a>
+	<input type="hidden" name="parameter" value="${param.cinemaNo }">
+	<div class="p-5 mt-3">
+		<span id="cinemaName" class=""></span>
+		<span><button type="button" class="btn btn-dark btn-sm">목록으로 돌아가기</button></span>
+	</div>
+	<!-- 상영시간표 -->
+	<div id="movie-timetable" class="row justify-content-center mt-5 mb-5">
+		<div id="content" class="col-10 px-0">
+			<c:choose>
+				<c:when test="${empty movieTimeTableDtos }">
+					<div id="warning" class="text-center">현재 상영중인 영화가 없습니다.</div>
+				</c:when>
+				<c:otherwise>
+					<!-- 안내버튼 -->
+					<div class="row mb-0 justify-content-end hstack gap-2">
+						<a href="/theater/price" id="price-info" class="col-2 btn btn-success" data-bs-toggle="modal" data-bs-target="#priceInfoModal">
+						관람가격 안내</a>
+<!-- 						<a href="/cinema/location" id="location-info" class="col-2 btn btn-success">위치/주차 안내</a> -->
+					</div>
+					<c:forEach var="timetable" items="${movieTimeTableDtos }">
+						<table class="table" id="schedule-list">
+							<thead>
+								<tr>
+									<th>
+										<span class="fs-2" id="movie-title">${timetable.title } &nbsp; &nbsp;</span>
+		<%-- 							<span class="ml-3">${movieTimeTable.genre } | </span> --%>
+										<span><fmt:formatDate value="${timetable.openDate }" pattern="yyyy-MM-dd"/> 개봉 &nbsp;|</span>
+										<span>${timetable.runtime }분</span>
+									</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr>
+									<td class="show-info">
+										<div class="mx-5 my-3">
+											<span class="fs-4" id="hall-name"><strong>${timetable.hallName }</strong></span>
+		<%-- 								<span>총 ${movieTimeTable.totalSeats }석</span> --%>
+										</div>
+										<div class="d-flex align-items-center mx-5">
+											<ul class="list-group list-group-horizontal">
+												<li class="list-group-item mt-0 mb-3 text-center">
+													<a href="#">
+														<strong>
+														<fmt:formatDate value="${timetable.startTime }" pattern="HH:mm"/> ~ 
+														<fmt:formatDate value="${timetable.endTime }" pattern="HH:mm"/> 
+														</strong>
+														<br>잔여좌석수/전체좌석수
+													</a>
+												</li>
+											</ul>
+										</div>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+					</c:forEach>
+				</c:otherwise>
+			</c:choose>
+		</div>
+<!-- 		<p class="col-10 text-end mt-2">* 입장 지연에 따른 관람 불편을 최소화하기 위해, 상영시간 10분 후부터 영화가 시작됩니다.</p> -->
 	</div>
 	<!-- 관람가격 모달창 -->
 	<div class="modal fade" id="priceInfoModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -67,65 +128,22 @@
 	    	</div>
 	  	</div>
 	</div>
-	<!-- 상영시간표 -->
-	<div id="movie-timetable" class="row justify-content-center mt-5 mb-5">
-		<div class="col-10 px-0">
-			<c:forEach var="timetable" items="${movieTimeTableDtos }">
-				<table class="table" id="schedule-list">
-					<thead>
-						<tr>
-							<th>
-								<span class="fs-2">${timetable.title } &nbsp; &nbsp;</span>
-<%-- 							<span class="ml-3">${movieTimeTable.genre } | </span> --%>
-								<span><fmt:formatDate value="${timetable.openDate }" pattern="yyyy-MM-dd"/> 개봉 &nbsp;|</span>
-								<span>${timetable.runtime }분</span>
-							</th>
-						</tr>
-					</thead>
-					<tbody>
-						<tr>
-							<td class="show-info" data-td-hall-name="${timetable.hallName }">
-								<div class="mx-5 my-3">
-									<span class="fs-4" id="hall-name" data-span-hall-name="${timetable.hallName }"><strong>${timetable.hallName }</strong></span>
-<%-- 								<span>총 ${movieTimeTable.totalSeats }석</span> --%>
-								</div>
-								<div class="d-flex align-items-center mx-5">
-									<ul class="list-group list-group-horizontal">
-										<li class="list-group-item mt-0 mb-3 text-center">
-											<a href="#">
-												<strong>
-												<fmt:formatDate value="${timetable.startTime }" pattern="HH:mm"/> ~ 
-												<fmt:formatDate value="${timetable.endTime }" pattern="HH:mm"/> 
-												</strong>
-												<br>잔여좌석수/전체좌석수
-											</a>
-										</li>
-									</ul>
-								</div>
-							</td>
-						</tr>
-					</tbody>
-				</table>
-			</c:forEach>
-		</div>
-		<p class="col-10 text-end mt-2">* 입장 지연에 따른 관람 불편을 최소화하기 위해, 상영시간 10분 후부터 영화가 시작됩니다.</p>
-	</div>
 </div>	
 <%@ include file="/WEB-INF/views/common/footer.jsp" %>
 </body>
 <script type="text/javascript">
 
-	window.addEventListener('load', function () {
-		let tdHallName = $('.show-info').attr('data-td-hall-name');
-		let spanHallName = $('#hall-name').attr('data-span-hall-name');
-		
-// 		$('#schedule-list').each(function (index, item) {
-// 			if (tdHallName === spanHallName) {
-// 				console.log(item);
-// 			}
-// 		}) 
-	})
+	let no = $('input[name=parameter]').val();
 
+	$.getJSON("/rest/cinema/timetable", {cinemaNo:no}, function (timetableList) {
+		$.each (timetableList, function(index, timetable) {
+				
+			$('#cinemaName').text(timetable.cinemaName);
+		})
+	})
+	
+	let title = $('#movie-title').text();
+	let hall = $('#hall-name').text();
 
 </script>
 </html>
