@@ -6,16 +6,19 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.jhta.moviefan.dto.HomeTrailerDto;
 import com.jhta.moviefan.dto.ResponseDto;
 import com.jhta.moviefan.exception.RestLoginErrorException;
 import com.jhta.moviefan.form.CustomerRegisterForm;
 import com.jhta.moviefan.service.CustomerService;
+import com.jhta.moviefan.service.MovieService;
 import com.jhta.moviefan.utils.SessionUtils;
 import com.jhta.moviefan.vo.Customer;
 
@@ -28,7 +31,10 @@ public class HomeRestController {
 	@Autowired
 	private CustomerService customerService;
 	@Autowired
+	private MovieService movieService;
+  @Autowired
 	private BCryptPasswordEncoder bCryptPasswordEncoder;
+
 
 	// 일반 로그인 요청 처리
 	@PostMapping("/logincheck")
@@ -93,6 +99,17 @@ public class HomeRestController {
 		
 		response.setStatus("OK");
 		response.setItem(List.of("회원가입이 완료되었습니다."));
+		
+		return response;
+	}
+	
+	@GetMapping("trailer")
+	public ResponseDto<HomeTrailerDto> homeTrailer(){
+		ResponseDto<HomeTrailerDto> response = new ResponseDto<>();
+		List<HomeTrailerDto> movie = movieService.getHomeTrailer();
+		
+		
+		response.setItem(movie);
 		
 		return response;
 	}

@@ -25,6 +25,8 @@ import org.springframework.web.multipart.MultipartFile;
 import com.google.gson.Gson;
 import com.google.gson.internal.LinkedTreeMap;
 import com.jhta.moviefan.dao.MovieDao;
+import com.jhta.moviefan.dto.HomeTrailerDetailDto;
+import com.jhta.moviefan.dto.HomeTrailerDto;
 import com.jhta.moviefan.dto.MovieDetailDto;
 import com.jhta.moviefan.dto.MovieWithImagesDto;
 import com.jhta.moviefan.exception.MovieErrorException;
@@ -399,4 +401,28 @@ public class MovieService {
 	public List<Movie> getMovieOrderByRating(){
 		return movieDao.getMovieOrderByRating();
 	}
+	
+	public void updateHomeTrailer(String url) {
+		movieDao.updateHomeTrailer(url);
+	}
+	
+	public HomeTrailerDetailDto getHomeMovieDetail() {
+		return movieDao.getHomeMovieDetail();
+	}
+	
+	public List<HomeTrailerDto> getHomeTrailer(){
+		List<HomeTrailerDto> dtoList = new ArrayList<>();
+		List<Movie> movieList = movieDao.getAllMovies();
+		for(Movie movie : movieList) {
+			HomeTrailerDto dto = new HomeTrailerDto();
+			dto.setTitle(movie.getTitle());
+			dto.setTitleEn(movie.getTitleEn());
+			dto.setOpenDate(movie.getOpenDate());
+			dto.setSummary(movie.getSummary());
+			dto.setTrailers(movieDao.getMovieTrailersByMovieNo(movie.getNo()));
+			dtoList.add(dto);
+		}
+		return dtoList;
+	}
+	
 }
