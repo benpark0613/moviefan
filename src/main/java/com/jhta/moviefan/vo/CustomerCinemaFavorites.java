@@ -5,7 +5,7 @@ public class CustomerCinemaFavorites {
 	private int customerNo;
 	private int cinemaNo;
 	
-	CustomerCinemaFavorites() {}
+	public CustomerCinemaFavorites() {}
 
 	public int getCustomerNo() {
 		return customerNo;
@@ -28,7 +28,5 @@ public class CustomerCinemaFavorites {
 		return "CustomerCinemaFavorites [customerNo=" + customerNo + ", cinemaNo=" + cinemaNo + "]";
 	}
 
-	
-	
 
 }

@@ -175,6 +175,13 @@
 		where customer_no = #{customerNo}
 	</select>
 	
+	<insert id="insertMyCinema" parameterType="com.jhta.moviefan.vo.CustomerCinemaFavorites">
+		insert into customer_cinema_favorites 
+		(customer_no, cinema_no)
+		values
+		(#{customerNo}, #{cinemaNo})
+	</insert>
+	
 </mapper>
 
 

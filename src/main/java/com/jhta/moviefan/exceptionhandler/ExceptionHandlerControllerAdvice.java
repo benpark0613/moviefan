@@ -1,8 +1,6 @@
 
 package com.jhta.moviefan.exceptionhandler;
 
-import org.springframework.dao.DataAccessException;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -11,6 +9,7 @@ import com.jhta.moviefan.dto.ResponseDto;
 import com.jhta.moviefan.exception.CustomException;
 import com.jhta.moviefan.exception.LoginErrorException;
 import com.jhta.moviefan.exception.MovieErrorException;
+import com.jhta.moviefan.exception.MyCinemaErrorException;
 import com.jhta.moviefan.exception.RestLoginErrorException;
 import com.jhta.moviefan.exception.RestRegisterErrorException;
 
@@ -48,6 +47,15 @@ public class ExceptionHandlerControllerAdvice {
 	@ExceptionHandler(MovieErrorException.class)
 	public @ResponseBody ResponseDto<?> handleMovieErrorException(MovieErrorException e) {
 		e.printStackTrace();
+		ResponseDto<?> response = new ResponseDto<>();
+		response.setStatus("FAIL");
+		response.setError(e.getMessage());
+		
+		return response;
+	}
+	
+	@ExceptionHandler(MyCinemaErrorException.class)
+	public @ResponseBody ResponseDto<?> handleRestMyCinemaErrorException(MyCinemaErrorException e) {
 		ResponseDto<?> response = new ResponseDto<>();
 		response.setStatus("FAIL");
 		response.setError(e.getMessage());
