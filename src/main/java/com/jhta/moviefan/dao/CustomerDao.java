@@ -34,4 +34,5 @@ public interface CustomerDao {
 	
 	// my영화관
 	List<CustomerCinemaFavorites> getCustomerCinemaFavoritesByCustomerNo(int customerNo);
+	void insertMyCinema(CustomerCinemaFavorites customerCinemaFavorites);
 }

@@ -8,11 +8,13 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.jhta.moviefan.dao.CinemaDao;
 import com.jhta.moviefan.dao.CustomerDao;
 import com.jhta.moviefan.dao.MovieDao;
 import com.jhta.moviefan.dto.CityWithCinemasDto;
+import com.jhta.moviefan.exception.MyCinemaErrorException;
 import com.jhta.moviefan.exception.RestLoginErrorException;
 import com.jhta.moviefan.exception.RestRegisterErrorException;
 import com.jhta.moviefan.form.CriteriaMyAccount;
@@ -206,6 +208,20 @@ public class CustomerService {
 		}
 		
 		return dtos;
+	}
+	
+	@Transactional
+	public void insertMyCinema(CustomerCinemaFavorites form) {
+		List<CustomerCinemaFavorites> savedFavorites = customerDao.getCustomerCinemaFavoritesByCustomerNo(form.getCustomerNo());
+		if (savedFavorites.size() == 3) {
+			throw new MyCinemaErrorException("자주가는 극장은 최대 3곳까지 설정할 수 있습니다.");
+		}
+		for (CustomerCinemaFavorites saved : savedFavorites) {
+			if (saved.getCinemaNo() == form.getCinemaNo()) {
+				throw new MyCinemaErrorException("이미 즐겨찾기한 영화관 입니다.");
+			}
+		}
+		customerDao.insertMyCinema(form);
 	}
 }
 

@@ -47,7 +47,7 @@
 		</div>
 	</div>
 	<%-- MY영화관 모달 --%>
-	<div class="modal fade" tabindex="-1" aria-labelledby="cinemaModalLabel" id="modal-update-mycinema">
+	<div class="modal fade" tabindex="-1" data-bs-backdrop="static" aria-labelledby="cinemaModalLabel" id="modal-update-mycinema">
 		<div class="modal-dialog modal-dialog-centered">
 			<div class="modal-content">
 				<div class="modal-header">
@@ -58,17 +58,17 @@
 					<div class="row mb-3">
 						<form class="d-flex justify-content-start" method="post" id="form-select-mycinema">
 							<div class="col-3">
-								<select class="form-select form-select-sm" name="cityNo">
+								<select class="form-select form-select-sm" name="cityNo" id="select-city">
 							  		<option selected="selected">지역선택</option>
 								</select>
 							</div>
 							<div class="col-3">
-								<select class="form-select form-select-sm" name="cinemaNo">
+								<select class="form-select form-select-sm" name="cinemaNo" id="select-cinema">
 							  		<option selected="selected">극장선택</option>
 								</select>
 							</div>
 							<div class="col">
-								<button class="btn btn-outline-secondary btn-sm" type="button">자주가는 극장 추가</button>
+								<button class="btn btn-outline-secondary btn-sm" type="button" id="btn-add-mycinema">자주가는 극장 추가</button>
 							</div>
 						</form>
 					</div>
@@ -89,7 +89,7 @@
 										</c:when>
 										<c:otherwise>
 											<c:forEach var="cinema" items="${myCinemaList}">
-												<td class="col-3 fs-5 text-center"><button type="button" class="btn btn-outline-secondary" data-cinema-no="${cinema.no }" style="width: 120px; height: 60px;">${cinema.name}<i class="bi bi-x-square"></i></button></td>
+												<td class="col-3 fs-5 text-center"><button type="button" class="btn btn-outline-secondary" value="${cinema.no }" data-cityno-of-cinema="${cinema.cityNo }" style="width: 120px; height: 60px;">${cinema.name}<i class="bi bi-x-square"></i></button></td>
 											</c:forEach>
 										</c:otherwise>
 									</c:choose>
@@ -100,7 +100,7 @@
 					
 				</div>
 				<div class="modal-footer">
-					<button type="button" class="btn btn-danger btn-sm" id="">등록하기</button>
+					<button type="button" class="btn btn-danger btn-sm" id="btn-send-mycinema">등록하기</button>
 					<button type="button" class="btn btn-outline-dark btn-sm" data-bs-dismiss="modal">취소</button>
 				</div>
 			</div>
@@ -183,7 +183,7 @@
 							<tbody class="mx-3">
 								<tr>
 									<c:forEach var="cinema" items="${myCinemaList}" varStatus="loop">
-										<td class="col-3 fs-5 text-center"><button type="button" class="btn btn-outline-secondary" data-cinema-no="${cinema.no }" style="width: 120px; height: 60px;">${cinema.name }</button></td>
+										<td class="col-3 fs-5 text-center"><button type="button" class="btn btn-outline-secondary" value="${cinema.no }" data-cityno-of-cinema="${cinema.cityNo }" style="width: 120px; height: 60px;">${cinema.name }</button></td>
 									</c:forEach>
 								</tr>
 							</tbody>
@@ -561,16 +561,24 @@ $(function() {
 	// 나의 정보 패널 > my영화관 모달	
 	$('#link-update-mycinema').click(function(event) {
 		event.preventDefault();
-		let $selectCityNo = $('#form-select-mycinema select[name=cityNo]');
-		let $selectCinemaNo = $('#form-select-mycinema select[name=cinemaNo]');
-		
 		if ($('#modal-table-mycinema tbody tr').children().length < 3) {
-			let row = `<td class="col-3 fs-5 text-center"><button type="button" class="btn btn-outline-secondary" style="width: 120px; height: 60px;"></button></td>`
+			let row = `<td class="col-3 fs-5 text-center"><button type="button" class="btn btn-outline-secondary" id="btn-empty-mycinema" style="width: 120px; height: 60px;"></button></td>`
 			for (var i = 0; i < 3 - $('#modal-table-mycinema tbody tr').children().length; i++) {
 				$('#modal-table-mycinema tbody tr').append(row);
 			}
 		}
-
+		
+		let $selectCityNo = $('#form-select-mycinema select[name=cityNo]');
+		let $selectCinemaNo = $('#form-select-mycinema select[name=cinemaNo]');
+		
+		$selectCityNo.empty();
+		let cityRow = `<option selected="selected">지역선택</option>`;
+		$selectCityNo.append(cityRow);
+		
+		$selectCinemaNo.empty();
+		let cinemaRow = `<option selected="selected">극장선택</option>`;
+		$selectCinemaNo.append(cinemaRow);
+		
 		$.ajax({
 			type: 'GET',
 			url: '/rest/member/mycinema',
@@ -578,41 +586,103 @@ $(function() {
 			success: function(response) {
 				let cityWithCinemas = response.item;
 				
-				$selectCityNo.empty();
-				let cityRow = `<option selected="selected">지역선택</option>`;
-				$selectCityNo.append(cityRow);
-				
 				for(let cityWithCinema of cityWithCinemas) {
 					cityRow = '<option value="'+cityWithCinema.no+'">'+cityWithCinema.name+'</option>';
 					$selectCityNo.append(cityRow);
-				}
-				
-				$selectCityNo.change(function(event) {
-					cityNo = $selectCityNo.children('option:selected').val();
-					
-					$selectCinemaNo.empty();
-					let cinemaRow = `<option selected="selected">극장선택</option>`;
-					$selectCinemaNo.append(cityRow);
-					
-					for (let cityWithCinema of cityWithCinemas) {
-						for (let cinema of cityWithCinema.cinemas) {
-							if (cityNo == cinema.cityNo) {
-								cinemaRow = '<option value="'+cinema.no+'">'+cinema.name+'</option>';
-								$selectCinemaNo.append(cinemaRow);
-							}
-						}
+					for(let cinema of cityWithCinema.cinemas){
+						cinemaRow = '<option class="d-none" value="'+cinema.no+'" data-cityno-of-cinema="'+cinema.cityNo+'">'+cinema.name+'</option>';
+						$selectCinemaNo.append(cinemaRow);
 					}
-					
-				})
-				
-
+				}
 			}
+		});	
+		
+		// 모달 > 내 영화관 삭제
+		$('#modal-table-mycinema td').click(function(event) {
+			event.preventDefault();
+			let defaultRow = `<td class="col-3 fs-5 text-center"><button type="button" class="btn btn-outline-secondary" id="btn-empty-mycinema" style="width: 120px; height: 60px;"></button></td>`
+			
+			let cinemaNoList = new Array();
+			cinemaNoList.push($(this).find('button').attr('value'));
+			
+			
+			$.post(url, data, function(event) {
+				
+			})
+			
 		});
 		
+		// 모달 > 내 영화관 등록
+		$selectCityNo.change(function(event) {
+			event.preventDefault();
+			let cityNo = $selectCityNo.children('option:selected').attr('value');
+			let cinemaNo = $selectCinemaNo.children('option:selected').attr('value');
+			let $cityNoOfCinema = $selectCinemaNo.children('option[data-cityno-of-cinema]').addClass('d-none');
+			$selectCinemaNo.children('option[data-cityno-of-cinema='+cityNo+']').removeClass('d-none');
+		});
 		
+		$('#btn-add-mycinema').click(function(event) {
+			event.preventDefault();
+			let cityNo = $selectCityNo.children('option:selected').attr('value');
+			let cinemaNo = $selectCinemaNo.children('option:selected').attr('value');
+			let cinemaName = $selectCinemaNo.children('option:selected').text();
+ 			let savedCinemaNo = new Array();
 
+			$('#modal-table-mycinema button[data-cityno-of-cinema]').each(function() {
+				return savedCinemaNo.push($(this).attr('value'));
+			})
+			
+			checkMyCinemaForm(cityNo, cinemaNo, cinemaName, savedCinemaNo);
+			
+			$('#btn-send-mycinema').click(function(event) {
+				event.preventDefault();
+				checkMyCinemaForm(cityNo, cinemaNo, cinemaName, savedCinemaNo);
+// 				if ($('#table-mycinema tbody td [data-cinema-no]').length === 0) {
+// 					alert('지역과 극장을 선택해주세요.');
+// 					return;
+// 				}
+				$.post("/rest/member/addmycinema", {cinemaNo:cinemaNo}, function(response) {
+					if (response.status == "OK") {
+						alert("자주찾는 극장을 추가하였습니다.");
+						location.reload();
+					} else {
+						alert(response.error);
+					}
+				})
+			})
+		})
 		
-	})
+		function checkMyCinemaForm(cityNo, cinemaNo, cinemaName, savedCinemaNo) {
+			console.log("체크 cityNo: " + cityNo);
+			console.log("체크 cinemaNo: " + cinemaNo);
+			console.log("체크 cinemaName: " + cinemaName);
+			console.log("체크 savedCinemaNo: " + savedCinemaNo);
+			if (!cityNo || !cinemaNo) {
+				alert('지역과 극장을 선택해주세요.');
+				$('#select-city option:eq(0)').prop("selected", true);
+				$('#select-cinema option:eq(0)').prop("selected", true);
+				return;
+			}
+			if ($('#modal-table-mycinema tbody td').length === 3) {
+				alert('자주가는 극장은 최대 3곳까지 설정할 수 있습니다.');
+				$('#select-city option:eq(0)').prop("selected", true);
+				$('#select-cinema option:eq(0)').prop("selected", true);
+				return;
+			}
+			for (let saved of savedCinemaNo) {
+				if (cinemaNo === saved) {
+					alert('이미 자주가는 극장으로 등록한 극장입니다.');
+					$('#select-city option:eq(0)').prop("selected", true);
+					$('#select-cinema option:eq(0)').prop("selected", true);
+					return;
+				}
+			}
+			let replaceRow = '<td class="col-3 fs-5 text-center"><button type="button" class="btn btn-outline-secondary" value="'+cinemaNo+'" data-cityno-of-cinema="'+cityNo+'" style="width: 120px; height: 60px;">'+cinemaName+'<i class="bi bi-x-square"></i></button></td>'
+			$('#btn-empty-mycinema').replaceWith(replaceRow);
+		}
+		
+		
+	});
 	
 	// 나의 정보 패널에서 찜한 영화로 이동
 	$('#link-wishlist-show').click(function(event) {

@@ -18,9 +18,11 @@ import com.jhta.moviefan.dto.ResponseDto;
 import com.jhta.moviefan.dto.RestMovieWishListDto;
 import com.jhta.moviefan.form.CriteriaMyAccount;
 import com.jhta.moviefan.pagination.Pagination;
+import com.jhta.moviefan.service.CinemaService;
 import com.jhta.moviefan.service.CustomerService;
 import com.jhta.moviefan.service.MovieService;
 import com.jhta.moviefan.vo.Customer;
+import com.jhta.moviefan.vo.CustomerCinemaFavorites;
 import com.jhta.moviefan.vo.Movie;
 import com.jhta.moviefan.vo.MovieImage;
 
@@ -34,8 +36,36 @@ public class CustomerRestController {
 	CustomerService customerService;
 	@Autowired
 	MovieService movieService;
+	@Autowired
+	CinemaService cinemaService;
 	
-
+	@PostMapping("/deletemycinema") 
+	public ResponseDto<String> deleteMyCinema(@LoginedCustomer Customer customer,
+			@RequestParam(name = "cinemaNoList", required = true, value = "cinemaNoList[]") List<Integer> cinemaNo) {
+		ResponseDto<String> response = new ResponseDto<String>();
+		
+		
+		
+		return response;
+	}
+	
+	@PostMapping("/addmycinema")
+	public ResponseDto<String> insertMyCinema(@LoginedCustomer Customer customer, @RequestParam(name = "cinemaNo", required = true) int cinemaNo) {
+		ResponseDto<String> response = new ResponseDto<String>();
+		System.out.println("cinemaNo값: " + cinemaNo);
+		
+		CustomerCinemaFavorites form = new CustomerCinemaFavorites();
+		
+		form.setCustomerNo(customer.getNo());
+		form.setCinemaNo(cinemaNo);
+		
+		customerService.insertMyCinema(form);
+		
+		response.setStatus("OK");
+		
+		return response;
+	}
+	
 	@GetMapping("/mycinema")
 	public ResponseDto<?> getCityWithCinemaList(@LoginedCustomer Customer customer) {
 		ResponseDto<?> response = new ResponseDto<>();

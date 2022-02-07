@@ -19,7 +19,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.jhta.moviefan.annotation.LoginedCustomer;
-import com.jhta.moviefan.dto.CinemaDto;
 import com.jhta.moviefan.exception.LoginErrorException;
 import com.jhta.moviefan.form.CriteriaMyAccount;
 import com.jhta.moviefan.form.CustomerRegisterForm;
@@ -42,8 +41,6 @@ public class CustomerController {
 	private CustomerService customerService;
 	@Autowired
 	private MovieService movieService;
-	@Autowired
-	private BCryptPasswordEncoder bCryptPasswordEncoder;
 	
 	// MY MVF
 	@GetMapping("/myaccount")
