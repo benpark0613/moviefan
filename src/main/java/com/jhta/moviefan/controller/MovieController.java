@@ -20,12 +20,15 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.jhta.moviefan.dto.MovieDetailDto;
+import com.jhta.moviefan.dto.movieDto;
 import com.jhta.moviefan.service.CommentService;
 import com.jhta.moviefan.service.CustomerService;
 import com.jhta.moviefan.service.MovieService;
 import com.jhta.moviefan.vo.Comment;
 import com.jhta.moviefan.vo.CustomerMovieWishList;
 import com.jhta.moviefan.vo.Movie;
+import com.jhta.moviefan.vo.MovieDirector;
 import com.jhta.moviefan.vo.MovieImage;
 import com.jhta.moviefan.vo.MovieTrailer;
 
@@ -90,47 +93,41 @@ public class MovieController {
 
 	@GetMapping("/detail")
 	public String detail(int no, Model model) {
-		Movie movie = movieService.getMovieByMovieNo(no);
+		
+		MovieDetailDto movieDetail = movieService.getMovieDetail(no);
 		List<Comment> commentList = commentService.searchCommentsByMovieNo(no);
-		List<MovieImage> movieImage = movieService.getMovieImagesByMovieNo(no);
-		List<MovieTrailer> movieTrailer = movieService.getMovieTrailersByMovieNo(no);
-		int countTrailer = movieService.getMovieTrailersByMovieNo(no).size();
-		int countImage = movieService.getMovieImagesByMovieNo(no).size();
+		int countTrailer = movieService.getMovieDetail(no).getTrailers().size();
+		int countImage = movieService.getMovieDetail(no).getImages().size();
 		int size = commentList.size();
 		
 		model.addAttribute("countTrailer", countTrailer);
 		model.addAttribute("countImage", countImage);
-		model.addAttribute("movie", movie);
-		model.addAttribute("movieImage", movieImage);
-		model.addAttribute("movieTrailer", movieTrailer);
 		model.addAttribute("comment", commentList);
 		model.addAttribute("size", size);
+		model.addAttribute("movieDetail", movieDetail);
 
 		return "movie/detail";
 	}
 
 	@GetMapping("/trailer")
 	public String trailer(int no, Model model) {
-		Movie movie = movieService.getMovieByMovieNo(no);
-		List<MovieImage> movieImage = movieService.getMovieImagesByMovieNo(no);
-		List<MovieTrailer> movieTrailer = movieService.getMovieTrailersByMovieNo(no);
-		int countTrailer = movieService.getMovieTrailersByMovieNo(no).size();
-		int countImage = movieService.getMovieImagesByMovieNo(no).size();
+		MovieDetailDto movieDetail = movieService.getMovieDetail(no);
+		int countTrailer = movieService.getMovieDetail(no).getTrailers().size();
+		int countImage = movieService.getMovieDetail(no).getImages().size();
+		
 		model.addAttribute("countTrailer", countTrailer);
 		model.addAttribute("countImage", countImage);
-		model.addAttribute("movie", movie);
-		model.addAttribute("movieImage", movieImage);
-		model.addAttribute("movieTrailer", movieTrailer);
+		model.addAttribute("movieDetail", movieDetail);
 
 		return "movie/trailer";
 	}
 
 	@GetMapping("/customerrating")
 	public String customerrating(int no, Model model) {
-		Movie movie = movieService.getMovieByMovieNo(no);
+		MovieDetailDto movieDetail = movieService.getMovieDetail(no);
 		List<Comment> commentList = commentService.searchCommentsByMovieNo(no);
 		int size = commentList.size();
-		model.addAttribute("movie", movie);
+		model.addAttribute("movieDetail", movieDetail);
 		model.addAttribute("comment", commentList);
 		model.addAttribute("size", size);
 

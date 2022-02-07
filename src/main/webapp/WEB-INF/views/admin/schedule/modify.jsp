@@ -22,6 +22,10 @@
 		.card {
 			border: none;
 		}
+		.wrapper {
+			 margin-left:auto; 
+    		margin-right:auto;
+		}
 	</style>
 </head>
 <body>
@@ -31,138 +35,120 @@
 	<div class="row">
 		<div class="col">
 			<h1>상영일정 수정</h1>
+			<h3>
+				${detailSchedule.cinemaName } &nbsp;|&nbsp; ${detailSchedule.hallName } &nbsp;|&nbsp;
+				<fmt:formatDate value="${detailSchedule.startTime}" pattern="HH:ss" /> ~ <fmt:formatDate value="${detailSchedule.endTime}" pattern="HH:ss" /> 상영
+			</h3>
 		</div>
 	</div>
 	 <!-- 선택한 상영정보 표시 -->
-	 <input type="hidden" id="parameter" name="showNo" value="${param.showNo }">
-	 <h3>${detailSchedule.cinemaName } | ${detailSchedule.hallName } | ${detailSchedule.startTime } ~ ${detailSchedule.endTime }</h3>
 	 <div class="row justify-content-evenly mt-5 mb-5 align-center">
 		 <!-- 영화 간단정보 표시 -->
 		 <div class="card col-5">
-		 	<img src="..." class="card-img-top" id="movie-image">
+		 	<img src="/resources/images/movie/moviePoster/${detailSchedule.movieNo }.jpg" class="card-img-top" id="movie-image">
 		 	<div class="card-body">
-		    	<p class="card-text" id="movie-no"></p>
-		    	<p class="card-text" id="movie-title"></p>
-		    	<p class="card-text" id="movie-genre">액션</p>
-		    	<p class="card-text" id="movie-runtime"></p>
-		    	<p class="card-text" id="movie-open-date"></p>
+		 		<h4 class="card-title">${detailSchedule.title }</h4>
+				<table class="table">
+					<tbody>
+						<tr>
+							<th>장르</th><td id="movie-genre">액션</td>
+						</tr>
+						<tr>
+							<th>러닝타임</th><td id="movie-runtime">${detailSchedule.runtime } 분</td>
+						</tr>
+						<tr>
+							<th>개봉일</th><td id="movie-open-date"><fmt:formatDate value="${detailSchedule.openDate}" pattern="yyyy-MM-dd" /></td>
+						</tr>
+					</tbody>
+				</table>
 		 	</div>
 		 </div>
 		 
-		 
 		 <!-- 수정폼 -->
-		 <form class="col-7" id="modify-form" method="post" action="">
+		 <form class="col-7" id="modify-form" method="post" action="update">
+
+			 <input type="hidden" name="showNo" value="${detailSchedule.showNo }" />
+			 <input type="hidden" name="movieNo" value="${detailSchedule.movieNo }" />
+		 
 		 	<div class="row mb-3">
-				<label for="movie-no" class="form-label">상영영화</label>
-				<div class="col-sm-8">
-					<!-- 상영중인 영화 리스트 -->
-					<select class="form-select" id="movie-no" name="movieNo">
-						<option value="" selected disabled>변경할 영화를 선택하세요.</option>
-						<c:forEach var="movie" items="${movieList }">
-							<option value="${movie.no }">${movie.title }</option>
-						</c:forEach>
-					</select>		 		
-				</div>
-				<div class="col-sm-3">
-					<button type="button" class="btn btn-outline-primary align-items-end" id="btn-modify-movie">수정</button>
-				</div>
-		  	</div>
-		 	<div class="row mb-3">
-		    	<label for="show-date" class="form-label">상영일 변경</label>
+		    	<label for="show-date" class="form-label">상영일</label>
 		    	<div class="col-sm-8">
-		      		<input type="date" class="form-control" id="show-date" name="showDate" value="">
+		      		<input type="date" class="form-control" id="show-date" name="showDate" 
+		      		value="<fmt:formatDate value="${detailSchedule.showDate}" pattern="yyyy-MM-dd" />" 
+		      		min="<fmt:formatDate value="${detailSchedule.openDate}" pattern="yyyy-MM-dd" />">
 		    	</div>
-		    	<div class="col-sm-3">
-					<button type="button" class="btn btn-outline-primary align-items-end" id="btn-modify-show-date">수정</button>
-				</div>
 		  	</div>
+		  	
 		  	<div class="row mb-3">
-		    	<label for="cinema-hall" class="form-label">상영관 변경</label>
+		    	<label for="cinema-hall" class="form-label">상영관</label>
 		    	<div class="col-sm-8">
 					<select class="form-select" id="hall-no" name="hallNo">
-						<option value="1">1관</option>
-						<option value="2">2관</option>
-						<option value="3">3관</option>
+						<option value="1" ${detailSchedule.hallNo eq 1 ? 'selected' : ''}>1관</option>
+						<option value="2" ${detailSchedule.hallNo eq 2 ? 'selected' : ''}>2관</option>
+						<option value="3" ${detailSchedule.hallNo eq 3 ? 'selected' : ''}>3관</option>
 					</select>
 		    	</div>
-		    	<div class="col-sm-3">
-					<button type="button" class="btn btn-outline-primary align-items-end" id="btn-modify-hall">수정</button>
-				</div>
 		  	</div>
 		  	
 		  	<div class="col-sm-10 justify-content-evenly">
-		  		<label for="show-time" class="form-label">상영시간 변경</label>
+		  		<label for="show-time" class="form-label">상영시간</label>
 		  		<div class="row g-0 align-items-center mb-3">
 					<!-- 시작시간 -->
 					<div class="col-sm-4">
-						<input type="time" class="form-control" id="start-time" name="startTime">
+						<input type="datetime" class="form-control" id="start-time" name="startTime" value="<fmt:formatDate value="${detailSchedule.startTime}" pattern="yyyy-MM-dd HH:mm:ss" />">
 					</div>
-					<span class="col-1 text-center">~</span>
+						<span class="col-sm-1 text-center">~</span>
 					<!-- 종료시간 -->
 					<div class="col-sm-4">
-						<input type="time" class="form-control" id="end-time" name="endTime">
-					</div>
-			  		<div class="col-sm-2">
-						<button type="button" class="btn btn-outline-primary align-items-end" id="btn-modify-show-time">수정</button>
+						<input type="datetime" class="form-control" id="end-time" name="endTime" value="<fmt:formatDate value="${detailSchedule.endTime}" pattern="yyyy-MM-dd HH:mm:ss" />">
 					</div>
 				</div>
 		  	</div>
-		  		
-		  	<div class="row mb-3">
-		    	<label for="show-status" class="form-label">상영상태 변경</label>
-		    	<div class="col-sm-8">
-		      		<select class="form-select" id="show-status" name="showStatus">
-						<option value="Y">상영중</option>
-						<option value="N">상영종료</option>
-					</select>
-		    	</div>
-		    	<div class="col-sm-3">
-					<button type="button" class="btn btn-outline-primary align-items-end" id="btn-modify-status">수정</button>
-				</div>
-		  	</div>
+
+	    	<div class="col-sm-3 ms-0">
+				<button type="submit" class="btn btn-primary align-items-end mt-5" id="btn-modify-status">수정</button>
+			</div>
+			
 		</form>
+		
 	</div>	 
 </div>
 <%@ include file="/WEB-INF/views/common/footer.jsp" %>
 </body>
 <script type="text/javascript">
+
+// $('#btn-modify-status').click(function () {
+// 	let showDate = $('input[name=showSelect]').val()
+// 	let startTime = showDate + ' ' + $('input[name=startSelect]').val()+':00';
+// 	let endTime = showDate + ' ' + $('input[name=endSelect]').val()+':00';
 	
-	$(function () {
-		let showNo = $('#parameter').val();
-		//console.log(showNo);
-		
-		$.getJSON("/rest/cinema/modify", {showNo:showNo}, function(detailSchedule) {
-			$('#movie-title').text('제목: ' + detailSchedule.title);
-			//$('#movie-genre').text(detailSchedule.title);		장르
-			$('#movie-runtime').text("러닝타임: " + detailSchedule.runtime + " 분");
-			$('#movie-open-date').text("개봉일: " + detailSchedule.openDate);
-			$('#show-date').val(detailSchedule.showDate).attr("min", detailSchedule.openDate);
-			
-			$('#hall-no').val(detailSchedule.hallNo);
-			$('#start-time').val(detailSchedule.startTime);
-			$('#end-time').val(detailSchedule.endTime);
-			//$('#show-status').val(detailSchedule.showDate);	상영상태
-		})
-		
-// 		$('select[name=movieNo]').change(function() {
-// 			var a = $(this).val();
-// 			console.log("a: ", a);
-// 		})
-		
-		
-		let movieNo = $('#movie-no option:selected').val();
-		console.log("movieNo: ", movieNo);
-		
-		
-		$('#btn-modify-movie').click(function() {
-			
-			$('#movie-modify').attr('action', 'updateMovie').trigger('submit');
-		});
-		
-		
-	})
+// 	$('#modify-form').submit();
+// })
+	
+// 	console.log('상영일: ', showDate);
+// 	console.log('시작시간: ', startTime);
+// 	console.log('종료시간: ', endTime);
 	
 	
+// 	// 변환한 상영날짜
+// 	function formatShowdate() {
+// 		let date = $('#show-select').val()+' 00:00:00';
+// 		$('input[name=showDate]').val(date)
+// 	}
+	
+// 	// 변환한 영화 시작시간
+// 	function formatStartTime() {
+// 		let date = $('#show-select').val();
+// 		let start = date + ' ' + $('input[name=startSelect]').val()+':00';
+// 		$('input[name=startTime]').val(start);
+// 	}
+	
+// 	// 변환한 영화 종료시간
+// 	function formatEndTime() {
+// 		let date = $('#show-select').val();
+// 		let end = date + ' ' + $('input[name=endSelect]').val()+':00';
+// 		$('input[name=endTime]').val(end);
+// 	}
 
 </script>
 </html>

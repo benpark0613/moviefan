@@ -69,10 +69,10 @@
 		    e.movie_no											as movieNo,
 		    e.movie_title 										as title,
 		    e.movie_runtime 									as runtime,
-		    to_char(e.movie_open_date, 'YYYY-MM-DD') 			as openDate,
-		    to_char(d.show_date, 'YYYY-MM-DD')	 				as showDate,
-		    to_char(d.show_start_time, 'HH24:MI') 				as startTime,
-		    to_char(d.show_end_time, 'HH24:MI')  				as endTime
+		    e.movie_open_date 									as openDate,
+		    d.show_date	 										as showDate,
+		    d.show_start_time 									as startTime,
+		    d.show_end_time						 				as endTime
 		from
 		    city a, cinema b, cinema_hall c, show d, movie e
 		where
@@ -86,7 +86,7 @@
 		and
 			b.cinema_no = #{value}
 		order by
-			c.hall_no asc
+			d.show_no asc
 	</select>
 
 	<select id="getMovieTimeTableByShowNo" parameterType="int" resultType="com.jhta.moviefan.dto.MovieTimeTableDto">
@@ -100,10 +100,10 @@
 		    e.movie_no											as movieNo,
 		    e.movie_title 										as title,
 		    e.movie_runtime 									as runtime,
-		    to_char(e.movie_open_date, 'YYYY-MM-DD') 			as openDate,
-		    to_char(d.show_date, 'YYYY-MM-DD')	 				as showDate,
-		    to_char(d.show_start_time, 'HH24:MI') 				as startTime,
-		    to_char(d.show_end_time, 'HH24:MI')  				as endTime
+		    e.movie_open_date 									as openDate,
+		    d.show_date	 										as showDate,
+		    d.show_start_time 									as startTime,
+		    d.show_end_time  									as endTime
 		from
 		    city a, cinema b, cinema_hall c, show d, movie e
 		where
@@ -118,14 +118,30 @@
 			d.show_no = #{value}
 	</select>
 	
+	
+	<select id="getShowByShowNo" parameterType="int"  resultType="com.jhta.moviefan.vo.Show">
+		select
+			show_no						as showNo,
+			show_date					as showDate,
+			show_start_time				as startTime,
+			show_end_time				as endTime,
+			movie_no					as movieNo,
+			hall_no						as hallNo
+		from
+			show
+		where
+			show_no = #{value}
+	</select>
+	
+	
 	<!-- 상영정보 수정 MovieTimeTableDto updateMovieTimeTableByShowNo(int showNo); -->
-	<update id="updateSchedule" parameterType="com.jhta.moviefan.dto.MovieTimeTableDto">
+	<update id="updateSchedule" parameterType="com.jhta.moviefan.vo.Show">
 		update show
 		set
-			movie_no = #{movieNo}
-			show_date = #{showDate}
-			hall_no = #{hallNo}
-			show_start_time = #{startTime}
+			movie_no = #{movieNo},
+			show_date = #{showDate},
+			hall_no = #{hallNo},
+			show_start_time = #{startTime},
 			show_end_time = #{endTime}
 		where
 			show_no = #{showNo}

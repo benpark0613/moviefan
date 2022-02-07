@@ -1,14 +1,20 @@
 package com.jhta.moviefan.form;
 
+import java.util.Date;
+
+import org.springframework.format.annotation.DateTimeFormat;
+
 public class ScheduleUpdateForm {
 	
 	private int showNo;
 	private int movieNo;
-	private String showDate;
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
+	private Date showDate;
 	private int hallNo;
-	private String startTime;
-	private String endTime;
-	private String showStatus;
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
+	private Date startTime;
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
+	private Date endTime;
 	
 	public ScheduleUpdateForm() {}
 
@@ -28,11 +34,11 @@ public class ScheduleUpdateForm {
 		this.movieNo = movieNo;
 	}
 
-	public String getShowDate() {
+	public Date getShowDate() {
 		return showDate;
 	}
 
-	public void setShowDate(String showDate) {
+	public void setShowDate(Date showDate) {
 		this.showDate = showDate;
 	}
 
@@ -44,34 +50,28 @@ public class ScheduleUpdateForm {
 		this.hallNo = hallNo;
 	}
 
-	public String getStartTime() {
+	public Date getStartTime() {
 		return startTime;
 	}
 
-	public void setStartTime(String startTime) {
+	public void setStartTime(Date startTime) {
 		this.startTime = startTime;
 	}
 
-	public String getEndTime() {
+	public Date getEndTime() {
 		return endTime;
 	}
 
-	public void setEndTime(String endTime) {
+	public void setEndTime(Date endTime) {
 		this.endTime = endTime;
-	}
-
-	public String getShowStatus() {
-		return showStatus;
-	}
-
-	public void setShowStatus(String showStatus) {
-		this.showStatus = showStatus;
 	}
 
 	@Override
 	public String toString() {
 		return "ScheduleUpdateForm [showNo=" + showNo + ", movieNo=" + movieNo + ", showDate=" + showDate + ", hallNo="
-				+ hallNo + ", startTime=" + startTime + ", endTime=" + endTime + ", showStatus=" + showStatus + "]";
+				+ hallNo + ", startTime=" + startTime + ", endTime=" + endTime + "]";
 	}
+
+	
 
 }

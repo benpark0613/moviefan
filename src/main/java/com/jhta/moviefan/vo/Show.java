@@ -66,6 +66,7 @@ public class Show {
 		return "Show [no=" + no + ", date=" + date + ", startTime=" + startTime + ", endTime=" + endTime + ", movieNo="
 				+ movieNo + ", hallNo=" + hallNo + "]";
 	}
-	
-	
+  
+  
+  
 }

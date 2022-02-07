@@ -8,11 +8,14 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.jhta.moviefan.annotation.LoginedCustomer;
+import com.jhta.moviefan.dto.MyAccountCinemaDto;
+import com.jhta.moviefan.dto.ResponseDto;
 import com.jhta.moviefan.dto.RestMovieWishListDto;
 import com.jhta.moviefan.form.CriteriaMyAccount;
 import com.jhta.moviefan.pagination.Pagination;
@@ -33,9 +36,47 @@ public class CustomerRestController {
 	@Autowired
 	MovieService movieService;
 	
+
+	@GetMapping
+	public List<MyAccountCinemaDto> getCityWithCinemaList() {
+		List<MyAccountCinemaDto> dto = customerService.getCityWithCinema();
+		return dto;
+	}
+	
+	@PostMapping("/check-nickname")
+	public ResponseDto<String> checkNickName(@LoginedCustomer Customer customer, @RequestParam(name = "nickName", required = true) String nickName) {
+		ResponseDto<String> response = new ResponseDto<String>();
+		
+		Customer savedCustomer = customerService.getCustomerByNickName(nickName);
+		if (savedCustomer != null) {
+			response.setStatus("FAIL");
+			response.setError("중복되는 닉네임입니다.");
+			return response;
+		}
+		
+		response.setStatus("OK");
+		response.setItem(List.of("사용 가능한 닉네임입니다."));
+		
+		return response;
+	}
+	
+	@PostMapping("/update-nickname")
+	public ResponseDto<String> updateNickName(@LoginedCustomer Customer customer, @RequestParam(name = "nickName", required = true) String nickName) {
+		ResponseDto<String> response = new ResponseDto<String>();
+		
+		customer.setNickName(nickName);
+		customerService.updateCustomerInfo(customer);
+		
+		response.setStatus("OK");
+		
+		return response;
+	}
+	
 	@GetMapping("/movie-wish-list")
 	public RestMovieWishListDto movieWishList(@LoginedCustomer Customer customer, 
 			@RequestParam(name = "page", required = false, defaultValue = "1") String page, CriteriaMyAccount criteriaMyAccount) {
+		
+		logger.info("검색조건: " + criteriaMyAccount);
 		
 		RestMovieWishListDto response = new RestMovieWishListDto();
 		MovieImage movieImage = new MovieImage();
@@ -66,6 +107,7 @@ public class CustomerRestController {
 		
 		return response;
 	}
+	
 }
 
 

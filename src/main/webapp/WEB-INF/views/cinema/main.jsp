@@ -45,7 +45,7 @@
 							<c:if test="${cinema.cityNo eq 20 }">
 					    		<div id="cinema-select" class="col">
 									<div id="cinema" class="p-4 border bg-light text-center">
-							      		<a href="#" id="${cinema.no }">${cinema.name }</a>
+							      		<a href="/cinema/timetable?cinemaNo=${cinema.no}" id="${cinema.no }">${cinema.name }</a>
 							      	</div>
 					    		</div>
 							</c:if>

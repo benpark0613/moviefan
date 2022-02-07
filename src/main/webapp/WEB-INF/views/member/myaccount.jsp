@@ -20,29 +20,109 @@
 <body>
 <%@ include file="/WEB-INF/views/common/header.jsp" %>
 <div class="container bg-light mb-3">
-	<div class="d-flex justify-content-evenly px-5 pt-5 pb-2">
+	<%-- 닉네임 변경 모달 --%>
+	<div class="modal fade" tabindex="-1" aria-labelledby="nickNameModalLabel" id="modal-update-nickname" >
+		<div class="modal-dialog modal-dialog-centered">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="nickNameModalLabel"><strong>${LOGINED_CUSTOMER.nickName }님</strong>&nbsp;<span class="fs-6 fw-lighter">${LOGINED_CUSTOMER.id }</span></h5>
+					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+				</div>
+				<div class="modal-body">
+					<form method="post" id="form-update-nickname">
+						<div class="row">
+							<div class="col d-flex justify-content-center input-group input-group-sm">
+								<label class="form-label input-group-text my-auto">닉네임</label>
+								<input type="text" class="form-control" name="nickName" maxlength="30" data-is-checked="N" placeholder="한글, 영문, 숫자 혼용가능(한글 기준 10자 이내)" id="input-nickname"/>
+								<button type="button" class="btn btn-outline-dark btn-sm" id="btn-check-nickname">중복확인</button>
+							</div>
+						</div>
+					</form>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-dark" id="btn-update-nickname">등록하기</button>
+					<button type="button" class="btn btn-outline-dark" data-bs-dismiss="modal">취소</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<%-- MY영화관 모달 --%>
+	<div class="modal fade" tabindex="-1" aria-labelledby="cinemaModalLabel" id="modal-update-mycinema">
+		<div class="modal-dialog modal-dialog-centered">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h6 class="modal-title small">영화관을 선택하여 등록해주세요.<strong> 최대 3개까지</strong> 등록하실 수 있습니다.</h6>
+					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+				</div>
+				<div class="modal-body">
+					<div class="row">
+						<form class="d-flex justify-content-start" method="post" id="">
+							<div class="col-3">
+								<select class="form-select form-select-sm" name="city">
+							  		<option selected="selected">지역선택</option>
+							  		<option value="1">One</option>
+							  		<option value="2">Two</option>
+							  		<option value="3">Three</option>
+								</select>
+							</div>
+							<div class="col-3">
+								<select class="form-select form-select-sm" name="cinema">
+							  		<option selected="selected">극장선택</option>
+							  		<option value="1">One</option>
+							  		<option value="2">Two</option>
+							  		<option value="3">Three</option>
+								</select>
+							</div>
+							<div class="col">
+								<button class="btn btn-outline-secondary btn-sm" type="button">자주가는 극장 추가</button>
+							</div>
+						</form>
+					</div>
+					<div class="row">
+						<p><span class="bolder align-middle">${LOGINED_CUSTOMER.nickName }님이 자주가는 극장</span></p>
+					</div>
+					<div class="row">
+						<table class="table table-borderless">
+							<tbody class="mx-3">
+								<tr>
+									<td class="col-3 fs-5 text-center"><button type="button" class="btn btn-outline-secondary" style="width: 120px; height: 60px;">MVF 가락</button></td>
+									<td class="col-3 fs-5 text-center"><button type="button" class="btn btn-outline-secondary" style="width: 120px; height: 60px;">MVF 용산</button></td>
+									<td class="col-3 fs-5 text-center"><button type="button" class="btn btn-outline-secondary" style="width: 120px; height: 60px;">MVF 강남</button></td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+					
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-danger" id="">등록하기</button>
+					<button type="button" class="btn btn-outline-dark" data-bs-dismiss="modal">취소</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	<%-- 나의 정보 패널 --%>
+	<div class="d-flex justify-content-evenly px-5 pt-5 pb-2" id="div-myinfo-panel">
 		<div class="col-5 my-auto">
 			<c:choose>
 				<c:when test="${empty LOGINED_CUSTOMER.nickName}">
 					<p class="fs-1">
 						<span class="fs-1 fw-bolder">${LOGINED_CUSTOMER.name}</span>님&nbsp; 반갑습니다.&nbsp;
-						<a href="" class="link-secondary" data-bs-toggle="tooltip" data-bs-placement="top" title="닉네임을 설정해주세요.">
-							<i class="bi bi-pen" style="font-size: 0.5em;" ></i>
+						<a href="" class="link-secondary" data-bs-toggle="modal" data-bs-target="#modal-update-nickname">
+							<i class="bi bi-pen" style="font-size: 0.5em;" data-bs-toggle="tooltip" data-bs-placement="top" title="닉네임을 설정해주세요."></i>
 						</a>
 					</p>
 				</c:when>
 				<c:otherwise>
 					<p class="fs-1">
 						<span class="fs-1 fw-bolder">${LOGINED_CUSTOMER.nickName}</span>님&nbsp; 반갑습니다.&nbsp;
-						<a href="" class="link-secondary" data-bs-toggle="tooltip" data-bs-placement="top" title="닉네임 바꾸러 가기">
-							<i class="bi bi-pen" style="font-size: 0.5em;" ></i>
+						<a href="" class="link-secondary" data-bs-toggle="modal" data-bs-target="#modal-update-nickname">
+							<i class="bi bi-pen" style="font-size: 0.5em;" data-bs-toggle="tooltip" data-bs-placement="top" title="닉네임 변경"></i>
 						</a>
 					</p>
 				</c:otherwise>
 			</c:choose>
-			<p class="fs-3">
-				고객님의 등급은 <span class="text-decoration-underline">${LOGINED_CUSTOMER.gradeCode }</span> 입니다.
-			</p>
 		</div>
 		<div class="vr p-0 bg-light"></div>
 		<div class="col-6"></div>
@@ -53,17 +133,17 @@
 				<table class="table table-borderless">
 					<thead>
 						<tr>
-							<td class="fs-4"><a class="text-decoration-none text-decoration-underline link-dark" href="/myaccount/mypoint/history">MVF POINT +</a></td>
+							<td class="fs-4"><a class="text-decoration-none text-decoration-underline link-dark" href="" id="link-mvfpoint-history">MVF POINT +</a></td>
 						</tr>
 					</thead>
 					<tbody class="mx-3">
 						<tr>
-							<th class="col-6 fs-5 text-start">사용가능 포인트</th>
-							<td class="col-3 fs-5 text-end">${LOGINED_CUSTOMER.totalPoint } 점</td>
+							<th class="col-6 fs-5 text-start">나의 현재 등급</th>
+							<td class="col-3 fs-5 text-end">${LOGINED_CUSTOMER.gradeCode }</td>
 						</tr>
 						<tr>
-							<th class="col-6 fs-5 text-start">다음 등급까지 남은 포인트</th>
-							<td class="col-3 fs-5 text-end">5000 점</td>
+							<th class="col-6 fs-5 text-start">사용가능 포인트</th>
+							<td class="col-3 fs-5 text-end">${LOGINED_CUSTOMER.totalPoint } 점</td>
 						</tr>
 					</tbody>
 				</table>
@@ -73,7 +153,7 @@
 				<table class="table table-borderless">
 					<thead>
 						<tr>
-							<td class="fs-4">MY 영화관&nbsp;<a class="link-secondary" href=""><i class="bi bi-gear" style="font-size: 0.5em;"></i></a></td>
+							<td class="fs-4">MY 영화관&nbsp;<a class="link-secondary" href="" data-bs-toggle="modal" data-bs-target="#modal-update-mycinema" id="link-update-mycinema"><i class="bi bi-gear" style="font-size: 0.5em;"></i></a></td>
 						</tr>
 					</thead>
 					<tbody class="mx-3">
@@ -92,7 +172,7 @@
 				<div class="col">
 					<div class="d-flex justify-content-between mb-3 mx-3">
 						<span class="h3">찜한 영화</span>
-						<span class="align-self-end"><a href="" class="text-decoration-none link-dark">더 보러 가기</a></span>
+						<span class="align-self-end"><a class="btn text-decoration-none link-dark" id="link-wishlist-show">더 보러 가기</a></span>
 					</div>
 					<c:choose>
 						<c:when test="${empty movieWithImages }">
@@ -197,67 +277,24 @@
 			<div class="col-8">
 				<%-- 영화 리스트 --%>
 				<div class="row d-flex justify-content-center" id="div-wishlist">
-					<h1>테스트</h1>
-					<c:choose>
-						<c:when test="${empty movieWithImages }">
-							<div class="row">
-								<div class="row text-center"><i class="bi bi-exclamation-square" style="font-size: 5em;"></i></div>
-								<div class="row text-center"><p class="fs-1">찜한 영화가 존재하지 않습니다.</p></div>
-							</div>
-						</c:when>
-						<c:otherwise>
-							<div class="row d-flex justify-content-evenly p-0 m-0">
-								<c:forEach var="entry" items="${movieWithImages }" varStatus="loop">
-									<c:forEach var="movieImage" items="${entry.value }" end="0">
-										<div class="card col-2 p-1 mx-3 mt-3 d-flex justify-content-center align-self-center">
-											<div class="row">
-										  		<img src="/resources/images/movie/${movieImage.filename }" class="w-100 my-auto" alt="...">
-											</div>
-											<div class="card-body d-flex justify-content-center p-0">
-												<a type="button" class="btn btn-danger w-100"><span class="fs-6">상세정보</span></a>
-												<a type="button" class="btn btn-outline-secondary"><span class="bi bi-heart-fill"></span></a>
-											</div>
-										</div>
-									</c:forEach>
-								</c:forEach>
-							</div>
-						</c:otherwise> 
-					</c:choose>
 				</div>
 				<%-- 페이지 내비게이션 표시 --%>
 				<div class="row d-flex justify-content-center p-0 m-0 mt-4">
-					<c:if test="${pagination.totalRecords gt 0 }">
-						<div class="col">
-							<nav id="page-navigation">
-					  			<ul class="pagination pagination-sm justify-content-center m-0">
-					    			<li class="page-item ${pagination.existPrev ? '' : 'disabled' }">
-					      				<a class="page-link link-dark" href="list.do?page=${pagination.prevPage }" data-page="${pagination.prevPage }"><span aria-hidden="true">&laquo;</span></a>
-					    			</li>
-					    			<c:forEach var="num" begin="${pagination.beginPage }" end="${pagination.endPage }">
-						    			<li class="page-item ${pagination.pageNo eq num ? 'active' : '' }">
-						    				<a class="page-link link-dark" href="list.do?page=${num }" data-page="${num }">${num }</a>
-						    			</li>	    			
-					    			</c:forEach>
-					    			<li class="page-item ${pagination.existNext ? '' : 'disabled' }">
-					      				<a class="page-link link-dark" href="list.do?page=${pagination.nextPage }" data-page="${pagination.nextPage }"><span aria-hidden="true">&raquo;</span></a>
-					    			</li>
-					  			</ul>
-							</nav>
-						</div>
-					</c:if>
+					<div class="col" id="div-paination">
+					</div>
 				</div>
 				<%-- 검색 표시 --%>
 				<div class="row d-flex justify-content-center p-0 m-0 mt-2">
 					<form class="row d-flex justify-content-center gx-1" id="form-search-movie">
-						<input type="hidden" name="page" value="1" />
+						<input type="hidden" name="current-page" value="1" />
 						<div class="col-2">
 							<select class="form-select" name="opt">
-								<option value="title" ${'title' eq param.opt ? 'selected' : ''} selected="selected"> 제목 검색</option>
-								<option value="actor" ${'actor' eq param.opt ? 'selected' : ''}> 배우 검색</option>
+								<option value="title" selected="selected"> 제목 검색</option>
+								<option value="actor"> 배우 검색</option>
 							</select>
 						</div>
 						<div class="col-3">
-							<input type="text" class="form-control" name="value" value="${param.value }" placeholder="영화 검색">
+							<input type="text" class="form-control" name="value" placeholder="영화 검색">
 						</div>
 						<div class="col-1">
 							<button type="button" class="btn btn-outline-dark w-100 h-100" id="btn-search-movie">검색</button>
@@ -422,6 +459,79 @@
 <%@ include file="/WEB-INF/views/common/footer.jsp" %>
 <script type="text/javascript">
 $(function() {
+	// 내정보 패널 > 닉네임 변경 모달
+	$('#div-myinfo-panel a').click(function(event) {
+		event.preventDefault();
+
+		let getNickName = RegExp(/^[ㄱ-ㅎ|가-힣|a-z|A-Z|0-9|]+$/);	// 한글, 영대소문자, 숫자
+		let $nickName = $('#input-nickname');
+		
+		$('#btn-check-nickname').click(function(event) {
+			event.preventDefault();
+			checkNickName();
+		});
+		
+		$('#btn-update-nickname').click(function(event) {
+			event.preventDefault();
+			updateNickName();
+		})
+		
+		function checkNickName() {
+			if (!getNickName.test($nickName.val())) {
+				alert('닉네임은 한글, 영문 대소문자, 숫자만 입력 가능합니다.');
+				$nickName.val('');
+				$nickName.focus();
+				return false;
+			};
+			$.post('/rest/member/check-nickname', {nickName: $nickName.val()}, function(response) {
+				if (response.status == "FAIL") {
+					alert(response.error);
+					$nickName.val('');
+					$nickName.focus();
+				} else {
+					alert(response.item[0]);
+					$nickName.attr("data-is-checked", "Y");
+				}
+			});
+		}
+		
+		function updateNickName() {
+			if ($nickName.attr("data-is-checked") === "N") {
+				alert('닉네임 중복체크를 해주세요.');
+				$nickName.focus();
+				return false;
+			};
+			$.post('/rest/member/update-nickname', {nickName: $nickName.val()}, function(response) {
+				if (response.status == "OK") {
+					alert("닉네임 변경이 완료되었습니다.");
+					location.reload();
+				}
+			});
+		}
+	});
+	
+	// 내 정보 패널 > 내 영화관 설정 모달
+	$('#link-update-mycinema').click(function(event) {
+		event.preventDefault();
+		
+		
+	})
+	
+	// 나의 정보 패널에서 찜한 영화로 이동
+	$('#link-wishlist-show').click(function(event) {
+		event.preventDefault();
+		$('#wish-movie-item').click();
+		var offset = $('#div-wishlist').offset();
+		$('html').animate({scrollTop : offset.top}, 400);
+	});
+	// 나의 정보 패널에서 포인트 내역으로 이동
+	$('#link-mvfpoint-history').click(function(event) {
+		event.preventDefault();
+		$('#point-history-item').click();
+		var offset = $('#point-history').offset();
+		$('html').animate({scrollTop : offset.top}, 400);
+	});
+	
 	// 결제내역
 	$('#booking-list-item').click(function(event) {
 		event.preventDefault();
@@ -457,63 +567,132 @@ $(function() {
 		$('#my-movie-tab').addClass('fw-bolder')
 		$('#wish-movie').removeClass("d-none")
 		
-		$(".pagination a").click(function(event) {
+		getMovieWishList();
+		
+		$("#btn-search-movie").click(function(event) {
 			event.preventDefault();
-			// 클릭한 페이지내비게이션의 페이지번호 조회하기
-			let pageNo = $(this).attr('data-page');
-			// 검색폼의 히든필드에 클릭한 페이지내비게이션의 페이지번호 설정
-			$("#form-search-movie :input[name=page]").val(pageNo);
+			$('#form-search-movie input[name=current-page]').val("1");
+			getMovieWishList();
+		});
+		
+	// 찜한 영화와 페이지네이션
+	function getMovieWishList() {
+			let $divWishList = $('#div-wishlist').empty();
+			let pagination;
+			let currentPage = $('#form-search-movie input[name=current-page]').val();
+			let searchOption = $("#form-search-movie select[name=opt]").val();
+			let searchValue = $.trim($("#form-search-movie :input[name=value]").val());
 			
 			$.ajax({
 				type: 'GET',
 				url: '/rest/member/movie-wish-list',
-				data: {page:pageNo},
-				contentType: 'application/json',
+				data: {
+					page: currentPage,
+					opt: searchOption,
+					value: searchValue
+				},
+				beforeSend: function() {
+					let row =
+						`<div class="spinner-border text-danger my-5" role="status">
+					 	<span class="visually-hidden">Loading...</span>
+						</div>`
+					$divWishList.append(row);
+				},
 				success: function(response) {
-					if (response.status == "FAIL") {
-						alert(response.error);
-						return;
+					$divWishList.empty();
+
+					let wishMovies = response.wishMovies;
+					let movieImages = response.movieImages;
+					pagination = response.pagination;
+					
+					// 찜한 영화가 없는 경우
+					if (wishMovies.length == 0) {
+						let row = 
+							`<div class="row">
+							<div class="row text-center"><i class="bi bi-exclamation-square" style="font-size: 5em;"></i></div>
+							<div class="row text-center"><p class="fs-1">찜한 영화가 존재하지 않습니다.</p></div>
+							</div>`;
+						$divWishList.append(row);
 					} else {
-						$('#div-wishlist>div').empty();
-						$('#page-navigation').empty();
-						
-						let wishMovies = response.wishMovies;
-						let filename = new Array();
-						let pagination = response.pagination;
-						
+						// 찜한 영화가 있는 경우
+						// 찜한 영화에 영화 이미지를 추가한다.
 						$.each(wishMovies, function(index, wishMovie) {
-							let filename = new Array();
-							for (let movieImage of response.movieImages) {
+							let filenames = new Array();
+							for(let movieImage of movieImages) {
 								if (movieImage.movieNo === wishMovie.no) {
-									filename.push(movieImage.filename);
+									filenames.push(movieImage.filename);
 								}
 							}
-							wishMovie.filename = filename;
+							wishMovie.filenames = filenames;
 						});
-						
 						$.each(wishMovies, function(index, wishMovie) {
 							let row = '<div class="card col-2 p-1 mx-3 mt-3 d-flex justify-content-center align-self-center">';
-							row += '<div class="row">';
-							row += '<img src="/resources/images/movie/' + wishMovie.filename[0] + '" class="w-100 my-auto" alt="...">';
-							row += '</div>';
-							row += '<div class="card-body d-flex justify-content-center p-0">';
-							row += '<a type="button" class="btn btn-danger w-100"><span class="fs-6">상세정보</span></a>';
-							row += '<a type="button" class="btn btn-outline-secondary"><span class="bi bi-heart-fill"></span></a>';
-							row += '</div>';
-							row += '</div>';
+								row += '<div class="row">';
+								row += '<img src="/resources/images/movie/' + wishMovie.filenames[0] + '" class="w-100 my-auto" alt="...">';
+								row += '</div>';
+								row += '<div class="card-body d-flex justify-content-center p-0">';
+								row += '<a type="button" class="btn btn-danger w-100"><span class="fs-6">상세정보</span></a>';
+								row += '<a type="button" class="btn btn-outline-secondary"><span class="bi bi-heart-fill"></span></a>';
+								row += '</div>';
+								row += '</div>';
 								
-							$('#div-wishlist>div').append(row);
+							$divWishList.append(row);
+							getPaginationNav(currentPage, pagination);
 						});
 					}
+					
+				},
+				error: function() {
+					alert('오류가 발생했습니다. 잠시 후 다시 시도해주세요.');
 				}
-			})
+			});
+		}
+		
+		// 페이지네이션
+		function getPaginationNav(currentPage, pagination) {
+			let $pagination = $("#div-paination").empty();
 			
-			
-		})
-		
-		
-		
-		
+			if (pagination.totalRecords > 0) {
+				let row = `<nav id="page-navigation">`;
+				row += `<ul class="pagination pagination-sm justify-content-center m-0">`;
+				if (pagination.existPrev) {
+					row += `<li class="page-item" id="li-prev">`;
+				} else {
+					row += `<li class="page-item disabled" id="li-prev">`;
+				}
+					row += `<a class="page-link link-dark" data-page="` + pagination.prevPage + `"><span aria-hidden="true">&laquo;</span></a>`;
+	    			row += `</li>`;
+	    			
+	    		for (var i = pagination.beginPage; i <= pagination.endPage; i++) {
+					if (i == currentPage) {
+						row += `<li class="page-item fw-bold" id="li-num">`;
+					} else {
+						row += `<li class="page-item" id="li-num">`;
+					}
+					row += `<a class="page-link link-dark" data-page="` + i + `">` + i + `</a>`;
+					row += `</li>`;
+				}
+				if (pagination.existNext) {
+					row += `<li class="page-item"  id="li-next">`;
+				} else {
+					row += `<li class="page-item disabled"  id="li-next">`;
+				}
+					row += `<a class="page-link link-dark" data-page="` + pagination.nextPage + `"><span aria-hidden="true">&raquo;</span></a>`;
+					row += `</li>`;
+				
+					row += `</ul>`
+					row += `</nav>`
+				
+					$pagination.append(row);
+					
+				$('#page-navigation a').click(function(event) {
+					event.preventDefault();
+					let pageNo = $(this).attr('data-page');
+					$('#form-search-movie input[name=current-page]').val(pageNo);
+					getMovieWishList();
+				})
+			}
+		}
 	});
 	$('#watched-movie-item').click(function(event) {
 		event.preventDefault();
@@ -594,8 +773,6 @@ $(function() {
 		$('#info-delete').removeClass("d-none")
 	});
 })
-
-
 
 	
 </script>

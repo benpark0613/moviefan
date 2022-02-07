@@ -17,7 +17,6 @@
    
    <link rel="stylesheet" href="https://uicdn.toast.com/chart/latest/toastui-chart.min.css" />
    <script src="https://uicdn.toast.com/chart/latest/toastui-chart.min.js"></script>
-   
 </head>
 <body>
 <c:set var="movieNav" value="주요정보"/>
@@ -25,8 +24,10 @@
 <div class="container">
 	<%@ include file="top.jsp" %>
 	<div class="row mb-3">
-	  <h4>줄거리</h4>
-	  <p style="font-size: 15px;">${movie.summary }</p>
+	  <span style="font-size:1.6em; color:#503396;"><strong>줄거리</strong></span>
+	</div>
+	<div class="row mb-3">
+		<span style="font-size: 15px;">${movie.summary }</span>
 	</div>
 	<div class="row">
 		<div class="col">
@@ -37,11 +38,15 @@
 		</div>
 	</div>
 	<div class="row mb-3 bg-light ">
-		<span>트레일러 <strong>${countTrailer } 건</strong></span>
+		<span style="font-size:1.3em; color:#503396;">트레일러 <strong>${countTrailer } 건</strong></span>
 	</div>
-	<!-- 트레일러 유튜브링크-->
+	
+	<div class="row mb-3 trailerShow" style="display : none;">
+		<video width="400" height="600" src="" controls autoplay></video>
+	</div>
+	
 	<div class="row mb-3 justify-content-center">
-		<c:forEach var="movieTrailer" items="${movieTrailer }">
+		<c:forEach var="movieTrailer" items="${movieDetail.trailers }">
 			<div class="col-3 trailer text-center">
 				<video width="260" height="142" src="${movieTrailer.urlAddress }"></video>
 				<br>
@@ -50,11 +55,11 @@
 		</c:forEach>
 	</div>
 	<div class="row mb-3 bg-light">
-		<span>스틸컷 <strong>${countImage } 건</strong></span>
+		<span style="font-size:1.3em; color:#503396;">스틸컷 <strong>${countImage } 건</strong></span>
 	</div>
 	<!-- 캐러셀 -->
 	<div class="row mb-3">
-		<c:forEach var="movieImage" items="${movieImage }" varStatus="status">
+		<c:forEach var="movieImage" items="${movieDetail.images }" varStatus="status">
 			<div class="col">
 				<img src="/resources/images/movie/${movieImage.filename }" alt="...">
 			</div>
@@ -62,7 +67,7 @@
 	</div>
 	
 	<div class="row mb-3">
-		<p><strong>${movie.title }</strong>에 대한 <strong>${size }</strong>개의 이야기가 있어요!</p>
+		<span style="font-size:1.3em; color:#503396;"><strong>${movieDetail.title }</strong>에 대한 <strong>${size }</strong>개의 이야기가 있어요!</span>
 	</div>
 	<div class="row-6 mb-3">
 		<div class="row mb-3">
@@ -74,7 +79,7 @@
 				<div class="row">
 					<div class="col-10">
 					 	<span class="" style="font-size:1.2em; color:#503396;">
-					 		[영화제목] 재미있게 보셨나요? 영화의 어떤 점이 좋았는지 이야기해주세요.
+					 		[${movieDetail.title }] 재미있게 보셨나요? 영화의 어떤 점이 좋았는지 이야기해주세요.
 						</span>
 					</div>
 					<div class="col-2">
@@ -179,7 +184,11 @@ var chart = bb.generate({
 	  bindto: "#barChart"
 	});
 
-
+	$(".trailer").click(function(){
+		url = $(this).children("video").attr("src");
+		$(".trailerShow").children("video").attr("src", url);
+		$(".trailerShow").css("display", "");
+	})
 </script>
 </body>
 </html>
