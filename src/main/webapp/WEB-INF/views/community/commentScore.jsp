@@ -35,10 +35,10 @@
 			</div>
 			<div class="row mb-1">
 				<h5 class="col">전체리스트</h5>
-				
-					<div class="col text-end">
+					
+			<%-- 		<div class="col text-end">
 						총 <strong>${comment.commentRow }</strong>개의 평점이 있습니다.
-					</div>
+					</div> --%>
 				
 			</div>
 			<table class="table table-bordered">
@@ -62,7 +62,6 @@
 									<td class="text-center">${comment.commentNo }</td>
 									<td>
 										<div class="row">
-											<img src="/resources/images/movie/${comment.movieFileName }" style="width: 74px; height:54px;">
 											<a href="" class="col-2">${comment.movieTitle }</a>
 											<div class="col-4">별점 ${comment.rating } /5</div>
 										</div>
@@ -80,29 +79,45 @@
 					</c:choose>
 				</tbody>
 			</table>
-			<nav aria-label="Page navigation example" class="pagination justify-content-center">
-				<ul class="pagination">
-					<li class="page-item"><a class="page-link" href="#" aria-label="Previous"> <span aria-hidden="true">&laquo;</span>
-					</a></li>
-					<li class="page-item"><a class="page-link" href="#">1</a></li>
-					<li class="page-item"><a class="page-link" href="#">2</a></li>
-					<li class="page-item"><a class="page-link" href="#">3</a></li>
-					<li class="page-item"><a class="page-link" href="#">4</a></li>
-					<li class="page-item"><a class="page-link" href="#">5</a></li>
-					<li class="page-item"><a class="page-link" href="#">6</a></li>
-					<li class="page-item"><a class="page-link" href="#">7</a></li>
-					<li class="page-item"><a class="page-link" href="#">8</a></li>
-					<li class="page-item"><a class="page-link" href="#">9</a></li>
-					<li class="page-item"><a class="page-link" href="#">10</a></li>
-					<li class="page-item"><a class="page-link" href="#" aria-label="Next"> <span aria-hidden="true">&raquo;</span>
-					</a></li>
-				</ul>
-			</nav>
+			
+			<c:if test="${pagination.totalRecords gt 0 }">
+				<div class="row mb-3">
+					<div class="col">
+						<nav>
+							<ul class="pagination justify-content-center">
+								<li class="page-item ${pagination.existPrev ? '' : 'disabled' }">
+									<a class="page-link" href="commentScore?page=${pagination.prevPage }" data-page="${pagination.prevPage }">이전</a>
+								</li>
+								
+								<c:forEach var="num" begin="${pagination.beginPage }" end="${pagination.endPage }">
+					    			<li class="page-item ${pagination.pageNo eq num ? 'active' : '' }">
+					    				<a class="page-link" href="commentScore?page=${num }" data-page="${num }">${num }</a>
+					    			</li>	    			
+				    			</c:forEach>
+				    			
+				    			<li class="page-item ${pagination.existNext ? '' : 'disabled' }">
+				      				<a class="page-link" href="commentScore?page=${pagination.nextPage }" data-page="${pagination.nextPage }">다음</a>
+				    			</li>
+							</ul>
+						</nav>
+					</div>
+				</div>
+			</c:if>
+			
 		</div>
 	</form>
 </div>
 <script type="text/javascript">
-
+	$(".pagination a").click(function(event) {
+		event.preventDefault();
+		// 클릭한 페이지내비게이션의 페이지번호 조회하기
+		var pageNo = $(this).attr("data-page");
+		// 검색폼의 히든필드에 클릭한 페이지내비게이션의 페이지번호 설정
+		$(":input[name=page]").val(pageNo);
+		
+		// 검색폼에 onsubmit 이벤트 발생시키기
+		$("#form-search-book").trigger("submit");
+	})
 </script>
 </body>
 <%@ include file="/WEB-INF/views/common/footer.jsp"%>
