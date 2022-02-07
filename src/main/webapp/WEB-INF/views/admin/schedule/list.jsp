@@ -126,7 +126,17 @@
 							result += '</tr>';
 						
 						$('#timetable tbody').append(result);
+						
 					})
+					
+				// 페이징처리	
+				let totalRecoreds = $('#timetable tbody tr').length;
+				console.log(totalRecoreds);
+				
+				
+				
+				
+				
 				}
 			})
 		})

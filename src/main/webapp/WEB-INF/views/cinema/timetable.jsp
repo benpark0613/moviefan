@@ -37,16 +37,16 @@
 <%@ include file="/WEB-INF/views/common/header.jsp" %>
 <div class="container">
 	<input type="hidden" name="parameter" value="${param.cinemaNo }">
-	<div class="p-5 mt-3">
-		<span id="cinemaName" class=""></span>
-		<span><button type="button" class="btn btn-dark btn-sm">목록으로 돌아가기</button></span>
+	<div id="cinemaName" class="p-5 mt-3">
+		<span>${cinema.name }&nbsp;&nbsp;&nbsp;</span>
+		<span><button type="button" class="btn btn-dark btn-sm" onclick="history.go(-1)">목록으로 돌아가기</button></span>
 	</div>
 	<!-- 상영시간표 -->
 	<div id="movie-timetable" class="row justify-content-center mt-5 mb-5">
 		<div id="content" class="col-10 px-0">
 			<c:choose>
 				<c:when test="${empty movieTimeTableDtos }">
-					<div id="warning" class="text-center">현재 상영중인 영화가 없습니다.</div>
+					<div id="warning" class="text-center mb-5">현재 상영중인 영화가 없습니다.</div>
 				</c:when>
 				<c:otherwise>
 					<!-- 안내버튼 -->
@@ -133,17 +133,10 @@
 </body>
 <script type="text/javascript">
 
-	let no = $('input[name=parameter]').val();
-
-	$.getJSON("/rest/cinema/timetable", {cinemaNo:no}, function (timetableList) {
-		$.each (timetableList, function(index, timetable) {
-				
-			$('#cinemaName').text(timetable.cinemaName);
-		})
+	$('#back').click(function () {
+		
+		
 	})
-	
-	let title = $('#movie-title').text();
-	let hall = $('#hall-name').text();
 
 </script>
 </html>

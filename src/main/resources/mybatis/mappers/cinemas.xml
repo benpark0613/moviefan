@@ -160,4 +160,13 @@
 	</select>
 	
 
+	<select id="getCinemaNameByNo" parameterType="int" resultType="com.jhta.moviefan.vo.Cinema">
+		select
+		    cinema_name as name
+		from
+		    cinema
+		where
+		    cinema_no = #{value}
+	</select>
+	
 </mapper>

@@ -71,6 +71,10 @@ public class CinemaService {
 		return cinemaDao.getShowByShowNo(showNo);
 	}
 
+	public Cinema getCinemaNameByNo(int cinemaNo) {
+		return cinemaDao.getCinemaNameByNo(cinemaNo);
+	}
+	
 	public void updateSchedule(Show show) {
 		Show savedShow = cinemaDao.getShowByShowNo(show.getNo());
 		
