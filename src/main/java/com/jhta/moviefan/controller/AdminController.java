@@ -4,7 +4,6 @@ import java.util.List;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,7 +18,6 @@ import com.jhta.moviefan.vo.Movie;
 import com.jhta.moviefan.vo.Show;
 import com.jhta.moviefan.dto.CinemaDto;
 import com.jhta.moviefan.dto.MovieTimeTableDto;
-import com.jhta.moviefan.form.ScheduleUpdateForm;
 import com.jhta.moviefan.service.CinemaService;
 import com.jhta.moviefan.service.MovieService;
 import com.jhta.moviefan.vo.City;
@@ -99,15 +97,10 @@ public class AdminController {
 	}
 	
 	@PostMapping("/schedule/update")
-	public String update(ScheduleUpdateForm form) {
-		
-		logger.info("form 정보: " + form);
-		
-		Show show = new Show();
-		BeanUtils.copyProperties(form, show);
+	public String update(Show show) {
 		cinemaService.updateSchedule(show);
 		
-		return "redirect:/admin/schedule/modify?showNo=" + form.getShowNo();
+		return "redirect:/admin/schedule/modify?showNo=" + show.getNo();
 	}
 	
 }

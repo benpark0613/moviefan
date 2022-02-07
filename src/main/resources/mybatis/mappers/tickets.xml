@@ -5,7 +5,7 @@
 	<select id="getShowsNowPlaying" resultType="com.jhta.moviefan.vo.Show">
 		select 
 			show_no				as no, 
-			show_date			as date, 
+			show_date			as showDate, 
 			show_start_time		as startTime, 
 			show_end_time		as endTime, 
 			movie_no			as movieNo, 
@@ -23,8 +23,10 @@
 			show
 		where 
 			show_start_time > current_date
+		order by
+			show_date
 	</select>
-
+ 
 
 
 </mapper>

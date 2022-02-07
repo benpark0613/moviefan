@@ -1,7 +1,12 @@
 package com.jhta.moviefan.controller;
 
+import java.util.Arrays;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -36,9 +41,20 @@ public class TicketController {
 		List<CityWithCinemasDto> cities = cinemaService.getCitiesWithCinemas();
 		Date[] dates = ticketService.getShowDates();
 		
+		List<Map<String, Object>> dateList = Arrays.stream(dates).map(date -> {
+			Calendar c = Calendar.getInstance();
+			c.setTime(date);
+			Map<String, Object> map = new HashMap<String, Object>();
+			map.put("year", c.get(Calendar.YEAR));
+			map.put("month", c.get(Calendar.MONTH) + 1);
+			map.put("day", c.get(Calendar.DAY_OF_WEEK));
+			map.put("date", date);
+			return map;
+		}).collect(Collectors.toList());
+		
 		model.addAttribute("movies", movies); 
 		model.addAttribute("cities", cities);
-		model.addAttribute("dates", dates);
+		model.addAttribute("dates", dateList);
 
 		return "ticket/movie";
 	}
