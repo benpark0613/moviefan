@@ -68,15 +68,15 @@ public class ExceptionHandlerControllerAdvice {
 		return "error/customerror";
 	}
 
-	@ExceptionHandler(DataAccessException.class)
-	public String handleDataAccessException(DataAccessException e) {
+	/*
+	 * @ExceptionHandler(DataAccessException.class) public String
+	 * handleDataAccessException(DataAccessException e) {
+	 * 
+	 * return "error/databaseerror"; }
+	 */
 
-		return "error/databaseerror";
-	}
-
-	@ExceptionHandler(Exception.class)
-	public String handleException(Exception e) {
-		e.printStackTrace();
-		return "error/servererror";
-	}
+	/*
+	 * @ExceptionHandler(Exception.class) public String handleException(Exception e)
+	 * { e.printStackTrace(); return "error/servererror"; }
+	 */
 }

@@ -68,7 +68,7 @@
 						</tr>
 					</c:when>
 					<c:otherwise>
-						<c:forEach var="movie" items="${movies }" varStatus="loop">
+						<c:forEach var="movie" items="${movies }">
 							<tr>
 								<td class="text-start">${movie.title }</td>
 								<td class="text-start">${movie.titleEn }</td>

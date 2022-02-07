@@ -2,9 +2,28 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.jhta.moviefan.dao.TicketDao">
 
+	<select id="getShowsNowPlaying" resultType="com.jhta.moviefan.vo.Show">
+		select 
+			show_no				as no, 
+			show_date			as date, 
+			show_start_time		as startTime, 
+			show_end_time		as endTime, 
+			movie_no			as movieNo, 
+			hall_no				as hallNo
+		from 
+			show
+		where 
+			show_start_time > current_date
+	</select>
 
-
-
+	<select id="getShowDates" resultType="date">
+		select 
+			distinct show_date
+		from 
+			show
+		where 
+			show_start_time > current_date
+	</select>
 
 
 

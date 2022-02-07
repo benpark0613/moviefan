@@ -48,12 +48,13 @@
 	
 	<select id="getMoviesNowPlaying" resultMap="MovieResultMap">
 		select 
-			m.*
+			distinct m.*
 		from 
 			movie m, show s
-		where
+		where 
 			s.show_start_time > current_date
-		and s.movie_no = m.movie_no 
+		and 
+			s.movie_no = m.movie_no
 	</select>
 	
 	<select id="getMovieByMovieNo" parameterType="int" resultMap="MovieResultMap">
