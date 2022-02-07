@@ -199,8 +199,8 @@ public class CustomerService {
 		
 		for (City city : cities) {
 			CityWithCinemasDto dto = new CityWithCinemasDto();
-			dto.setCityNo(city.getNo());
-			dto.setCityName(city.getName());
+			dto.setNo(city.getNo());
+			dto.setName(city.getName());
 			dto.setCinemas(cinemaDao.getCinemaListByCityNo(city.getNo()));
 			dtos.add(dto);
 		}

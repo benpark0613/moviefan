@@ -583,7 +583,7 @@ $(function() {
 				$selectCityNo.append(cityRow);
 				
 				for(let cityWithCinema of cityWithCinemas) {
-					cityRow = '<option value="'+cityWithCinema.cityNo+'">'+cityWithCinema.cityName+'</option>';
+					cityRow = '<option value="'+cityWithCinema.no+'">'+cityWithCinema.name+'</option>';
 					$selectCityNo.append(cityRow);
 				}
 				
