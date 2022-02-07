@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.jhta.moviefan.dto.CinemaDto;
 import com.jhta.moviefan.dto.MovieTimeTableDto;
 import com.jhta.moviefan.service.CinemaService;
+import com.jhta.moviefan.vo.Cinema;
 import com.jhta.moviefan.vo.City;
 
 @Controller
@@ -38,10 +39,10 @@ public class CinemaController {
 	@GetMapping("/timetable")
 	public String timetable(int cinemaNo, Model model) {
 		List<MovieTimeTableDto> movieTimeTableDtos = cinemaService.getMovieTimeTableByCinemaNo(cinemaNo);
-		List<CinemaDto> cinemaList = cinemaService.getAllCinemaList();
+		Cinema cinemaName = cinemaService.getCinemaNameByNo(cinemaNo);
 		
 		model.addAttribute("movieTimeTableDtos", movieTimeTableDtos);
-		model.addAttribute("cinema", cinemaList);
+		model.addAttribute("cinema", cinemaName);
 		
 		return "cinema/timetable";
 	}

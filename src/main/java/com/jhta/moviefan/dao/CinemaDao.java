@@ -24,6 +24,8 @@ public interface CinemaDao {
 	MovieTimeTableDto getMovieTimeTableByShowNo(int showNo);
 	Show getShowByShowNo(int showNo);
 	
+	Cinema getCinemaNameByNo(int cinemaNo);
+	
 	void updateSchedule(Show show);
 	
 }
