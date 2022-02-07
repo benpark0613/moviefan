@@ -26,7 +26,7 @@ import com.google.gson.Gson;
 import com.google.gson.internal.LinkedTreeMap;
 import com.jhta.moviefan.dao.MovieDao;
 import com.jhta.moviefan.dto.MovieDetailDto;
-import com.jhta.moviefan.dto.MovieWithImages;
+import com.jhta.moviefan.dto.MovieWithImagesDto;
 import com.jhta.moviefan.exception.MovieErrorException;
 import com.jhta.moviefan.form.MovieInsertForm;
 import com.jhta.moviefan.form.MovieUpdateForm;
@@ -59,12 +59,12 @@ public class MovieService {
 		return movieDao.getMovies(beginIndex, endIndex);
 	}
 	
-	public List<MovieWithImages> getMoviesNowPlaying() {
-		List<MovieWithImages> movies = new ArrayList<>();
+	public List<MovieWithImagesDto> getMoviesNowPlaying() {
+		List<MovieWithImagesDto> movies = new ArrayList<>();
 		List<Movie> moviesNowPlaying = movieDao.getMoviesNowPlaying();
 		
 		for (Movie movie : moviesNowPlaying) {
-			MovieWithImages movieWithImages = new MovieWithImages();
+			MovieWithImagesDto movieWithImages = new MovieWithImagesDto();
 		
 			List<MovieImage> images = movieDao.getMovieImagesByMovieNo(movie.getNo());
 			BeanUtils.copyProperties(movie, movieWithImages);
@@ -296,7 +296,6 @@ public class MovieService {
 		Movie movie = movieDao.getMovieByMovieNo(no);
 		movie.setSummary(summary);
 		movieDao.updateMovie(movie);
-		
 		
 		// 폼에서 전달받은 이미지목록에 기존에 저장되어 있는 이미지가 존재 하는지 확인한다.
 		// 존재하지 않다면 파일을 삭제한 뒤 MOVIE_IMAGE 테이블에서 해당 레코드를 삭제한다.

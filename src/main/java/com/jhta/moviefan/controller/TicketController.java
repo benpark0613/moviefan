@@ -1,5 +1,6 @@
 package com.jhta.moviefan.controller;
 
+import java.util.Date;
 import java.util.List;
 
 import org.apache.logging.log4j.LogManager;
@@ -10,7 +11,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.jhta.moviefan.dto.MovieWithImages;
+import com.jhta.moviefan.dto.CityWithCinemasDto;
+import com.jhta.moviefan.dto.MovieWithImagesDto;
+import com.jhta.moviefan.service.CinemaService;
 import com.jhta.moviefan.service.MovieService;
 import com.jhta.moviefan.service.TicketService;
 
@@ -18,28 +21,34 @@ import com.jhta.moviefan.service.TicketService;
 @RequestMapping("/ticket")
 public class TicketController {
 	
-	static final Logger logger = LogManager.getLogger(TicketController.class);
-	
 	@Autowired
-	TicketService ticketService;
+	private TicketService ticketService;
 	@Autowired
-	MovieService movieService;
+	private MovieService movieService;
+	@Autowired
+	private CinemaService cinemaService;
 
-	@GetMapping("/movie")
+	static final Logger logger = LogManager.getLogger(TicketController.class);
+
+	@GetMapping("movie")
 	public String movie(Model model) {
-		List<MovieWithImages> movies = movieService.getMoviesNowPlaying(); 
+		List<MovieWithImagesDto> movies = movieService.getMoviesNowPlaying();
+		List<CityWithCinemasDto> cities = cinemaService.getCitiesWithCinemas();
+		Date[] dates = ticketService.getShowDates();
 		
-		model.addAttribute("movies", movies);
-		
+		model.addAttribute("movies", movies); 
+		model.addAttribute("cities", cities);
+		model.addAttribute("dates", dates);
+
 		return "ticket/movie";
 	}
-	
-	@GetMapping("/seat")
+
+	@GetMapping("seat")
 	public String seat() {
 		return "ticket/seat";
 	}
-	
-	@GetMapping("/checkout")
+
+	@GetMapping("checkout")
 	public String checkout() {
 		return "ticket/checkout";
 	}

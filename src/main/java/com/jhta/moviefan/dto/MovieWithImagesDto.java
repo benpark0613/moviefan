@@ -7,7 +7,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import com.jhta.moviefan.vo.MovieImage;
 
-public class MovieWithImages {
+public class MovieWithImagesDto {
 
 	private int no;
 	private String title;
@@ -27,7 +27,7 @@ public class MovieWithImages {
 	private Date updatedDate;
 	private List<MovieImage> images;
 	
-	public MovieWithImages() {}
+	public MovieWithImagesDto() {}
 
 	public int getNo() {
 		return no;
@@ -151,12 +151,14 @@ public class MovieWithImages {
 
 	@Override
 	public String toString() {
-		return "MovieWithImages [no=" + no + ", title=" + title + ", titleEn=" + titleEn + ", rate=" + rate
+		return "MovieWithImagesDto [no=" + no + ", title=" + title + ", titleEn=" + titleEn + ", rate=" + rate
 				+ ", runtime=" + runtime + ", openDate=" + openDate + ", productionYear=" + productionYear
 				+ ", customerRating=" + customerRating + ", totalAudience=" + totalAudience + ", summary=" + summary
 				+ ", producer=" + producer + ", poster=" + poster + ", createdDate=" + createdDate + ", updatedDate="
 				+ updatedDate + ", images=" + images + "]";
 	}
+
+	
 	
 	
 }

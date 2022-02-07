@@ -9,6 +9,8 @@
 			city_name					as name
 		from
 			city
+		order by
+			city_no
 	</select>
 	
 	<!-- 지역번호로 지역명 조회 List<City> getCityByNo(int no); -->
@@ -42,12 +44,17 @@
 	<!-- 지역번호로 영화관 조회 List<CinemaNameDto> getCinemaNameByCityNo(); -->
 	<select id="getCinemaListByCityNo" parameterType="int" resultType="com.jhta.moviefan.vo.Cinema">
  		select
- 			cinema_no 					as no,
- 			cinema_name 				as name
+ 			cinema_no 			as no,
+ 			cinema_name 		as name,
+ 			cinema_address		as address,
+ 			cinema_total_halls	as totalHalls,
+ 			city_no				as cityNo		
  		from
  			cinema 
  		where
  			city_no = #{value}
+ 		order by
+ 			cinema_name
 	</select>
 	
 	<!-- 영화관별 상영시간표 List<MovieTimeTableDto> getMovieTimeTableByCinemaNo(int cinemaNo); -->
