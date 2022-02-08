@@ -154,4 +154,19 @@
 			comment_no = #{value}
 	</select>
 	
+	<update id="updateCommentLike" parameterType="int">
+		update MOVIE_CUSTOMER_COMMENT
+		set
+			COMMENT_LIKE_COUNT = COMMENT_LIKE_COUNT + 1
+		where
+			COMMENT_NO = #{value}
+	</update>
+	
+	<insert id="updateCommentLikeCustomer" parameterType="com.jhta.moviefan.vo.CommentLikedCustomer">
+	insert into COMMENT_LIKED_USER
+		(COMMENT_NO, CUSTOMER_NO)
+	values
+		(#{commentNo}, #{customerNo})
+	</insert>
+	
 </mapper>
