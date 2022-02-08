@@ -2,6 +2,7 @@ package com.jhta.moviefan.service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -33,7 +34,6 @@ public class CinemaService {
 		
 		for (City city : cities) {
 			CityWithCinemasDto cityWithCinemas = new CityWithCinemasDto();
-			
 			List<Cinema> cinemas = cinemaDao.getCinemaListByCityNo(city.getNo());
 			BeanUtils.copyProperties(city, cityWithCinemas);
 			cityWithCinemas.setCinemas(cinemas);
@@ -43,19 +43,27 @@ public class CinemaService {
 		return citiesWithCinemas;
 	}
 	
-	public List<CityWithCinemasDto> getCitiesWithCinemasNowPlaying() {
-		List<CityWithCinemasDto> CitiesWithCinemasNowPlaying = new ArrayList<>();
+	public List<CityWithCinemasDto> getCitiesWithCinemasNowPlaying(Map<String, Object> request) {
+		List<CityWithCinemasDto> citiesWithCinemasNowPlaying = new ArrayList<>();
+		List<City> cities = cinemaDao.getCitiesNowPlaying(request);
 		
+		for (City city : cities) {
+			CityWithCinemasDto cityWithCinemas = new CityWithCinemasDto();
+			request.put("cityNo", city.getNo());
+			List<Cinema> cinemas = cinemaDao.getCinemasNowPlaying(request);
+			BeanUtils.copyProperties(city, cityWithCinemas);
+			cityWithCinemas.setCinemas(cinemas);
+			citiesWithCinemasNowPlaying.add(cityWithCinemas);
+		}
 		
-		
-		return CitiesWithCinemasNowPlaying;
+		return citiesWithCinemasNowPlaying;
 	}
 	
 	public List<City> getAllCityList() {
 		return cinemaDao.getAllCities();
 	}
 	
-	public List<City> getCityByNo(int no) {
+	public City getCityByNo(int no) {
 		return cinemaDao.getCityByNo(no);
 	}
 
@@ -80,7 +88,7 @@ public class CinemaService {
 	}
 
 	public Cinema getCinemaNameByNo(int cinemaNo) {
-		return cinemaDao.getCinemaNameByNo(cinemaNo);
+		return cinemaDao.getCinemaByCinemaNo(cinemaNo);
 	}
 	
 	public void updateSchedule(Show show) {

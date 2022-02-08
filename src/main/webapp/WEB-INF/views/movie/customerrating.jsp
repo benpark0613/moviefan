@@ -48,6 +48,7 @@
 					 	<span class="" style="font-size:1.2em; color:#503396;">
 					 		<br>
 					 		<strong>${movieDetail.title }</strong> 재미있게 보셨나요? 영화의 어떤 점이 좋았는지 이야기해주세요.
+					 		<input id="movieNo" type="hidden" value="${movieDetail.no }">
 					 		<br><br>
 						</span>
 					</div>
@@ -58,7 +59,7 @@
 			</div>
 		</div>
 	</div>
-	<c:forEach var="comment" items="${comment }">
+	<c:forEach var="comment" items="${comment }" varStatus="status">
 		<div class="row-6 mb-3">
 			<div class="row mb-3">
 				<div class="col-2 text-center">
@@ -77,9 +78,11 @@
 							<span>${comment.content }</span>
 						</div>
 						<div class="col-1 align-self-center">
-							<i class="far fa-thumbs-up fa-lg"></i>
+							<a href="" class="like"><i class="far fa-thumbs-up fa-lg"></i></a>
+							<input type="hidden" value="${comment.commentNo }">
 							<br>
-							<span>${comment.likeCount }</span>
+							<span id="like${status.index }" style="font-size: 13pt;"><strong>${comment.likeCount }</strong></span>
+							<span><fmt:formatDate value="${comment.creDate }" pattern="YYYY.MM.DD"/></span>
 						</div>
 					</div>
 				</div>
@@ -91,5 +94,36 @@
 	</div>
 </div>
 <%@ include file="/WEB-INF/views/common/footer.jsp" %>
+<script type="text/javascript">
+$(function(){
+	
+	$(".like").click(function(){
+		event.preventDefault();
+		var commentNo = $(this).next().val();
+		var movieNo = $("#movieNo").val();
+		
+		$.ajax({
+			type : "post",
+			url : "/rest/review/updatelikecount",
+			dataType : "json",
+			data : {
+				commentNo : commentNo,
+				movieNo : movieNo
+			},
+			success : function(response){
+				for(var i=0; i<response.item.length;i++){
+					$("#like"+[i]).text(response.item[i].likeCount);
+				}
+				alert("추천이 완료되었습니다.")
+			},
+			error : function(response){
+				alert(response.error)
+			}
+		})
+	})
+})
+
+
+</script>
 </body>
 </html>

@@ -114,10 +114,10 @@
 							<c:forEach var="city" items="${cities }" varStatus="loop">
 								<c:choose>
 									<c:when test="${loop.count eq 1 }">
-										<a class="list-group-item list-group-item-action bg-secondary bg-opacity-10 border-light active" data-city-no="${city.no }" href="#">${city.name }(${fn:length(city.cinemas)})</a>
+										<a class="list-group-item list-group-item-action bg-secondary bg-opacity-10 border-light text-end active" data-city-no="${city.no }" href="#">${city.name }(${fn:length(city.cinemas)})</a>
 									</c:when>
 									<c:otherwise>
-										<a class="list-group-item list-group-item-action bg-secondary bg-opacity-10 border-light" data-city-no="${city.no }" href="#">${city.name }(${fn:length(city.cinemas)})</a>
+										<a class="list-group-item list-group-item-action bg-secondary bg-opacity-10 border-light text-end" data-city-no="${city.no }" href="#">${city.name }(${fn:length(city.cinemas)})</a>
 									</c:otherwise>
 								</c:choose>
 							</c:forEach>
@@ -281,7 +281,10 @@
 				$("#movie-list-box a").removeClass("active");
 				$(this).addClass("active");				
 				var movieNo = $(this).attr("data-movie-no");
-				console.log(movieNo);
+				var showDate = $("#date-list-box a.active").attr("data-show-date");
+				if ($("#cinema-list-box a.active").length == 0) {
+					getCinemas(movieNo, showDate);
+				}
 			}
 		});
 		
@@ -305,7 +308,9 @@
 				$(this).addClass("active");				
 				var cinemaNo = $(this).attr("data-cinema-no");
 				var showDate = $("#date-list-box a.active").attr("data-show-date");
-				getMovies(cinemaNo, showDate);
+				if ($("#movie-list-box a.active").length == 0) {
+					getMovies(cinemaNo, showDate);
+				}
 			}
 		});
 		
@@ -315,21 +320,22 @@
 			if (!isSelected) {
 				$("#date-list-box a").removeClass("active");
 				$(this).addClass("active");			
-				
+				var movieNo = $("#movie-list-box a.active").attr("data-movie-no");
 				var cinemaNo = $("#cinema-list-box a.active").attr("data-cinema-no");
 				var showDate = $(this).attr("data-show-date");
-				getMovies(cinemaNo, showDate);
+				if ($("#movie-list-box a.active").length == 0) {
+					getMovies(cinemaNo, showDate);
+				}
+				if ($("#cinema-list-box a.active").length == 0) {
+					getCinemas(movieNo, showDate);
+				}
 			}
 		});
-		
-		
 	});
-
 	
 	function getMovies(cinemaNo = null, showDate = null) {
-		console.log("getMoives(" + cinemaNo +"," + showDate + ")");
-		var $spinnerBox = $("#spinner-box");
-		var $movieInputBox = $("#movie-list-box").empty();
+		var $spinnerBox = $("#spinner-box").empty();
+		var $movieListBox = $("#movie-list-box").empty();
 		$.ajax({
 			type: "get",
 			url: "/rest/ticket/movie",
@@ -346,11 +352,44 @@
 			},
 			success: function(movies) {
 				$spinnerBox.empty();
-				if (movies.length == 0) {
-					
+				if (movies.moviesAvailable.length != 0) {
+					for (var i = 0; i < movies.moviesAvailable.length; i++) {
+						var movieNo = movies.moviesAvailable[i].no;
+						var row = '<a class="list-group-item list-group-item-action bg-light border-light d-flex align-items-center" data-movie-no="' + movieNo + '" href="#">';
+						if (movies.moviesAvailable[i].rate == "전체관람가") {
+							row += '<span class="badge bg-success rounded-pill me-1">전체</span>';
+						} else if (movies.moviesAvailable[i].rate == "12세이상관람가") {
+							row += '<span class="badge bg-primary rounded-pill me-1">12</span>';
+						} else if (movies.moviesAvailable[i].rate == "15세이상관람가") {
+							row += '<span class="badge bg-warning rounded-pill me-1">15</span>';
+						} else if(movies.moviesAvailable[i].rate == "청소년관람불가") {
+							row += '<span class="badge bg-danger rounded-pill me-1">청불</span>';
+						}
+						row += '<span class="fw-bold">' + movies.moviesAvailable[i].title + '</span>';
+						row += '</a>';
+						$movieListBox.append(row);
+					}
 				}
-				console.log(movies[0].no);
-				
+				if (movies.moviesNowPlaying.length != 0) {
+					for (var i = 0; i < movies.moviesNowPlaying.length; i++) {
+						var movieNo = movies.moviesNowPlaying[i].no;
+						 if ($("#movie-list-box a[data-movie-no=" + movieNo + "]").length == 0) {
+							var row = '<a class="list-group-item list-group-item-action bg-light border-light d-flex align-items-center disabled" data-movie-no="' + movieNo + '" href="#">';
+							if (movies.moviesNowPlaying[i].rate == "전체관람가") {
+								row += '<span class="badge bg-secondary rounded-pill me-1">전체</span>';
+							} else if (movies.moviesNowPlaying[i].rate == "12세이상관람가") {
+								row += '<span class="badge bg-secondary rounded-pill me-1">12</span>';
+							} else if (movies.moviesNowPlaying[i].rate == "15세이상관람가") {
+								row += '<span class="badge bg-secondary rounded-pill me-1">15</span>';
+							} else if(movies.moviesNowPlaying[i].rate == "청소년관람불가") {
+								row += '<span class="badge bg-secondary rounded-pill me-1">청불</span>';
+							}
+							row += '<span class="fw-bold">' + movies.moviesNowPlaying[i].title + '</span>';
+							row += '</a>';
+							$movieListBox.append(row);
+						 }
+					}
+				}
 			},
 			error: function() {
 				$spinnerBox.empty();
@@ -359,8 +398,83 @@
 		});
 	}
 	
-	function getCityWithCinemas(movieNo, showDate) {
-		
+	function getCinemas(movieNo = null, showDate = null) {
+		var $spinnerBox = $("#spinner-box").empty();
+		var $cityListBox = $("#city-list-box").empty();
+		var $cinemaListBox = $("#cinema-list-box").empty();
+		$.ajax({
+			type: "get",
+			url: "/rest/ticket/cinema",
+			data: {
+				movieNo: movieNo,
+				showDate: showDate
+			},
+			dataType: "json",
+			beforeSend: function() {
+				var row = '<div class="spinner-border spinner-border-md" role="status">'
+					+ '<span class="visually-hidden">Loading...</span>'
+					+ '</div>';
+				$spinnerBox.append(row);
+			},
+			success: function(cinemas) {
+				$spinnerBox.empty();
+				for (var i = 0; i < cinemas.citiesWithCinemas.length; i++) {
+					var cityNo = cinemas.citiesWithCinemas[i].no;
+					var cityName = cinemas.citiesWithCinemas[i].name;
+					// var cinemaCount = cinemas.citiesWithCinemas[i].cinemas.length;
+					var row = '';
+					if (i == 0) {
+						row += '<a class="list-group-item list-group-item-action bg-secondary bg-opacity-10 border-light text-end active" data-city-no="' + cityNo + '" href="#">' + cityName + '(0)</a>';
+					} else {
+						row += '<a class="list-group-item list-group-item-action bg-secondary bg-opacity-10 border-light text-end" data-city-no="' + cityNo + '" href="#">' + cityName + '(0)</a>';
+					}
+					$cityListBox.append(row);
+				}
+				for (var i = 0; i < cinemas.citiesWithCinemasAvailable.length; i++) {
+					var cityNo = cinemas.citiesWithCinemasAvailable[i].no;
+					var cityName = cinemas.citiesWithCinemasAvailable[i].name;
+					var cinemaCount = cinemas.citiesWithCinemasAvailable[i].cinemas.length;
+					$("#city-list-box a[data-city-no=" + cityNo + "]").empty().append(cityName + '(' + cinemaCount + ')');
+					if (cinemaCount != 0) {
+						for (var j = 0; j < cinemaCount; j++) {
+							var cinemaNo = cinemas.citiesWithCinemasAvailable[i].cinemas[j].no;
+							var cinemaName = cinemas.citiesWithCinemasAvailable[i].cinemas[j].name.replace('MVF ', '');
+							var row = '';
+							if (i == 0) {
+								row += '<a class="list-group-item list-group-item-action bg-light border-light" data-city-no="' + cityNo + '" data-cinema-no="' + cinemaNo + '" href="#"><span class="fw-bold">' + cinemaName + '</span></a>';
+							} else {
+								row += '<a class="list-group-item list-group-item-action bg-light border-light d-none" data-city-no="' + cityNo + '" data-cinema-no="' + cinemaNo + '" href="#"><span class="fw-bold">' + cinemaName + '</span></a>';
+							}
+							$cinemaListBox.append(row);
+						}
+					}
+				}
+				for (var i = 0; i < cinemas.citiesWithCinemas.length; i++) {
+					var cityNo = cinemas.citiesWithCinemas[i].no;
+					var cityName = cinemas.citiesWithCinemas[i].name;
+					var cinemaCount = cinemas.citiesWithCinemas[i].cinemas.length;
+					for (var j = 0; j < cinemaCount; j++) {
+						var cinemaNo = cinemas.citiesWithCinemas[i].cinemas[j].no;
+						var cinemaName = cinemas.citiesWithCinemas[i].cinemas[j].name.replace('MVF', '');
+						if (i == 0) {
+							if ($("#cinema-list-box a[data-cinema-no=" + cinemaNo + "]").length == 0) {
+								var row = '<a class="list-group-item list-group-item-action bg-light border-light disabled" data-city-no="' + cityNo + '" data-cinema-no="' + cinemaNo + '" href="#"><span class="fw-bold">' + cinemaName + '</span></a>';
+								$cinemaListBox.append(row);
+							}	
+						} else {
+							if ($("#cinema-list-box a[data-cinema-no=" + cinemaNo + "]").length == 0) {
+								var row = '<a class="list-group-item list-group-item-action bg-light border-light d-none disabled" data-city-no="' + cityNo + '" data-cinema-no="' + cinemaNo + '" href="#"><span class="fw-bold">' + cinemaName + '</span></a>';
+								$cinemaListBox.append(row);
+							}
+						}
+					}
+				}
+			},
+			error: function() {
+				$spinnerBox.empty();
+				alert("오류가 발생하였습니다.");
+			}
+		});
 	}
 	
 	function getShowDates() {

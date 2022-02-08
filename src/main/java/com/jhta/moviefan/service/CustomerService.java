@@ -208,6 +208,7 @@ public class CustomerService {
 		}
 		customerDao.insertMyCinema(form);
 	}
+
 	public void deleteMyCinema(CustomerCinemaFavorites form) {
 		List<CustomerCinemaFavorites> savedFavorites = customerDao.getCustomerCinemaFavoritesByCustomerNo(form.getCustomerNo());
 		if (savedFavorites.size() == 0) {
@@ -220,6 +221,7 @@ public class CustomerService {
 //	public void name() {
 //		
 //	}
+
 }
 
 

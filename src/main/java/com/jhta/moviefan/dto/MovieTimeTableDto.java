@@ -6,6 +6,7 @@ public class MovieTimeTableDto {
 
 	private int cityNo;				// 지역 번호
 	private String cityName;		// 지역 이름
+	private int cinemaNo;			// 영화관 번호
 	private String cinemaName;		// 영화관 이름
 	private int showNo;				// 상영일정 번호	
 	private int hallNo;				// 상영관 번호
@@ -14,9 +15,9 @@ public class MovieTimeTableDto {
 	private String title;			// 영화 제목
 	//private String genre;			// 장르
 	private int runtime;			// 러닝타임
-	private Date openDate;		// 개봉일
-	private Date showDate;		// 상영일
-	private Date startTime;		// 상영 시작시간
+	private Date openDate;			// 개봉일
+	private Date showDate;			// 상영일
+	private Date startTime;			// 상영 시작시간
 	private Date endTime;			// 상영 종료시간
 	//private String status;		// 상영상태
 	//private int totalSeats;		// 상영관 전체 좌석수
@@ -38,6 +39,14 @@ public class MovieTimeTableDto {
 
 	public void setCityName(String cityName) {
 		this.cityName = cityName;
+	}
+
+	public int getCinemaNo() {
+		return cinemaNo;
+	}
+
+	public void setCinemaNo(int cinemaNo) {
+		this.cinemaNo = cinemaNo;
 	}
 
 	public String getCinemaName() {
@@ -130,10 +139,10 @@ public class MovieTimeTableDto {
 
 	@Override
 	public String toString() {
-		return "MovieTimeTableDto [cityNo=" + cityNo + ", cityName=" + cityName + ", cinemaName=" + cinemaName
-				+ ", showNo=" + showNo + ", hallNo=" + hallNo + ", hallName=" + hallName + ", movieNo=" + movieNo
-				+ ", title=" + title + ", runtime=" + runtime + ", openDate=" + openDate + ", showDate=" + showDate
-				+ ", startTime=" + startTime + ", endTime=" + endTime + "]";
+		return "MovieTimeTableDto [cityNo=" + cityNo + ", cityName=" + cityName + ", cinemaNo=" + cinemaNo
+				+ ", cinemaName=" + cinemaName + ", showNo=" + showNo + ", hallNo=" + hallNo + ", hallName=" + hallName
+				+ ", movieNo=" + movieNo + ", title=" + title + ", runtime=" + runtime + ", openDate=" + openDate
+				+ ", showDate=" + showDate + ", startTime=" + startTime + ", endTime=" + endTime + "]";
 	}
 
 }
