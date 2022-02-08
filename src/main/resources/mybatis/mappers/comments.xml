@@ -76,6 +76,30 @@
    			and c.customer_no = cus.customer_no)
 	</select> -->
 	
+	<select id="">
+		<where>
+				<if test="opt != null and value != null">
+					<choose>
+						<when test="opt == '제목'">
+							book_title like '%' || #{value} || '%'
+						</when>
+						<when test="opt == '저자'">
+							book_author = #{value}
+						</when>
+						<when test="opt == '출판사'">
+							book_publisher = #{value}
+						</when>
+						<when test="opt == '최소가격'">
+							book_price >= to_number(#{value})
+						</when>
+						<when test="opt == '최대가격'">
+							book_price &lt;= to_number(#{value})
+						</when>
+					</choose>
+				</if>
+			</where>			
+	</select>
+	
 	<select id="getMovieTitle" parameterType="int" resultType="com.jhta.moviefan.vo.Comment">
 		select 	
 			movie_title
