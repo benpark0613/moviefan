@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.jhta.moviefan.dao.CommentDao;
 import com.jhta.moviefan.vo.Comment;
+import com.jhta.moviefan.vo.CommentLikedCustomer;
 
 @Service
 public class CommentService {
@@ -46,6 +47,13 @@ public class CommentService {
 		return commentDao.getCustomerIdBycustomerNo(customerNo);
 	}
 	
+	public void updateCommentLike(int commentNo) {
+		commentDao.updateCommentLike(commentNo);
+	}
+	
+	public void updateCommentLikeCustomer(CommentLikedCustomer commentLikedCustomer) {
+		commentDao.updateCommentLikeCustomer(commentLikedCustomer);
+	}
 	
 
 }

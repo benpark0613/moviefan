@@ -106,29 +106,10 @@
 				<div class="row mb-3">
 					<div class="col">
 						<!-- Button trigger modal -->
-						<button type="button" class="btn btn-outline-dark wishListBtn" data-bs-toggle="modal" style="padding-left:10px; padding-right:10px;">
+						<button type="button" class="btn btn-outline-dark wishListBtn" style="padding-left:10px; padding-right:10px;">
 							<i class="far fa-heart fa-lg"></i><span> ${wishList[status.index] }</span>
 						</button>
 							<input type="hidden" value="${movies.no}" /> 
-						
-						<!-- Modal 
-						<div class="modal fade" id="ratingModal" tabindex="-1" aria-hidden="true">
-						  <div class="modal-dialog">
-						    <div class="modal-content">
-						      <div class="modal-header">
-						        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-						        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-						      </div>
-						      <div class="modal-body">
-						      	<span id="message"></span>
-						      </div>
-						      <div class="modal-footer">
-						        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-						      </div>
-						    </div>
-						  </div>
-						</div>
-						-->
 					</div>
 					<div class="col">
 						<button type="button" class="btn btn-danger btn-block" style="padding-left:50px; padding-right:50px;"><span>예매</span></button>
@@ -174,17 +155,18 @@
 	
 	$(".wishListBtn").click(function(){
 		var movieNo = $(this).next().val();
-		var count = $(this).next();
+		var count = $(this).children("span")
 	
 		$.ajax({
-			url : "/rest/movie/wishList",
 			type : "post",
+			url : "/rest/movie/wishlist",
 			dataType : "json",
 			data: {
-				movieNo : movieNo,
+				movieNo : movieNo
 			},
-			success : function(data){
-				$(".wishListBtn").children("span").text(response.items[0]);
+			success : function(response){
+				$(this).children("span").text(response.item[0]);
+				count.text(' '+response.item[0]);
 				alert("저장되었습니다.");
 			},
 			error : function(response){

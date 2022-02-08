@@ -5,6 +5,7 @@ import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 
 import com.jhta.moviefan.vo.Comment;
+import com.jhta.moviefan.vo.CommentLikedCustomer;
 
 @Mapper
 public interface CommentDao {
@@ -19,4 +20,7 @@ public interface CommentDao {
 	List<Comment> searchCommnetsByCustomerNo(int customerNo);
 	Comment getCommentByCommentNo(int commentNo);
 	Comment commentAllRows();
+	
+	void updateCommentLike(int commentNo);
+	void updateCommentLikeCustomer(CommentLikedCustomer commentLikedCustomer);
 }

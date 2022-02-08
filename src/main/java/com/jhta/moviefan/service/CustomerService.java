@@ -223,6 +223,10 @@ public class CustomerService {
 		}
 		customerDao.insertMyCinema(form);
 	}
+	
+	public List<CustomerMovieWishList> getCustomerWishListByCustomerNo(int customerNo){
+		return customerDao.getAllCustomerMovieWishListByCustomerNo(customerNo);
+	}
 }
 
 
