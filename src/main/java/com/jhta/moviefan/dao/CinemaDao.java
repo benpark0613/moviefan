@@ -9,14 +9,14 @@ import com.jhta.moviefan.dto.CinemaDto;
 import com.jhta.moviefan.dto.MovieTimeTableDto;
 import com.jhta.moviefan.vo.Cinema;
 import com.jhta.moviefan.vo.City;
-import com.jhta.moviefan.vo.CustomerCinemaFavorites;
 import com.jhta.moviefan.vo.Show;
 
 @Mapper
 public interface CinemaDao {
 	
 	List<City> getAllCities();
-
+	List<City> getCitiesNowPlaying(Map<String, Object> request);
+	List<Cinema> getCinemasNowPlaying(Map<String, Object> request);
 	City getCityByNo(int no);
 
 	List<CinemaDto> getAllCinemas();
