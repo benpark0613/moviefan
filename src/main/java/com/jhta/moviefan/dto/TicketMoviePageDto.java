@@ -1,49 +1,47 @@
 package com.jhta.moviefan.dto;
 
-import java.util.Arrays;
-import java.util.Date;
 import java.util.List;
 
-import org.springframework.format.annotation.DateTimeFormat;
+import com.jhta.moviefan.vo.Movie;
 
 public class TicketMoviePageDto {
 
-	List<MovieWithImagesDto> movies;
-	List<CityWithCinemasDto> cities;
-	@DateTimeFormat(pattern = "yyyy-MM-dd")
-	Date[] showDate;
+	List<Movie> moviesNowPlaying;							// 상영중인 영화 전체 목록
+	List<Movie> moviesAvailable;							// 선택한 극장, 날짜로 예매 가능한 영화 목록
+	List<CityWithCinemasDto> citiesWithCinemas;				// 도시 전체 목록과 해당 도시에 있는 극장 전체 목록 
+	List<CityWithCinemasDto> citiesWithCinemasAvailable;	// 선택한 영화, 날짜로 예매 가능한 극장 목록
 	
-	public TicketMoviePageDto() {}
-
-	public List<MovieWithImagesDto> getMovies() {
-		return movies;
+	public List<Movie> getMoviesNowPlaying() {
+		return moviesNowPlaying;
 	}
-
-	public void setMovies(List<MovieWithImagesDto> movies) {
-		this.movies = movies;
+	public void setMoviesNowPlaying(List<Movie> moviesNowPlaying) {
+		this.moviesNowPlaying = moviesNowPlaying;
 	}
-
-	public List<CityWithCinemasDto> getCities() {
-		return cities;
+	public List<Movie> getMoviesAvailable() {
+		return moviesAvailable;
 	}
-
-	public void setCities(List<CityWithCinemasDto> cities) {
-		this.cities = cities;
+	public void setMoviesAvailable(List<Movie> moviesAvailable) {
+		this.moviesAvailable = moviesAvailable;
 	}
-
-	public Date[] getShowDate() {
-		return showDate;
+	public List<CityWithCinemasDto> getCitiesWithCinemas() {
+		return citiesWithCinemas;
 	}
-
-	public void setShowDate(Date[] showDate) {
-		this.showDate = showDate;
+	public void setCitiesWithCinemas(List<CityWithCinemasDto> citiesWithCinemas) {
+		this.citiesWithCinemas = citiesWithCinemas;
 	}
-
+	public List<CityWithCinemasDto> getCitiesWithCinemasAvailable() {
+		return citiesWithCinemasAvailable;
+	}
+	public void setCitiesWithCinemasAvailable(List<CityWithCinemasDto> citiesWithCinemasAvailable) {
+		this.citiesWithCinemasAvailable = citiesWithCinemasAvailable;
+	}
 	@Override
 	public String toString() {
-		return "TicketMoviePageDto [movies=" + movies + ", cities=" + cities + ", showDate=" + Arrays.toString(showDate)
-				+ "]";
+		return "TicketMoviePageDto [moviesNowPlaying=" + moviesNowPlaying + ", moviesAvailable=" + moviesAvailable
+				+ ", citiesWithCinemas=" + citiesWithCinemas + ", citiesWithCinemasAvailable="
+				+ citiesWithCinemasAvailable + "]";
 	}
+	
 	
 	
 	

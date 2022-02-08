@@ -1,6 +1,7 @@
 package com.jhta.moviefan.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 
@@ -16,6 +17,8 @@ public interface CinemaDao {
 	
 	List<City> getAllCities();
 	List<City> getCityByNo(int no);
+	List<City> getCitiesNowPlaying(Map<String, Object> request);
+	List<Cinema> getCinemasNowPlaying(Map<String, Object> request);
 	List<CinemaDto> getAllCinemas();
 	
 	List<Cinema> getCinemaListByCityNo(int cityNo);

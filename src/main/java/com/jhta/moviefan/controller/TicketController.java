@@ -12,10 +12,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.jhta.moviefan.dto.CityWithCinemasDto;
-import com.jhta.moviefan.dto.MovieWithImagesDto;
 import com.jhta.moviefan.service.CinemaService;
 import com.jhta.moviefan.service.MovieService;
 import com.jhta.moviefan.service.TicketService;
+import com.jhta.moviefan.vo.Movie;
 
 @Controller
 @RequestMapping("/ticket")
@@ -32,7 +32,7 @@ public class TicketController {
 
 	@GetMapping("movie")
 	public String movie(Model model) {
-		List<MovieWithImagesDto> movies = movieService.getMoviesWithImagesNowPlaying(null);
+		List<Movie> movies = movieService.getMoviesNowPlaying(null);
 		List<CityWithCinemasDto> cities = cinemaService.getCitiesWithCinemas();
 		List<Map<String, Object>> dates = ticketService.getShowDatesNowPlaying();
 		

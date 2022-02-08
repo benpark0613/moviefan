@@ -31,7 +31,6 @@ public interface MovieDao {
 	
 	List<Movie> getAllMovies();
 	List<Movie> getMovies(@Param("beginIndex") int beginIndex, @Param("endIndex") int endIndex);
-	List<Movie> getAllMoviesNowPlaying();
 	List<Movie> getMoviesNowPlaying(Map<String, Object> request);
 	
 	List<MovieImage> getMovieImagesByMovieNo(int movieNo);
