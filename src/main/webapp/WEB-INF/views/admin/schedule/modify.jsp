@@ -47,7 +47,7 @@
 					</h3>
 				</div>
 				<div>
-					<button type="button" class="btn btn-dark btn-sm" onclick="history.go(-1)">목록으로 돌아가기</button>
+					<a type="button" class="btn btn-dark btn-sm" href="list?cityNo=${detailSchedule.cityNo }&cinemaNo=${detailSchedule.cinemaNo }">목록으로 돌아가기</a>
 				</div>
 			</div>
 		</div>
@@ -124,39 +124,6 @@
 <%@ include file="/WEB-INF/views/common/footer.jsp" %>
 </body>
 <script type="text/javascript">
-
-// $('#btn-modify-status').click(function () {
-// 	let showDate = $('input[name=showSelect]').val()
-// 	let startTime = showDate + ' ' + $('input[name=startSelect]').val()+':00';
-// 	let endTime = showDate + ' ' + $('input[name=endSelect]').val()+':00';
-	
-// 	$('#modify-form').submit();
-// })
-	
-// 	console.log('상영일: ', showDate);
-// 	console.log('시작시간: ', startTime);
-// 	console.log('종료시간: ', endTime);
-	
-	
-// 	// 변환한 상영날짜
-// 	function formatShowdate() {
-// 		let date = $('#show-select').val()+' 00:00:00';
-// 		$('input[name=showDate]').val(date)
-// 	}
-	
-// 	// 변환한 영화 시작시간
-// 	function formatStartTime() {
-// 		let date = $('#show-select').val();
-// 		let start = date + ' ' + $('input[name=startSelect]').val()+':00';
-// 		$('input[name=startTime]').val(start);
-// 	}
-	
-// 	// 변환한 영화 종료시간
-// 	function formatEndTime() {
-// 		let date = $('#show-select').val();
-// 		let end = date + ' ' + $('input[name=endSelect]').val()+':00';
-// 		$('input[name=endTime]').val(end);
-// 	}
 
 </script>
 </html>

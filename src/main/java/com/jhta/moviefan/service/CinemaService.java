@@ -55,7 +55,7 @@ public class CinemaService {
 		return cinemaDao.getAllCities();
 	}
 	
-	public List<City> getCityByNo(int no) {
+	public City getCityByNo(int no) {
 		return cinemaDao.getCityByNo(no);
 	}
 
@@ -80,7 +80,7 @@ public class CinemaService {
 	}
 
 	public Cinema getCinemaNameByNo(int cinemaNo) {
-		return cinemaDao.getCinemaNameByNo(cinemaNo);
+		return cinemaDao.getCinemaByCinemaNo(cinemaNo);
 	}
 	
 	public void updateSchedule(Show show) {

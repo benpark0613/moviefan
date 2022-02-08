@@ -39,7 +39,7 @@
 	<input type="hidden" name="parameter" value="${param.cinemaNo }">
 	<div id="cinemaName" class="p-5 mt-3">
 		<span>${cinema.name }&nbsp;&nbsp;&nbsp;</span>
-		<span><button type="button" class="btn btn-dark btn-sm" onclick="history.go(-1)">목록으로 돌아가기</button></span>
+		<span><a type="button" class="btn btn-dark btn-sm" href="main?cityNo=${param.cityNo }">목록으로 돌아가기</a></span>
 	</div>
 	<!-- 상영시간표 -->
 	<div id="movie-timetable" class="row justify-content-center mt-5 mb-5">

@@ -33,7 +33,14 @@
 			<div class="col mx-2">
 				<select id="city-select" name="city" class="form-select form-select-lg w-25 h-10 mb-3">
 					<c:forEach var="city" items="${cityList }">
-						<option value="${city.no }" ${city.no eq 20 ? 'selected' : '' }>${city.name }</option>
+						<c:choose>
+							<c:when test="${empty param.cityNo }">
+								<option value="${city.no }" ${city.no eq 20 ? 'selected' : '' }>${city.name }</option>
+							</c:when>
+							<c:otherwise>
+								<option value="${city.no }" ${city.no eq param.cityNo ? 'selected' : '' }>${city.name }</option>
+							</c:otherwise>
+						</c:choose>
 					</c:forEach>
 				</select>
 			</div>
@@ -42,13 +49,22 @@
 				<div class="container mt-4" id="test">
 					<div id="cinemaBox" class="row row-cols-2 row-cols-lg-3 g-2 g-lg-2">
 						<c:forEach var="cinema" items="${cinemaList }">
-							<c:if test="${cinema.cityNo eq 20 }">
-					    		<div id="cinema-select" class="col">
-									<div id="cinema" class="p-4 border bg-light text-center">
-							      		<a href="/cinema/timetable?cinemaNo=${cinema.no}" id="${cinema.no }">${cinema.name }</a>
-							      	</div>
-					    		</div>
-							</c:if>
+							<c:choose>
+								<c:when test="${empty param.cityNo and cinema.cityNo eq 20 }">
+						    		<div id="cinema-select" class="col">
+										<div id="cinema" class="p-4 border bg-light text-center">
+								      		<a href="/cinema/timetable?cinemaNo=${cinema.no}" id="${cinema.no }">${cinema.name }</a>
+								      	</div>
+						    		</div>
+								</c:when>
+								<c:when test="${param.cityNo eq cinema.cityNo }">
+						    		<div id="cinema-select" class="col">
+										<div id="cinema" class="p-4 border bg-light text-center">
+								      		<a href="/cinema/timetable?cinemaNo=${cinema.no}" id="${cinema.no }">${cinema.name }</a>
+								      	</div>
+						    		</div>
+								</c:when>
+							</c:choose>
 				  		</c:forEach> 
 				    </div>
 				</div>
@@ -73,7 +89,7 @@
 				$.each (cinemaList, function(index, cinema) {
 					let content = '<div id="cinema-select" class="col">';
 						content += '<div id="cinema" class="p-4 border bg-light text-center">';
-			      		content += '<a href="/cinema/timetable?cinemaNo=' + cinema.no + '" data-cinemaNo="' + cinema.no + '">' + cinema.name + '</a>';
+			      		content += '<a href="/cinema/timetable?cityNo='+ cinema.cityNo + '&cinemaNo=' + cinema.no + '" data-cinemaNo="' + cinema.no + '">' + cinema.name + '</a>';
 			      		content += '</div>';
 	    				content += '</div>';
 	    			
