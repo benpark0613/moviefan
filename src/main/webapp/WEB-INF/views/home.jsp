@@ -72,13 +72,13 @@
 			            	<a href="" class="link-light text-decoration-none" data-bs-toggle="tooltip" title="스파이더맨-노 웨이 홈">${movieTrailer.title }</a>
 			            </p>
 			            <p class="text-start text-white fw-bolder">
-			            	${movieTrailer.summary }<br>
+			            	${movieTrailer.summary }<br><br>
 			            	<fmt:formatDate value="${movieTrailer.openDate }" pattern="M"/>월 IMAX 대개봉<br>
 			            </p>
 		        </div>
 		        <div class="row">
 		        	<div class="col d-flex justify-content-start align-items-center">
-		        		<button class="btn btn-light btn-sm h-75 me-1" type="submit"><strong>상세보기&ensp;></strong></button>
+		        		<a href="movie/detail?no=${movieTrailer.no }"><button class="btn btn-light btn-sm h-75 me-1"><strong>상세보기&ensp;></strong></button></a>
 		        		<a href=""><i class="bi bi-play-circle text-white fs-1 d-none me-1" id="play"></i></a>
 		        		<a href=""><i class="bi bi-pause-circle text-white fs-1 me-1" id="pause"></i></a>
 		        		<a href=""><i class="bi bi-volume-up text-white fs-1 me-1" id="volume-on"></i></a>
@@ -104,18 +104,18 @@
 			</div>
 			<div class="row">
 				<div class="col text-end">
-					<a class="link-light" href="">더 많은 영화보기+</a>
+					<a class="link-light" href="movie/list">더 많은 영화보기+</a>
 				</div>
 			</div>
 			<div class="row d-flex justify-content-evenly">
-				<c:forEach var="movie" items="${movie }" end="4">
+				<c:forEach var="movie" items="${movie }" end="4" varStatus="status">
 					<div class="card col-2 p-1 d-flex justify-content-center align-self-center">
 						<div class="row">
-					  		<img src="/resources/images/movie/moviePoster/${movie.no }.jpg" class="w-100 my-auto" alt="...">
+					  		<img id="boxOffice-image" src="/resources/images/movie/moviePoster/${movie.no }.jpg" class="w-100 my-auto" alt="...">
 						</div>
 						<div class="card-body d-flex justify-content-center p-0">
 							<a type="button" class="btn btn-danger w-100"><span>예매</span></a>
-							<a type="button" class="btn btn-outline-secondary"><span class="bi bi-heart-fill"></span></a>
+							<a type="button" class="btn btn-outline-secondary"><span class="bi bi-heart-fill">${wishList[status.index] }</span></a>
 						</div>
 					</div>
 				</c:forEach>
@@ -372,9 +372,7 @@ $(function() {
 	});
 	
 	// 상영예정작 등록
-	var modal = new bootstrap.Modal(document.getElementById('modal-register-trailer'), {
-		keyboard: false
-	});
+	var modal = new bootstrap.Modal(document.getElementById('modal-register-trailer'));
 	
 	$('#button-register-trailer').click(function(event){
 		event.preventDefault();
@@ -388,9 +386,10 @@ $(function() {
 				for(var i=0; i<response.item.length;i++){
 					var title = '<option value=' + response.item[i].title + '>'+ response.item[i].title + '</option>';
 					$("#titleSelect").append(title);
-					
 				}
+				
 				$("#titleSelect").change(function(){
+					$("#trailerInput").empty();
 					for(var i=0; i<response.item.length;i++){
 						if($(this).children("option:selected").text() == response.item[i].title){
 							var summary = response.item[i].summary;
@@ -398,14 +397,13 @@ $(function() {
 							for(var j=0; j<response.item[i].trailers.length;j++){
 								var trailer = response.item[i].trailers[j].urlAddress;
 								var url = '<div class="mb-3 form-check">'
-										+ '<input class="form-check-input" type="radio" name="=url" value="'+trailer+'">'
+										+ '<input class="form-check-input" type="radio" name="url" value="'+trailer+'">'
 										+ '<label class="form-check-label" for="flexRadioDefault1">'
-										+ '<video id="trailerUrl" src="'+trailer+'" controls width="240" height="136"></video>'
+										+ '<video id="trailerUrl" src="'+trailer+'" controls width="300" height="200"></video>'
 										+ '</label> </div>';
 							
 								$("#trailerInput").append(url);
 							}
-								
 						}
 					}
 				})

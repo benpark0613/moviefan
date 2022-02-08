@@ -69,18 +69,22 @@ public class HomeController {
 			JSONArray jsonObject3 = (JSONArray) jsonObject2.get("dailyBoxOfficeList");
 
 			List<Movie> movieList = new ArrayList<>();
+			List<Integer> wishLists = new ArrayList<>();
 			for(int i=0; i<jsonObject3.size(); i++) {
 				JSONObject movies = (JSONObject) jsonObject3.get(i);
 				Movie movie = new Movie();
 
 				int movieCd = (Integer.parseInt((String)movies.get("movieCd")));
 				movie = movieService.getMovieByMovieNo(movieCd);
+				int wishList = customerService.countCustomerMovieWishListByMovieNo(movieCd);
+				wishLists.add(wishList);
 				movieList.add(movie);
 			}
 			
 			HomeTrailerDetailDto dto = movieService.getHomeMovieDetail();
 			model.addAttribute("movieTrailer", dto);
 			model.addAttribute("movie", movieList);
+			model.addAttribute("wishList", wishLists);
 
 
 		}catch(Exception e) {
@@ -189,12 +193,9 @@ public class HomeController {
 	
 	@PostMapping("/home/registerTrailer")
 	public String registerTrailer(String url) {
-		//movieService.updateHomeTrailer(url);
-		System.out.println("========================");
-		System.out.println(url);
-		System.out.println("========================");
+		movieService.updateHomeTrailer(url);
 		
-		return "home";
+		return "redirect:/";
 	}
 	
 }

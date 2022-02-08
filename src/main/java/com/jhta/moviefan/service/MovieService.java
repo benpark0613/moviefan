@@ -403,6 +403,7 @@ public class MovieService {
 	}
 	
 	public void updateHomeTrailer(String url) {
+		movieDao.updateHomeTrailerToN();
 		movieDao.updateHomeTrailer(url);
 	}
 	
