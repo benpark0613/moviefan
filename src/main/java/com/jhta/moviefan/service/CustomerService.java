@@ -217,6 +217,10 @@ public class CustomerService {
 		customerDao.deleteMyCinema(form);
 	}
 	
+	public List<CustomerMovieWishList> getCustomerWishListByCustomerNo(int customerNo){
+		return customerDao.getAllCustomerMovieWishListByCustomerNo(customerNo);
+	}
+	
 	// 한줄평
 //	public void name() {
 //		
