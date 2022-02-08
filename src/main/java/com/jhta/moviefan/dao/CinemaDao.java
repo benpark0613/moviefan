@@ -1,6 +1,7 @@
 package com.jhta.moviefan.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 
@@ -15,7 +16,9 @@ import com.jhta.moviefan.vo.Show;
 public interface CinemaDao {
 	
 	List<City> getAllCities();
+
 	City getCityByNo(int no);
+
 	List<CinemaDto> getAllCinemas();
 	
 	List<Cinema> getCinemaListByCityNo(int cityNo);
@@ -28,6 +31,6 @@ public interface CinemaDao {
 	void updateSchedule(Show show);
 	
 	// 성근
-	Cinema getCinemaByCinemaNo(int CinemaNo);
+	Cinema getCinemaByCinemaNo(int cinemaNo);
 	
 }

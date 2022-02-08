@@ -24,6 +24,53 @@
 			city_no = #{value}
 	</select>
 	
+	<select id="getCitiesNowPlaying" parameterType="map" resultType="com.jhta.moviefan.vo.City">
+		select distinct 
+			ct.city_no   as no,
+            ct.city_name as name
+		from 
+			show s, cinema_hall ch, cinema cn, city ct 
+		where 
+			s.show_start_time > current_date
+		and s.hall_no = ch.hall_no
+        and ch.cinema_no = cn.cinema_no
+        and cn.city_no = ct.city_no
+        <if test="movieNo != null">
+			and s.movie_no = #{movieNo}
+		</if>
+		<if test="showDate != null">
+			and s.show_date = #{showDate}
+		</if>
+		order by
+			ct.city_no
+	</select>
+	
+	<select id="getCinemasNowPlaying" parameterType="map" resultType="com.jhta.moviefan.vo.Cinema">
+		select distinct
+			cn.cinema_no 				as no,
+			cn.cinema_name 				as name,
+			cn.cinema_address 			as address,
+			cn.cinema_total_halls 		as totalHalls,
+			cn.city_no					as cityNo
+		from
+			show s, cinema_hall ch, cinema cn
+        where
+            s.show_start_time > current_date
+        and s.hall_no = ch.hall_no
+        and ch.cinema_no = cn.cinema_no
+        <if test="cityNo != null">
+        	and cn.city_no = #{cityNo}
+        </if>
+        <if test="movieNo != null">
+			and s.movie_no = #{movieNo}
+		</if>
+		<if test="showDate != null">
+			and s.show_date = #{showDate}
+		</if>
+		order by
+			cn.cinema_name
+	</select>
+	
 	<!-- 전체 영화관 정보 List<CinemaDto> getAllCinemas(); -->
 	<select id="getAllCinemas" resultType="com.jhta.moviefan.dto.CinemaDto">
 		select

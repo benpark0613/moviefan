@@ -28,7 +28,6 @@ import com.jhta.moviefan.dao.MovieDao;
 import com.jhta.moviefan.dto.HomeTrailerDetailDto;
 import com.jhta.moviefan.dto.HomeTrailerDto;
 import com.jhta.moviefan.dto.MovieDetailDto;
-import com.jhta.moviefan.dto.MovieWithImagesDto;
 import com.jhta.moviefan.exception.MovieErrorException;
 import com.jhta.moviefan.form.MovieInsertForm;
 import com.jhta.moviefan.form.MovieUpdateForm;
@@ -61,19 +60,9 @@ public class MovieService {
 		return movieDao.getMovies(beginIndex, endIndex);
 	}
 	
-	public List<MovieWithImagesDto> getMoviesWithImagesNowPlaying(Map<String, Object> request) {
-		List<MovieWithImagesDto> moviesWithImagesNowPlaying = new ArrayList<>();
+	public List<Movie> getMoviesNowPlaying(Map<String, Object> request) {
 		List<Movie> moviesNowPlaying = movieDao.getMoviesNowPlaying(request);
-		
-		for (Movie movie : moviesNowPlaying) {
-			MovieWithImagesDto movieWithImages = new MovieWithImagesDto();
-			List<MovieImage> images = movieDao.getMovieImagesByMovieNo(movie.getNo());
-			BeanUtils.copyProperties(movie, movieWithImages);
-			movieWithImages.setImages(images);
-			moviesWithImagesNowPlaying.add(movieWithImages);
-		}
-		
-		return moviesWithImagesNowPlaying;
+		return moviesNowPlaying;
 	}
 	
 	public MovieDetailDto getMovieDetail(int movieNo) {
