@@ -30,6 +30,6 @@ public interface CinemaDao {
 	void updateSchedule(Show show);
 	
 	// 성근
-	Cinema getCinemaByCinemaNo(int CinemaNo);
+	Cinema getCinemaByCinemaNo(int cinemaNo);
 	
 }

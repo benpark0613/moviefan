@@ -133,6 +133,7 @@ public class CustomerService {
 		customerDao.deleteCustomerByNo(customerNo);
 	}
 	
+	// 찜한 영화 관련 메소드
 	public List<Movie> getAllCustomerMovieWishList(int customerNo) {
 		List<CustomerMovieWishList> customerMovieWishList = customerDao.getAllCustomerMovieWishListByCustomerNo(customerNo);
 		
@@ -145,21 +146,9 @@ public class CustomerService {
 		
 		return movies;
 	}
-	
-	/**
-	 * 찜한 영화 페이지네이션, 검색 처리를 위한 메소드, 전체 데이터 행 갯수를 반환한다. 
-	 * @param criteriaMyAccount
-	 * @return
-	 */
 	public int getTotalRows(CriteriaMyAccount criteriaMyAccount) {
 		return customerDao.getCustomerMovieWishListTotalRows(criteriaMyAccount);
 	}
-	
-	/**
-	 * 찜한 영화 페이지네이션, 검색 처리를 위한 메소드, 검색 조건에 맞는 데이터를 반환한다.
-	 * @param criteriaMyAccount
-	 * @return
-	 */
 	public List<Movie> searchCustomerMovieWishList(CriteriaMyAccount criteriaMyAccount) {
 		List<CustomerMovieWishList> customerMovieWishList = customerDao.searchCustomerMovieWishList(criteriaMyAccount);
 		
@@ -172,7 +161,6 @@ public class CustomerService {
 		
 		return movies;
 	}
-	
 	public int countCustomerMovieWishListByMovieNo(int movieNo) {
 		int countWishList = customerDao.countCustomerMovieWishListByMovieNo(movieNo);
 		
@@ -183,6 +171,7 @@ public class CustomerService {
 		customerDao.insertCustomerMovieWishListByMovieNo(wishList);
 	}
 	
+	// 찜한 극장 관련 메소드
 	public List<Cinema> getCustomerFavoriteCinemaList(int customerNo) {
 		List<Cinema> myCinemaList = new ArrayList<Cinema>();
 		
@@ -191,10 +180,8 @@ public class CustomerService {
 		for (CustomerCinemaFavorites customerCinemaFavorite  : customerCinemaFavorites) {
 			myCinemaList.add(cinemaDao.getCinemaByCinemaNo(customerCinemaFavorite.getCinemaNo()));
 		}
-		
 		return myCinemaList;
 	}
-	
 	public List<CityWithCinemasDto> getCityWithCinemas() {
 		List<City> cities = cinemaDao.getAllCities();
 		List<CityWithCinemasDto> dtos = new ArrayList<CityWithCinemasDto>();
@@ -206,10 +193,8 @@ public class CustomerService {
 			dto.setCinemas(cinemaDao.getCinemaListByCityNo(city.getNo()));
 			dtos.add(dto);
 		}
-		
 		return dtos;
 	}
-	
 	@Transactional
 	public void insertMyCinema(CustomerCinemaFavorites form) {
 		List<CustomerCinemaFavorites> savedFavorites = customerDao.getCustomerCinemaFavoritesByCustomerNo(form.getCustomerNo());
@@ -218,11 +203,23 @@ public class CustomerService {
 		}
 		for (CustomerCinemaFavorites saved : savedFavorites) {
 			if (saved.getCinemaNo() == form.getCinemaNo()) {
-				throw new MyCinemaErrorException("이미 즐겨찾기한 영화관 입니다.");
+				throw new MyCinemaErrorException("이미 자주가는 극장으로 등록한 영화관 입니다.");
 			}
 		}
 		customerDao.insertMyCinema(form);
 	}
+	public void deleteMyCinema(CustomerCinemaFavorites form) {
+		List<CustomerCinemaFavorites> savedFavorites = customerDao.getCustomerCinemaFavoritesByCustomerNo(form.getCustomerNo());
+		if (savedFavorites.size() == 0) {
+			throw new MyCinemaErrorException("자주가는 극장으로 등록한 영화관만 선택하실 수 있습니다.");
+		}
+		customerDao.deleteMyCinema(form);
+	}
+	
+	// 한줄평
+//	public void name() {
+//		
+//	}
 }
 
 

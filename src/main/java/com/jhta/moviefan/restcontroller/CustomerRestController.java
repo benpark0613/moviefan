@@ -40,12 +40,15 @@ public class CustomerRestController {
 	CinemaService cinemaService;
 	
 	@PostMapping("/deletemycinema") 
-	public ResponseDto<String> deleteMyCinema(@LoginedCustomer Customer customer,
-			@RequestParam(name = "cinemaNoList", required = true, value = "cinemaNoList[]") List<Integer> cinemaNo) {
+	public ResponseDto<String> deleteMyCinema(@LoginedCustomer Customer customer, @RequestParam(name = "cinemaNo", required = true) int cinemaNo) {
 		ResponseDto<String> response = new ResponseDto<String>();
+		CustomerCinemaFavorites form = new CustomerCinemaFavorites();
+		form.setCustomerNo(customer.getNo());
+		form.setCinemaNo(cinemaNo);
 		
+		customerService.deleteMyCinema(form);
 		
-		
+		response.setStatus("OK");
 		return response;
 	}
 	
@@ -62,7 +65,6 @@ public class CustomerRestController {
 		customerService.insertMyCinema(form);
 		
 		response.setStatus("OK");
-		
 		return response;
 	}
 	
@@ -74,7 +76,6 @@ public class CustomerRestController {
 		response.setStatus("OK");
 		response.setItem(dtos);
 
-		logger.info(response);
 		return response;
 	}
 	
@@ -91,7 +92,6 @@ public class CustomerRestController {
 		
 		response.setStatus("OK");
 		response.setItem(List.of("사용 가능한 닉네임입니다."));
-		
 		return response;
 	}
 	
@@ -103,7 +103,6 @@ public class CustomerRestController {
 		customerService.updateCustomerInfo(customer);
 		
 		response.setStatus("OK");
-		
 		return response;
 	}
 	
@@ -137,7 +136,6 @@ public class CustomerRestController {
 		response.setPagination(pagination);
 		response.setWishMovies(wishMovies);
 		response.setMovieImages(movieImages);
-		
 		return response;
 	}
 	

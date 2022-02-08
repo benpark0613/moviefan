@@ -51,11 +51,7 @@
 		<div class="modal-dialog modal-dialog-centered">
 			<div class="modal-content">
 				<div class="modal-header">
-					<h6 class="modal-title small">영화관을 선택하여 등록해주세요.<strong> 최대 3개까지</strong> 등록하실 수 있습니다.</h6>
-					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-				</div>
-				<div class="modal-body">
-					<div class="row mb-3">
+					<div class="row">
 						<form class="d-flex justify-content-start" method="post" id="form-select-mycinema">
 							<div class="col-3">
 								<select class="form-select form-select-sm" name="cityNo" id="select-city">
@@ -72,6 +68,9 @@
 							</div>
 						</form>
 					</div>
+					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+				</div>
+				<div class="modal-body">
 					<div class="row">
 						<p class="m-0">
 							<span class="fw-bolder">${LOGINED_CUSTOMER.nickName }님이 자주가는 극장</span>
@@ -83,9 +82,9 @@
 								<tr>
 									<c:choose>
 										<c:when test="${empty myCinemaList}">
-											<td class="col-3 fs-5 text-center"><button type="button" class="btn btn-outline-secondary" style="width: 120px; height: 60px;"></button></td>
-											<td class="col-3 fs-5 text-center"><button type="button" class="btn btn-outline-secondary" style="width: 120px; height: 60px;"></button></td>
-											<td class="col-3 fs-5 text-center"><button type="button" class="btn btn-outline-secondary" style="width: 120px; height: 60px;"></button></td>
+											<td class="col-3 fs-5 text-center"><button type="button" class="btn btn-outline-secondary" id="btn-empty-mycinema" style="width: 120px; height: 60px;"></button></td>
+											<td class="col-3 fs-5 text-center"><button type="button" class="btn btn-outline-secondary" id="btn-empty-mycinema" style="width: 120px; height: 60px;"></button></td>
+											<td class="col-3 fs-5 text-center"><button type="button" class="btn btn-outline-secondary" id="btn-empty-mycinema" style="width: 120px; height: 60px;"></button></td>
 										</c:when>
 										<c:otherwise>
 											<c:forEach var="cinema" items="${myCinemaList}">
@@ -97,11 +96,9 @@
 							</tbody>
 						</table>
 					</div>
-					
 				</div>
-				<div class="modal-footer">
-					<button type="button" class="btn btn-danger btn-sm" id="btn-send-mycinema">등록하기</button>
-					<button type="button" class="btn btn-outline-dark btn-sm" data-bs-dismiss="modal">취소</button>
+				<div class="modal-footer d-flex justify-content-center">
+					<h6 class="small">영화관을 선택하여 등록해주세요.<strong> 최대 3개까지</strong> 등록하실 수 있습니다.</h6>
 				</div>
 			</div>
 		</div>
@@ -278,6 +275,9 @@
 				<li><a class="dropdown-item-text text-decoration-none" href="" id="info-delete-item">회원 탈퇴</a></li>
 			</ul>
 		</li>
+		<li class="nav-item">
+			<a class="nav-link link-secondary text-dark text-decoration-none" href="" id="link-notice">공지/뉴스</a>
+		</li>
 	</ul>
 	
 	<%-- 서브메뉴 모음 --%>
@@ -355,12 +355,45 @@
 				<div class="row text-center"><p class="fs-1">작성글</p></div>
 			</div>
 		</div>
-		<div class="row d-none" id="my-comment">
-			<div class="col p-5 my-5">
-				<div class="row text-center"><i class="bi bi-exclamation-square" style="font-size: 5em;"></i></div>
-				<div class="row text-center"><p class="fs-1">한줄평</p></div>
-			</div>
-		</div>
+<!-- 		<div class="row d-flex justify-content-evenly d-none" id="my-comment"> -->
+<%-- 			<c:when test=""> --%>
+<%-- 				<c:choose> --%>
+<!-- 					<div class="col p-5 my-5"> -->
+<!-- 						<div class="row text-center"><i class="bi bi-exclamation-square" style="font-size: 5em;"></i></div> -->
+<!-- 						<div class="row text-center"><p class="fs-1">작성한 한줄평이 없습니다.</p></div> -->
+<!-- 					</div> -->
+<%-- 				</c:choose> --%>
+<%-- 				<c:otherwise> --%>
+<!-- 					<div class="col-8"> -->
+<!-- 						<div class="row d-flex justify-content-center"> -->
+<!-- 						</div> -->
+<!-- 						페이지 내비게이션 표시 -->
+<!-- 						<div class="row d-flex justify-content-center p-0 m-0 mt-4"> -->
+<!-- 							<div class="col" id=""> -->
+<!-- 							</div> -->
+<!-- 						</div> -->
+<!-- 						검색 표시 -->
+<!-- 						<div class="row d-flex justify-content-center p-0 m-0 mt-2"> -->
+<!-- 							<form class="row d-flex justify-content-center gx-1" id=""> -->
+<!-- 								<input type="hidden" name="current-page" value="1" /> -->
+<!-- 								<div class="col-2"> -->
+<!-- 									<select class="form-select" name="opt"> -->
+<!-- 										<option value="title" selected="selected">제목 검색</option> -->
+<!-- 										<option value="content">내용 검색</option> -->
+<!-- 									</select> -->
+<!-- 								</div> -->
+<!-- 								<div class="col-3"> -->
+<!-- 									<input type="text" class="form-control" name="value" placeholder="한줄평 검색"> -->
+<!-- 								</div> -->
+<!-- 								<div class="col-1"> -->
+<!-- 									<button type="button" class="btn btn-outline-dark w-100 h-100" id="">검색</button> -->
+<!-- 								</div> -->
+<!-- 							</form> -->
+<!-- 						</div> -->
+<!-- 					</div> -->
+<%-- 				</c:otherwise> --%>
+<%-- 			</c:when> --%>
+<!-- 		</div> -->
 		<div class="row d-none" id="my-reply">
 			<div class="col p-5 my-5">
 				<div class="row text-center"><i class="bi bi-exclamation-square" style="font-size: 5em;"></i></div>
@@ -483,6 +516,61 @@
 				</div>
 			</div>
 		</div>
+		<%-- 공지사항 --%>
+		<div class="row d-flex justify-content-evenly d-none" id="div-notice">
+			<div class="col-8">
+				<%-- 공지카테고리 --%>
+				<div class="row d-flex justify-content-start mt-3 ">
+					<p class="p-0 mb-1">무비팬의 주요한 이슈 및 여러가지 소식들을 확인하실 수 있습니다.</p>
+				</div>
+				<div class="row d-flex justify-content-start">
+					<ul class="nav nav-tabs">
+						<li class="nav-item fw-bolder">
+							<a class="nav-link active link-dark" href="#">전체</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link link-dark" href="#">시스템점검</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link link-dark" href="#">극장</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link link-dark" href="#">기타</a>
+						</li>
+					</ul>
+				</div>
+				<div class="row d-flex justify-content-start">
+					<p class="small fw-bold mt-3">총 0000건이 검색되었습니다.</p>
+				</div>
+				<%-- 공지글 --%>
+				<div class="row d-flex justify-content-center">
+				</div>
+				<%-- 페이지 내비게이션 표시 --%>
+				<div class="row d-flex justify-content-center p-0 m-0 mt-4">
+					<div class="col" id="">
+					</div>
+				</div>
+				<%-- 검색 표시 --%>
+				<div class="row d-flex justify-content-center p-0 m-0 mt-2">
+					<form class="row d-flex justify-content-center gx-1" id="">
+						<input type="hidden" name="current-page" value="1" />
+						<div class="col-2">
+							<select class="form-select" name="opt">
+								<option value="title" selected="selected">제목 검색</option>
+								<option value="content">내용 검색</option>
+							</select>
+						</div>
+						<div class="col-3">
+							<input type="text" class="form-control" name="value" placeholder="한줄평 검색">
+						</div>
+						<div class="col-1">
+							<button type="button" class="btn btn-outline-dark w-100 h-100" id="">검색</button>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+		
 	</div>
 	
 	
@@ -531,7 +619,7 @@ $(function() {
 			if ($nickName.attr("data-is-checked") === "N") {
 				alert('닉네임 중복체크를 해주세요.');
 				$nickName.focus();
-				return false;
+				return;
 			};
 			$.post('/rest/member/check-nickname', {nickName: $nickName.val()}, function(response) {
 				if (response.status == "FAIL") {
@@ -551,14 +639,25 @@ $(function() {
 		}
 	});
 	
-	// 나의 정보 패널 > my영화관
-	if ($('#table-mycinema tbody tr').children().length < 3) {
-		let row = `<td class="col-3 fs-5 text-center"><button type="button" class="btn btn-outline-secondary" style="width: 120px; height: 60px;"></button></td>`
-		for (var i = 0; i < 3 - $('#table-mycinema tbody tr').children().length; i++) {
+// 	// 나의 정보 패널 > my영화관
+// 	$('#table-mycinema tbody tr [data-cityno-of-cinema]').click(function(event) {
+// 		console.log($(this));
+// 		window.location.replace();
+// 	})
+	
+	if ($('#table-mycinema tbody tr [data-cityno-of-cinema]').length < 3) {
+		let row = `<td class="col-3 fs-5 text-center"><button type="button" class="btn btn-outline-secondary" id="btn-empty-mycinema" style="width: 120px; height: 60px;"></button></td>`
+		for (var i = 0; i < 3 - $('#table-mycinema tbody tr [data-cityno-of-cinema]').length; i++) {
 			$('#table-mycinema tbody tr').append(row);
 		}
 	}
-	// 나의 정보 패널 > my영화관 모달	
+	if ($('#modal-table-mycinema tbody tr').children().length < 3) {
+		let row = `<td class="col-3 fs-5 text-center"><button type="button" class="btn btn-outline-secondary" id="btn-empty-mycinema" style="width: 120px; height: 60px;"></button></td>`
+		for (var i = 0; i < 3 - $('#modal-table-mycinema tbody tr').children().length; i++) {
+			$('#modal-table-mycinema tbody tr').append(row);
+		}
+	}
+	// 나의 정보 패널 > my영화관 모달
 	$('#link-update-mycinema').click(function(event) {
 		event.preventDefault();
 		if ($('#modal-table-mycinema tbody tr').children().length < 3) {
@@ -596,22 +695,6 @@ $(function() {
 				}
 			}
 		});	
-		
-		// 모달 > 내 영화관 삭제
-		$('#modal-table-mycinema td').click(function(event) {
-			event.preventDefault();
-			let defaultRow = `<td class="col-3 fs-5 text-center"><button type="button" class="btn btn-outline-secondary" id="btn-empty-mycinema" style="width: 120px; height: 60px;"></button></td>`
-			
-			let cinemaNoList = new Array();
-			cinemaNoList.push($(this).find('button').attr('value'));
-			
-			
-			$.post(url, data, function(event) {
-				
-			})
-			
-		});
-		
 		// 모달 > 내 영화관 등록
 		$selectCityNo.change(function(event) {
 			event.preventDefault();
@@ -620,50 +703,22 @@ $(function() {
 			let $cityNoOfCinema = $selectCinemaNo.children('option[data-cityno-of-cinema]').addClass('d-none');
 			$selectCinemaNo.children('option[data-cityno-of-cinema='+cityNo+']').removeClass('d-none');
 		});
-		
 		$('#btn-add-mycinema').click(function(event) {
 			event.preventDefault();
 			let cityNo = $selectCityNo.children('option:selected').attr('value');
 			let cinemaNo = $selectCinemaNo.children('option:selected').attr('value');
 			let cinemaName = $selectCinemaNo.children('option:selected').text();
  			let savedCinemaNo = new Array();
-
 			$('#modal-table-mycinema button[data-cityno-of-cinema]').each(function() {
 				return savedCinemaNo.push($(this).attr('value'));
 			})
-			
-			checkMyCinemaForm(cityNo, cinemaNo, cinemaName, savedCinemaNo);
-			
-			$('#btn-send-mycinema').click(function(event) {
-				event.preventDefault();
-				checkMyCinemaForm(cityNo, cinemaNo, cinemaName, savedCinemaNo);
-// 				if ($('#table-mycinema tbody td [data-cinema-no]').length === 0) {
-// 					alert('지역과 극장을 선택해주세요.');
-// 					return;
-// 				}
-				$.post("/rest/member/addmycinema", {cinemaNo:cinemaNo}, function(response) {
-					if (response.status == "OK") {
-						alert("자주찾는 극장을 추가하였습니다.");
-						location.reload();
-					} else {
-						alert(response.error);
-					}
-				})
-			})
-		})
-		
-		function checkMyCinemaForm(cityNo, cinemaNo, cinemaName, savedCinemaNo) {
-			console.log("체크 cityNo: " + cityNo);
-			console.log("체크 cinemaNo: " + cinemaNo);
-			console.log("체크 cinemaName: " + cinemaName);
-			console.log("체크 savedCinemaNo: " + savedCinemaNo);
 			if (!cityNo || !cinemaNo) {
 				alert('지역과 극장을 선택해주세요.');
 				$('#select-city option:eq(0)').prop("selected", true);
 				$('#select-cinema option:eq(0)').prop("selected", true);
 				return;
 			}
-			if ($('#modal-table-mycinema tbody td').length === 3) {
+			if ($('#modal-table-mycinema button[data-cityno-of-cinema]').length === 3) {
 				alert('자주가는 극장은 최대 3곳까지 설정할 수 있습니다.');
 				$('#select-city option:eq(0)').prop("selected", true);
 				$('#select-cinema option:eq(0)').prop("selected", true);
@@ -677,10 +732,51 @@ $(function() {
 					return;
 				}
 			}
-			let replaceRow = '<td class="col-3 fs-5 text-center"><button type="button" class="btn btn-outline-secondary" value="'+cinemaNo+'" data-cityno-of-cinema="'+cityNo+'" style="width: 120px; height: 60px;">'+cinemaName+'<i class="bi bi-x-square"></i></button></td>'
-			$('#btn-empty-mycinema').replaceWith(replaceRow);
-		}
+			if (confirm("자주 찾는 극장으로 추가하시겠습니까?")) {
+				$.ajax({
+    				type: 'POST',
+    				url: '/rest/member/addmycinema',
+    				data: {cinemaNo:cinemaNo},
+    				success: function(response) {
+    					alert("자주찾는 극장을 추가하였습니다.");
+    					$('#link-update-mycinema').click
+   						location.reload();
+					},
+					fail: function(response) {
+						alert(response.error);
+					}
+    			}).done(function() {
+					let replaceRow = '<td class="col-3 fs-5 text-center"><button type="button" class="btn btn-outline-secondary" value="'+cinemaNo+'" data-cityno-of-cinema="'+cityNo+'" style="width: 120px; height: 60px;">'+cinemaName+'<i class="bi bi-x-square"></i></button></td>'
+					$('#btn-empty-mycinema').replaceWith(replaceRow);
+    			})
+			}	
+		})
 		
+		// 모달 > 내 영화관 삭제
+		$('#modal-table-mycinema td').click(function(event) {
+			event.preventDefault();
+			if (!$(this).find('button').attr('value')) {
+				return;
+			}
+			if (confirm("자주 찾는 극장에서 해제하시겠습니까?")) {
+                let cinemaNo = $(this).find('button').attr('value');
+    			console.log(cinemaNo);	
+    			
+    			$.ajax({
+    				type: 'POST',
+    				url: '/rest/member/deletemycinema',
+    				data: {cinemaNo:cinemaNo},
+    				success: function(response) {
+   						alert("해제가 완료되었습니다.");
+   						location.reload();
+   						$('#link-update-mycinema').click
+					},
+					fail: function(response) {
+						alert(response.error);
+					}
+    			})
+			}
+		});
 		
 	});
 	
@@ -939,9 +1035,50 @@ $(function() {
 		$('#my-info-tab').addClass('fw-bolder')
 		$('#info-delete').removeClass("d-none")
 	});
+	
+	// 공지사항
+	$('#link-notice').click(function(event) {
+		event.preventDefault();
+		$("#sub-menu-list-container > div").addClass("d-none")
+		$('#sub-menu-tab a').removeClass('fw-bolder')
+		$("#link-notice").addClass("fw-bolder")
+		$('#div-notice').removeClass("d-none")
+		
+	
+		
+	});
 })
 
 	
 </script>
 </body>
 </html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
