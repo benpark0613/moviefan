@@ -117,7 +117,22 @@
 		
 		// 검색폼에 onsubmit 이벤트 발생시키기
 		$("#form-search-book").trigger("submit");
-	})
+	});
+	
+	$("#btn-search-book").click(function() {
+		// 검색옵션값과 입력값을 조회한다.
+		var opt = $("select[name=opt]").val();
+		var value = $.trim($(":input[name=value]").val());
+		
+		// 검색옵션값과 입력값이 모두 존재하면 페이지번호를 1로 설정하고 폼에서 onsubmit 이벤트를 발생시켜서 폼 입력값이 서버로 제출되게 한다.
+		if (opt && value) {
+			$(":input[name=page]").val("1");
+			$("#form-search-book").trigger("submit");
+		} else {
+			alert("검색조건 혹은 검색어를 입력하세요");					
+		}
+		
+	});
 </script>
 </body>
 <%@ include file="/WEB-INF/views/common/footer.jsp"%>
