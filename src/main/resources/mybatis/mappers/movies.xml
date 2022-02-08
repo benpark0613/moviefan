@@ -65,7 +65,9 @@
 	
 	<!-- 홈에 뿌려줄 것 -->
 	<select id="getHomeMovieDetail" resultType="com.jhta.moviefan.dto.HomeTrailerDetailDto">
-		select  m.MOVIE_TITLE					as title, 
+		select  
+				m.MOVIE_NO						as no,
+				m.MOVIE_TITLE					as title, 
 				m.MOVIE_SUMMARY					as summary, 
 				m.MOVIE_TITLE_EN				as titleEn, 
 				t.MOVIE_TRAILER_URL_ADDRESS		as urlAddress, 
@@ -266,6 +268,14 @@
 		delete from movie_trailer
 		where movie_no = #{value}
 	</delete>
+	
+	<update id="updateHomeTrailerToN">
+		update MOVIE_TRAILER
+		set
+			IS_HOMETRAILER = 'N'
+		where
+			IS_HOMETRAILER = 'Y'
+	</update>
 	
 	<update id="updateHomeTrailer" parameterType="string">
 		update MOVIE_TRAILER

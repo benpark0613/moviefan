@@ -58,5 +58,6 @@ public interface MovieDao {
 	void deleteMovieImage(String filename);
 	void deleteMovieTrailer(int movieNo);
 	void updateHomeTrailer(String url);
+	void updateHomeTrailerToN();
 	
 }

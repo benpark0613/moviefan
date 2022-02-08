@@ -4,6 +4,7 @@ import java.util.Date;
 
 public class HomeTrailerDetailDto {
 	
+	private int no;
 	private String title;
 	private String titleEn;
 	private String summary;
@@ -11,6 +12,14 @@ public class HomeTrailerDetailDto {
 	private Date openDate;
 	
 	public HomeTrailerDetailDto() {}
+
+	public int getNo() {
+		return no;
+	}
+
+	public void setNo(int no) {
+		this.no = no;
+	}
 
 	public String getTitle() {
 		return title;
@@ -54,7 +63,7 @@ public class HomeTrailerDetailDto {
 
 	@Override
 	public String toString() {
-		return "HomeTrailerDetailDto [title=" + title + ", titleEn=" + titleEn + ", summary=" + summary
+		return "HomeTrailerDetailDto [no=" + no + ", title=" + title + ", titleEn=" + titleEn + ", summary=" + summary
 				+ ", urlAddress=" + urlAddress + ", openDate=" + openDate + "]";
 	}
 
