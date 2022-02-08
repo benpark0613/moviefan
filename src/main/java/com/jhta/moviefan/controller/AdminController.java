@@ -103,4 +103,16 @@ public class AdminController {
 		return "redirect:/admin/schedule/modify?showNo=" + show.getNo();
 	}
 	
+	// 공지사항
+	@GetMapping("/notice/list")
+	public String getNoticeList(Model model) {
+		
+		return "admin/notice/list";
+	}
+	@GetMapping("/notice/write")
+	public String writeNotice(Model model) {
+		
+		return "admin/notice/write";
+	}
+	
 }

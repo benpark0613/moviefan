@@ -34,7 +34,7 @@
 					<li class="nav-item me-4"><a class="nav-link text-secondary" href="/admin/schedule/list">상영일정</a></li>
 					<li class="nav-item me-4"><a class="nav-link text-secondary" href="#">회원정보</a></li>
 					<li class="nav-item me-4"><a class="nav-link text-secondary" href="#">매출통계</a></li>
-					<li class="nav-item me-4"><a class="nav-link text-secondary" href="#">게시판관리</a></li>
+					<li class="nav-item me-4"><a class="nav-link text-secondary" href="/admin/notice/list">공지사항</a></li>
 					<li class="nav-item me-4"><a class="nav-link text-secondary" href="/admin/movie/list">영화DB</a></li>
 					<li class="nav-item me-4"><a class="nav-link text-secondary" href="/admin/movie/search">영화검색/등록</a></li>
 				</ul>	

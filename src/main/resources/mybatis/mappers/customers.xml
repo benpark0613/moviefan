@@ -182,6 +182,12 @@
 		(#{customerNo}, #{cinemaNo})
 	</insert>
 	
+	<delete id="deleteMyCinema" parameterType="com.jhta.moviefan.vo.CustomerCinemaFavorites">
+		delete from customer_cinema_favorites
+		where customer_no = #{customerNo}
+		and cinema_no = #{cinemaNo}
+	</delete>
+	
 </mapper>
 
 
