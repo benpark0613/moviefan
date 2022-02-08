@@ -46,7 +46,7 @@
 			rn between #{beginIndex} and #{endIndex}
 	</select>
 	
-	<select id="getMoviesNowPlaying" resultMap="MovieResultMap">
+	<select id="getAllMoviesNowPlaying" resultMap="MovieResultMap">
 		select 
 			distinct m.*
 		from 
@@ -54,7 +54,25 @@
 		where 
 			s.show_start_time > current_date
 		and 
+			s.movie_no = m.movie_no;
+	</select>
+	
+	<select id="getMoviesNowPlaying" parameterType="map" resultMap="MovieResultMap">
+		select 
+			distinct m.*
+		from 
+			movie m, show s, cinema_hall ch
+		where 
+			s.show_start_time > current_date
+		and 
 			s.movie_no = m.movie_no
+		<if test="cinemaNo != null">
+			and s.hall_no = ch.hall_no
+			and ch.cinema_no = #{cinemaNo}
+		</if>
+		<if test="showDate != null">
+			and s.show_date = #{showDate}
+		</if>
 	</select>
 	
 	<select id="getMovieByMovieNo" parameterType="int" resultMap="MovieResultMap">

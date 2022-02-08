@@ -43,6 +43,14 @@ public class CinemaService {
 		return citiesWithCinemas;
 	}
 	
+	public List<CityWithCinemasDto> getCitiesWithCinemasNowPlaying() {
+		List<CityWithCinemasDto> CitiesWithCinemasNowPlaying = new ArrayList<>();
+		
+		
+		
+		return CitiesWithCinemasNowPlaying;
+	}
+	
 	public List<City> getAllCityList() {
 		return cinemaDao.getAllCities();
 	}
