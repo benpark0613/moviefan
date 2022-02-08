@@ -109,6 +109,7 @@
 		select
 		    a.city_no 											as cityNo,
 		    a.city_name 										as cityName,
+		    b.cinema_no											as cinemaNo,
 		    b.cinema_name 										as cinemaName,
 		    d.show_no                                    		as showNo,
 		    d.hall_no											as hallNo,
@@ -140,6 +141,7 @@
 		select
 		    a.city_no 											as cityNo,
 		    a.city_name 										as cityName,
+		    b.cinema_no											as cinemaNo,
 		    b.cinema_name 										as cinemaName,
 		    d.show_no                                    		as showNo,
 		    d.hall_no											as hallNo,
@@ -205,15 +207,5 @@
 		from cinema
 		where cinema_no = #{cinemaNo}
 	</select>
-	
 
-	<select id="getCinemaNameByNo" parameterType="int" resultType="com.jhta.moviefan.vo.Cinema">
-		select
-		    cinema_name as name
-		from
-		    cinema
-		where
-		    cinema_no = #{value}
-	</select>
-	
 </mapper>

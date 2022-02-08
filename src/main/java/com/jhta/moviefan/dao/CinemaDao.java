@@ -16,9 +16,9 @@ import com.jhta.moviefan.vo.Show;
 public interface CinemaDao {
 	
 	List<City> getAllCities();
-	List<City> getCityByNo(int no);
-	List<City> getCitiesNowPlaying(Map<String, Object> request);
-	List<Cinema> getCinemasNowPlaying(Map<String, Object> request);
+
+	City getCityByNo(int no);
+
 	List<CinemaDto> getAllCinemas();
 	
 	List<Cinema> getCinemaListByCityNo(int cityNo);
@@ -28,11 +28,9 @@ public interface CinemaDao {
 	MovieTimeTableDto getMovieTimeTableByShowNo(int showNo);
 	Show getShowByShowNo(int showNo);
 	
-	Cinema getCinemaNameByNo(int cinemaNo);
-	
 	void updateSchedule(Show show);
 	
 	// 성근
-	Cinema getCinemaByCinemaNo(int CinemaNo);
+	Cinema getCinemaByCinemaNo(int cinemaNo);
 	
 }

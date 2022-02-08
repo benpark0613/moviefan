@@ -27,6 +27,9 @@
 <%@ include file="/WEB-INF/views/admin/common/header.jsp" %>
 <div class="container">
 	
+	<input type="hidden" id="param-cityNo" name="paramCityNo" value="${param.cityNo }">
+	<input type="hidden" id="param-cinemaNo" name="paramCinemaNo" value="${param.cinemaNo }">
+	
 	<div class="row">
 		<div class="col">
 			<h1>상영일정 조회</h1>
@@ -40,13 +43,13 @@
 				<select id="city-select" name="city" class="form-select">
 					<option value="" selected disabled>-- 지역 --</option>
 					<c:forEach var="city" items="${cityList }">
-						<option value="${city.no }">${city.name }</option>
+						<option value="${city.no }" ${param.cityNo eq city.no ? 'selected' : '' }>${city.name }</option>
 					</c:forEach>
 				</select>
 			</div>
    			<div class="col-3">
    				<select id="cinema-select" name="cinema" class="form-select">
-					<option value="" selected disabled>-- 지역을 먼저 선택하세요. --</option>
+					<option value="" selected disabled>-- 영화관을 선택하세요. --</option>
 				</select>
    			</div>
  		</div>
@@ -79,32 +82,55 @@
 <script type="text/javascript">
 
 	$(function () {
-		let $firstSelect = $('#cinema-select').empty();
-		let secondSelect = '<option value="" selected disabled>-- 지역을 먼저 선택하세요. --</option>';
-		$firstSelect.append(secondSelect);
-	
-		// 지역이 변경될때마다 실행될 이벤트 핸들러 함수 
+		
+		// 1. 지역선택 셀렉트박스가 변경될 때마다 실행될 이벤트 핸들러 함수
 		$('#city-select').change(function () {
 			let no = $(this).val();
 			let $select = $("#cinema-select").empty();
 			$select.prepend('<option value="" disabled selected>--영화관을 선택하세요. --</option>');
 			
 			$.getJSON("/rest/cinema/list", {cityNo:no}, function (cinemaList) {
-				// [{no:10, name:"신촌점"}, {no:11, name:"홍대점"}]
 				$.each (cinemaList, function(index, cinema) {
-					let option = '<option value="' + cinema.no + '">' + cinema.name + '</option>';
-					
+					let option = '<option value="' + cinema.no + '" >' + cinema.name + '</option>';
 					$select.append(option);
 				})
 			})
 		})
 		
-		// 상영관이 변경될 때마다 실행될 이벤트 핸들러 함수
-		// http://localhost/rest/cinema/timetable?cinemaNo=342
+		// 2. 상영관이 변경될 때마다 실행될 이벤트 핸들러 함수
 		$('#cinema-select').change(function () {
+			let cinemaNo = $(this).val();			
+			// 지역별 영화관 리스트를 가져오는 함수 실행
+			getTimetableList(cinemaNo);
+		})
+		
+		
+		// 수정화면에서 목록으로 되돌아가기 버튼을 클릭했을 때의 파라미터값을 가져온다.
+		let paramCityNo = $('input[name=paramCityNo]').val();
+		let paramCinemaNo = $('input[name=paramCinemaNo]').val();
+		
+		// 파라미터가 비어있지 않다면(수정화면에서 목록으로 되돌아오기 버튼을 클릭한 경우) 실행되는 부분
+		if (paramCityNo != ""  && paramCinemaNo != "") {
+			// 지역별 영화관 셀렉트박스를 비운다.
+			let $select = $("#cinema-select").empty();
+			// ajax로 지역별 영화관 리스트를 받아온다.
+			$.getJSON("/rest/cinema/list", {cityNo:paramCityNo}, function (cinemaList) {
+				$.each (cinemaList, function(index, cinema) {
+					// 받아온 지역별 영화관 리스트의 cinemaNo와 파라미터값이 같다면 옵션이 선택되어 있도록 한다.
+					let option = '<option value="' + cinema.no + '"  '+(cinema.no == paramCinemaNo ? 'selected' : '')+'>' + cinema.name + '</option>';
+					// 영화관 셀렉트박스에 옵션을 채운다.
+					$select.append(option);
+				});
+				
+				// 영화관 셀렉트박스에 값이 채워졌으니 해당 상영관의 상영 스케줄을 조회해서 화면에 표시한다. 
+				getTimetableList(paramCinemaNo);
+			})
+		}
+
+		
+		
+		function getTimetableList(cinemaNo) {
 			$('#timetable tbody').empty();
-			let cinemaNo = $(this).val();
-			
 			$.getJSON("/rest/cinema/timetable", {cinemaNo:cinemaNo}, function (timetableList) {
 				
 				if (timetableList.length == 0) {
@@ -122,7 +148,7 @@
 							result += '<td>' + moment(timetable.showDate).format('YYYY-MM-DD') + '</td>'
 							result += '<td>' + moment(timetable.startTime).format('HH:mm') + ' ~ ' + moment(timetable.endTime).format('HH:mm') + '</td>'
 							result += '<td>상영중</td>'
-							result += '<td><a href="/admin/schedule/modify?showNo=' + timetable.showNo + '" class="btn btn-outline-primary btn-sm">수정</a></td>'
+							result += '<td><a href="/admin/schedule/modify?cityNo=' + timetable.cityNo+ '&cinemaNo=' + cinemaNo + '&showNo=' + timetable.showNo + '" class="btn btn-outline-primary btn-sm">수정</a>'
 							result += '</tr>';
 						
 						$('#timetable tbody').append(result);
@@ -139,7 +165,7 @@
 				
 				}
 			})
-		})
+		}
 	})	
 	
 </script>
