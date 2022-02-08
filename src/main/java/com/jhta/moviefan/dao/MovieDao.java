@@ -1,6 +1,7 @@
 package com.jhta.moviefan.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -30,7 +31,8 @@ public interface MovieDao {
 	
 	List<Movie> getAllMovies();
 	List<Movie> getMovies(@Param("beginIndex") int beginIndex, @Param("endIndex") int endIndex);
-	List<Movie> getMoviesNowPlaying();
+	List<Movie> getAllMoviesNowPlaying();
+	List<Movie> getMoviesNowPlaying(Map<String, Object> request);
 	
 	List<MovieImage> getMovieImagesByMovieNo(int movieNo);
 	List<MovieTrailer> getMovieTrailersByMovieNo(int movieNo);

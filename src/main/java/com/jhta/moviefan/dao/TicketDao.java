@@ -11,5 +11,5 @@ import com.jhta.moviefan.vo.Show;
 public interface TicketDao {
 
 	List<Show> getShowsNowPlaying();
-	Date[] getShowDates();
+	Date[] getShowDatesNowPlaying();
 }

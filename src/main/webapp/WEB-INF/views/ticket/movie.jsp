@@ -69,7 +69,8 @@
 <div class="container">
 	<div class="row my-3">
 		<div class="col-12">
-			<h1>영화선택</h1>
+			<h1 class="d-inline-flex">영화선택</h1>
+			<div class="d-inline-flex ms-2" id="spinner-box"></div>
 		</div>
 	</div>
 	<div class="row">
@@ -128,12 +129,12 @@
 								<c:forEach var="cinema" items="${city.cinemas }">
 									<c:choose>
 										<c:when test="${loop.count eq 1 }">
-											<c:set var = "name" value = "${cinema.name }"/>
-											<a class="list-group-item list-group-item-action bg-light border-light" data-city-no="${city.no }" data-cinema-no="${cinema.no }" data-bs-toggle="list" href="#"><span class="fw-bold">${fn:replace(name, 'MVF ', '')}</span></a>
+											<c:set var="name" value="${cinema.name }"/>
+											<a class="list-group-item list-group-item-action bg-light border-light" data-city-no="${city.no }" data-cinema-no="${cinema.no }" href="#"><span class="fw-bold">${fn:replace(name, 'MVF ', '')}</span></a>
 										</c:when>
 										<c:otherwise>
-											<c:set var = "name" value = "${cinema.name }"/>
-											<a class="list-group-item list-group-item-action bg-light border-light d-none" data-city-no="${city.no }" data-cinema-no="${cinema.no }" data-bs-toggle="list" href="#"><span class="fw-bold">${fn:replace(name, 'MVF ', '')}</span></a>
+											<c:set var="name" value="${cinema.name }"/>
+											<a class="list-group-item list-group-item-action bg-light border-light d-none" data-city-no="${city.no }" data-cinema-no="${cinema.no }" href="#"><span class="fw-bold">${fn:replace(name, 'MVF ', '')}</span></a>
 										</c:otherwise>
 									</c:choose>
 								</c:forEach>
@@ -147,10 +148,10 @@
 									<c:when test="${loop.count eq 1 }">
 										<c:set var="prevYear" value="${date.year }"/>
 										<c:set var="prevMonth" value="${date.month }" />
-										<a class="list-group-item list-group-item-action bg-light border-light text-center disabled" id="" data-bs-toggle="list" href="#">
-											<span class="d-block fw-bold" style="height: 15px;">${date.year }</span>
-											<span class="d-block fw-bold fs-2" style="height: 35px;">${date.month }</span>
-										</a>
+										<div class="bg-light border-light text-center text-secondary text-opacity-10 fw-bold">
+											<span class="d-block" style="height: 15px;">${date.year }</span>
+											<span class="d-block fs-2" style="height: 45px;">${date.month }</span>
+										</div>
 									</c:when>
 									<c:otherwise>
 										<c:set var="year" value="${date.year }" />
@@ -158,28 +159,31 @@
 										<c:if test="${prevYear ne year  || prevMonth ne month }">
 											<c:set var="prevYear" value="${date.year }"/>
 											<c:set var="prevMonth" value="${date.month }" />
-											<a class="list-group-item list-group-item-action bg-light border-light text-center disabled" id="" data-bs-toggle="list" href="#">
-												<span class="d-block fw-bold" style="height: 15px;">${date.year }</span>
-												<span class="d-block fw-bold fs-2" style="height: 35px;">${date.month }</span>
-											</a>
+											<div class="bg-light border-light text-center text-secondary text-opacity-10 fw-bold">
+												<span class="d-block" style="height: 15px;">${date.year }</span>
+												<span class="d-block fs-2 align-top" style="height: 45px;">${date.month }</span>
+											</div>
 										</c:if>
 									</c:otherwise>
 								</c:choose>
 								<c:choose>
 									<c:when test="${date.day eq 7 }">
-										<a class="list-group-item list-group-item-action bg-light border-light text-center text-primary" id="" data-bs-toggle="list" href="#">
+										<fmt:formatDate var="showDate" value="${date.date }" pattern="yyyy-MM-dd" />
+										<a class="list-group-item list-group-item-action bg-light border-light text-center text-primary" data-show-date="${showDate }" href="#">
 											<span class="float-start fw-bold"><fmt:formatDate value="${date.date }" pattern="E" /></span>
 											<span class="float-end fw-bold"><fmt:formatDate value="${date.date }" pattern="d" /></span>
 										</a>
 									</c:when>
 									<c:when test="${date.day eq 1 }">
-										<a class="list-group-item list-group-item-action bg-light border-light text-center text-danger" id="" data-bs-toggle="list" href="#">
+										<fmt:formatDate var="showDate" value="${date.date }" pattern="yyyy-MM-dd" />
+										<a class="list-group-item list-group-item-action bg-light border-light text-center text-danger"  data-show-date="${showDate }"  href="#">
 											<span class="float-start fw-bold"><fmt:formatDate value="${date.date }" pattern="E" /></span>
 											<span class="float-end fw-bold"><fmt:formatDate value="${date.date }" pattern="d" /></span>
 										</a>
 									</c:when>
 									<c:otherwise>
-										<a class="list-group-item list-group-item-action bg-light border-light text-center" id="" data-bs-toggle="list" href="#">
+										<fmt:formatDate var="showDate" value="${date.date }" pattern="yyyy-MM-dd" />
+										<a class="list-group-item list-group-item-action bg-light border-light text-center" data-show-date="${showDate }" href="#">
 											<span class="float-start fw-bold"><fmt:formatDate value="${date.date }" pattern="E" /></span>
 											<span class="float-end fw-bold"><fmt:formatDate value="${date.date }" pattern="d" /></span>
 										</a>
@@ -270,6 +274,16 @@
 </div>
 <script type="text/javascript">
 	$(function() {
+		$("#movie-list-box").on("click", ".list-group-item", function(event) {
+			event.preventDefault();
+			var isSelected = $(this).hasClass("active");
+			if (!isSelected) {
+				$("#movie-list-box a").removeClass("active");
+				$(this).addClass("active");				
+				var movieNo = $(this).attr("data-movie-no");
+				console.log(movieNo);
+			}
+		});
 		
 		$("#city-list-box").on("click", ".list-group-item", function(event) {
 			event.preventDefault();
@@ -283,33 +297,73 @@
 			}
 		});
 		
-		$("#movie-list-box").on("click", ".list-group-item", function(event) {
+		$("#cinema-list-box").on("click", ".list-group-item", function(event) {
 			event.preventDefault();
 			var isSelected = $(this).hasClass("active");
 			if (!isSelected) {
-				$("#movie-list-box a").removeClass("active");
+				$("#cinema-list-box a").removeClass("active");
 				$(this).addClass("active");				
-				var movieNo = $(this).attr("data-movie-no");
-				console.log(movieNo);
+				var cinemaNo = $(this).attr("data-cinema-no");
+				var showDate = $("#date-list-box a.active").attr("data-show-date");
+				getMovies(cinemaNo, showDate);
 			}
 		});
+		
+		$("#date-list-box").on("click", ".list-group-item", function(event) {
+			event.preventDefault();
+			var isSelected = $(this).hasClass("active");
+			if (!isSelected) {
+				$("#date-list-box a").removeClass("active");
+				$(this).addClass("active");			
+				
+				var cinemaNo = $("#cinema-list-box a.active").attr("data-cinema-no");
+				var showDate = $(this).attr("data-show-date");
+				getMovies(cinemaNo, showDate);
+			}
+		});
+		
 		
 	});
 
 	
-	function getMovieList() {
+	function getMovies(cinemaNo = null, showDate = null) {
+		console.log("getMoives(" + cinemaNo +"," + showDate + ")");
+		var $spinnerBox = $("#spinner-box");
+		var $movieInputBox = $("#movie-list-box").empty();
+		$.ajax({
+			type: "get",
+			url: "/rest/ticket/movie",
+			data: {
+				cinemaNo: cinemaNo,
+				showDate: showDate
+			},
+			dataType: "json",
+			beforeSend: function() {
+				var row = '<div class="spinner-border spinner-border-md" role="status">'
+					+ '<span class="visually-hidden">Loading...</span>'
+					+ '</div>';
+				$spinnerBox.append(row);
+			},
+			success: function(movies) {
+				$spinnerBox.empty();
+				if (movies.length == 0) {
+					
+				}
+				console.log(movies[0].no);
+				
+			},
+			error: function() {
+				$spinnerBox.empty();
+				alert("오류가 발생하였습니다.");
+			}
+		});
+	}
+	
+	function getCityWithCinemas(movieNo, showDate) {
 		
 	}
 	
-	function getCityList() {
-		
-	}
-	
-	function getCinemaList() {
-		
-	}
-	
-	function getDateList() {
+	function getShowDates() {
 		
 	}
 

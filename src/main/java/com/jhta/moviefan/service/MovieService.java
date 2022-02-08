@@ -61,20 +61,19 @@ public class MovieService {
 		return movieDao.getMovies(beginIndex, endIndex);
 	}
 	
-	public List<MovieWithImagesDto> getMoviesNowPlaying() {
-		List<MovieWithImagesDto> movies = new ArrayList<>();
-		List<Movie> moviesNowPlaying = movieDao.getMoviesNowPlaying();
+	public List<MovieWithImagesDto> getMoviesWithImagesNowPlaying(Map<String, Object> request) {
+		List<MovieWithImagesDto> moviesWithImagesNowPlaying = new ArrayList<>();
+		List<Movie> moviesNowPlaying = movieDao.getMoviesNowPlaying(request);
 		
 		for (Movie movie : moviesNowPlaying) {
 			MovieWithImagesDto movieWithImages = new MovieWithImagesDto();
-		
 			List<MovieImage> images = movieDao.getMovieImagesByMovieNo(movie.getNo());
 			BeanUtils.copyProperties(movie, movieWithImages);
 			movieWithImages.setImages(images);
-			movies.add(movieWithImages);
+			moviesWithImagesNowPlaying.add(movieWithImages);
 		}
 		
-		return movies;
+		return moviesWithImagesNowPlaying;
 	}
 	
 	public MovieDetailDto getMovieDetail(int movieNo) {
