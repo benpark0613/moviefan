@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.jhta.moviefan.annotation.LoginedCustomer;
 import com.jhta.moviefan.exception.LoginErrorException;
+import com.jhta.moviefan.exception.RestLoginErrorException;
 import com.jhta.moviefan.form.CriteriaMyAccount;
 import com.jhta.moviefan.form.CustomerRegisterForm;
 import com.jhta.moviefan.pagination.Pagination;
@@ -41,12 +42,15 @@ public class CustomerController {
 	private CustomerService customerService;
 	@Autowired
 	private MovieService movieService;
+	@Autowired
+	private BCryptPasswordEncoder bCryptPasswordEncoder;
 	
 	// MY MVF
 	@GetMapping("/myaccount")
 	public String myAccount(@LoginedCustomer Customer customer, 
 			@RequestParam(name = "page", required = false, defaultValue = "1") String page,	CriteriaMyAccount criteriaMyAccount, Model model) {
 		
+		LOGGER.info("customer의 값: " + customer);
 		criteriaMyAccount.setCustomerNo(customer.getNo());
 		int totalRecords = customerService.getTotalRows(criteriaMyAccount);
 		Pagination pagination = new Pagination(page, totalRecords, 8);
@@ -82,15 +86,12 @@ public class CustomerController {
 		if (!customer.getId().equals(id)) {
 			throw new LoginErrorException("아이디를 확인해주세요.");
 		}
-		
-		if (!customer.getPassword().equals(password)) {
-			throw new LoginErrorException("비밀번호가 일치하지 않습니다.");
+		if (!bCryptPasswordEncoder.matches(password, customer.getPassword())) {
+			throw new RestLoginErrorException("비밀번호가 일치하지 않습니다.");	
 		}
 		
 		return "member/myinfo/modifyform";
 	}
-	
-	
 	@PostMapping("/myinfo/modify-customer-info")
 	public String modifyCustomerInfo(@LoginedCustomer Customer customer, CustomerRegisterForm modifyform) {
 		BeanUtils.copyProperties(modifyform, customer);
@@ -112,8 +113,8 @@ public class CustomerController {
 			throw new LoginErrorException("아이디를 확인해주세요.");
 		}
 		
-		if (!customer.getPassword().equals(password)) {
-			throw new LoginErrorException("비밀번호가 일치하지 않습니다.");
+		if (!bCryptPasswordEncoder.matches(password, customer.getPassword())) {
+			throw new RestLoginErrorException("비밀번호가 일치하지 않습니다.");	
 		}
 		
 		return "/member/myinfo/checkwithdrawal";

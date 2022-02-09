@@ -39,6 +39,17 @@ public class CustomerService {
 	@Autowired
 	private BCryptPasswordEncoder bCryptPasswordEncoder;
 	
+	// 관리자 여부
+	public boolean isAdmin(int customerNo) {
+		Customer savedCustomer = customerDao.getCustomerByNo(customerNo);
+		if ("Y".equals(savedCustomer.getIsAdmin())) {
+			return true;
+		} else {
+			return false;
+		}
+		
+	}
+	
 	// 일반 회원가입
 	public Customer registerCustomer(Customer customer) {
 		Customer savedCustomer = customerDao.getCustomerById(customer.getId());
@@ -107,6 +118,7 @@ public class CustomerService {
 		return savedCustomer;
 	}
 	
+	// 회원 찾기
 	public Customer getCustomerById(String id) {
 		Customer savedCustomer = customerDao.getCustomerById(id);
 		return savedCustomer;
@@ -124,11 +136,11 @@ public class CustomerService {
 		return savedCustomer;
 	}
 	
+	// 회원정보 업데이트
 	public void updateCustomerInfo(Customer customer) {
-		
 		customerDao.updateCustomer(customer);
 	}
-	
+	// 회원정보 삭제
 	public void deleteCustomerInfo(int customerNo) {
 		customerDao.deleteCustomerByNo(customerNo);
 	}

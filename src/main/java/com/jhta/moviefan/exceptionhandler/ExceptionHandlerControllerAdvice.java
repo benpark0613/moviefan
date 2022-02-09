@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.jhta.moviefan.dto.ResponseDto;
+import com.jhta.moviefan.exception.AdminErrorException;
 import com.jhta.moviefan.exception.CustomException;
 import com.jhta.moviefan.exception.LoginErrorException;
 import com.jhta.moviefan.exception.MovieErrorException;
@@ -64,6 +65,11 @@ public class ExceptionHandlerControllerAdvice {
 	}
 	
 	// 에러페이지 응답
+	@ExceptionHandler(AdminErrorException.class)
+	public String handleAdminErrorException(AdminErrorException e) {
+		return "member/loginform";
+	}
+	
 	@ExceptionHandler(LoginErrorException.class)
 	public String handleLoginErrorException(LoginErrorException e) {
 		e.printStackTrace();

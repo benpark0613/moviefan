@@ -180,7 +180,7 @@ public class HomeController {
 	@PostMapping("**/newpassword")
 	public String changePassword(CustomerRegisterForm form) {
 		Customer savedCustomer = customerService.getCustomerByEmail(form.getEmail());
-		savedCustomer.setPassword(form.getPassword());
+		savedCustomer.setPassword(bCryptPasswordEncoder.encode(form.getPassword()));
 		customerService.updateCustomerInfo(savedCustomer);
 		
 		return "redirect:/member/myinfo/modifycompleted";

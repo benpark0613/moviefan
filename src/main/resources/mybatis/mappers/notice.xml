@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jhta.moviefan.dao.NoticeDao">
+	<resultMap type="com.jhta.moviefan.vo.Notice" id="NoticeResultMap">
+		<id column="notice_no"	property="no"/>
+		<result column="notice_title" 			property="title"/>
+		<result column="notice_content" 		property="content"/>
+		<result column="notice_created_date" 	property="createdDate"/>
+		<result column="notice_updated_date" 	property="updatedDate"/>
+		<result column="notice_view_count" 		property="viewCount"/>
+		<result column="notice_deleted" 		property="isDeleted"/>
+		<result column="category_no" 			property="categoryNo"/>
+		<result column="customer_no" 			property="customerNo"/>
+	</resultMap>
+	
+	<!-- 공지글 -->
+	<insert id="insertNotice" parameterType="com.jhta.moviefan.vo.Notice">
+		<selectKey keyProperty="no" resultType="int" order="BEFORE">
+			select notice_seq.nextval
+			from dual
+		</selectKey>
+		insert into notice
+		(notice_no, notice_title, notice_content, category_no, customer_no)
+		values
+		(#{no}, #{title}, #{content}, #{categoryNo}, #{customerNo})
+	</insert>
+	<update id="updateNotice" parameterType="com.jhta.moviefan.vo.Notice">
+		update notice
+		set
+			notice_title = #{title}, 
+			notice_content = #{content},
+			notice_updated_date = sysdate,
+			notice_deleted = #{isDeleted},
+			category_no = #{categoryNo}
+		where
+			notice_no = #{no}
+	</update>
+	
+	<select id="getAllNoticeList" resultMap="NoticeResultMap">
+		select *
+		from notice
+		where NOTICE_DELETED = 'N'
+		order by notice_created_date
+	</select>
+	
+	<select id="getNoticeTotalRows" parameterType="com.jhta.moviefan.form.Criteria" resultType="int">
+		select count(*)
+		from notice
+		<where>
+			NOTICE_DELETED = 'N'
+			<if test="opt != null and value != null">
+				<choose>
+					<when test="opt == '제목'">
+						and notice_title like '%' || #{value} || '%'
+					</when>
+					<when test="opt == '내용'">
+						and notice_content like '%' || #{value} || '%'
+					</when>
+				</choose>
+			</if>
+		</where>
+	</select>
+	
+	<select id="searchNoticeList" parameterType="com.jhta.moviefan.form.Criteria" resultMap="NoticeResultMap">
+		select *
+		from (
+			select n.*, row_number() over (order by notice_created_date desc) rn
+			from notice n
+			<where>
+				NOTICE_DELETED = 'N'
+				<if test="opt != null and value != null">
+					<choose>
+						<when test="opt == 'title'">
+							and notice_title like '%' || #{value} || '%'
+						</when>
+						<when test="opt == 'content'">
+							and notice_content like '%' || #{value} || '%'
+						</when>
+					</choose>
+				</if>
+			</where> 			
+		)
+		where rn between #{beginIndex} and #{endIndex}
+	</select>
+	
+	<select id="getNoticeDetailByNo" parameterType="int" resultMap="NoticeResultMap">
+		select *
+		from notice
+		where notice_no = #{value}
+	</select>
+	
+	<!-- 공지글 이미지 -->
+	<insert id="insertNoticeImage" parameterType="com.jhta.moviefan.vo.NoticeImage">
+		insert into notice_image
+		(notice_no, notice_filename)
+		values
+		(#{noticeNo}, #{image})
+	</insert>
+	<select id="getNoticeImageByNo" parameterType="int" resultType="com.jhta.moviefan.vo.NoticeImage">
+		select
+			notice_no 		as noticeNo,
+			notice_filename as image
+		from notice_image
+		where notice_no = #{value}
+	</select>
+	
+	<!-- 공지글 카테고리 -->
+	<select id="getAllNoticeCategories" resultType="com.jhta.moviefan.vo.NoticeCategory">
+		select 
+			category_no 	as categoryNo,
+			category_name 	as name
+		from notice_category
+	</select>
+</mapper>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
