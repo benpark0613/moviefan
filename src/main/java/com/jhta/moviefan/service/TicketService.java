@@ -30,8 +30,8 @@ public class TicketService {
 		return ticketDao.getShowsNowPlaying();
 	}
 	
-	public List<Map<String, Object>> getShowDatesNowPlaying() {
-		Date[] dates = ticketDao.getShowDatesNowPlaying();
+	public List<Map<String, Object>> getShowDatesNowPlaying(Map<String, Integer> request) {
+		Date[] dates = ticketDao.getShowDatesNowPlaying(request);
 		
 		List<Map<String, Object>> showDatesNowPlaying = Arrays.stream(dates).map(date -> {
 			Calendar c = Calendar.getInstance();

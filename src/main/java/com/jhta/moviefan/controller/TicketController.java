@@ -34,7 +34,7 @@ public class TicketController {
 	public String movie(Model model) {
 		List<Movie> movies = movieService.getMoviesNowPlaying(null);
 		List<CityWithCinemasDto> cities = cinemaService.getCitiesWithCinemas();
-		List<Map<String, Object>> dates = ticketService.getShowDatesNowPlaying();
+		List<Map<String, Object>> dates = ticketService.getShowDatesNowPlaying(null);
 		
 		model.addAttribute("movies", movies); 
 		model.addAttribute("cities", cities);
