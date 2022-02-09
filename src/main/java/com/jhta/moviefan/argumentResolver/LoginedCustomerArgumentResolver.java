@@ -27,7 +27,7 @@ public class LoginedCustomerArgumentResolver implements HandlerMethodArgumentRes
 
 	@Override
 	public boolean supportsParameter(MethodParameter parameter) {
-		logger.info("@LoginedUser 어노테이션을 가지고 있는가? " + parameter.hasParameterAnnotation(LoginedCustomer.class));
+		logger.info("@Logined_Customer 어노테이션을 가지고 있는가? " + parameter.hasParameterAnnotation(LoginedCustomer.class));
 		logger.info("매개변수의 클래스이름: " + parameter.getParameterType().getName());
 		logger.info("매개변수의 이름: " + parameter.getParameterName());
 		return parameter.hasParameterAnnotation(LoginedCustomer.class);

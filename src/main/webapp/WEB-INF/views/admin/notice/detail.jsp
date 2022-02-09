@@ -33,43 +33,48 @@
 <div class="container">
 	<div class="row d-flex justify-content-center mb-3">
 		<div class="col-10">
-			<div class="row">
+			<div class="row mb-2">
 				<h1>공지사항</h1>
 			</div>
-			<div class="row">
-				<!-- 
-					폼 입력요소에 <input type="file" />인 입력요소(첨부파일 업로드)가 있을 경우
-					method는 반드시 post로 설정한다.
-					enctype는 반드시 multipart/form-data로 설정한다.
-				 -->
-				<form class="border bg-light p-3" method="post" action="insert" enctype="multipart/form-data">
-					<div class="row mb-3">
-						<div class="col">
-							<label class="form-label">제목</label>
-							<input type="text" class="form-control" name="title" />
-						</div>
-						<div class="col">
-							<label class="form-label">구분</label>
-							<select class="form-select form-select-sm" name="categoryNo">
-								<option value="100">시스템점검</option>
-								<option value="200">극장</option>
-								<option value="300" selected="selected">기타</option>
-							</select>
-						</div>
+			<div class="row bg-light border-top">
+				<div class="col d-flex justify-content-start">
+						<p class="fw-bold me-1 my-2">
+							<c:forEach var="category" items="${categories }">
+								<c:if test="${category.categoryNo eq notice.categoryNo }">
+									[${category.name }]
+								</c:if>
+							</c:forEach>
+						</p>
+						<p class="fw-bold me-auto my-2">
+							${notice.title}
+						</p>
+						<p class="fw-bold text-end me-2 my-2">
+							등록일 <fmt:formatDate value="${notice.createdDate}" pattern="yyyy-MM-dd" />
+						</p>
+						<p class="fw-bold text-end my-2">
+							조회수 ${notice.viewCount }
+						</p>
+					
+				</div>
+			</div>
+			<div class="row border-bottom">
+				<div class="col p-5">
+					<div class="row mb-2">
+						<c:if test="${not empty noticeImage }">
+							<img class="img-thumbnail w-25" src="/resources/images/admin/${noticeImage.image }">
+						</c:if>
 					</div>
-					<div class="row mb-3">
-						<label class="form-label">내용</label>
-						<textarea class="form-control" rows="10" name="content"></textarea>
+					<div class="row">
+						<p>${notice.content }</p>
 					</div>
-					<div class="row mb-3">
-						<label class="form-label">첨부사진</label>
-						<input type="file" class="form-control" name="upfile"/>
-					</div>
-					<div class="text-end">
-						<a href="list" class="btn btn-secondary">취소</a>
-						<button type="submit" class="btn btn-primary">등록</button>
-					</div>
-				</form>
+				</div>
+			</div>
+			<div class="row my-2">
+				<div class="col d-flex justify-content-end">
+					<a href="/admin/notice/list?no=${param.no }" class="btn btn-primary" type="button">목록으로</a>
+					<a href="/admin/notice/update?no=${param.no }" class="btn btn-secondary ms-2" type="button">수정</a>
+					<a href="/admin/notice/delete?no=${param.no }" class="btn btn-dark ms-2" type="button">삭제</a>
+				</div>
 			</div>
 		</div>	
 	</div>

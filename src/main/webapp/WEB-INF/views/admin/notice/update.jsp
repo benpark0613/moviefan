@@ -37,37 +37,29 @@
 				<h1>공지사항</h1>
 			</div>
 			<div class="row">
-				<!-- 
-					폼 입력요소에 <input type="file" />인 입력요소(첨부파일 업로드)가 있을 경우
-					method는 반드시 post로 설정한다.
-					enctype는 반드시 multipart/form-data로 설정한다.
-				 -->
-				<form class="border bg-light p-3" method="post" action="insert" enctype="multipart/form-data">
+				<form class="border bg-light p-3" method="post" action="update">
 					<div class="row mb-3">
 						<div class="col">
 							<label class="form-label">제목</label>
-							<input type="text" class="form-control" name="title" />
+							<input type="text" class="form-control" value="${notice.title }" name="title" />
 						</div>
 						<div class="col">
 							<label class="form-label">구분</label>
-							<select class="form-select form-select-sm" name="categoryNo">
-								<option value="100">시스템점검</option>
-								<option value="200">극장</option>
-								<option value="300" selected="selected">기타</option>
+							<select class="form-select" name="categoryNo">
+								<option value="100" ${notice.categoryNo eq 100 ? 'selected' : ''}>시스템점검</option>
+								<option value="200" ${notice.categoryNo eq 200 ? 'selected' : ''}>극장</option>
+								<option value="300" ${notice.categoryNo eq 300 ? 'selected' : ''}>기타</option>
 							</select>
 						</div>
 					</div>
 					<div class="row mb-3">
 						<label class="form-label">내용</label>
-						<textarea class="form-control" rows="10" name="content"></textarea>
-					</div>
-					<div class="row mb-3">
-						<label class="form-label">첨부사진</label>
-						<input type="file" class="form-control" name="upfile"/>
+						<textarea class="form-control" rows="10" name="content">${notice.content }</textarea>
 					</div>
 					<div class="text-end">
+						<input type="hidden" name="no" value="${notice.no }">
 						<a href="list" class="btn btn-secondary">취소</a>
-						<button type="submit" class="btn btn-primary">등록</button>
+						<button type="submit" class="btn btn-primary">수정</button>
 					</div>
 				</form>
 			</div>

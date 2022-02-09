@@ -180,7 +180,7 @@
 							<tbody class="mx-3">
 								<tr>
 									<c:forEach var="cinema" items="${myCinemaList}" varStatus="loop">
-										<td class="col-3 fs-5 text-center"><button type="button" class="btn btn-outline-secondary" value="${cinema.no }" data-cityno-of-cinema="${cinema.cityNo }" style="width: 120px; height: 60px;">${cinema.name }</button></td>
+										<td class="col-3 fs-5 text-center"><a href="/cinema/timetable?cinemaNo=${cinema.no }"><button type="button" class="btn btn-outline-secondary" value="${cinema.no }" data-cityno-of-cinema="${cinema.cityNo }" style="width: 120px; height: 60px;">${cinema.name }</button></a></td>
 									</c:forEach>
 								</tr>
 							</tbody>
@@ -218,7 +218,7 @@
 										  		<img src="/resources/images/movie/${movieImage.filename }" class="w-100 my-auto" alt="...">
 											</div>
 											<div class="card-body d-flex justify-content-center p-0">
-												<a type="button" class="btn btn-danger w-100"><span>상세정보</span></a>
+												<a href="/movie/detail?no=${entry.key.no}" type="button" class="btn btn-danger w-100"><span>상세정보</span></a>
 												<a type="button" class="btn btn-outline-secondary"><span class="bi bi-heart-fill"></span></a>
 											</div>
 										</div>
@@ -642,6 +642,8 @@ $(function() {
 // 	// 나의 정보 패널 > my영화관
 // 	$('#table-mycinema tbody tr [data-cityno-of-cinema]').click(function(event) {
 // 		console.log($(this));
+// 		console.log($(this).attr('value'));
+		
 // 		window.location.replace();
 // 	})
 	
@@ -894,7 +896,7 @@ $(function() {
 								row += '<img src="/resources/images/movie/' + wishMovie.filenames[0] + '" class="w-100 my-auto" alt="...">';
 								row += '</div>';
 								row += '<div class="card-body d-flex justify-content-center p-0">';
-								row += '<a type="button" class="btn btn-danger w-100"><span class="fs-6">상세정보</span></a>';
+								row += '<a href="/movie/detail?no='+ wishMovie.no+'" type="button" class="btn btn-danger w-100"><span class="fs-6">상세정보</span></a>';
 								row += '<a type="button" class="btn btn-outline-secondary"><span class="bi bi-heart-fill"></span></a>';
 								row += '</div>';
 								row += '</div>';

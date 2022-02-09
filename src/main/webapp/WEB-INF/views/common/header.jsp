@@ -52,7 +52,7 @@
 	</div>
 </div>
 <!-- 상단 네비 -->
-<header class="mb-3">
+<header class="">
 	<div class="py-4 border-bottom">
 		<div class="container">
 			<div class="d-flex">

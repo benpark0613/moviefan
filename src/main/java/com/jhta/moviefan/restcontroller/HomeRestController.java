@@ -32,7 +32,7 @@ public class HomeRestController {
 	private CustomerService customerService;
 	@Autowired
 	private MovieService movieService;
-  @Autowired
+	@Autowired
 	private BCryptPasswordEncoder bCryptPasswordEncoder;
 
 
@@ -43,7 +43,6 @@ public class HomeRestController {
 		
 		Customer customer = customerService.login(id, password);
 		SessionUtils.addAttribute("LOGINED_CUSTOMER", customer);
-		
 		response.setStatus("OK");
 		
 		return response;
@@ -107,7 +106,6 @@ public class HomeRestController {
 	public ResponseDto<HomeTrailerDto> homeTrailer(){
 		ResponseDto<HomeTrailerDto> response = new ResponseDto<>();
 		List<HomeTrailerDto> movie = movieService.getHomeTrailer();
-		
 		
 		response.setItem(movie);
 		
