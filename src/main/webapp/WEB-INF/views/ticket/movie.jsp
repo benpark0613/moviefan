@@ -9,6 +9,8 @@
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+	<!-- <script src="https://cdn.jsdelivr.net/npm/moment@2.29.1/moment.min.js"></script> -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment-with-locales.min.js"></script>
 	<style type="text/css">
 		/*
 			스크롤바 CSS 설정
@@ -161,7 +163,7 @@
 											<c:set var="prevMonth" value="${date.month }" />
 											<div class="bg-light border-light text-center text-secondary text-opacity-10 fw-bold">
 												<span class="d-block" style="height: 15px;">${date.year }</span>
-												<span class="d-block fs-2 align-top" style="height: 45px;">${date.month }</span>
+												<span class="d-block fs-2" style="height: 45px;">${date.month }</span>
 											</div>
 										</c:if>
 									</c:otherwise>
@@ -273,6 +275,8 @@
 	</div>
 </div>
 <script type="text/javascript">
+	moment.locale('ko');
+	
 	$(function() {
 		$("#movie-list-box").on("click", ".list-group-item", function(event) {
 			event.preventDefault();
@@ -281,9 +285,13 @@
 				$("#movie-list-box a").removeClass("active");
 				$(this).addClass("active");				
 				var movieNo = $(this).attr("data-movie-no");
+				var cinemaNo = $("#cinema-list-box a.active").attr("data-cinema-no");
 				var showDate = $("#date-list-box a.active").attr("data-show-date");
 				if ($("#cinema-list-box a.active").length == 0) {
 					getCinemas(movieNo, showDate);
+				}
+				if ($("#date-list-box a.active").length == 0) {
+					getShowDates(movieNo, cinemaNo);
 				}
 			}
 		});
@@ -306,10 +314,14 @@
 			if (!isSelected) {
 				$("#cinema-list-box a").removeClass("active");
 				$(this).addClass("active");				
+				var movieNo = $("#movie-list-box a.active").attr("data-movie-no");
 				var cinemaNo = $(this).attr("data-cinema-no");
 				var showDate = $("#date-list-box a.active").attr("data-show-date");
 				if ($("#movie-list-box a.active").length == 0) {
 					getMovies(cinemaNo, showDate);
+				}
+				if ($("#date-list-box a.active").length == 0) {
+					getShowDates(movieNo, cinemaNo);
 				}
 			}
 		});
@@ -352,43 +364,39 @@
 			},
 			success: function(movies) {
 				$spinnerBox.empty();
-				if (movies.moviesAvailable.length != 0) {
-					for (var i = 0; i < movies.moviesAvailable.length; i++) {
-						var movieNo = movies.moviesAvailable[i].no;
-						var row = '<a class="list-group-item list-group-item-action bg-light border-light d-flex align-items-center" data-movie-no="' + movieNo + '" href="#">';
-						if (movies.moviesAvailable[i].rate == "전체관람가") {
+				for (var i = 0; i < movies.moviesAvailable.length; i++) {
+					var movieNo = movies.moviesAvailable[i].no;
+					var row = '<a class="list-group-item list-group-item-action bg-light border-light d-flex align-items-center" data-movie-no="' + movieNo + '" href="#">';
+					if (movies.moviesAvailable[i].rate == "전체관람가") {
+						row += '<span class="badge bg-success rounded-pill me-1">전체</span>';
+					} else if (movies.moviesAvailable[i].rate == "12세이상관람가") {
+						row += '<span class="badge bg-primary rounded-pill me-1">12</span>';
+					} else if (movies.moviesAvailable[i].rate == "15세이상관람가") {
+						row += '<span class="badge bg-warning rounded-pill me-1">15</span>';
+					} else if(movies.moviesAvailable[i].rate == "청소년관람불가") {
+						row += '<span class="badge bg-danger rounded-pill me-1">청불</span>';
+					}
+					row += '<span class="fw-bold">' + movies.moviesAvailable[i].title + '</span>';
+					row += '</a>';
+					$movieListBox.append(row);
+				}
+				for (var i = 0; i < movies.moviesNowPlaying.length; i++) {
+					var movieNo = movies.moviesNowPlaying[i].no;
+					 if ($("#movie-list-box a[data-movie-no=" + movieNo + "]").length == 0) {
+						var row = '<a class="list-group-item list-group-item-action bg-light border-light d-flex align-items-center disabled opacity-50" data-movie-no="' + movieNo + '" href="#">';
+						if (movies.moviesNowPlaying[i].rate == "전체관람가") {
 							row += '<span class="badge bg-success rounded-pill me-1">전체</span>';
-						} else if (movies.moviesAvailable[i].rate == "12세이상관람가") {
+						} else if (movies.moviesNowPlaying[i].rate == "12세이상관람가") {
 							row += '<span class="badge bg-primary rounded-pill me-1">12</span>';
-						} else if (movies.moviesAvailable[i].rate == "15세이상관람가") {
+						} else if (movies.moviesNowPlaying[i].rate == "15세이상관람가") {
 							row += '<span class="badge bg-warning rounded-pill me-1">15</span>';
-						} else if(movies.moviesAvailable[i].rate == "청소년관람불가") {
+						} else if(movies.moviesNowPlaying[i].rate == "청소년관람불가") {
 							row += '<span class="badge bg-danger rounded-pill me-1">청불</span>';
 						}
-						row += '<span class="fw-bold">' + movies.moviesAvailable[i].title + '</span>';
+						row += '<span class="fw-bold">' + movies.moviesNowPlaying[i].title + '</span>';
 						row += '</a>';
 						$movieListBox.append(row);
-					}
-				}
-				if (movies.moviesNowPlaying.length != 0) {
-					for (var i = 0; i < movies.moviesNowPlaying.length; i++) {
-						var movieNo = movies.moviesNowPlaying[i].no;
-						 if ($("#movie-list-box a[data-movie-no=" + movieNo + "]").length == 0) {
-							var row = '<a class="list-group-item list-group-item-action bg-light border-light d-flex align-items-center disabled" data-movie-no="' + movieNo + '" href="#">';
-							if (movies.moviesNowPlaying[i].rate == "전체관람가") {
-								row += '<span class="badge bg-secondary rounded-pill me-1">전체</span>';
-							} else if (movies.moviesNowPlaying[i].rate == "12세이상관람가") {
-								row += '<span class="badge bg-secondary rounded-pill me-1">12</span>';
-							} else if (movies.moviesNowPlaying[i].rate == "15세이상관람가") {
-								row += '<span class="badge bg-secondary rounded-pill me-1">15</span>';
-							} else if(movies.moviesNowPlaying[i].rate == "청소년관람불가") {
-								row += '<span class="badge bg-secondary rounded-pill me-1">청불</span>';
-							}
-							row += '<span class="fw-bold">' + movies.moviesNowPlaying[i].title + '</span>';
-							row += '</a>';
-							$movieListBox.append(row);
-						 }
-					}
+					 }
 				}
 			},
 			error: function() {
@@ -458,12 +466,12 @@
 						var cinemaName = cinemas.citiesWithCinemas[i].cinemas[j].name.replace('MVF', '');
 						if (i == 0) {
 							if ($("#cinema-list-box a[data-cinema-no=" + cinemaNo + "]").length == 0) {
-								var row = '<a class="list-group-item list-group-item-action bg-light border-light disabled" data-city-no="' + cityNo + '" data-cinema-no="' + cinemaNo + '" href="#"><span class="fw-bold">' + cinemaName + '</span></a>';
+								var row = '<a class="list-group-item list-group-item-action bg-light border-light disabled opacity-50" data-city-no="' + cityNo + '" data-cinema-no="' + cinemaNo + '" href="#"><span class="fw-bold">' + cinemaName + '</span></a>';
 								$cinemaListBox.append(row);
 							}	
 						} else {
 							if ($("#cinema-list-box a[data-cinema-no=" + cinemaNo + "]").length == 0) {
-								var row = '<a class="list-group-item list-group-item-action bg-light border-light d-none disabled" data-city-no="' + cityNo + '" data-cinema-no="' + cinemaNo + '" href="#"><span class="fw-bold">' + cinemaName + '</span></a>';
+								var row = '<a class="list-group-item list-group-item-action bg-light border-light d-none disabled opacity-50" data-city-no="' + cityNo + '" data-cinema-no="' + cinemaNo + '" href="#"><span class="fw-bold">' + cinemaName + '</span></a>';
 								$cinemaListBox.append(row);
 							}
 						}
@@ -477,9 +485,85 @@
 		});
 	}
 	
-	function getShowDates() {
-		
+	function getShowDates(movieNo = null, cinemaNo = null) {
+		var $spinnerBox = $("#spinner-box").empty();
+		var $dateListBox = $("#date-list-box").empty();
+		$.ajax({
+			type: "get",
+			url: "/rest/ticket/date",
+			data: {
+				movieNo: movieNo,
+				cinemaNo: cinemaNo
+			},
+			dataType: "json",
+			beforeSend: function() {
+				var row = '<div class="spinner-border spinner-border-md" role="status">'
+					+ '<span class="visually-hidden">Loading...</span>'
+					+ '</div>';
+				$spinnerBox.append(row);
+			},
+			success: function(showDates) {
+				$spinnerBox.empty();
+				var prevYear;
+				var prevMonth;
+				for (var i = 0; i < showDates.showDatesNowPlaying.length; i++) {
+					var year = showDates.showDatesNowPlaying[i].year;
+					var month = showDates.showDatesNowPlaying[i].month;
+					var day =  showDates.showDatesNowPlaying[i].day;
+					var date =  showDates.showDatesNowPlaying[i].date;
+					if (i == 0) {
+						prevYear = year;
+						prevMonth = month;
+						var row = '<div class="bg-light border-light text-center text-secondary text-opacity-10 fw-bold">';
+						row += '<span class="d-block" style="height: 15px;">' + year + '</span>';
+						row += '<span class="d-block fs-2" style="height: 45px;">' + month + '</span>';
+						$dateListBox.append(row);
+					} else {
+						if (prevYear != year || prevMonth != month) {
+							prevYear = year;
+							prevMonth = month;
+							var row = '<div class="bg-light border-light text-center text-secondary text-opacity-10 fw-bold">';
+							row += '<span class="d-block" style="height: 15px;">' + year + '</span>';
+							row += '<span class="d-block fs-2" style="height: 45px;">' + month + '</span>';
+							$dateListBox.append(row);
+						}
+					}
+					if (day == 7) {
+						 var row = '<a class="list-group-item list-group-item-action bg-light border-light text-center text-primary disabled opacity-50" data-show-date="' + moment(date).format('YYYY-MM-DD') + '" href="#">';
+						 row += '<span class="float-start fw-bold">' + moment(date).format('dd') + '</span>';
+						 row += '<span class="float-end fw-bold">' + moment(date).format('D') + '</span>';
+						 row += '</a>';
+						 $dateListBox.append(row);
+					} else if (day == 1) {
+						var row = '<a class="list-group-item list-group-item-action bg-light border-light text-center text-danger disabled opacity-50" data-show-date="' + moment(date).format('YYYY-MM-DD') + '" href="#">';
+						row += '<span class="float-start fw-bold">' + moment(date).format('dd') + '</span>';
+						row += '<span class="float-end fw-bold">' + moment(date).format('D') + '</span>';
+						row += '</a>';
+						$dateListBox.append(row);
+					} else {
+						var row = '<a class="list-group-item list-group-item-action bg-light border-light text-center disabled opacity-50" data-show-date="' + moment(date).format('YYYY-MM-DD') + '" href="#">';
+						row += '<span class="float-start fw-bold">' + moment(date).format('dd') + '</span>';
+						row += '<span class="float-end fw-bold">' + moment(date).format('D') + '</span>';
+						row += '</a>';
+						$dateListBox.append(row);
+					}
+				}
+				for (var i = 0; i < showDates.showDatesAvailable.length; i++) {
+					var date =  showDates.showDatesAvailable[i].date;
+					var showDate = moment(date).format('YYYY-MM-DD');
+					$("#date-list-box a[data-show-date=" + showDate + "]").removeClass("disabled").removeClass("opacity-50");
+				}
+			},
+			error: function() {
+				$spinnerBox.empty();
+				alert("오류가 발생하였습니다.");
+			}
+		});	
 	}
+		
+		
+		
+	
 
 
 

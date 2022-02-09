@@ -16,15 +16,22 @@
 			show_start_time > current_date
 	</select>
 
-	<select id="getShowDatesNowPlaying" resultType="date">
+	<select id="getShowDatesNowPlaying" parameterType="map" resultType="date">
 		select 
-			distinct show_date
+			distinct s.show_date
 		from 
-			show
+			show s, cinema_hall ch
 		where 
-			show_start_time > current_date
+			s.show_start_time > current_date
+		<if test="movieNo != null">
+			and s.movie_no = #{movieNo}
+		</if>
+		<if test="cinemaNo != null">
+			and s.hall_no = ch.hall_no
+        	and ch.cinema_no = #{cinemaNo}
+		</if>
 		order by
-			show_date
+			s.show_date
 	</select>
  
 

@@ -1,6 +1,5 @@
 package com.jhta.moviefan.restcontroller;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -74,7 +73,7 @@ public class TicketRestController {
 		return cinemas;
 	}
 	
-	@GetMapping("showDate")
+	@GetMapping("date")
 	public TicketMoviePageDto showDate(Integer movieNo, Integer cinemaNo) {
 		TicketMoviePageDto showDates = new TicketMoviePageDto();
 		
@@ -85,10 +84,11 @@ public class TicketRestController {
 		if (cinemaNo != null) {
 			request.put("cinemaNo", cinemaNo);
 		}
+		List<Map<String, Object>> showDatesAvailable = ticketService.getShowDatesNowPlaying(request);
+		List<Map<String, Object>> showDatesNowPlaying = ticketService.getShowDatesNowPlaying(null);
 		
-		
-		
-		
+		showDates.setShowDatesAvailable(showDatesAvailable);
+		showDates.setShowDatesNowPlaying(showDatesNowPlaying);
 		
 		return showDates;
 	}
