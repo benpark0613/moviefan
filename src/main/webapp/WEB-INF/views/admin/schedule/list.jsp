@@ -76,6 +76,20 @@
 		    </table>
 	    </form>
 	</div>
+	<!-- 페이지네이션 -->
+	<div class="row mb-3">
+		<div class="col" id="pagination">
+			<nav>
+				<ul class="pagination justify-content-center">
+			    	<li class="page-item"><a class="page-link" href="#">이전</a></li>
+			    	<li class="page-item"><a class="page-link" href="#">1</a></li>
+			    	<li class="page-item"><a class="page-link" href="#">2</a></li>
+			    	<li class="page-item"><a class="page-link" href="#">3</a></li>
+			    	<li class="page-item"><a class="page-link" href="#">다음</a></li>
+				</ul>
+			</nav>
+		</div>
+	</div>
 </div>
 <%@ include file="/WEB-INF/views/common/footer.jsp" %>
 </body>
@@ -88,7 +102,7 @@
 			let no = $(this).val();
 			let $select = $("#cinema-select").empty();
 			$select.prepend('<option value="" disabled selected>--영화관을 선택하세요. --</option>');
-			
+			// ajax로 선택한 지역번호에 해당하는 영화관 리스트를 받아온다.
 			$.getJSON("/rest/cinema/list", {cityNo:no}, function (cinemaList) {
 				$.each (cinemaList, function(index, cinema) {
 					let option = '<option value="' + cinema.no + '" >' + cinema.name + '</option>';
@@ -100,44 +114,45 @@
 		// 2. 상영관이 변경될 때마다 실행될 이벤트 핸들러 함수
 		$('#cinema-select').change(function () {
 			let cinemaNo = $(this).val();			
-			// 지역별 영화관 리스트를 가져오는 함수 실행
+			// 해당 상영관의 상영스케줄을 가져오는 함수를 실행한다.
 			getTimetableList(cinemaNo);
 		})
 		
-		
-		// 수정화면에서 목록으로 되돌아가기 버튼을 클릭했을 때의 파라미터값을 가져온다.
+		// 3. 수정화면에서 목록으로 되돌아가기 버튼을 클릭했을 때 실행되는 부분		
+		// 수정화면에서 목록으로 되돌아오기 버튼을 클릭했을 때의 파라미터값(지역번호, 영화관번호)을 가져온다.
 		let paramCityNo = $('input[name=paramCityNo]').val();
 		let paramCinemaNo = $('input[name=paramCinemaNo]').val();
 		
-		// 파라미터가 비어있지 않다면(수정화면에서 목록으로 되돌아오기 버튼을 클릭한 경우) 실행되는 부분
+		// 파라미터가 비어있지 않다면(=수정화면에서 되돌아온 경우) 실행되는 부분
+		// (파라미터가 비어있다면 제일 처음으로 조회페이지에 들어온 것임)
 		if (paramCityNo != ""  && paramCinemaNo != "") {
-			// 지역별 영화관 셀렉트박스를 비운다.
+			// 지역별 영화관 셀렉트박스를 비워둔다.
 			let $select = $("#cinema-select").empty();
 			// ajax로 지역별 영화관 리스트를 받아온다.
 			$.getJSON("/rest/cinema/list", {cityNo:paramCityNo}, function (cinemaList) {
 				$.each (cinemaList, function(index, cinema) {
-					// 받아온 지역별 영화관 리스트의 cinemaNo와 파라미터값이 같다면 옵션이 선택되어 있도록 한다.
-					let option = '<option value="' + cinema.no + '"  '+(cinema.no == paramCinemaNo ? 'selected' : '')+'>' + cinema.name + '</option>';
+					// 받아온 지역별 영화관 리스트의 cinemaNo와 파라미터값이 같다면 해당 영화관 옵션이 선택되어 있도록 한다.
+					let option = '<option value="' + cinema.no + '"  ' + (cinema.no == paramCinemaNo ? 'selected' : '') + '>' + cinema.name + '</option>';
 					// 영화관 셀렉트박스에 옵션을 채운다.
 					$select.append(option);
 				});
-				
-				// 영화관 셀렉트박스에 값이 채워졌으니 해당 상영관의 상영 스케줄을 조회해서 화면에 표시한다. 
+				// 영화관 셀렉트박스에 값이 채워졌으니 해당 상영관의 상영 스케줄을 조회해서 화면에 표현한다. 
 				getTimetableList(paramCinemaNo);
 			})
 		}
-
 		
-		
+		// 4. 해당 영화관의 상영스케줄을 조회하는 함수
 		function getTimetableList(cinemaNo) {
+			// 상영스케줄이 표시될 테이블의 내용을 비워둔다.
 			$('#timetable tbody').empty();
+			// ajax로 영화관 번호에 해당하는 상영스케줄 리스트를 받아온다.
 			$.getJSON("/rest/cinema/timetable", {cinemaNo:cinemaNo}, function (timetableList) {
-				
+				// 영화관 번호로 조회한 상영스케줄이 없는 경우 나타날 부분
 				if (timetableList.length == 0) {
 					let row = '<td class="pt-4 text-center" colspan="8">해당 영화관의 상영일정이 존재하지 않습니다.</td>';
 					
 					$('#timetable tbody').append(row);
-						
+				// 영화관 번호로 조회한 상영스케줄이 존재하는 경우		
 				} else {
 					$.each (timetableList, function (index, timetable) {
 						
@@ -152,20 +167,30 @@
 							result += '</tr>';
 						
 						$('#timetable tbody').append(result);
-						
 					})
+
+					let totalRecoreds = $('#timetable tbody tr').length;
+					// console.log(totalRecoreds);
 					
-				// 페이징처리	
-				let totalRecoreds = $('#timetable tbody tr').length;
-				console.log(totalRecoreds);
-				
-				
-				
-				
-				
+					pagination();
+					
 				}
 			})
 		}
+		
+		
+		function pagination () {
+			
+			
+			
+			
+		}
+
+
+
+		
+		
+		
 	})	
 	
 </script>
