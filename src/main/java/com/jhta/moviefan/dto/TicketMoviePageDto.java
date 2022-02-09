@@ -14,6 +14,8 @@ public class TicketMoviePageDto {
 	List<Map<String, Object>> showDatesNowPlaying;			// 상영중인 영화가 있는 날짜 전체 목록
 	List<Map<String, Object>> showDatesAvailable;			// 선택한 영화, 극장에서 예매 가능한 날짜 목록
 	
+	public TicketMoviePageDto() {}
+	
 	public List<Movie> getMoviesNowPlaying() {
 		return moviesNowPlaying;
 	}

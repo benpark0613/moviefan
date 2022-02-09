@@ -93,4 +93,22 @@ public class TicketRestController {
 		return showDates;
 	}
 	
+	@GetMapping("time")
+	public TicketMoviePageDto showTime(Integer movieNo, Integer cinemaNo, @DateTimeFormat(pattern = "yyyy-MM-dd") Date showDate) {
+		TicketMoviePageDto showTimes = new TicketMoviePageDto();
+		
+		Map<String, Object> request = new HashMap<>();
+		if (movieNo != null) {
+			request.put("movieNo", movieNo);
+		}
+		if (cinemaNo != null) {
+			request.put("cinemaNo", cinemaNo);
+		}
+		if (showDate != null) {
+			request.put("showDate", showDate);
+		}
+		
+		return showTimes;
+	}
+	
 }
