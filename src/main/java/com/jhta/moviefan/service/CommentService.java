@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.jhta.moviefan.dao.CommentDao;
+import com.jhta.moviefan.form.Criteria;
+import com.jhta.moviefan.form.CriteriaMovieComment;
 import com.jhta.moviefan.vo.Comment;
 import com.jhta.moviefan.vo.CommentLikedCustomer;
 
@@ -55,5 +57,19 @@ public class CommentService {
 		commentDao.updateCommentLikeCustomer(commentLikedCustomer);
 	}
 	
+	public List<Comment> getCommentPages(CriteriaMovieComment criteria){
+		return commentDao.getCommentPages(criteria);
+	}
+	
+	public List<Comment> getAllCommentByIndex(Criteria criteria){
+		return commentDao.getAllCommentByIndex(criteria);
+	}
 
+	public List<Comment> searchComment(CriteriaMovieComment criteria){
+		return commentDao.searchComment(criteria);
+	}
+	
+	public int getCommentTotalRow(CriteriaMovieComment criteria) {
+		return commentDao.getCommentTotalRow(criteria);
+	}
 }

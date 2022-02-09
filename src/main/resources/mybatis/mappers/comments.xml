@@ -37,23 +37,26 @@
 	
 	<select id="getAllComments" resultType="com.jhta.moviefan.vo.Comment">
 		select 
-			comment_no	 			as commentNo,
-			movie_title				as movieTitle, 
-			customer_rating			as rating, 
-			comment_content			as content, 
-			customer_id				as customerId, 
-			comment_created_date	as creDate, 
-			comment_like_count		as likeCount, 
-			comment_report_count	as reprtCount
+			CO.COMMENT_NO				as commentNo, 
+			CO.CUSTOMER_NO				as customerNo, 
+			CO.MOVIE_NO					as movieNo, 
+			CO.CUSTOMER_RATING			as rating, 
+			CO.COMMENT_CONTENT			as content, 
+			CO.COMMENT_CREATED_DATE		as creDate, 
+			CO.COMMENT_REPORT_COUNT		as reprtCount,
+			CO.COMMENT_LIKE_COUNT		as likeCount,
+			CO.COMMENT_UPDATED_DATE		as updatedDate,
+			M.MOVIE_TITLE				as movieTitle, 
+			CU.customer_id				as customerId 
 		from 
-			movie_customer_comment c, 
-			movie m, 
-			customer cus
+			MOVIE_CUSTOMER_COMMENT CO, 
+			MOVIE M, 
+			CUSTOMER CU
 		where 
-			c.movie_no = m.movie_no
-   		and c.customer_no = cus.customer_no
+			CO.MOVIE_NO = M.MOVIE_NO
+   		and CO.CUSTOMER_NO = CU.CUSTOMER_NO
 		order by
-			comment_no desc
+			COMMENT_CREATED_DATE desc
 	</select>
 	
 <!-- 	<select id="commentAllRows" resultType="com.jhta.moviefan.vo.Comment">
@@ -75,30 +78,6 @@
 				c.movie_no = m.movie_no
    			and c.customer_no = cus.customer_no)
 	</select> -->
-	
-	<select id="">
-		<where>
-				<if test="opt != null and value != null">
-					<choose>
-						<when test="opt == '제목'">
-							book_title like '%' || #{value} || '%'
-						</when>
-						<when test="opt == '저자'">
-							book_author = #{value}
-						</when>
-						<when test="opt == '출판사'">
-							book_publisher = #{value}
-						</when>
-						<when test="opt == '최소가격'">
-							book_price >= to_number(#{value})
-						</when>
-						<when test="opt == '최대가격'">
-							book_price &lt;= to_number(#{value})
-						</when>
-					</choose>
-				</if>
-			</where>			
-	</select>
 	
 	<select id="getMovieTitle" parameterType="int" resultType="com.jhta.moviefan.vo.Comment">
 		select 	
@@ -176,6 +155,118 @@
 			movie_customer_comment
 		where
 			comment_no = #{value}
+	</select>
+	
+	<select id="getCommentPages" parameterType="com.jhta.moviefan.form.CriteriaMovieComment" resultType="com.jhta.moviefan.vo.Comment">
+		select 	
+				CO.COMMENT_NO			as commentNo, 
+				CO.CUSTOMER_NO			as customerNo, 
+				CO.CUSTOMER_RATING		as rating, 
+				CO.COMMENT_CONTENT		as content, 
+				CO.COMMENT_CREATED_DATE	as creDate, 
+				CO.COMMENT_REPORT_COUNT	as reportCount, 
+				CO.COMMENT_LIKE_COUNT	as likeCount, 
+				CO.COMMENT_UPDATED_DATE	as updatedDate,
+				CU.CUSTOMER_ID 			as customerId
+		from(
+			 select C.*, row_number() over (order by COMMENT_LIKE_COUNT desc) rn
+			 from MOVIE_CUSTOMER_COMMENT C
+			 where C.MOVIE_NO = #{movieNo}
+			 ) CO, CUSTOMER CU
+		where
+			CO.CUSTOMER_NO = CU.CUSTOMER_NO
+		and rn between #{beginIndex} and #{endIndex}
+	</select>
+	
+	<select id="getAllCommentByIndex" parameterType="com.jhta.moviefan.form.Criteria" resultType="com.jhta.moviefan.vo.Comment">
+		select 	
+				CO.MOVIE_NO				as movieNo, 
+				M.MOVIE_TITLE			as movieTitle, 
+				CO.COMMENT_NO			as commentNo, 
+				CO.CUSTOMER_NO			as customerNo, 
+				CO.CUSTOMER_RATING		as rating, 
+				CO.COMMENT_CONTENT		as content, 
+				CO.COMMENT_CREATED_DATE	as creDate, 
+				CO.COMMENT_REPORT_COUNT	as reportCount, 
+				CO.COMMENT_LIKE_COUNT	as likeCount, 
+				CO.COMMENT_UPDATED_DATE	as updatedDate,
+				CU.CUSTOMER_ID 			as customerId
+		from(
+			 select C.*, row_number() over (order by COMMENT_LIKE_COUNT desc) rn
+			 from MOVIE_CUSTOMER_COMMENT C
+			 ) CO, CUSTOMER CU, MOVIE M
+		where
+			CO.CUSTOMER_NO = CU.CUSTOMER_NO
+		and	CO.MOVIE_NO = M.MOVIE_NO 
+		AND	rn between #{beginIndex} and #{endIndex}
+	</select>
+	
+	<select id="searchComment" parameterType="com.jhta.moviefan.form.CriteriaMovieComment" resultType="com.jhta.moviefan.vo.Comment">
+		select 	
+				CO.MOVIE_NO				as movieNo, 
+				M.MOVIE_TITLE			as movieTitle, 
+				CO.COMMENT_NO			as commentNo, 
+				CO.CUSTOMER_NO			as customerNo, 
+				CO.CUSTOMER_RATING		as rating, 
+				CO.COMMENT_CONTENT		as content, 
+				CO.COMMENT_CREATED_DATE	as creDate, 
+				CO.COMMENT_REPORT_COUNT	as reportCount, 
+				CO.COMMENT_LIKE_COUNT	as likeCount, 
+				CO.COMMENT_UPDATED_DATE	as updatedDate,
+				CU.CUSTOMER_ID 			as customerId
+		from(
+			 select C.*, row_number() over (
+			 order by
+				 <if test="sort != null">
+				 	<choose>
+				 		<when test="sort == recent">
+				 			C.COMMENT_CREATED_DATE desc
+				 		</when>
+				 		<when test="sort == recommend">
+				 			C.COMMENT_LIKE_COUNT desc
+				 		</when>
+				 	</choose>
+				 </if>
+				 <if test="sort == null">
+				 	C.COMMENT_CREATED_DATE desc
+				 </if>
+				 
+			 ) rn
+			 from MOVIE_CUSTOMER_COMMENT C, MOVIE M, CUSTOMER CU
+			 where C.MOVIE_NO = M.MOVIE_NO
+			 and C.CUSTOMER_NO = CU.CUSTOMER_NO
+		 	<if test="opt != null and value != null">
+		 		<choose>
+		 			<when test="opt == '영화명'">
+		 				and M.MOVIE_TITLE LIKE '%' || #{value} || '%'
+		 			</when>
+		 			<when test="opt == '작성자아이디'">
+		 				and CU.CUSTOMER_ID '%' || #{value} || '%'
+		 			</when>
+		 		</choose>
+		 	</if>
+			 ) CO, CUSTOMER CU, MOVIE M
+		where
+			CO.CUSTOMER_NO = CU.CUSTOMER_NO
+		and	CO.MOVIE_NO = M.MOVIE_NO 
+		AND	rn between #{beginIndex} and #{endIndex}	
+	</select>
+	
+	<select id="getCommentTotalRow" parameterType="com.jhta.moviefan.form.CriteriaMovieComment" resultType="int">
+		select count(*)
+		from MOVIE_CUSTOMER_COMMENT CO, MOVIE M, CUSTOMER CU
+		where M.movie_no = CO.movie_no
+		and	CO.CUSTOMER_NO = CU.CUSTOMER_NO
+		<if test="opt != null and value != null">
+		 		<choose>
+		 			<when test="opt == '영화명'">
+		 				and M.MOVIE_TITLE LIKE '%' || #{value} || '%'
+		 			</when>
+		 			<when test="opt == '작성자아이디'">
+		 				and CU.CUSTOMER_ID '%' || #{value} || '%'
+		 			</when>
+		 		</choose>
+		 	</if>
 	</select>
 	
 	<update id="updateCommentLike" parameterType="int">

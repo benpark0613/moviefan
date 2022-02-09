@@ -397,7 +397,7 @@ $(function() {
 			type: 'get',
 			url: 'rest/home/trailer',
 			dataType: 'json',
-			success: function(response, response2){
+			success: function(response){
 				modal.show();
 				for(var i=0; i<response.item.length;i++){
 					var title = '<option value=' + response.item[i].title + '>'+ response.item[i].title + '</option>';
@@ -425,7 +425,6 @@ $(function() {
 				})
 			}
 		})
-		$("#button-apply-form").click
 	})
 })
 </script>
