@@ -7,6 +7,7 @@ import org.apache.ibatis.annotations.Mapper;
 
 import com.jhta.moviefan.dto.CinemaDto;
 import com.jhta.moviefan.dto.MovieTimeTableDto;
+import com.jhta.moviefan.form.ScheduleCriteria;
 import com.jhta.moviefan.vo.Cinema;
 import com.jhta.moviefan.vo.CinemaHall;
 import com.jhta.moviefan.vo.City;
@@ -17,22 +18,23 @@ public interface CinemaDao {
 	
 	List<City> getAllCities();
 	List<City> getCitiesNowPlaying(Map<String, Object> request);
+	List<Cinema> getCinemaListByCityNo(int cityNo);
 	List<Cinema> getCinemasNowPlaying(Map<String, Object> request);
 	List<CinemaHall> getCinemaHallsNowPlaying(Map<String, Object> request);
-	City getCityByNo(int no);
-
 	List<CinemaDto> getAllCinemas();
-	
-	List<Cinema> getCinemaListByCityNo(int cityNo);
-	
 	List<MovieTimeTableDto> getAllMovieTimeTables();
 	List<MovieTimeTableDto> getMovieTimeTableByCinemaNo(int cinemaNo);
+
+	// 성근
+	Cinema getCinemaByCinemaNo(int cinemaNo);
+	City getCityByNo(int no);
 	MovieTimeTableDto getMovieTimeTableByShowNo(int showNo);
 	Show getShowByShowNo(int showNo);
 	
 	void updateSchedule(Show show);
 	
-	// 성근
-	Cinema getCinemaByCinemaNo(int cinemaNo);
+	// 페이징처리용
+	int getTotalRowsTimetable(ScheduleCriteria criteria);
+	List<MovieTimeTableDto> searchTimetables(ScheduleCriteria criteria);
 	
 }

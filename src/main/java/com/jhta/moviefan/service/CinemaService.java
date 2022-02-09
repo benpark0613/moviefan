@@ -15,6 +15,7 @@ import com.jhta.moviefan.dao.CinemaDao;
 import com.jhta.moviefan.dto.CinemaDto;
 import com.jhta.moviefan.dto.CityWithCinemasDto;
 import com.jhta.moviefan.dto.MovieTimeTableDto;
+import com.jhta.moviefan.form.ScheduleCriteria;
 import com.jhta.moviefan.vo.Cinema;
 import com.jhta.moviefan.vo.City;
 import com.jhta.moviefan.vo.Show;
@@ -101,6 +102,16 @@ public class CinemaService {
 		savedShow.setEndTime(new java.sql.Date(show.getEndTime().getTime()));
 		
 		cinemaDao.updateSchedule(savedShow);
+	}
+	
+	public int getTotalRowsTimetable(ScheduleCriteria criteria) {
+		logger.info("검색조건: " + criteria);
+		return cinemaDao.getTotalRowsTimetable(criteria);
+	}
+	
+	public List<MovieTimeTableDto> searchTimetables(ScheduleCriteria criteria) {
+		logger.info("검색조건: " + criteria);
+		return cinemaDao.searchTimetables(criteria);
 	}
 	
 }
