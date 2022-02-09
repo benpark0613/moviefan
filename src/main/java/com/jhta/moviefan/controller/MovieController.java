@@ -19,8 +19,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.jhta.moviefan.dto.MovieDetailDto;
+import com.jhta.moviefan.form.Criteria;
+import com.jhta.moviefan.form.CriteriaMovieComment;
+import com.jhta.moviefan.pagination.Pagination;
 import com.jhta.moviefan.service.CommentService;
 import com.jhta.moviefan.service.CustomerService;
 import com.jhta.moviefan.service.MovieService;
@@ -118,13 +122,25 @@ public class MovieController {
 	}
 
 	@GetMapping("/customerrating")
-	public String customerrating(int no, Model model) {
+	public String customerrating(@RequestParam(name="page", required = false, defaultValue = "1")String page, int no, Model model) {
 		MovieDetailDto movieDetail = movieService.getMovieDetail(no);
-		List<Comment> commentList = commentService.searchCommentsByMovieNo(no);
-		int size = commentList.size();
+		List<Comment> comment = commentService.searchCommentsByMovieNo(no);
+		int totalRecords = comment.size();
+		
+		CriteriaMovieComment criteria = new CriteriaMovieComment();
+		
+		Pagination pagination = new Pagination(page, totalRecords, 3);
+		
+		criteria.setMovieNo(no);
+		criteria.setBeginIndex(pagination.getBegin());
+		criteria.setEndIndex(pagination.getEnd());
+		
+		List<Comment> commentList = commentService.getCommentPages(criteria);
+		
 		model.addAttribute("movieDetail", movieDetail);
 		model.addAttribute("comment", commentList);
-		model.addAttribute("size", size);
+		model.addAttribute("pagination", pagination);
+		model.addAttribute("size", totalRecords);
 
 		return "movie/customerrating";
 	}

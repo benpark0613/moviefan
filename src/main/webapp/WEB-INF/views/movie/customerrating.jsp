@@ -89,8 +89,26 @@
 			</div>
 		</div>
 	</c:forEach>
-	<div class="row">
-		페이지네이션
+	<div class="row mb-3">
+		<nav>
+			<ul class="pagination justify-content-center">
+				<li class="page-item ${pagination.existPrev ? '' : 'disabled' }">
+					<a class="page-link" href="customerrating?no=${movieDetail.no }&page=${pagination.prevPage }" data-page="${pagination.prevPage }">
+						<span aria-hidden="true">&laquo;</span>
+					</a>
+				</li>
+				<c:forEach var="num" begin="${pagination.beginPage }" end="${pagination.endPage }">
+					<li class="page-item ${pagination.pageNo eq num ? 'active' : '' }">
+						<a class="page-link" href="customerrating?no=${movieDetail.no }&page=${num }" data-page="${num }">${num }</a>
+					</li>
+				</c:forEach>
+				<li class="page-item ${pagination.existNext ? '' : 'disabled' }">
+					<a class="page-link" href="customerration?no=${movieDetail.no }&page=${pagination.nextPage }" data-page="${pagination.nextPage }">
+						<span aria-hidden="true">&raquo;</span>
+					</a>
+				</li>
+			</ul>			
+		</nav>
 	</div>
 </div>
 <%@ include file="/WEB-INF/views/common/footer.jsp" %>

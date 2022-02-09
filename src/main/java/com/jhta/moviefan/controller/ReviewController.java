@@ -12,6 +12,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.jhta.moviefan.form.CommentInsertForm;
+import com.jhta.moviefan.form.Criteria;
+import com.jhta.moviefan.form.CriteriaMovieComment;
+import com.jhta.moviefan.pagination.Pagination;
 import com.jhta.moviefan.service.CommentService;
 import com.jhta.moviefan.vo.Comment;
 
@@ -23,11 +26,17 @@ public class ReviewController {
 	CommentService commentService;
 	
 	@GetMapping("/commentScore")
-	public String commentSocre(@RequestParam(name = "page", required = false, defaultValue = "1") int page, Model model) {
+	public String commentScore(@RequestParam(name = "page", required = false, defaultValue = "1")String page, Model model, CriteriaMovieComment criteria) {
+		int totalRecords = commentService.getCommentTotalRow(criteria);
+		Pagination pagination = new Pagination(page, totalRecords, 10);
+		criteria.setBeginIndex(pagination.getBegin());
+		criteria.setEndIndex(pagination.getEnd());
 		
+		List<Comment> commentList = commentService.searchComment(criteria);
 		
-		List<Comment> comments = commentService.getCommentList();
-		model.addAttribute("comments", comments);
+		model.addAttribute("comment", commentList);
+		model.addAttribute("pagination", pagination);
+		model.addAttribute("size", totalRecords);
 		
 		return "community/commentScore";
 	}

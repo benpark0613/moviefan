@@ -4,6 +4,8 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
 
+import com.jhta.moviefan.form.Criteria;
+import com.jhta.moviefan.form.CriteriaMovieComment;
 import com.jhta.moviefan.vo.Comment;
 import com.jhta.moviefan.vo.CommentLikedCustomer;
 
@@ -23,4 +25,8 @@ public interface CommentDao {
 	
 	void updateCommentLike(int commentNo);
 	void updateCommentLikeCustomer(CommentLikedCustomer commentLikedCustomer);
+	List<Comment> getCommentPages(CriteriaMovieComment criteria);
+	List<Comment> getAllCommentByIndex(Criteria criteria);
+	List<Comment> searchComment(CriteriaMovieComment criteria);
+	int getCommentTotalRow(CriteriaMovieComment criteria);
 }
