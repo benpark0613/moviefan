@@ -7,6 +7,7 @@
 	<meta charset="utf-8"> 
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css" rel="stylesheet">
+	<link href="/resources/css/homestyle.css" rel="stylesheet">
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 	<!-- 카카오 로그인 지원 자바스크립트-->
@@ -71,7 +72,7 @@
 			            <p class="fs-1 text-start text-white fw-bolder text-truncate">
 			            	<a href="" class="link-light text-decoration-none" data-bs-toggle="tooltip" title="스파이더맨-노 웨이 홈">${movieTrailer.title }</a>
 			            </p>
-			            <p class="text-start text-white fw-bolder">
+			            <p class="text-start text-white fw-bolder text-truncate">
 			            	${movieTrailer.summary }<br><br>
 			            	<fmt:formatDate value="${movieTrailer.openDate }" pattern="M"/>월 IMAX 대개봉<br>
 			            </p>
@@ -110,12 +111,12 @@
 			<div class="row d-flex justify-content-evenly">
 				<c:forEach var="movie" items="${movie }" end="4" varStatus="status">
 					<div class="card col-2 p-1 d-flex justify-content-center align-self-center">
-						<div class="row">
-					  		<img id="boxOffice-image" src="/resources/images/movie/moviePoster/${movie.no }.jpg" class="w-100 my-auto" alt="...">
-						</div>
-						<div class="card-body d-flex justify-content-center p-0">
-							<a type="button" class="btn btn-danger w-100"><span>예매</span></a>
-							<a type="button" class="btn btn-outline-secondary"><span class="bi bi-heart-fill">${wishList[status.index] }</span></a>
+						<div class="row pic">
+							<span class="rank">${status.count }</span>
+					  		<img class="w-100 my-auto imgs" src="/resources/images/movie/moviePoster/${movie.no }.jpg" alt="...">
+					  		<a href="movie/detail?no=${movie.no }"><button type="button" class="btn btn-outline-secondary aaa">상세보기</button></a>
+					  		<a><button type="button" class="btn btn-outline-success aaaa">예매하기</button></a>
+							<span class="customerRating">관람평 <strong>7.8</strong></span>
 						</div>
 					</div>
 				</c:forEach>
@@ -370,6 +371,21 @@ $(function() {
 		$('#mute').addClass('d-none');
 		$('#volume-on').removeClass('d-none');
 	});
+	
+	$(".pic").hover(function(){
+		$(this).find(".imgs").css("opacity", 0.91);
+		$(this).find(".imgs").css("filter", "brightness(10%)");
+		$(this).find(".aaa").css("z-index", 1);
+		$(this).find(".aaaa").css("z-index", 1);
+		$(this).find(".customerRating").css("z-index", 1);
+		
+	}, function(){
+		$(this).find(".imgs").css("opacity", 1);
+		$(this).find(".imgs").css("filter", "brightness(100%)");
+		$(this).find(".aaa").css("z-index", -1);
+		$(this).find(".aaaa").css("z-index", -1);
+		$(this).find(".customerRating").css("z-index", -1);
+	})
 	
 	// 상영예정작 등록
 	var modal = new bootstrap.Modal(document.getElementById('modal-register-trailer'));

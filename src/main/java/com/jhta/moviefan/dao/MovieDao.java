@@ -1,5 +1,6 @@
 package com.jhta.moviefan.dao;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -39,6 +40,7 @@ public interface MovieDao {
 	List<MovieDirector> getMovieDirectorsByMovieNo(int movieNo);
 	List<MovieActor> getMovieActorsByMovieNo(int movieNo);
 	List<Movie> getMovieOrderByRating();
+	List<Movie> getMovieByDate(String date);
 	
 	Genre getGenreByName(String genreName);
 	Director getDirectorByNo(int directorNo);

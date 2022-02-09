@@ -21,16 +21,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.jhta.moviefan.dto.MovieDetailDto;
-import com.jhta.moviefan.dto.movieDto;
 import com.jhta.moviefan.service.CommentService;
 import com.jhta.moviefan.service.CustomerService;
 import com.jhta.moviefan.service.MovieService;
 import com.jhta.moviefan.vo.Comment;
-import com.jhta.moviefan.vo.CustomerMovieWishList;
 import com.jhta.moviefan.vo.Movie;
-import com.jhta.moviefan.vo.MovieDirector;
-import com.jhta.moviefan.vo.MovieImage;
-import com.jhta.moviefan.vo.MovieTrailer;
 
 @Controller
 @RequestMapping("/movie")
@@ -153,7 +148,21 @@ public class MovieController {
 
 	@GetMapping("/commingsoon")
 	public String commingsoon(Model model) {
+		Calendar calendar = new GregorianCalendar();
+		calendar.add(Calendar.DATE, 0);
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
+		String date = sdf.format(calendar.getTime());
 		
+		List<Movie> movieList = movieService.getMovieByDate(date);
+		List<Integer> wishList = new ArrayList<>();
+		for(Movie movie : movieList) {
+			int movieNo = movie.getNo();
+			int countWishList = customerService.countCustomerMovieWishListByMovieNo(movieNo);
+			wishList.add(countWishList);
+		}
+		
+		model.addAttribute("movie", movieList);
+		model.addAttribute("wishList", wishList);
 		
 		return "movie/commingsoon";
 	}

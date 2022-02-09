@@ -5,7 +5,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap" rel="stylesheet">
 <style>
-	 body, table, div, p, span{
+	 p, span{
 	 font-family: 'Noto Sans KR', sans-serif; 
 	 }
 	 a:link { 
