@@ -21,7 +21,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.jhta.moviefan.annotation.LoginedCustomer;
-import com.jhta.moviefan.dao.NoticeDao;
 import com.jhta.moviefan.dto.CinemaDto;
 import com.jhta.moviefan.dto.MovieTimeTableDto;
 import com.jhta.moviefan.form.Criteria;
@@ -53,7 +52,7 @@ public class AdminController {
 	private NoticeService noticeService;
 
 	@GetMapping("home")
-	public String home(@LoginedCustomer Customer customer) {
+	public String home() {
 		return "admin/home";
 	}
 
