@@ -8,6 +8,7 @@ import org.apache.ibatis.annotations.Mapper;
 import com.jhta.moviefan.dto.CinemaDto;
 import com.jhta.moviefan.dto.MovieTimeTableDto;
 import com.jhta.moviefan.vo.Cinema;
+import com.jhta.moviefan.vo.CinemaHall;
 import com.jhta.moviefan.vo.City;
 import com.jhta.moviefan.vo.Show;
 
@@ -17,6 +18,7 @@ public interface CinemaDao {
 	List<City> getAllCities();
 	List<City> getCitiesNowPlaying(Map<String, Object> request);
 	List<Cinema> getCinemasNowPlaying(Map<String, Object> request);
+	List<CinemaHall> getCinemaHallsNowPlaying(Map<String, Object> request);
 	City getCityByNo(int no);
 
 	List<CinemaDto> getAllCinemas();

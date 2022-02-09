@@ -97,7 +97,7 @@
 						<td class="col-3 bg-light border-start-0">
 							<div class="list-group rounded-0" id="movie-list-box">
 								<c:forEach var="movie" items="${movies }" varStatus="loop">
-									<a class="list-group-item list-group-item-action bg-light border-light d-flex align-items-center" data-movie-no="${movie.no }" href="#">
+									<a class="list-group-item bg-light border-light d-flex align-items-center" data-movie-no="${movie.no }" href="#">
 										<c:choose>
 											<c:when test="${movie.rate == '전체관람가' }"><span class="badge bg-success rounded-pill me-1">전체</span></c:when>
 											<c:when test="${movie.rate == '12세이상관람가' }"><span class="badge bg-primary rounded-pill me-1">12</span></c:when>
@@ -116,10 +116,10 @@
 							<c:forEach var="city" items="${cities }" varStatus="loop">
 								<c:choose>
 									<c:when test="${loop.count eq 1 }">
-										<a class="list-group-item list-group-item-action bg-secondary bg-opacity-10 border-light text-end active" data-city-no="${city.no }" href="#">${city.name }(${fn:length(city.cinemas)})</a>
+										<a class="list-group-item bg-secondary bg-opacity-10 border-light text-end active" data-city-no="${city.no }" href="#">${city.name }(${fn:length(city.cinemas)})</a>
 									</c:when>
 									<c:otherwise>
-										<a class="list-group-item list-group-item-action bg-secondary bg-opacity-10 border-light text-end" data-city-no="${city.no }" href="#">${city.name }(${fn:length(city.cinemas)})</a>
+										<a class="list-group-item bg-secondary bg-opacity-10 border-light text-end" data-city-no="${city.no }" href="#">${city.name }(${fn:length(city.cinemas)})</a>
 									</c:otherwise>
 								</c:choose>
 							</c:forEach>
@@ -132,11 +132,11 @@
 									<c:choose>
 										<c:when test="${loop.count eq 1 }">
 											<c:set var="name" value="${cinema.name }"/>
-											<a class="list-group-item list-group-item-action bg-light border-light" data-city-no="${city.no }" data-cinema-no="${cinema.no }" href="#"><span class="fw-bold">${fn:replace(name, 'MVF ', '')}</span></a>
+											<a class="list-group-item bg-light border-light" data-city-no="${city.no }" data-cinema-no="${cinema.no }" href="#"><span class="fw-bold">${fn:replace(name, 'MVF ', '')}</span></a>
 										</c:when>
 										<c:otherwise>
 											<c:set var="name" value="${cinema.name }"/>
-											<a class="list-group-item list-group-item-action bg-light border-light d-none" data-city-no="${city.no }" data-cinema-no="${cinema.no }" href="#"><span class="fw-bold">${fn:replace(name, 'MVF ', '')}</span></a>
+											<a class="list-group-item bg-light border-light d-none" data-city-no="${city.no }" data-cinema-no="${cinema.no }" href="#"><span class="fw-bold">${fn:replace(name, 'MVF ', '')}</span></a>
 										</c:otherwise>
 									</c:choose>
 								</c:forEach>
@@ -171,21 +171,21 @@
 								<c:choose>
 									<c:when test="${date.day eq 7 }">
 										<fmt:formatDate var="showDate" value="${date.date }" pattern="yyyy-MM-dd" />
-										<a class="list-group-item list-group-item-action bg-light border-light text-center text-primary" data-show-date="${showDate }" href="#">
+										<a class="list-group-item bg-light border-light text-center text-primary" data-show-date="${showDate }" href="#">
 											<span class="float-start fw-bold"><fmt:formatDate value="${date.date }" pattern="E" /></span>
 											<span class="float-end fw-bold"><fmt:formatDate value="${date.date }" pattern="d" /></span>
 										</a>
 									</c:when>
 									<c:when test="${date.day eq 1 }">
 										<fmt:formatDate var="showDate" value="${date.date }" pattern="yyyy-MM-dd" />
-										<a class="list-group-item list-group-item-action bg-light border-light text-center text-danger"  data-show-date="${showDate }"  href="#">
+										<a class="list-group-item bg-light border-light text-center text-danger"  data-show-date="${showDate }"  href="#">
 											<span class="float-start fw-bold"><fmt:formatDate value="${date.date }" pattern="E" /></span>
 											<span class="float-end fw-bold"><fmt:formatDate value="${date.date }" pattern="d" /></span>
 										</a>
 									</c:when>
 									<c:otherwise>
 										<fmt:formatDate var="showDate" value="${date.date }" pattern="yyyy-MM-dd" />
-										<a class="list-group-item list-group-item-action bg-light border-light text-center" data-show-date="${showDate }" href="#">
+										<a class="list-group-item bg-light border-light text-center" data-show-date="${showDate }" href="#">
 											<span class="float-start fw-bold"><fmt:formatDate value="${date.date }" pattern="E" /></span>
 											<span class="float-end fw-bold"><fmt:formatDate value="${date.date }" pattern="d" /></span>
 										</a>
@@ -194,29 +194,35 @@
 							</c:forEach>
 						</div>
 					</td>
-					<td class="col-3 bg-light border-start-0 align-middle text-center">
+					<!-- <td class="col-4 bg-light align-middle text-center border-end-0">
 							<span>영화, 극장, 날짜를 선택해주세요.</span>
-					</td>
-					<!-- <td class="col-4 bg-light border-end-0">
-						<div class="py-2">
-							<p>2D(라스트 특가)5관(Laser) 10층(총172석)</p>
-							<a class="btn bg-secondary bg-opacity-10 border-light" id="" data-bs-toggle="button" href="#">09:00</a><span class="align-middle" style="display: inline-block; width: 70px;">155석</span>
-							<a class="btn bg-secondary bg-opacity-10 border-light" id="" data-bs-toggle="button" href="#">09:00</a><span class="align-middle" style="display: inline-block; width: 70px;">155석</span>
-							<a class="btn bg-secondary bg-opacity-10 border-light" id="" data-bs-toggle="button" href="#">09:00</a><span class="align-middle" style="display: inline-block; width: 70px;">155석</span>
-							<a class="btn bg-secondary bg-opacity-10 border-light" id="" data-bs-toggle="button" href="#">09:00</a><span class="align-middle" style="display: inline-block; width: 70px;">155석</span>
-							<a class="btn bg-secondary bg-opacity-10 border-light" id="" data-bs-toggle="button" href="#">09:00</a><span class="align-middle" style="display: inline-block; width: 70px;">155석</span>
-							<a class="btn bg-secondary bg-opacity-10 border-light" id="" data-bs-toggle="button" href="#">09:00</a><span class="align-middle" style="display: inline-block; width: 70px;">155석</span>
-						</div>
-						<div class="py-2">
-							<p>2D(라스트 특가)5관(Laser) 10층(총172석)</p>
-							<a class="btn bg-secondary bg-opacity-10 border-light" id="" data-bs-toggle="button" href="#">09:00</a><span class="align-middle" style="display: inline-block; width: 70px;">155석</span>
-							<a class="btn bg-secondary bg-opacity-10 border-light" id="" data-bs-toggle="button" href="#">09:00</a><span class="align-middle" style="display: inline-block; width: 70px;">155석</span>
-							<a class="btn bg-secondary bg-opacity-10 border-light" id="" data-bs-toggle="button" href="#">09:00</a><span class="align-middle" style="display: inline-block; width: 70px;">155석</span>
-							<a class="btn bg-secondary bg-opacity-10 border-light" id="" data-bs-toggle="button" href="#">09:00</a><span class="align-middle" style="display: inline-block; width: 70px;">155석</span>
-							<a class="btn bg-secondary bg-opacity-10 border-light" id="" data-bs-toggle="button" href="#">09:00</a><span class="align-middle" style="display: inline-block; width: 70px;">155석</span>
-							<a class="btn bg-secondary bg-opacity-10 border-light" id="" data-bs-toggle="button" href="#">09:00</a><span class="align-middle" style="display: inline-block; width: 70px;">155석</span>
-						</div>
 					</td> -->
+					<td class="col-4 bg-light border-end-0">
+						<div class="ps-1 fw-bold">
+							<i class="bi bi-brightness-high-fill text-warning"></i> 조조 
+							<i class="bi bi-moon-fill text-primary"></i> 심야
+						</div>
+						<hr>
+						<div class="mb-3" id="">
+							<div class="ps-1 mb-1">2D(라스트 특가)5관(Laser) 10층(총172석)</div>
+							<a class="btn bg-secondary bg-opacity-10 border-light" id="" data-bs-toggle="button" href="#">09:00</a><span class="align-middle" style="display: inline-block; width: 70px;">155석</span>
+							<a class="btn bg-secondary bg-opacity-10 border-light" id="" data-bs-toggle="button" href="#">09:00</a><span class="align-middle" style="display: inline-block; width: 70px;">155석</span>
+							<a class="btn bg-secondary bg-opacity-10 border-light" id="" data-bs-toggle="button" href="#">09:00</a><span class="align-middle" style="display: inline-block; width: 70px;">155석</span>
+							<a class="btn bg-secondary bg-opacity-10 border-light" id="" data-bs-toggle="button" href="#">09:00</a><span class="align-middle" style="display: inline-block; width: 70px;">155석</span>
+							<a class="btn bg-secondary bg-opacity-10 border-light" id="" data-bs-toggle="button" href="#">09:00</a><span class="align-middle" style="display: inline-block; width: 70px;">155석</span>
+							<a class="btn bg-secondary bg-opacity-10 border-light" id="" data-bs-toggle="button" href="#">09:00</a><span class="align-middle" style="display: inline-block; width: 70px;">155석</span>
+						</div>
+						<hr>
+						<div class="mb-3" id="">
+							<div class="ps-1 mb-1">2D(라스트 특가)5관(Laser) 10층(총172석)</div>
+							<a class="btn bg-secondary bg-opacity-10 border-light" id="" data-bs-toggle="button" href="#">09:00</a><span class="align-middle" style="display: inline-block; width: 70px;">155석</span>
+							<a class="btn bg-secondary bg-opacity-10 border-light" id="" data-bs-toggle="button" href="#">09:00</a><span class="align-middle" style="display: inline-block; width: 70px;">155석</span>
+							<a class="btn bg-secondary bg-opacity-10 border-light" id="" data-bs-toggle="button" href="#">09:00</a><span class="align-middle" style="display: inline-block; width: 70px;">155석</span>
+							<a class="btn bg-secondary bg-opacity-10 border-light" id="" data-bs-toggle="button" href="#">09:00</a><span class="align-middle" style="display: inline-block; width: 70px;">155석</span>
+							<a class="btn bg-secondary bg-opacity-10 border-light" id="" data-bs-toggle="button" href="#">09:00</a><span class="align-middle" style="display: inline-block; width: 70px;">155석</span>
+							<a class="btn bg-secondary bg-opacity-10 border-light" id="" data-bs-toggle="button" href="#">09:00</a><span class="align-middle" style="display: inline-block; width: 70px;">155석</span>
+						</div>
+					</td>
 				</tr>
 			</tbody>
 		</table>
@@ -276,7 +282,6 @@
 </div>
 <script type="text/javascript">
 	moment.locale('ko');
-	
 	$(function() {
 		$("#movie-list-box").on("click", ".list-group-item", function(event) {
 			event.preventDefault();
@@ -560,7 +565,55 @@
 			}
 		});	
 	}
+	
+	function getShowTime(movieNo, cinemaNo, showDate) {
+		var $spinnerBox = $("#spinner-box").empty();
 		
+		$.ajax({
+			type: "get",
+			url: "/rest/ticket/time".
+			data: {
+				movieNo: movieNo,
+				cinemaNo: cinemaNo,
+				showDate: showDate
+			},
+			dataType: "json",
+			beforeSend: function() {
+				var row = '<div class="spinner-border spinner-border-md" role="status">'
+					+ '<span class="visually-hidden">Loading...</span>'
+					+ '</div>';
+				$spinnerBox.append(row);
+			},
+			success: function(cinemas) {
+				$spinnerBox.empty();
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+			},
+			error: function() {
+				$spinnerBox.empty();
+				alert("오류가 발생하였습니다.");
+			}
+		})
+		
+		
+		
+		
+		
+		
+		
+		
+	}
 		
 		
 	

@@ -1,5 +1,6 @@
 package com.jhta.moviefan.service;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
@@ -15,6 +16,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.jhta.moviefan.dao.TicketDao;
+import com.jhta.moviefan.dto.CinemaHallWithShowsDto;
 import com.jhta.moviefan.vo.Show;
 
 @Service
@@ -46,5 +48,16 @@ public class TicketService {
 		
 		return showDatesNowPlaying;
 	}
+	
+	public List<CinemaHallWithShowsDto> getShowTimes(Map<String, Object> request) {
+		List<CinemaHallWithShowsDto> showTimes = new ArrayList<>();
+		
+		
+		
+		return showTimes;
+	}
+	
+	
+	
 	
 }
