@@ -109,13 +109,13 @@
 				</div>
 			</div>
 			<div class="row d-flex justify-content-evenly">
-				<c:forEach var="movie" items="${movie }" end="4" varStatus="status">
+				<c:forEach var="movieList" items="${movie }" end="4" varStatus="status">
 					<div class="card col-2 p-1 d-flex justify-content-center align-self-center">
 						<div class="row pic">
 							<span class="rank">${status.count }</span>
-					  		<img class="w-100 my-auto imgs" src="/resources/images/movie/moviePoster/${movie.no }.jpg" alt="...">
-					  		<a href="movie/detail?no=${movie.no }"><button type="button" class="btn btn-outline-secondary aaa">상세보기</button></a>
-					  		<a><button type="button" class="btn btn-outline-success aaaa">예매하기</button></a>
+					  		<img class="w-100 my-auto imgs" src="/resources/images/movie/moviePoster/${movieList.no }.jpg" alt="...">
+					  		<a href="movie/detail?no=${movieList.no }"><button type="button" class="btn btn-outline-secondary btndetail">상세보기</button></a>
+					  		<a><button type="button" class="btn btn-outline-success btnreservation">예매하기</button></a>
 							<span class="customerRating">관람평 <strong>7.8</strong></span>
 						</div>
 					</div>
@@ -375,15 +375,15 @@ $(function() {
 	$(".pic").hover(function(){
 		$(this).find(".imgs").css("opacity", 0.91);
 		$(this).find(".imgs").css("filter", "brightness(10%)");
-		$(this).find(".aaa").css("z-index", 1);
-		$(this).find(".aaaa").css("z-index", 1);
+		$(this).find(".btndetail").css("z-index", 1);
+		$(this).find(".btnreservation").css("z-index", 1);
 		$(this).find(".customerRating").css("z-index", 1);
 		
 	}, function(){
 		$(this).find(".imgs").css("opacity", 1);
 		$(this).find(".imgs").css("filter", "brightness(100%)");
-		$(this).find(".aaa").css("z-index", -1);
-		$(this).find(".aaaa").css("z-index", -1);
+		$(this).find(".btndetail").css("z-index", -1);
+		$(this).find(".btnreservation").css("z-index", -1);
 		$(this).find(".customerRating").css("z-index", -1);
 	})
 	

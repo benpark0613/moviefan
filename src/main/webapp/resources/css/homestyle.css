@@ -17,20 +17,20 @@
 	 	z-index: -1;
 	 	font-size: 18px;
 	 	color: #59bec9;
-	 	top:160px; 
-	 	left:30px;
+	 	top:200px; 
+	 	left:51px;
 	 }
-	 .aaa{
+	 .btndetail{
 	 position:absolute;
-	 top:50px;
-	 left: 20px;
+	 top:70px;
+	 left: 37px;
 	 width:140px;
 	 z-index:-1;
 	 }
-	 .aaaa{
+	 .btnreservation{
 	 position:absolute;
-	 top:100px;
-	 left: 20px;
+	 top:120px;
+	 left: 37px;
 	 width:140px;
 	 z-index:-1;
 	 }

@@ -216,20 +216,19 @@
 				CU.CUSTOMER_ID 			as customerId
 		from(
 			 select C.*, row_number() over (
-			 order by
-				 <if test="sort != null">
+			 order by 
 				 	<choose>
-				 		<when test="sort == recent">
+				 		<when test="sort == 'recent'">
 				 			C.COMMENT_CREATED_DATE desc
 				 		</when>
-				 		<when test="sort == recommend">
+				 		<when test="sort == 'recommend'">
 				 			C.COMMENT_LIKE_COUNT desc
 				 		</when>
+				 		<otherwise>
+				 			C.COMMENT_CREATED_DATE desc
+				 		</otherwise> 
 				 	</choose>
-				 </if>
-				 <if test="sort == null">
-				 	C.COMMENT_CREATED_DATE desc
-				 </if>
+				 
 				 
 			 ) rn
 			 from MOVIE_CUSTOMER_COMMENT C, MOVIE M, CUSTOMER CU
