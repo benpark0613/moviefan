@@ -89,7 +89,7 @@
 		    <a class="nav-link ${movieNav eq '트레일러' ? 'active' : ''}" href="trailer?no=${movieDetail.no }">트레일러/스틸컷</a>
 		  </li>
 		  <li class="nav-item">
-		    <a class="nav-link ${movieNav eq '평점' ? 'active' : ''}" href="customerrating?no=${movieDetail.no }">평점/리뷰</a>
+		    <a class="nav-link ${movieNav eq '평점' ? 'active' : ''}" href="comment?no=${movieDetail.no }">평점/리뷰</a>
 		  </li>
 		  <li class="nav-item">
 		    <a class="nav-link">상영시간표</a>

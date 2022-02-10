@@ -89,7 +89,7 @@
 			</div>
 		</div>
 	</div>
-	<c:forEach var="comment" items="${comment }">
+	<c:forEach var="comment" items="${comment }" end="4">
 		<div class="row-6 mb-3">
 			<div class="row mb-3">
 				<div class="col-2 text-center">
@@ -117,8 +117,8 @@
 			</div>
 		</div>
 	</c:forEach>
-	<div class="row">
-		페이지네이션
+	<div class="row mb-3 text-end">
+		<a href="comment?no=${movieDetail.no}"><span>더보기</span></a>
 	</div>
 </div>
 <%@ include file="/WEB-INF/views/common/footer.jsp" %>

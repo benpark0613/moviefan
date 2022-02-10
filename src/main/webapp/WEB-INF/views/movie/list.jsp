@@ -70,8 +70,7 @@
 				</div>
 				<div class="row mb-3">
 					<div class="col">
-						<!-- Button trigger modal -->
-						<button type="button" class="btn btn-outline-dark wishListBtn" style="padding-left:10px; padding-right:10px;">
+						<button type="button" class="btn btn-outline-dark wishListBtn ${'Y' eq myWishList[status.index] ? 'active' : '' }" style="padding-left:10px; padding-right:10px;">
 							<i class="far fa-heart fa-lg"></i><span> ${wishList[status.index] }</span>
 						</button>
 							<input type="hidden" value="${movies.no}" /> 
@@ -87,9 +86,6 @@
 <%@ include file="/WEB-INF/views/common/footer.jsp" %>
 <script type="text/javascript">
 
-	$("#movieStatus1").prepend($("<span>▶</span>"));
-	$("#movieStatus1").find("span").css("color", "#b12e2e");
-	
 	$(".pic").hover(function(){
 		$(this).find(".imgs").css("opacity", 0.91);
 		$(this).find(".imgs").css("filter", "brightness(10%)");
@@ -127,7 +123,7 @@
 	$(".wishListBtn").click(function(){
 		var movieNo = $(this).next().val();
 		var count = $(this).children("span")
-	
+		
 		$.ajax({
 			type : "post",
 			url : "/rest/movie/wishlist",

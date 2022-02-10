@@ -233,6 +233,22 @@ public class CustomerService {
 		return customerDao.getAllCustomerMovieWishListByCustomerNo(customerNo);
 	}
 	
+	public String getMyWishList(int customerNo, int movieNo) {
+		List<CustomerMovieWishList> wishList = customerDao.getAllCustomerMovieWishListByCustomerNo(customerNo);
+		
+		String value = "";
+		for(CustomerMovieWishList wish : wishList) {
+			if(wish.getMovieNo() == movieNo) {
+				value = "Y";
+			}
+		}
+		return value;
+	}
+	
+	public void deleteCustomerMovieWishListByMovieNo(CustomerMovieWishList wishList) {
+		customerDao.deleteCustomerMovieWishListByMovieNo(wishList);
+	}
+	
 	// 한줄평
 //	public void name() {
 //		

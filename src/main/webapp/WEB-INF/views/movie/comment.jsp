@@ -32,8 +32,13 @@
 	<div class="row">
 		<div class="col-10">
 		</div>
-		<div class="col-2">
-			<span><a href="">최신순</a> <a href="">공감순</a> <a href="">평점순</a></span>
+		<div class="col-2 text-end">
+			<span><a id="recent">최신순</a> <a id="recommend">공감순</a></span>
+			<form id="form-sort" action="comment" method="get">
+				<input type="hidden" name="page" value="" />
+				<input type="hidden" name="sort" value="" />
+				<input type="hidden" name="no" value="${movieDetail.no }" />
+			</form>
 		</div>
 	</div>
 	<div class="row-6 mb-3">
@@ -93,17 +98,17 @@
 		<nav>
 			<ul class="pagination justify-content-center">
 				<li class="page-item ${pagination.existPrev ? '' : 'disabled' }">
-					<a class="page-link" href="customerrating?no=${movieDetail.no }&page=${pagination.prevPage }" data-page="${pagination.prevPage }">
+					<a class="page-link" href="comment?no=${movieDetail.no }&page=${pagination.prevPage }" data-page="${pagination.prevPage }">
 						<span aria-hidden="true">&laquo;</span>
 					</a>
 				</li>
 				<c:forEach var="num" begin="${pagination.beginPage }" end="${pagination.endPage }">
 					<li class="page-item ${pagination.pageNo eq num ? 'active' : '' }">
-						<a class="page-link" href="customerrating?no=${movieDetail.no }&page=${num }" data-page="${num }">${num }</a>
+						<a class="page-link" href="comment?no=${movieDetail.no }&page=${num }" data-page="${num }">${num }</a>
 					</li>
 				</c:forEach>
 				<li class="page-item ${pagination.existNext ? '' : 'disabled' }">
-					<a class="page-link" href="customerration?no=${movieDetail.no }&page=${pagination.nextPage }" data-page="${pagination.nextPage }">
+					<a class="page-link" href="comment?no=${movieDetail.no }&page=${pagination.nextPage }" data-page="${pagination.nextPage }">
 						<span aria-hidden="true">&raquo;</span>
 					</a>
 				</li>
@@ -114,6 +119,21 @@
 <%@ include file="/WEB-INF/views/common/footer.jsp" %>
 <script type="text/javascript">
 $(function(){
+	
+	$("#recent").click(function(){
+		event.preventDefault();
+		var pageNo = $(".pagination a").attr("data-page");
+		$(":input[name=page]").val("1");
+		$(":input[name=sort]").val('recent');
+		$("#form-sort").trigger("submit");
+	})
+	$("#recommend").click(function(){
+		event.preventDefault();
+		var pageNo = $(".pagination a").attr("data-page");
+		$(":input[name=page]").val("1");
+		$(":input[name=sort]").val('recommend');
+		$("#form-sort").trigger("submit");
+	})
 	
 	$(".like").click(function(){
 		event.preventDefault();

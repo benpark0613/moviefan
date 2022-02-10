@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.jhta.moviefan.form.CommentInsertForm;
-import com.jhta.moviefan.form.Criteria;
 import com.jhta.moviefan.form.CriteriaMovieComment;
 import com.jhta.moviefan.pagination.Pagination;
 import com.jhta.moviefan.service.CommentService;

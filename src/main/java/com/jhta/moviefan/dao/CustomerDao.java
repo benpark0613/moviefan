@@ -31,6 +31,7 @@ public interface CustomerDao {
 	// 주성
 	int countCustomerMovieWishListByMovieNo(int movieNo);
 	void insertCustomerMovieWishListByMovieNo(CustomerMovieWishList wishList);
+	void deleteCustomerMovieWishListByMovieNo(CustomerMovieWishList wishList);
 	
 	// my영화관
 	List<CustomerCinemaFavorites> getCustomerCinemaFavoritesByCustomerNo(int customerNo);

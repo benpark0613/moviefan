@@ -175,6 +175,12 @@
 		where customer_no = #{customerNo}
 	</select>
 	
+	<select id="getMyWishList" parameterType="int" resultType="int">
+		select MOVIE_NO
+		from CUSTOMER_MOVIE_WISHLIST
+		where CUSTOMER_NO = #{value}
+	</select>
+	
 	<insert id="insertMyCinema" parameterType="com.jhta.moviefan.vo.CustomerCinemaFavorites">
 		insert into customer_cinema_favorites 
 		(customer_no, cinema_no)
@@ -186,6 +192,12 @@
 		delete from customer_cinema_favorites
 		where customer_no = #{customerNo}
 		and cinema_no = #{cinemaNo}
+	</delete>
+	
+	<delete id="deleteCustomerMovieWishListByMovieNo" parameterType="com.jhta.moviefan.vo.CustomerMovieWishList">
+		delete from CUSTOMER_MOVIE_WISHLIST
+		where MOVIE_NO = #{movieNo}
+		and CUSTOMER_NO = #{customerNo}
 	</delete>
 	
 </mapper>
