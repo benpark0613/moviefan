@@ -518,7 +518,7 @@
 		</div>
 		<%-- 공지사항 --%>
 		<div class="row d-flex justify-content-evenly d-none" id="div-notice-template">
-			<div class="col-8">
+			<div class="col-8" id="col-notice-template">
 				<%-- 공지카테고리 --%>
 				<div class="row d-flex justify-content-start my-3 ">
 					<p class="p-0 mb-1">무비팬의 주요한 이슈 및 여러가지 소식들을 확인하실 수 있습니다.</p>
@@ -1080,79 +1080,6 @@ $(function() {
 			getNoticeList(selectCategoryNo);
 		})
 		
-// 		$('#tbody-noticelist a').click(function(event) {
-// 			event.preventDefault();
-// 			let selectCategoryNo = $('.active[data-category]').data();
-// 			noticeNo = $('#tbody-noticelist a').attr('href');
-// 			getNoticeDetail();
-// 		});
-		
-		function getNoticeDetail(noticeNo) {
-			event.preventDefault();
-			let currentPage = $('#form-search-notice input[name=current-page]').val();
-			let searchOption = $("#form-search-notice select[name=opt]").val();
-			let searchValue = $.trim($("#form-search-notice :input[name=value]").val());
-			let $divNoticeTemplate = $('#div-notice-template').empty();
-			
-			$.ajax({
-				type: 'GET',
-				url: '/rest/member/detail',
-				data: {
-					no: noticeNo,
-					opt: searchOption,
-					value: searchValue,
-			},
-			success: function(response) {
-				$divNoticeTemplate.empty();
-				
-				console.log(response.noticeDtos)
-				
-				let noticeDto = response.noticeDtos[0];
-				pagination = response.pagination;
-				
-				let row = '<div class="col-8">';
-				row += '<div class="row bg-light border-top">';
-				row += '<div class="col d-flex justify-content-start">'
-				row += '<p class="fw-bold me-1 my-2">'
-				row += '['+noticeDto.categoryName+']'
-				row += '</p>'
-				row += '<p class="fw-bold me-auto my-2">'
-				row += noticeDto.title
-				row += '</p>'
-				row += '<p class="fw-bold text-end me-2 my-2">'
-				row += '등록일' + noticeDto.createdDate
-				row += '</p>'
-				row += '<p class="fw-bold text-end my-2">'
-				row += '조회수' + noticeDto.viewCount 
-				row += '</p>'
-				row += '</div>'
-				row += '</div>'
-				row += '<div class="row border-bottom">'
-				row += '<div class="col p-5">'
-				if (noticeDto.image) {
-					row += '<div class="row mb-2">'
-					row += '<img class="img-thumbnail w-25" src="/resources/images/admin/'+noticeDto.image+'">'
-					row += '</div>'
-				}
-				row += '<div class="row">'
-				row += '<p>'+noticeDto.content+'</p>'
-				row += '</div>'
-				row += '</div>'
-				row += '</div>'
-				row += '<div class="row my-2">'
-				row += '<div class="col d-flex justify-content-end">'
-				row += '<a href="/admin/notice/list?page='+currentPage+'" class="btn btn-dark" type="button">목록으로</a>'
-				row += '</div>'
-				row += '</div>'
-				row += '</div>'
-						
-				$divNoticeTemplate.append(row);
-			},
-				error: function(response) {
-				alert('오류가 발생했습니다. 잠시 후 다시 시작해주세요.');
-			}
-		});	
-	}
 		function getNoticeList(selectCategoryNo) {
 			let $tbodyNoticeList = $('#tbody-noticelist').empty();
 			let pagination;
@@ -1178,66 +1105,110 @@ $(function() {
 					// 공지 사항 없는 경우
 					if (noticeListDto.length == 0) {
 						let row = 
-							`<div class="row">
-							<div class="row text-center"><i class="bi bi-exclamation-square" style="font-size: 5em;"></i></div>
-							<div class="row text-center"><p class="fs-1">공지사항이 존재하지 않습니다.</p></div>
-							</div>`;
+							`<tr>
+							<td class="text-center border-0" colspan="7"><i class="bi bi-exclamation-square fs-1"></i></td>
+							</tr>;
+							<tr>
+							<td class="text-center border-0" colspan="7"><p class="fs-1">공지사항이 존재하지 않습니다.</p></td>
+							</tr>`;
 						$tbodyNoticeList.append(row);
 					} else {
-						if (selectCategoryNo == 0) {
-							$.each(noticeListDto, function(index, noticeDto) {
-								let	row = '<tr>';
-									row +=	'<td class="text-center">'+noticeDto.no+'</td>';
-									row +=	'<td class="text-center">'+noticeDto.categoryName+'</td>';
-									row +=	'<td class="text-start"><a class="link-dark" data-noticeNo="'+noticeDto.no+'" href="">'+noticeDto.title+'</a></td>';
-									row +=	'<td class="text-center">'+noticeDto.createdDate+'</td>';
-									row +=	'<td class="text-center">'+noticeDto.viewCount+'</td>';
-									row +=	'</tr>'
-									
-								$tbodyNoticeList.append(row);
-							});
-							getPaginationNav(currentPage, pagination, selectCategoryNo);
-							
-							$('#tbody-noticelist a').click(function(event) {
-								event.preventDefault();
-// 								let selectCategoryNo = $('.active[data-category]').data('category');
-								let noticeNo = $(this).attr('data-noticeNo');
-// 								console.log(selectCategoryNo)
-								console.log(noticeNo)
-								getNoticeDetail(noticeNo);
-							});
-						} else {
-							$.each(noticeListDto, function(index, noticeDto) {
-								if (noticeDto.categoryNo == selectCategoryNo) {
-									let	row = '<tr>';
-										row +=	'<td class="text-center">'+noticeDto.no+'</td>';
-										row +=	'<td class="text-center">'+noticeDto.categoryName+'</td>';
-										row +=	'<td class="text-start"><a class="link-dark" data-noticeNo="'+noticeDto.no+'" href="">'+noticeDto.title+'</a></td>';
-										row +=	'<td class="text-center">'+noticeDto.createdDate+'</td>';
-										row +=	'<td class="text-center">'+noticeDto.viewCount+'</td>';
-										row +=	'</tr>'
-										
-									$tbodyNoticeList.append(row);
-								}
-							});
-							getPaginationNav(currentPage, pagination, selectCategoryNo);
-							
-							$('#tbody-noticelist a').click(function(event) {
-								event.preventDefault();
-// 								let selectCategoryNo = $('.active[data-category]').data('category');
-								let noticeNo = $(this).attr('data-noticeNo');
-// 								console.log(selectCategoryNo)
-								console.log(noticeNo)
-// 								getNoticeDetail(noticeNo, selectCategoryNo);
-							});
-						}
+						$.each(noticeListDto, function(index, noticeDto) {
+							let	row = '<tr>';
+								row +=	'<td class="text-center">'+noticeDto.no+'</td>';
+								row +=	'<td class="text-center">'+noticeDto.categoryName+'</td>';
+								row +=	'<td class="text-start"><a class="link-dark" data-noticeNo="'+noticeDto.no+'" href="">'+noticeDto.title+'</a></td>';
+								row +=	'<td class="text-center">'+noticeDto.createdDate+'</td>';
+								row +=	'<td class="text-center">'+noticeDto.viewCount+'</td>';
+								row +=	'</tr>'
+								
+							$tbodyNoticeList.append(row);
+						});
+						getPaginationNav(currentPage, pagination, selectCategoryNo);
 						
+						$('#tbody-noticelist a').click(function(event) {
+							event.preventDefault();
+							let noticeNo = $(this).attr('data-noticeNo');
+							getNoticeDetail(noticeNo);
+						});
 					}
 				},
 				error: function() {
 					alert('오류가 발생했습니다. 잠시 후 다시 시도해주세요.');
 				}
 			});
+		}
+		
+		function getNoticeDetail(noticeNo) {
+			event.preventDefault();
+			let currentPage = $('#form-search-notice input[name=current-page]').val();
+			let searchOption = $("#form-search-notice select[name=opt]").val();
+			let searchValue = $.trim($("#form-search-notice :input[name=value]").val());
+			let $divNoticeTemplate = $('#div-notice-template');
+			let $colNoticeTemplate = $('#col-notice-template');
+			 
+			$.ajax({
+				type: 'GET',
+				url: '/rest/member/detail',
+				data: {
+					no: noticeNo,
+					opt: searchOption,
+					value: searchValue,
+				},
+				success: function(response) {
+					
+					let noticeDto = response.noticeDtos[0];
+					pagination = response.pagination;
+					
+					let row = '<div class="col-8" id="div-notice-detail">';
+					row += '<div class="row bg-light border-top">';
+					row += '<div class="col d-flex justify-content-start">'
+					row += '<p class="fw-bold me-1 my-2">'
+					row += '['+noticeDto.categoryName+']'
+					row += '</p>'
+					row += '<p class="fw-bold me-auto my-2">'
+					row += noticeDto.title
+					row += '</p>'
+					row += '<p class="fw-bold text-end me-2 my-2">'
+					row += '등록일' + noticeDto.createdDate
+					row += '</p>'
+					row += '<p class="fw-bold text-end my-2">'
+					row += '조회수' + noticeDto.viewCount 
+					row += '</p>'
+					row += '</div>'
+					row += '</div>'
+					row += '<div class="row border-bottom">'
+					row += '<div class="col p-5">'
+					if (noticeDto.image) {
+						row += '<div class="row mb-2">'
+						row += '<img class="img-thumbnail w-25" src="/resources/images/admin/'+noticeDto.image+'">'
+						row += '</div>'
+					}
+					row += '<div class="row">'
+					row += '<p>'+noticeDto.content+'</p>'
+					row += '</div>'
+					row += '</div>'
+					row += '</div>'
+					row += '<div class="row my-2">'
+					row += '<div class="col d-flex justify-content-end">'
+					row += '<a href="/admin/notice/list?page='+currentPage+'" class="btn btn-dark" type="button" id="a-back-list">목록으로</a>'
+					row += '</div>'
+					row += '</div>'
+					row += '</div>'
+							
+					$divNoticeTemplate.append(row);
+					$colNoticeTemplate.addClass('d-none');
+					
+					$('#a-back-list').click(function(event) {
+						event.preventDefault();
+						$colNoticeTemplate.removeClass('d-none');
+						$('#div-notice-detail').remove();
+					})
+				},
+				error: function(response) {
+					alert('오류가 발생했습니다. 잠시 후 다시 시작해주세요.');
+				}
+			});	
 		}
 		
 		function getPaginationNav(currentPage, pagination, selectCategoryNo) {
