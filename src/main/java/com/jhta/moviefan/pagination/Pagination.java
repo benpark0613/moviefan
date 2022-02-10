@@ -194,25 +194,25 @@ public class Pagination {
 		return nextPage;
 	}
 	
-	public int getRowsPerPage() {
-		return rowsPerPage;
-	}
-
-	public int getPagesPerBlock() {
-		return pagesPerBlock;
-	}
-
-	public int getCurrentPageNo() {
-		return currentPageNo;
-	}
-
-	public int getTotalBlocks() {
-		return totalBlocks;
-	}
-
-	public int getCurrentBlock() {
-		return currentBlock;
-	}
+//	public int getRowsPerPage() {
+//		return rowsPerPage;
+//	}
+//
+//	public int getPagesPerBlock() {
+//		return pagesPerBlock;
+//	}
+//
+//	public int getCurrentPageNo() {
+//		return currentPageNo;
+//	}
+//
+//	public int getTotalBlocks() {
+//		return totalBlocks;
+//	}
+//
+//	public int getCurrentBlock() {
+//		return currentBlock;
+//	}
 
 	@Override
 	public String toString() {

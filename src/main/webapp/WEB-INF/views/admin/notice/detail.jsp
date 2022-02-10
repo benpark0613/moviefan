@@ -38,23 +38,22 @@
 			</div>
 			<div class="row bg-light border-top">
 				<div class="col d-flex justify-content-start">
-						<p class="fw-bold me-1 my-2">
-							<c:forEach var="category" items="${categories }">
-								<c:if test="${category.categoryNo eq notice.categoryNo }">
-									[${category.name }]
-								</c:if>
-							</c:forEach>
-						</p>
-						<p class="fw-bold me-auto my-2">
-							${notice.title}
-						</p>
-						<p class="fw-bold text-end me-2 my-2">
-							등록일 <fmt:formatDate value="${notice.createdDate}" pattern="yyyy-MM-dd" />
-						</p>
-						<p class="fw-bold text-end my-2">
-							조회수 ${notice.viewCount }
-						</p>
-					
+					<p class="fw-bold me-1 my-2">
+						<c:forEach var="category" items="${categories }">
+							<c:if test="${category.categoryNo eq notice.categoryNo }">
+								[${category.name }]
+							</c:if>
+						</c:forEach>
+					</p>
+					<p class="fw-bold me-auto my-2">
+						${notice.title}
+					</p>
+					<p class="fw-bold text-end me-2 my-2">
+						등록일 <fmt:formatDate value="${notice.createdDate}" pattern="yyyy-MM-dd" />
+					</p>
+					<p class="fw-bold text-end my-2">
+						조회수 ${notice.viewCount }
+					</p>
 				</div>
 			</div>
 			<div class="row border-bottom">

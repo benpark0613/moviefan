@@ -127,6 +127,8 @@
 				</ul>	
 				<form class="me-2">
 					<input class="form-control" type="text" placeholder="Search" aria-label="Search">
+					<!-- 엔터 눌렀을 때 검색 방지 -->
+					<input type="hidden">
 				</form>
 				<i class="bi bi-search" style="font-size: 1.5rem; color: grey;"></i>
 			</div>

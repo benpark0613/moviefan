@@ -14,12 +14,12 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.jhta.moviefan.annotation.LoginedCustomer;
 import com.jhta.moviefan.dto.CityWithCinemasDto;
+import com.jhta.moviefan.dto.NoticeDto;
 import com.jhta.moviefan.dto.ResponseDto;
 import com.jhta.moviefan.dto.RestMovieWishListDto;
 import com.jhta.moviefan.dto.RestNoticeDto;
-import com.jhta.moviefan.dto.NoticeDto;
-import com.jhta.moviefan.form.Criteria;
 import com.jhta.moviefan.form.CriteriaMyAccount;
+import com.jhta.moviefan.form.CriteriaNotice;
 import com.jhta.moviefan.pagination.Pagination;
 import com.jhta.moviefan.service.CinemaService;
 import com.jhta.moviefan.service.CustomerService;
@@ -146,22 +146,40 @@ public class CustomerRestController {
 	}
 	
 	@GetMapping("/notice-list")
-	public RestNoticeDto getNoticeList(@LoginedCustomer Customer customer, Criteria criteria,
+	public RestNoticeDto getNoticeList(@LoginedCustomer Customer customer, CriteriaNotice criteriaNotice,
 			@RequestParam(name = "page", required = false, defaultValue = "1") String page) {
 		
-		int totalRecords = noticeService.getTotalRows(criteria);
-		Pagination pagination = new Pagination(page, totalRecords, 8);
-		criteria.setBeginIndex(pagination.getBegin());
-		criteria.setEndIndex(pagination.getEnd());
+		logger.info("criteriaNotice 값1:" + criteriaNotice);
+		int totalRecords = noticeService.getTotalRows(criteriaNotice);
+		logger.info("totalRecords 값:" + totalRecords);
+		Pagination pagination = new Pagination(page, totalRecords);
+		logger.info("criteriaNotice 값2:" + criteriaNotice);
+		criteriaNotice.setBeginIndex(pagination.getBegin());
+		criteriaNotice.setEndIndex(pagination.getEnd());
+		logger.info("criteriaNotice 값3:" + criteriaNotice);
 		
-		List<NoticeDto> noticeDtos = noticeService.getNoticeDtos(criteria);
+		List<NoticeDto> noticeDtos = noticeService.getNoticeDtos(criteriaNotice);
 		
 		RestNoticeDto restNoticeDto = new RestNoticeDto();
 		restNoticeDto.setStatus("OK");
 		restNoticeDto.setNoticeDtos(noticeDtos);
 		restNoticeDto.setPagination(pagination);
 		
+		logger.info("restNoticeDto 값: " + restNoticeDto);
+		
 		return restNoticeDto;
+	}
+	
+	@GetMapping("/detail")
+	public RestNoticeDto getNoticeDetail(@LoginedCustomer Customer customer, @RequestParam(name = "no", required = true) int no) {
+		
+		RestNoticeDto restNoticeDto = new RestNoticeDto();
+		restNoticeDto.setStatus("OK");
+		restNoticeDto.setNoticeDtos(List.of(noticeService.getNoticeDto(no)));
+
+		return restNoticeDto;
+		
+		
 	}
 	
 }
