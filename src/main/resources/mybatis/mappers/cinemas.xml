@@ -71,6 +71,31 @@
 			cn.cinema_name
 	</select>
 	
+	<select id="getCinemaHallsNowPlaying" parameterType="map" resultType="com.jhta.moviefan.vo.CinemaHall">
+		select distinct 
+	    	ch.hall_no           as no,
+	    	ch.hall_name         as name,
+	    	ch.hall_total_seats  as totalSeats,
+	    	ch.cinema_no         as cinemaNo
+		from 
+			show s, cinema_hall ch
+		where 
+			s.show_start_time > current_date
+		and 
+			s.hall_no = ch.hall_no
+		<if test="movieNo != null">
+			and s.movie_no = #{movieNo}
+		</if>
+		<if test="cinemaNo != null">
+			and ch.cinema_no = #{cinemaNo}
+		</if>
+		<if test="showDate != null">
+			and s.show_date = #{showDate}
+		</if>
+		order by
+			ch.hall_name
+	</select>
+	
 	<!-- 전체 영화관 정보 List<CinemaDto> getAllCinemas(); -->
 	<select id="getAllCinemas" resultType="com.jhta.moviefan.dto.CinemaDto">
 		select

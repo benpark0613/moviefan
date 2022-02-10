@@ -2,18 +2,49 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.jhta.moviefan.dao.TicketDao">
 
-	<select id="getShowsNowPlaying" resultType="com.jhta.moviefan.vo.Show">
+	<select id="getShowsNowPlaying" parameterType="map" resultType="com.jhta.moviefan.vo.Show">
 		select 
-			show_no				as no, 
-			show_date			as showDate, 
-			show_start_time		as startTime, 
-			show_end_time		as endTime, 
-			movie_no			as movieNo, 
-			hall_no				as hallNo
+			s.show_no				as no, 
+			s.show_date				as showDate, 
+			s.show_start_time		as startTime, 
+			s.show_end_time			as endTime, 
+			s.movie_no				as movieNo, 
+			s.hall_no				as hallNo
 		from 
-			show
+			show s, cinema_hall ch
 		where 
-			show_start_time > current_date
+			s.show_start_time > current_date
+		and 
+			s.hall_no = ch.hall_no
+		<if test="movieNo != null">
+			and s.movie_no = #{movieNo}
+		</if>
+		<if test="cinemaNo != null">
+			and ch.cinema_no = #{cinemaNo}
+		</if>
+		<if test="showDate != null">
+			and s.show_date = #{showDate}
+		</if>
+		<if test="hallNo != null">
+			and s.hall_no = #{hallNo}
+		</if>
+		order by
+			s.show_start_time
+	</select>
+	
+	<select id="getShowSeatsByShowNo" parameterType="int" resultType="com.jhta.moviefan.vo.ShowSeat">
+		select
+			show_seat_no		as no,
+			show_no				as showNo,
+			seat_no				as seatNo,
+			booking_no			as bookingNo,
+			is_reserved			as isReserved
+		from
+			show_seat
+		where
+			show_no = #{value}
+		order by
+			show_seat_no
 	</select>
 
 	<select id="getShowDatesNowPlaying" parameterType="map" resultType="date">
