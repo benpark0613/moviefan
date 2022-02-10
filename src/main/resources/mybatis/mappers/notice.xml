@@ -103,6 +103,10 @@
 		from notice_image
 		where notice_no = #{value}
 	</select>
+	<select id="getAllNoticeImages" resultType="com.jhta.moviefan.vo.NoticeImage">
+		select *
+		from notice_image
+	</select>
 	
 	<!-- 공지글 카테고리 -->
 	<select id="getAllNoticeCategories" resultType="com.jhta.moviefan.vo.NoticeCategory">
