@@ -518,7 +518,7 @@
 		</div>
 		<%-- 공지사항 --%>
 		<div class="row d-flex justify-content-evenly d-none" id="div-notice-template">
-			<div class="col-8">
+			<div class="col-8" id="col-notice-template">
 				<%-- 공지카테고리 --%>
 				<div class="row d-flex justify-content-start my-3 ">
 					<p class="p-0 mb-1">무비팬의 주요한 이슈 및 여러가지 소식들을 확인하실 수 있습니다.</p>
@@ -1080,13 +1080,6 @@ $(function() {
 			getNoticeList(selectCategoryNo);
 		})
 		
-// 		$('#tbody-noticelist a').click(function(event) {
-// 			event.preventDefault();
-// 			let selectCategoryNo = $('.active[data-category]').data();
-// 			noticeNo = $('#tbody-noticelist a').attr('href');
-// 			getNoticeDetail();
-// 		});
-		
 		function getNoticeList(selectCategoryNo) {
 			let $tbodyNoticeList = $('#tbody-noticelist').empty();
 			let pagination;
@@ -1151,8 +1144,9 @@ $(function() {
 			let currentPage = $('#form-search-notice input[name=current-page]').val();
 			let searchOption = $("#form-search-notice select[name=opt]").val();
 			let searchValue = $.trim($("#form-search-notice :input[name=value]").val());
-			let $divNoticeTemplate = $('#div-notice-template').addClass('d-none');
-			
+			let $divNoticeTemplate = $('#div-notice-template');
+			let $colNoticeTemplate = $('#col-notice-template');
+			 
 			$.ajax({
 				type: 'GET',
 				url: '/rest/member/detail',
@@ -1166,7 +1160,7 @@ $(function() {
 					let noticeDto = response.noticeDtos[0];
 					pagination = response.pagination;
 					
-					let row = '<div class="col-8">';
+					let row = '<div class="col-8" id="div-notice-detail">';
 					row += '<div class="row bg-light border-top">';
 					row += '<div class="col d-flex justify-content-start">'
 					row += '<p class="fw-bold me-1 my-2">'
@@ -1197,16 +1191,22 @@ $(function() {
 					row += '</div>'
 					row += '<div class="row my-2">'
 					row += '<div class="col d-flex justify-content-end">'
-					row += '<a href="/admin/notice/list?page='+currentPage+'" class="btn btn-dark" type="button">목록으로</a>'
+					row += '<a href="/admin/notice/list?page='+currentPage+'" class="btn btn-dark" type="button" id="a-back-list">목록으로</a>'
 					row += '</div>'
 					row += '</div>'
 					row += '</div>'
 							
-					$divNoticeTemplate.after(row);
+					$divNoticeTemplate.append(row);
+					$colNoticeTemplate.addClass('d-none');
 					
+					$('#a-back-list').click(function(event) {
+						event.preventDefault();
+						$colNoticeTemplate.removeClass('d-none');
+						$('#div-notice-detail').remove();
+					})
 				},
 				error: function(response) {
-				alert('오류가 발생했습니다. 잠시 후 다시 시작해주세요.');
+					alert('오류가 발생했습니다. 잠시 후 다시 시작해주세요.');
 				}
 			});	
 		}
