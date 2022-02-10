@@ -32,23 +32,30 @@ public class MovieRestController {
 		ResponseDto<Integer> response = new ResponseDto<>();
 		CustomerMovieWishList wishList = new CustomerMovieWishList();
 		Customer customer = (Customer) SessionUtils.getAttribute("LOGINED_CUSTOMER");
-		
 		logger.info("로그인 된 사용자 정보 : " + customer);
+		
 		if(customer == null) {
 			throw new LoginErrorException("위시리스트는 로그인 후 사용할 수 있습니다.");
 		}
 		
-		List<CustomerMovieWishList> movieList = customerService.getCustomerWishListByCustomerNo(customer.getNo());
-		
-		for(CustomerMovieWishList list : movieList) {
-			if(list.getMovieNo() == movieNo) {
-				throw new MovieErrorException("이미 위시리스트에 저장된 영화입니다.");
-			}
-		}
-		
 		wishList.setCustomerNo(customer.getNo());
 		wishList.setMovieNo(movieNo);
-		customerService.insertCustomerMovieWishListByMovieNo(wishList);
+		
+		List<CustomerMovieWishList> movieList = customerService.getCustomerWishListByCustomerNo(customer.getNo());
+		
+		boolean isExist = false;
+		for(CustomerMovieWishList list : movieList) {
+			if(list.getMovieNo() == movieNo) {
+				//throw new MovieErrorException("이미 위시리스트에 저장된 영화입니다.");
+				isExist = true;
+				break;
+			}
+		}
+		if(isExist) {
+			customerService.deleteCustomerMovieWishListByMovieNo(wishList);
+		}else {
+			customerService.insertCustomerMovieWishListByMovieNo(wishList);
+		}
 		
 		int countWishList = customerService.countCustomerMovieWishListByMovieNo(movieNo);
 		

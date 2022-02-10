@@ -72,4 +72,8 @@ public class CommentService {
 	public int getCommentTotalRow(CriteriaMovieComment criteria) {
 		return commentDao.getCommentTotalRow(criteria);
 	}
+	
+	public int getCommentTotalRowByMovieNo(int movieNo) {
+		return commentDao.getCommentTotalRowByMovieNo(movieNo);
+	}
 }

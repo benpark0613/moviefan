@@ -29,4 +29,5 @@ public interface CommentDao {
 	List<Comment> getAllCommentByIndex(Criteria criteria);
 	List<Comment> searchComment(CriteriaMovieComment criteria);
 	int getCommentTotalRow(CriteriaMovieComment criteria);
+	int getCommentTotalRowByMovieNo(int movieNo);
 }

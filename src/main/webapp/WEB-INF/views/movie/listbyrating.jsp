@@ -70,8 +70,7 @@
 				</div>
 				<div class="row mb-3">
 					<div class="col">
-						<!-- Button trigger modal -->
-						<button type="button" class="btn btn-outline-dark wishListBtn" style="padding-left:10px; padding-right:10px;">
+						<button type="button" class="btn btn-outline-dark wishListBtn ${'Y' eq myWishList[status.index] ? 'active' : '' }" style="padding-left:10px; padding-right:10px;">
 							<i class="far fa-heart fa-lg"></i><span> ${wishList[status.index] }</span>
 						</button>
 							<input type="hidden" value="${movies.no}" /> 
@@ -123,17 +122,18 @@
 	
 	$(".wishListBtn").click(function(){
 		var movieNo = $(this).next().val();
-		var count = $(this).next();
+		var count = $(this).children("span")
 	
 		$.ajax({
-			url : "/rest/movie/wishList",
 			type : "post",
+			url : "/rest/movie/wishlist",
 			dataType : "json",
 			data: {
 				movieNo : movieNo,
 			},
-			success : function(data){
-				$(".wishListBtn").children("span").text(response.items[0]);
+			success : function(response){
+				$(this).children("span").text(response.item[0]);
+				count.text(' '+response.item[0]);
 				alert("저장되었습니다.");
 			},
 			error : function(response){

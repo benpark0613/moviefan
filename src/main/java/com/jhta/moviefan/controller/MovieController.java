@@ -22,13 +22,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.jhta.moviefan.dto.MovieDetailDto;
-import com.jhta.moviefan.form.Criteria;
 import com.jhta.moviefan.form.CriteriaMovieComment;
 import com.jhta.moviefan.pagination.Pagination;
 import com.jhta.moviefan.service.CommentService;
 import com.jhta.moviefan.service.CustomerService;
 import com.jhta.moviefan.service.MovieService;
+import com.jhta.moviefan.utils.SessionUtils;
 import com.jhta.moviefan.vo.Comment;
+import com.jhta.moviefan.vo.Customer;
 import com.jhta.moviefan.vo.Movie;
 
 @Controller
@@ -46,9 +47,10 @@ public class MovieController {
 
 	@GetMapping("/list")
 	public String list(Model model) {
-
 		String result = "";
 		String key = "f9dd7d979e07f9f15431b68f1cf1ae1d";
+		
+		Customer customer = (Customer) SessionUtils.getAttribute("LOGINED_CUSTOMER");
 
 		Calendar calendar = new GregorianCalendar();
 		calendar.add(Calendar.DATE, -1);
@@ -69,6 +71,7 @@ public class MovieController {
 
 			List<Movie> movieList = new ArrayList<>();
 			List<Integer> wishList = new ArrayList<>();
+			List<String> myWishList = new ArrayList<>();
 			for(int i=0; i<jsonObject3.size(); i++) {
 				JSONObject movies = (JSONObject) jsonObject3.get(i);
 				Movie movie = new Movie();
@@ -76,11 +79,20 @@ public class MovieController {
 				int movieCd = (Integer.parseInt((String)movies.get("movieCd")));
 				movie = movieService.getMovieByMovieNo(movieCd);
 				int countWishList = customerService.countCustomerMovieWishListByMovieNo(movieCd);
+				
+				if(customer != null) {
+					
+					String haveWish =customerService.getMyWishList(customer.getNo(), movieCd);
+					myWishList.add(haveWish);
+				}
+								
 				movieList.add(movie);
 				wishList.add(countWishList);
+				
 			}
 			model.addAttribute("movie", movieList);
 			model.addAttribute("wishList", wishList);
+			model.addAttribute("myWishList", myWishList);
 
 
 		}catch(Exception e) {
@@ -121,40 +133,47 @@ public class MovieController {
 		return "movie/trailer";
 	}
 
-	@GetMapping("/customerrating")
-	public String customerrating(@RequestParam(name="page", required = false, defaultValue = "1")String page, int no, Model model) {
+	@GetMapping("/comment")
+	public String comment(@RequestParam(name="page", required = false, defaultValue = "1")String page, int no, Model model, CriteriaMovieComment criteria) {
 		MovieDetailDto movieDetail = movieService.getMovieDetail(no);
-		List<Comment> comment = commentService.searchCommentsByMovieNo(no);
-		int totalRecords = comment.size();
 		
-		CriteriaMovieComment criteria = new CriteriaMovieComment();
+		int totalRecords = commentService.getCommentTotalRowByMovieNo(no);
 		
-		Pagination pagination = new Pagination(page, totalRecords, 3);
-		
-		criteria.setMovieNo(no);
+		Pagination pagination = new Pagination(page, totalRecords, 5);
 		criteria.setBeginIndex(pagination.getBegin());
 		criteria.setEndIndex(pagination.getEnd());
 		
-		List<Comment> commentList = commentService.getCommentPages(criteria);
+		List<Comment> commentList = commentService.searchComment(criteria);
+		
 		
 		model.addAttribute("movieDetail", movieDetail);
 		model.addAttribute("comment", commentList);
 		model.addAttribute("pagination", pagination);
 		model.addAttribute("size", totalRecords);
 
-		return "movie/customerrating";
+		return "movie/comment";
 	}
 	
 	@GetMapping("/listbyrating")
 	public String listbyrating(Model model) {
+		
+		Customer customer = (Customer) SessionUtils.getAttribute("LOGINED_CUSTOMER");
 		List<Movie> movieList = movieService.getMovieOrderByRating();
 		List<Integer> wishList = new ArrayList<>();
+		List<String> myWishList = new ArrayList<>();
 		for(Movie movie : movieList) {
 			int movieNo = movie.getNo();
 			int countWishList = customerService.countCustomerMovieWishListByMovieNo(movieNo);
 			wishList.add(countWishList);
+			
+			if(customer != null) {
+				
+				String haveWish =customerService.getMyWishList(customer.getNo(), movieNo);
+				myWishList.add(haveWish);
+			}
 		}
 		
+		model.addAttribute("myWishList", myWishList);
 		model.addAttribute("movie", movieList);
 		model.addAttribute("wishList", wishList);
 		
@@ -164,19 +183,28 @@ public class MovieController {
 
 	@GetMapping("/commingsoon")
 	public String commingsoon(Model model) {
+		
+		Customer customer = (Customer) SessionUtils.getAttribute("LOGINED_CUSTOMER");
 		Calendar calendar = new GregorianCalendar();
 		calendar.add(Calendar.DATE, 0);
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
 		String date = sdf.format(calendar.getTime());
 		
+		
 		List<Movie> movieList = movieService.getMovieByDate(date);
 		List<Integer> wishList = new ArrayList<>();
+		List<String> myWishList = new ArrayList<>();
 		for(Movie movie : movieList) {
 			int movieNo = movie.getNo();
 			int countWishList = customerService.countCustomerMovieWishListByMovieNo(movieNo);
 			wishList.add(countWishList);
+			
+			if(customer != null) {
+				String haveWish =customerService.getMyWishList(customer.getNo(), movieNo);
+				myWishList.add(haveWish);
+			}
 		}
-		
+		model.addAttribute("myWishList", myWishList);
 		model.addAttribute("movie", movieList);
 		model.addAttribute("wishList", wishList);
 		

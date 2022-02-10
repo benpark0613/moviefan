@@ -47,40 +47,46 @@
 		<hr size="3px" color="black">
 	</div>
 	<div class="row mb-3">
-		<c:forEach var="movies" items="${movie }" varStatus="status">
-			<div class="col-3 mb-3">
-				<div class="row pic">
-					<img class="imgs" src="/resources/images/movie/moviePoster/${movies.no }.jpg" class="rounded float-start" alt="..."> 
-					<span class="summary">${movies.summary }</span>
-					<span class="customerRating">관람평 7.8</span>
-				</div>
-				<div class="row">
-					<div class="col-1">
-						<img alt="" src="/resources/images/movie/age/age_15.png">
+		<c:choose>
+			<c:when test="${empty movie }">
+				<h3><strong>등록된 영화가 없습니다.</strong></h3>
+			</c:when>
+			<c:otherwise>
+				<c:forEach var="movies" items="${movie }" varStatus="status">
+					<div class="col-3 mb-3">
+						<div class="row pic">
+							<img class="imgs" src="/resources/images/movie/moviePoster/${movies.no }.jpg" class="rounded float-start" alt="..."> 
+							<span class="summary">${movies.summary }</span>
+							<span class="customerRating">관람평 7.8</span>
+						</div>
+						<div class="row">
+							<div class="col-1">
+								<img alt="" src="/resources/images/movie/age/age_15.png">
+							</div>
+							<div class="col">
+								<a href="detail?no=${movies.no }"><span class="movieTitle"><strong>${movies.title }</strong></span></a>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col">
+								<span style="font-size: 12pt;">개봉일 <fmt:formatDate value="${movies.openDate }" pattern="yyyy.MM.dd" /></span>
+							</div>
+						</div>
+						<div class="row mb-3">
+							<div class="col">
+								<button type="button" class="btn btn-outline-dark wishListBtn ${'Y' eq myWishList[status.index] ? 'active' : '' }" style="padding-left:10px; padding-right:10px;">
+									<i class="far fa-heart fa-lg"></i><span> ${wishList[status.index] }</span>
+								</button>
+									<input type="hidden" value="${movies.no}" /> 
+							</div>
+							<div class="col">
+								<button type="button" class="btn btn-danger btn-block" style="padding-left:50px; padding-right:50px;"><span>예매</span></button>
+							</div>
+						</div>
 					</div>
-					<div class="col">
-						<a href="detail?no=${movies.no }"><span class="movieTitle"><strong>${movies.title }</strong></span></a>
-					</div>
-				</div>
-				<div class="row">
-					<div class="col">
-						<span style="font-size: 12pt;">개봉일 <fmt:formatDate value="${movies.openDate }" pattern="yyyy.MM.dd" /></span>
-					</div>
-				</div>
-				<div class="row mb-3">
-					<div class="col">
-						<!-- Button trigger modal -->
-						<button type="button" class="btn btn-outline-dark wishListBtn" style="padding-left:10px; padding-right:10px;">
-							<i class="far fa-heart fa-lg"></i><span> ${wishList[status.index] }</span>
-						</button>
-							<input type="hidden" value="${movies.no}" /> 
-					</div>
-					<div class="col">
-						<button type="button" class="btn btn-danger btn-block" style="padding-left:50px; padding-right:50px;"><span>예매</span></button>
-					</div>
-				</div>
-			</div>
-		</c:forEach>
+				</c:forEach>
+			</c:otherwise>
+		</c:choose>
 	</div>
 </div>
 <%@ include file="/WEB-INF/views/common/footer.jsp" %>
@@ -120,12 +126,10 @@
 		$(".subMenu").css("visibility", "hidden");
 	})
 	
-	
-	
 	$(".wishListBtn").click(function(){
 		var movieNo = $(this).next().val();
 		var count = $(this).children("span")
-	
+		
 		$.ajax({
 			type : "post",
 			url : "/rest/movie/wishlist",
