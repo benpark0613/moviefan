@@ -110,7 +110,7 @@
 		where
 			a.city_no = b.city_no
 		order by
-			a.cinema_no
+			a.cinema_name
 	</select>
 	
 	<!-- 지역번호로 영화관 조회 List<CinemaNameDto> getCinemaNameByCityNo(); -->
@@ -191,7 +191,7 @@
 				and
 				    d.movie_no = e.movie_no
 				and
-					b.cinema_no = #{cinemaNo});
+					b.cinema_no = #{cinemaNo})
 	</select>
 
 	<!-- 페이징처리용 영화관별 상영시간표 List<MovieTimeTableDto> getMovieTimeTableByCinemaNo(int cinemaNo); -->

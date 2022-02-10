@@ -85,6 +85,7 @@ public class AdminController {
 		return "admin/movie/search";
 	}
 
+	// 관리자 - 상영정보 리스트 페이징처리
 	@GetMapping("/schedule/list")
 	public String list(@RequestParam(name="page", required = false, defaultValue = "1") String page,
 						ScheduleCriteria criteria, Model model) {
@@ -94,7 +95,7 @@ public class AdminController {
 		// 두번째 셀렉트박스(영화관 선택)
 		List<CinemaDto> cinemaList = cinemaService.getAllCinemaList();
 		
-		// 검색조건에 해당하는 총 상영정보 갯수 조회
+		// 뷰페이지에서 검색버튼을 클릭했을 때, 검색조건에 해당하는 총 상영정보 갯수 조회
 		int totalRecords = cinemaService.getTotalRowsTimetable(criteria);
 		// 현재 페이지번호와 총 데이터 갯수를 전달해서 페이지네이션 객체 생성하기
 		Pagination pagination = new Pagination(page, totalRecords);
@@ -112,6 +113,7 @@ public class AdminController {
 		model.addAttribute("cityList", cityList);
 		model.addAttribute("cinemaList", cinemaList);
 		model.addAttribute("timetables", timetables);
+		model.addAttribute("pagination", pagination);
 
 		return "admin/schedule/list";
 	}

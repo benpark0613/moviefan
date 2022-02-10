@@ -26,35 +26,50 @@
 <body>
 <%@ include file="/WEB-INF/views/admin/common/header.jsp" %>
 <div class="container">
-	
-	<input type="hidden" id="param-cityNo" name="paramCityNo" value="${param.cityNo }">
-	<input type="hidden" id="param-cinemaNo" name="paramCinemaNo" value="${param.cinemaNo }">
-	
+	<!-- 수정폼에서 되돌아왔을 때의 파라미터 값으로, 바로 이전에 클릭했던 셀렉트박스값 2개가 선택되어 있도록 하는 부분 -->
+	<div class="col">
+		<input type="hidden" id="param-pageNo" name="paramPageNo" value="${param.paramPageNo }">
+		<input type="hidden" id="param-cityNo" name="paramCityNo" value="${param.cityNo }">
+		<input type="hidden" id="param-cinemaNo" name="paramCinemaNo" value="${param.cinemaNo }">
+	</div>
 	<div class="row">
 		<div class="col">
 			<h1>상영일정 조회</h1>
 		</div>
 	</div>
-	
-	<!-- 지역, 영화관 선택 -->	
+	<!-- 지역, 영화관 선택부분 -->	
 	<div class="row justify-content-center">
  		<div class="row g-2">
-   			<div class="col-2">
-				<select id="city-select" name="city" class="form-select">
-					<option value="" selected disabled>-- 지역 --</option>
-					<c:forEach var="city" items="${cityList }">
-						<option value="${city.no }" ${param.cityNo eq city.no ? 'selected' : '' }>${city.name }</option>
-					</c:forEach>
-				</select>
-			</div>
-   			<div class="col-3">
-   				<select id="cinema-select" name="cinema" class="form-select">
-					<option value="" selected disabled>-- 영화관을 선택하세요. --</option>
-				</select>
-   			</div>
+ 			<!-- 검색버튼을 클릭하면 input hidden의 페이지번호, 지역번호, 상영관번호를 컨트롤러로 전달 -->
+	 		<form id="form-search-schedule" class="row row-cols-lg-auto g-3 align-items-center" method="get" action="list">
+		 		<div class="col">
+		 			<!-- 셀렉트박스 선택옵션이 바뀔 때마다 바뀐 옵션의 value값이 들어있는 부분 -->
+			 		<input type="hidden" name="pageNo" value="1">
+			 		<input type="hidden" name="cityNo" value="">
+			 		<input type="hidden" name="cinemaNo" value="">
+		 		</div>
+	   			<div class="col-2">
+					<select id="city-select" class="form-select">
+						<option value="" selected disabled>-- 지역 --</option>
+						<c:forEach var="city" items="${cityList }">
+							<option value="${city.no }" ${param.cityNo eq city.no ? 'selected' : '' }>${city.name }</option>
+						</c:forEach>
+					</select>
+				</div>
+	   			<div class="col-3">
+	   				<select id="cinema-select" class="form-select">
+						<option value="" selected disabled>-- 영화관을 선택하세요. --</option>
+						<c:forEach var="cinema" items="${cinemaList }">
+							<option value="${cinema.no }" ${param.cinemaNo eq cinema.no ? 'selected' : '' }>${cinema.name }</option>
+						</c:forEach>
+					</select>
+	   			</div>
+	   			<div class="col-2">
+					<button type="button" class="btn btn-dark" id="btn-search-schedule">검색</button>
+				</div>
+	   		</form>
  		</div>
    	</div>
-
 	<!-- 선택한 영화관에서 현재 상영중인 영화 목록 -->
 	<div id="list" class="row justify-content-center mt-5 mb-5">
 		<form name="scheduleList" method="get" action="/schedule/modify">
@@ -66,30 +81,57 @@
 			      		<th>영화제목</th>
 			      		<th>상영일</th>
 			      		<th>상영시간</th>
-			      		<th>상태</th>
 			      		<th>수정</th>
 			    	</tr>
 			  	</thead>
 			  	<tbody>
-			  		<tr></tr>
+			  		<c:choose>
+						<c:when test="${empty timetables }">
+							<tr>
+								<td class="text-center" colspan="7">현재 상영중인 영화가 없습니다.</td>
+							</tr>
+						</c:when>
+						<c:otherwise>
+							<c:forEach var="timetable" items="${timetables }">
+								<tr>
+									<td>${timetable.showNo }</td>
+									<td>${timetable.hallName }</td>
+									<td>${timetable.title }</td>
+									<td><fmt:formatDate value="${timetable.showDate}" pattern="yyyy-MM-dd" /></td>
+									<td><fmt:formatDate value="${timetable.startTime}" pattern="HH:mm"/> ~ <fmt:formatDate value="${timetable.endTime}" pattern="HH:mm"/></td>
+									<td>
+										<a href="/admin/schedule/modify?cityNo=${timetable.cityNo }&cinemaNo=${timetable.cinemaNo }&showNo=${timetable.showNo }" class="btn btn-outline-primary btn-sm">수정</a>
+									</td>
+								</tr>
+							</c:forEach>
+						</c:otherwise>
+				</c:choose>
 			    </tbody>
 		    </table>
 	    </form>
 	</div>
 	<!-- 페이지네이션 -->
-	<div class="row mb-3">
-		<div class="col" id="pagination">
-			<nav>
-				<ul class="pagination justify-content-center">
-			    	<li class="page-item"><a class="page-link" href="#">이전</a></li>
-			    	<li class="page-item"><a class="page-link" href="#">1</a></li>
-			    	<li class="page-item"><a class="page-link" href="#">2</a></li>
-			    	<li class="page-item"><a class="page-link" href="#">3</a></li>
-			    	<li class="page-item"><a class="page-link" href="#">다음</a></li>
-				</ul>
-			</nav>
+	<c:if test="${pagination.totalRecords gt 0 }">
+		<div class="row mb-3">
+			<div class="col" id="pagination">
+				<nav>
+					<ul class="pagination justify-content-center">
+				    	<li class="page-item ${pagination.existPrev ? '' : 'disabled' }">
+				    		<a class="page-link" href="list?page=${pagination.prevPage }" data-page-no="${pagination.prevPage }">이전</a>
+				    	</li>
+				    	<c:forEach var="no" begin="${pagination.beginPage }" end="${pagination.endPage }">
+					    	<li class="page-item ${pagination.pageNo eq no ? 'active' : '' }">
+					    		<a class="page-link" href="list?page=${no }" data-page-no="${no }">${no }</a>
+					    	</li>
+				    	</c:forEach>
+				    	<li class="page-item ${pagination.existNext ? '' : 'disabled' }">
+				    		<a class="page-link" href="list?page=${pagination.nextPage }" data-page-no="${pagination.nextPage }">다음</a>
+				    	</li>
+					</ul>
+				</nav>
+			</div>
 		</div>
-	</div>
+	</c:if>
 </div>
 <%@ include file="/WEB-INF/views/common/footer.jsp" %>
 </body>
@@ -99,31 +141,49 @@
 		
 		// 1. 지역선택 셀렉트박스가 변경될 때마다 실행될 이벤트 핸들러 함수
 		$('#city-select').change(function () {
-			let no = $(this).val();
-			let $select = $("#cinema-select").empty();
-			$select.prepend('<option value="" disabled selected>--영화관을 선택하세요. --</option>');
-			// ajax로 선택한 지역번호에 해당하는 영화관 리스트를 받아온다.
-			$.getJSON("/rest/cinema/list", {cityNo:no}, function (cinemaList) {
-				$.each (cinemaList, function(index, cinema) {
-					let option = '<option value="' + cinema.no + '" >' + cinema.name + '</option>';
-					$select.append(option);
-				})
-			})
+			// 선택한 지역번호를 input hidden에 저장한다.
+			let cityNo = $(this).val();
+			$('input[name=cityNo]').val(cityNo);
+			
 		})
 		
 		// 2. 상영관이 변경될 때마다 실행될 이벤트 핸들러 함수
 		$('#cinema-select').change(function () {
-			let cinemaNo = $(this).val();			
-			// 해당 상영관의 상영스케줄을 가져오는 함수를 실행한다.
-			getTimetableList(cinemaNo);
+			// 선택한 상영관 번호를 input hidden에 저장한다.
+			let cinemaNo = $(this).val();
+			$('input[name=cinemaNo]').val(cinemaNo);
 		})
 		
-		// 3. 수정화면에서 목록으로 되돌아가기 버튼을 클릭했을 때 실행되는 부분		
+		// 3. 검색하기 버튼을 클릭했을 때 실행될 이벤트 핸들러 함수
+		$('#btn-search-schedule').click(function () {
+			// input hidden에 저장해놨던 지역번호와 상영관번호를 서버로 제출한다.
+			let cityNo = $('input[name=cityNo]').val();
+			let cinemaNo = $('input[name=cinemaNo]').val();
+			// 지역번호와 상영관번호가 둘 다 있으면 제출, 하나라도 선택되어 있지 않으면 경고창 표시
+			if (cityNo && cinemaNo) {				
+				$("#form-search-schedule").trigger("submit");
+			} else {
+				alert("검색조건을 선택하세요.");					
+			}
+		})
+		
+		// 4. 페이지번호를 클릭했을 때 실행될 이벤트핸들러 함수
+		$(".pagination a").click(function(e) {
+			e.preventDefault();
+			// 클릭한 페이지번호를 조회해서 input hidden에 클릭한 페이지번호를 저장한다.
+			let pageNo = $(this).attr("data-page-no");
+			$("input[name=page]").val(pageNo);
+			// 클릭한 페이지번호를 서버로 제출한다.
+			$("#form-search-schedule").trigger("submit");
+		});
+		
+		// 5. 수정화면에서 목록으로 되돌아가기 버튼을 클릭했을 때 실행되는 부분		
 		// 수정화면에서 목록으로 되돌아오기 버튼을 클릭했을 때의 파라미터값(지역번호, 영화관번호)을 가져온다.
 		let paramCityNo = $('input[name=paramCityNo]').val();
 		let paramCinemaNo = $('input[name=paramCinemaNo]').val();
+		let paramPageNo = $('input[name=paramPageNo]').val();
 		
-		// 파라미터가 비어있지 않다면(=수정화면에서 되돌아온 경우) 실행되는 부분
+		// 5-1. 파라미터가 비어있지 않다면(=수정화면에서 되돌아온 경우) 실행되는 부분
 		// (파라미터가 비어있다면 제일 처음으로 조회페이지에 들어온 것임)
 		if (paramCityNo != ""  && paramCinemaNo != "") {
 			// 지역별 영화관 셀렉트박스를 비워둔다.
@@ -136,61 +196,12 @@
 					// 영화관 셀렉트박스에 옵션을 채운다.
 					$select.append(option);
 				});
-				// 영화관 셀렉트박스에 값이 채워졌으니 해당 상영관의 상영 스케줄을 조회해서 화면에 표현한다. 
-				getTimetableList(paramCinemaNo);
+				// 
+				$('input[name=pageNo]').val(paramPageNo);
+				$('input[name=cityNo]').val(paramCityNo);
+				$('input[name=cinemaNo]').val(paramCinemaNo);
 			})
 		}
-		
-		// 4. 해당 영화관의 상영스케줄을 조회하는 함수
-		function getTimetableList(cinemaNo) {
-			// 상영스케줄이 표시될 테이블의 내용을 비워둔다.
-			$('#timetable tbody').empty();
-			// ajax로 영화관 번호에 해당하는 상영스케줄 리스트를 받아온다.
-			$.getJSON("/rest/cinema/timetable", {cinemaNo:cinemaNo}, function (timetableList) {
-				// 영화관 번호로 조회한 상영스케줄이 없는 경우 나타날 부분
-				if (timetableList.length == 0) {
-					let row = '<td class="pt-4 text-center" colspan="8">해당 영화관의 상영일정이 존재하지 않습니다.</td>';
-					
-					$('#timetable tbody').append(row);
-				// 영화관 번호로 조회한 상영스케줄이 존재하는 경우		
-				} else {
-					$.each (timetableList, function (index, timetable) {
-						
-						let	result = '<tr>'
-							result += '<td>' + timetable.showNo + '</td>'
-							result += '<td>' + timetable.hallName + '</td>'
-							result += '<td>' + timetable.title + '</td>'
-							result += '<td>' + moment(timetable.showDate).format('YYYY-MM-DD') + '</td>'
-							result += '<td>' + moment(timetable.startTime).format('HH:mm') + ' ~ ' + moment(timetable.endTime).format('HH:mm') + '</td>'
-							result += '<td>상영중</td>'
-							result += '<td><a href="/admin/schedule/modify?cityNo=' + timetable.cityNo+ '&cinemaNo=' + cinemaNo + '&showNo=' + timetable.showNo + '" class="btn btn-outline-primary btn-sm">수정</a>'
-							result += '</tr>';
-						
-						$('#timetable tbody').append(result);
-					})
-
-					let totalRecoreds = $('#timetable tbody tr').length;
-					// console.log(totalRecoreds);
-					
-					pagination();
-					
-				}
-			})
-		}
-		
-		
-		function pagination () {
-			
-			
-			
-			
-		}
-
-
-
-		
-		
-		
 	})	
 	
 </script>
