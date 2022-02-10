@@ -86,7 +86,6 @@ public class HomeController {
 			model.addAttribute("movie", movieList);
 			model.addAttribute("wishList", wishLists);
 
-
 		}catch(Exception e) {
 			e.printStackTrace();
 		}
