@@ -2,28 +2,34 @@ package com.jhta.moviefan.dto;
 
 import java.util.Date;
 
+import com.jhta.moviefan.pagination.Pagination;
+
 public class NoticeDto {
 
-	private int noticeNo;
+	// notice
+	private int no;
 	private String title;
 	private String content;
 	private Date createdDate;
 	private Date updatedDate;
 	private int viewCount;
 	private String isDeleted;
+	// 카테고리
 	private int categoryNo;
-	private int categoryName;
+	private String categoryName;
+	// 관리자 식별용
 	private int customerNo;
+	// 이미지 파일 이름
 	private String image;
 	
 	public NoticeDto() {}
 
-	public int getNoticeNo() {
-		return noticeNo;
+	public int getNo() {
+		return no;
 	}
 
-	public void setNoticeNo(int noticeNo) {
-		this.noticeNo = noticeNo;
+	public void setNo(int no) {
+		this.no = no;
 	}
 
 	public String getTitle() {
@@ -82,11 +88,11 @@ public class NoticeDto {
 		this.categoryNo = categoryNo;
 	}
 
-	public int getCategoryName() {
+	public String getCategoryName() {
 		return categoryName;
 	}
 
-	public void setCategoryName(int categoryName) {
+	public void setCategoryName(String categoryName) {
 		this.categoryName = categoryName;
 	}
 
@@ -108,10 +114,11 @@ public class NoticeDto {
 
 	@Override
 	public String toString() {
-		return "NoticeDto [noticeNo=" + noticeNo + ", title=" + title + ", content=" + content + ", createdDate="
-				+ createdDate + ", updatedDate=" + updatedDate + ", viewCount=" + viewCount + ", isDeleted=" + isDeleted
+		return "RestNoticeDto [no=" + no + ", title=" + title + ", content=" + content + ", createdDate=" + createdDate
+				+ ", updatedDate=" + updatedDate + ", viewCount=" + viewCount + ", isDeleted=" + isDeleted
 				+ ", categoryNo=" + categoryNo + ", categoryName=" + categoryName + ", customerNo=" + customerNo
 				+ ", image=" + image + "]";
 	}
+
 	
 }

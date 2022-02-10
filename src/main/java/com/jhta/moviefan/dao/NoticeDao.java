@@ -23,6 +23,7 @@ public interface NoticeDao {
 	
 	void insertNoticeImage(NoticeImage image);
 	NoticeImage getNoticeImageByNo(int no);
+	List<NoticeImage> getAllNoticeImages();
 	
 	List<NoticeCategory> getAllNoticeCategories();
 	

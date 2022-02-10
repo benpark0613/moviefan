@@ -520,22 +520,23 @@
 		<div class="row d-flex justify-content-evenly d-none" id="div-notice">
 			<div class="col-8">
 				<%-- 공지카테고리 --%>
-				<div class="row d-flex justify-content-start mt-3 ">
+				<div class="row d-flex justify-content-start my-3 ">
 					<p class="p-0 mb-1">무비팬의 주요한 이슈 및 여러가지 소식들을 확인하실 수 있습니다.</p>
 				</div>
+				<%-- 공지 리스트 --%>
 				<div class="row d-flex justify-content-start">
 					<ul class="nav nav-tabs">
 						<li class="nav-item fw-bolder">
-							<a class="nav-link active link-dark" href="#">전체</a>
+							<a class="nav-link active link-dark" data-category="all" href="#">전체</a>
 						</li>
 						<li class="nav-item">
-							<a class="nav-link link-dark" href="#">시스템점검</a>
+							<a class="nav-link link-dark" data-category="100" href="#">시스템점검</a>
 						</li>
 						<li class="nav-item">
-							<a class="nav-link link-dark" href="#">극장</a>
+							<a class="nav-link link-dark" data-category="200" href="#">극장</a>
 						</li>
 						<li class="nav-item">
-							<a class="nav-link link-dark" href="#">기타</a>
+							<a class="nav-link link-dark" data-category="300" href="#">기타</a>
 						</li>
 					</ul>
 				</div>
@@ -543,16 +544,38 @@
 					<p class="small fw-bold mt-3">총 0000건이 검색되었습니다.</p>
 				</div>
 				<%-- 공지글 --%>
-				<div class="row d-flex justify-content-center">
+				<div class="row d-flex justify-content-center" id="div-noticelist">
+					<div>
+						<table class="table" id="">
+						<thead>
+							<tr>
+								<th class="col-1 text-center">번호</th>
+								<th class="col-1 text-center">구분</th>
+								<th class="col-4 text-start">제목</th>
+								<th class="col-1 text-center">등록일</th>
+								<th class="col-1 text-center">조회수</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td class="text-center">111</td>
+								<td class="text-center">기타</td>
+								<td class="text-start"><a class="link-dark" href="/admin/notice/detail?no=">제목제목제목</a></td>
+								<td class="text-center">2020-02-02</td>
+								<td class="text-center">10000</td>
+							</tr>
+						</tbody>
+					</table>
+					</div>
 				</div>
 				<%-- 페이지 내비게이션 표시 --%>
 				<div class="row d-flex justify-content-center p-0 m-0 mt-4">
-					<div class="col" id="">
+					<div class="col">
 					</div>
 				</div>
 				<%-- 검색 표시 --%>
 				<div class="row d-flex justify-content-center p-0 m-0 mt-2">
-					<form class="row d-flex justify-content-center gx-1" id="">
+					<form class="row d-flex justify-content-center gx-1" id="form-search-notice">
 						<input type="hidden" name="current-page" value="1" />
 						<div class="col-2">
 							<select class="form-select" name="opt">
@@ -561,19 +584,16 @@
 							</select>
 						</div>
 						<div class="col-3">
-							<input type="text" class="form-control" name="value" placeholder="한줄평 검색">
+							<input type="text" class="form-control" name="value">
 						</div>
 						<div class="col-1">
-							<button type="button" class="btn btn-outline-dark w-100 h-100" id="">검색</button>
+							<button type="button" class="btn btn-outline-dark w-100 h-100" id="btn-search-notice">검색</button>
 						</div>
 					</form>
 				</div>
 			</div>
 		</div>
-		
 	</div>
-	
-	
 </div>
 <%@ include file="/WEB-INF/views/common/footer.jsp" %>
 <script type="text/javascript">
@@ -638,14 +658,6 @@ $(function() {
 			
 		}
 	});
-	
-// 	// 나의 정보 패널 > my영화관
-// 	$('#table-mycinema tbody tr [data-cityno-of-cinema]').click(function(event) {
-// 		console.log($(this));
-// 		console.log($(this).attr('value'));
-		
-// 		window.location.replace();
-// 	})
 	
 	if ($('#table-mycinema tbody tr [data-cityno-of-cinema]').length < 3) {
 		let row = `<td class="col-3 fs-5 text-center"><button type="button" class="btn btn-outline-secondary" id="btn-empty-mycinema" style="width: 120px; height: 60px;"></button></td>`
@@ -1046,12 +1058,69 @@ $(function() {
 		$("#link-notice").addClass("fw-bolder")
 		$('#div-notice').removeClass("d-none")
 		
-	
+// 		getMovieWishList();
 		
-	});
-})
+// 		$("#btn-search-movie").click(function(event) {
+// 			event.preventDefault();
+// 			$('#form-search-movie input[name=current-page]').val("1");
+// 			getNoticeList();
+// 		});
+		
+// 		function getNoticeList() {
+// 			let $divNoticeList = $('#div-noticelist').empty();
+// 			let pagination;
+// 			let currentPage = $('#form-search-notice input[name=current-page]').val();
+// 			let searchOption = $("#form-search-notice select[name=opt]").val();
+// 			let searchValue = $.trim($("#form-search-notice  :input[name=value]").val());
+			
+// 			$.ajax({
+// 				type: 'GET',
+// 				url: '/rest/member/notice-list',
+// 				data: {
+// 					page: currentPage,
+// 					opt: searchOption,
+// 					value: searchValue
+// 				},
+// 				beforeSend: function() {
+// 					let row =
+// 						`<div class="spinner-border text-danger my-5" role="status">
+// 					 	<span class="visually-hidden">Loading...</span>
+// 						</div>`
+// 					$divNoticeList.append(row);
+// 				},
+// 				success: function(response) {
+// 					$divNoticeList.empty();
 
-	
+// 					let noticeList = response.noticeDtos;
+// 					pagination = response.pagination;
+					
+// 					// 공지 사항 없는 경우
+// 					if (noticeList.length == 0) {
+// 						let row = 
+// 							`<div class="row">
+// 							<div class="row text-center"><i class="bi bi-exclamation-square" style="font-size: 5em;"></i></div>
+// 							<div class="row text-center"><p class="fs-1">공지사항이 존재하지 않습니다.</p></div>
+// 							</div>`;
+// 						$divWishList.append(row);
+// 					} else {
+// 						$.each(noticeList, function(index, notice) {
+// 							let row = 
+								
+// 							$divWishList.append(row);
+// 							getPaginationNav(currentPage, pagination);
+// 						});
+// 					}
+// 				}
+// 			});
+// 		}
+	});
+		
+		
+		
+			
+			
+			
+});
 </script>
 </body>
 </html>

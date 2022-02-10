@@ -16,11 +16,15 @@ import com.jhta.moviefan.annotation.LoginedCustomer;
 import com.jhta.moviefan.dto.CityWithCinemasDto;
 import com.jhta.moviefan.dto.ResponseDto;
 import com.jhta.moviefan.dto.RestMovieWishListDto;
+import com.jhta.moviefan.dto.RestNoticeDto;
+import com.jhta.moviefan.dto.NoticeDto;
+import com.jhta.moviefan.form.Criteria;
 import com.jhta.moviefan.form.CriteriaMyAccount;
 import com.jhta.moviefan.pagination.Pagination;
 import com.jhta.moviefan.service.CinemaService;
 import com.jhta.moviefan.service.CustomerService;
 import com.jhta.moviefan.service.MovieService;
+import com.jhta.moviefan.service.NoticeService;
 import com.jhta.moviefan.vo.Customer;
 import com.jhta.moviefan.vo.CustomerCinemaFavorites;
 import com.jhta.moviefan.vo.Movie;
@@ -38,6 +42,8 @@ public class CustomerRestController {
 	MovieService movieService;
 	@Autowired
 	CinemaService cinemaService;
+	@Autowired
+	NoticeService noticeService;
 	
 	@PostMapping("/deletemycinema") 
 	public ResponseDto<String> deleteMyCinema(@LoginedCustomer Customer customer, @RequestParam(name = "cinemaNo", required = true) int cinemaNo) {
@@ -137,6 +143,25 @@ public class CustomerRestController {
 		response.setWishMovies(wishMovies);
 		response.setMovieImages(movieImages);
 		return response;
+	}
+	
+	@GetMapping("/notice-list")
+	public RestNoticeDto getNoticeList(@LoginedCustomer Customer customer, Criteria criteria,
+			@RequestParam(name = "page", required = false, defaultValue = "1") String page) {
+		
+		int totalRecords = noticeService.getTotalRows(criteria);
+		Pagination pagination = new Pagination(page, totalRecords, 8);
+		criteria.setBeginIndex(pagination.getBegin());
+		criteria.setEndIndex(pagination.getEnd());
+		
+		List<NoticeDto> noticeDtos = noticeService.getNoticeDtos(criteria);
+		
+		RestNoticeDto restNoticeDto = new RestNoticeDto();
+		restNoticeDto.setStatus("OK");
+		restNoticeDto.setNoticeDtos(noticeDtos);
+		restNoticeDto.setPagination(pagination);
+		
+		return restNoticeDto;
 	}
 	
 }
