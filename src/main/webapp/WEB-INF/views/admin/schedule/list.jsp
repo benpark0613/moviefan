@@ -28,7 +28,7 @@
 <div class="container">
 	<!-- 수정폼에서 되돌아왔을 때의 파라미터 값으로, 바로 이전에 클릭했던 셀렉트박스값 2개가 선택되어 있도록 하는 부분 -->
 	<div class="col">
-		<input type="hidden" id="param-pageNo" name="paramPageNo" value="${param.paramPageNo }">
+		<input type="hidden" id="param-page" name="paramPage" value="${param.page }">
 		<input type="hidden" id="param-cityNo" name="paramCityNo" value="${param.cityNo }">
 		<input type="hidden" id="param-cinemaNo" name="paramCinemaNo" value="${param.cinemaNo }">
 	</div>
@@ -44,7 +44,7 @@
 	 		<form id="form-search-schedule" class="row row-cols-lg-auto g-3 align-items-center" method="get" action="list">
 		 		<div class="col">
 		 			<!-- 셀렉트박스 선택옵션이 바뀔 때마다 바뀐 옵션의 value값이 들어있는 부분 -->
-			 		<input type="hidden" name="pageNo" value="1">
+		 			<input type="hidden" name="page" value="1">
 			 		<input type="hidden" name="cityNo" value="">
 			 		<input type="hidden" name="cinemaNo" value="">
 		 		</div>
@@ -100,7 +100,7 @@
 									<td><fmt:formatDate value="${timetable.showDate}" pattern="yyyy-MM-dd" /></td>
 									<td><fmt:formatDate value="${timetable.startTime}" pattern="HH:mm"/> ~ <fmt:formatDate value="${timetable.endTime}" pattern="HH:mm"/></td>
 									<td>
-										<a href="/admin/schedule/modify?cityNo=${timetable.cityNo }&cinemaNo=${timetable.cinemaNo }&showNo=${timetable.showNo }" class="btn btn-outline-primary btn-sm">수정</a>
+										<a href="/admin/schedule/modify?page=${param.page }&cityNo=${timetable.cityNo }&cinemaNo=${timetable.cinemaNo }&showNo=${timetable.showNo }" class="btn btn-outline-primary btn-sm">수정</a>
 									</td>
 								</tr>
 							</c:forEach>
@@ -117,15 +117,15 @@
 				<nav>
 					<ul class="pagination justify-content-center">
 				    	<li class="page-item ${pagination.existPrev ? '' : 'disabled' }">
-				    		<a class="page-link" href="list?page=${pagination.prevPage }" data-page-no="${pagination.prevPage }">이전</a>
+				    		<a class="page-link" href="list?page=${pagination.prevPage }" data-page="${pagination.prevPage }">이전</a>
 				    	</li>
-				    	<c:forEach var="no" begin="${pagination.beginPage }" end="${pagination.endPage }">
-					    	<li class="page-item ${pagination.pageNo eq no ? 'active' : '' }">
-					    		<a class="page-link" href="list?page=${no }" data-page-no="${no }">${no }</a>
+				    	<c:forEach var="num" begin="${pagination.beginPage }" end="${pagination.endPage }">
+					    	<li class="page-item ${pagination.pageNo eq num ? 'active' : '' }">
+					    		<a id="current-page" class="page-link" href="list?page=${num }" data-page="${num }">${num }</a>
 					    	</li>
 				    	</c:forEach>
 				    	<li class="page-item ${pagination.existNext ? '' : 'disabled' }">
-				    		<a class="page-link" href="list?page=${pagination.nextPage }" data-page-no="${pagination.nextPage }">다음</a>
+				    		<a class="page-link" href="list?page=${pagination.nextPage }" data-page="${pagination.nextPage }">다음</a>
 				    	</li>
 					</ul>
 				</nav>
@@ -144,7 +144,17 @@
 			// 선택한 지역번호를 input hidden에 저장한다.
 			let cityNo = $(this).val();
 			$('input[name=cityNo]').val(cityNo);
-			
+					// 영화관 선택 셀렉트박스를 비워둔다.
+					let $select = $("#cinema-select").empty();
+					$select.prepend('<option value="" disabled selected>--영화관을 선택하세요. --</option>');
+					// ajax로 선택한 지역번호에 해당하는 영화관 리스트를 받아온다.
+					$.getJSON("/rest/cinema/list", {cityNo:cityNo}, function (cinemaList) {
+						$.each (cinemaList, function(index, cinema) {
+							let option = '<option value="' + cinema.no + '" >' + cinema.name + '</option>';
+							
+							$select.append(option);
+						})
+					})
 		})
 		
 		// 2. 상영관이 변경될 때마다 실행될 이벤트 핸들러 함수
@@ -156,7 +166,7 @@
 		
 		// 3. 검색하기 버튼을 클릭했을 때 실행될 이벤트 핸들러 함수
 		$('#btn-search-schedule').click(function () {
-			// input hidden에 저장해놨던 지역번호와 상영관번호를 서버로 제출한다.
+			// input hidden에 저장해놨던 페이지번호와 지역번호, 상영관번호를 서버로 제출한다.
 			let cityNo = $('input[name=cityNo]').val();
 			let cinemaNo = $('input[name=cinemaNo]').val();
 			// 지역번호와 상영관번호가 둘 다 있으면 제출, 하나라도 선택되어 있지 않으면 경고창 표시
@@ -171,17 +181,17 @@
 		$(".pagination a").click(function(e) {
 			e.preventDefault();
 			// 클릭한 페이지번호를 조회해서 input hidden에 클릭한 페이지번호를 저장한다.
-			let pageNo = $(this).attr("data-page-no");
+			let pageNo = $(this).attr("data-page");
 			$("input[name=page]").val(pageNo);
 			// 클릭한 페이지번호를 서버로 제출한다.
 			$("#form-search-schedule").trigger("submit");
 		});
 		
-		// 5. 수정화면에서 목록으로 되돌아가기 버튼을 클릭했을 때 실행되는 부분		
-		// 수정화면에서 목록으로 되돌아오기 버튼을 클릭했을 때의 파라미터값(지역번호, 영화관번호)을 가져온다.
+		// 5. 수정페이지에서 목록으로 되돌아가기 기능 구현	
+		// 수정페이지의 파라미터값(지역번호, 영화관번호, 페이지번호)을 가져온다.
 		let paramCityNo = $('input[name=paramCityNo]').val();
 		let paramCinemaNo = $('input[name=paramCinemaNo]').val();
-		let paramPageNo = $('input[name=paramPageNo]').val();
+		let paramPage = $('input[name=paramPage]').val();
 		
 		// 5-1. 파라미터가 비어있지 않다면(=수정화면에서 되돌아온 경우) 실행되는 부분
 		// (파라미터가 비어있다면 제일 처음으로 조회페이지에 들어온 것임)
@@ -196,8 +206,8 @@
 					// 영화관 셀렉트박스에 옵션을 채운다.
 					$select.append(option);
 				});
-				// 
-				$('input[name=pageNo]').val(paramPageNo);
+				// 수정페이지에서 넘어온 파라미터값을 현재페이지에 저장한다.
+				$('input[name=pageNo]').val(paramPage);
 				$('input[name=cityNo]').val(paramCityNo);
 				$('input[name=cinemaNo]').val(paramCinemaNo);
 			})

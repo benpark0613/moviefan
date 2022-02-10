@@ -31,6 +31,7 @@ import com.jhta.moviefan.service.CinemaService;
 import com.jhta.moviefan.service.MovieService;
 import com.jhta.moviefan.service.NoticeService;
 import com.jhta.moviefan.utils.SessionUtils;
+import com.jhta.moviefan.vo.Cinema;
 import com.jhta.moviefan.vo.City;
 import com.jhta.moviefan.vo.Customer;
 import com.jhta.moviefan.vo.Movie;
@@ -93,7 +94,7 @@ public class AdminController {
 		// 첫번째 셀렉트박스(지역 선택)
 		List<City> cityList = cinemaService.getAllCityList();
 		// 두번째 셀렉트박스(영화관 선택)
-		List<CinemaDto> cinemaList = cinemaService.getAllCinemaList();
+		List<Cinema> cinemaList = cinemaService.getCinemaListByCityNo(criteria.getCityNo());
 		
 		// 뷰페이지에서 검색버튼을 클릭했을 때, 검색조건에 해당하는 총 상영정보 갯수 조회
 		int totalRecords = cinemaService.getTotalRowsTimetable(criteria);
