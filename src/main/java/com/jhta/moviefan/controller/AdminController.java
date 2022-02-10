@@ -25,6 +25,7 @@ import com.jhta.moviefan.dto.CinemaDto;
 import com.jhta.moviefan.dto.MovieTimeTableDto;
 import com.jhta.moviefan.form.Criteria;
 import com.jhta.moviefan.form.NoticeInsertForm;
+import com.jhta.moviefan.form.ScheduleCriteria;
 import com.jhta.moviefan.pagination.Pagination;
 import com.jhta.moviefan.service.CinemaService;
 import com.jhta.moviefan.service.MovieService;
@@ -85,12 +86,32 @@ public class AdminController {
 	}
 
 	@GetMapping("/schedule/list")
-	public String list(Model model) {
+	public String list(@RequestParam(name="page", required = false, defaultValue = "1") String page,
+						ScheduleCriteria criteria, Model model) {
+		
+		// 첫번째 셀렉트박스(지역 선택)
 		List<City> cityList = cinemaService.getAllCityList();
+		// 두번째 셀렉트박스(영화관 선택)
 		List<CinemaDto> cinemaList = cinemaService.getAllCinemaList();
-
+		
+		// 검색조건에 해당하는 총 상영정보 갯수 조회
+		int totalRecords = cinemaService.getTotalRowsTimetable(criteria);
+		// 현재 페이지번호와 총 데이터 갯수를 전달해서 페이지네이션 객체 생성하기
+		Pagination pagination = new Pagination(page, totalRecords);
+		logger.info("요청 페이지번호: " + page);
+		
+		// 페이지 조회범위를 criteria에 저장하기
+		criteria.setBeginIndex(pagination.getBegin());
+		criteria.setEndIndex(pagination.getEnd());
+		logger.info("검색조건 및 값: " + criteria);
+		
+		// 검색조건과 조회범위가 포함된 criteria객체를 전달해서 해당하는 데이터 조회하기
+		List<MovieTimeTableDto> timetables = cinemaService.searchTimetables(criteria);
+		
+		// 뷰페이지로 전달
 		model.addAttribute("cityList", cityList);
 		model.addAttribute("cinemaList", cinemaList);
+		model.addAttribute("timetables", timetables);
 
 		return "admin/schedule/list";
 	}
