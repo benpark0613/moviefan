@@ -571,7 +571,7 @@
 		
 		$.ajax({
 			type: "get",
-			url: "/rest/ticket/time".
+			url: "/rest/ticket/time",
 			data: {
 				movieNo: movieNo,
 				cinemaNo: cinemaNo,

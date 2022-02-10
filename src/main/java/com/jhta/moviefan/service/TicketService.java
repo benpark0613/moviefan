@@ -11,13 +11,18 @@ import java.util.stream.Collectors;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.jhta.moviefan.dao.CinemaDao;
 import com.jhta.moviefan.dao.TicketDao;
 import com.jhta.moviefan.dto.CinemaHallWithShowsDto;
+import com.jhta.moviefan.dto.ShowWithSeatsDto;
+import com.jhta.moviefan.vo.CinemaHall;
 import com.jhta.moviefan.vo.Show;
+import com.jhta.moviefan.vo.ShowSeat;
 
 @Service
 @Transactional
@@ -27,9 +32,30 @@ public class TicketService {
 	
 	@Autowired 
 	private TicketDao ticketDao;
+	@Autowired
+	private CinemaDao cinemaDao; 
 	
-	public List<Show> getShowsNowPlaying() {
-		return ticketDao.getShowsNowPlaying();
+	public List<Show> getShowsNowPlaying(Map<String, Object> request) {
+		return ticketDao.getShowsNowPlaying(request);
+	}
+	
+	public List<ShowSeat> getShowSeatsByShowNo(int showNo) {
+		return ticketDao.getShowSeatsByShowNo(showNo);
+	}
+	
+	public List<ShowWithSeatsDto> getShowsWithSeatsNowPlaying(Map<String, Object> request) {
+		List<ShowWithSeatsDto> showsWithSeatsNowPlaying = new ArrayList<>();
+		
+		List<Show> shows = ticketDao.getShowsNowPlaying(request);
+		for (Show show : shows) {
+			ShowWithSeatsDto showWithSeats = new ShowWithSeatsDto();
+			List<ShowSeat> seats = ticketDao.getShowSeatsByShowNo(show.getNo());
+			BeanUtils.copyProperties(show, showWithSeats);
+			showWithSeats.setSeats(seats);
+			showsWithSeatsNowPlaying.add(showWithSeats);
+		}
+		
+		return showsWithSeatsNowPlaying;
 	}
 	
 	public List<Map<String, Object>> getShowDatesNowPlaying(Map<String, Integer> request) {
@@ -49,12 +75,20 @@ public class TicketService {
 		return showDatesNowPlaying;
 	}
 	
-	public List<CinemaHallWithShowsDto> getShowTimes(Map<String, Object> request) {
-		List<CinemaHallWithShowsDto> showTimes = new ArrayList<>();
+	public List<CinemaHallWithShowsDto> getCinemaHallsWithShowsDto(Map<String, Object> request) {
+		List<CinemaHallWithShowsDto> cinemaHallsWithShows = new ArrayList<>();
 		
+		List<CinemaHall> halls = cinemaDao.getCinemaHallsNowPlaying(request);
+		for (CinemaHall hall : halls) {
+			CinemaHallWithShowsDto cinemaHallWithShows = new CinemaHallWithShowsDto();
+			request.put("hallNo", hall.getNo());
+			List<ShowWithSeatsDto> showWithSeats = getShowsWithSeatsNowPlaying(request);
+			BeanUtils.copyProperties(hall, cinemaHallWithShows);
+			cinemaHallWithShows.setShows(showWithSeats);
+			cinemaHallsWithShows.add(cinemaHallWithShows);
+		}
 		
-		
-		return showTimes;
+		return cinemaHallsWithShows;
 	}
 	
 	
