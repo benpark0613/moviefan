@@ -43,17 +43,30 @@
 		order by notice_created_date
 	</select>
 	
-	<select id="getNoticeTotalRows" parameterType="com.jhta.moviefan.form.Criteria" resultType="int">
+	<select id="getNoticeTotalRows" parameterType="com.jhta.moviefan.form.CriteriaNotice" resultType="int">
 		select count(*)
 		from notice
 		<where>
 			NOTICE_DELETED = 'N'
+			<if test="categoryNo != 0 || categoryNo != null">
+				<choose>
+					<when test="categoryNo == 100">
+						and category_no = 100
+					</when>
+					<when test="categoryNo == 200">
+						and category_no = 200
+					</when>
+					<when test="categoryNo == 300">
+						and category_no = 300
+					</when>
+				</choose>
+			</if>
 			<if test="opt != null and value != null">
 				<choose>
-					<when test="opt == '제목'">
+					<when test="opt == 'title'">
 						and notice_title like '%' || #{value} || '%'
 					</when>
-					<when test="opt == '내용'">
+					<when test="opt == 'content'">
 						and notice_content like '%' || #{value} || '%'
 					</when>
 				</choose>
@@ -61,13 +74,26 @@
 		</where>
 	</select>
 	
-	<select id="searchNoticeList" parameterType="com.jhta.moviefan.form.Criteria" resultMap="NoticeResultMap">
+	<select id="searchNoticeList" parameterType="com.jhta.moviefan.form.CriteriaNotice" resultMap="NoticeResultMap">
 		select *
 		from (
-			select n.*, row_number() over (order by notice_created_date desc) rn
+			select n.*, row_number() over (order by notice_no desc) rn
 			from notice n
 			<where>
 				NOTICE_DELETED = 'N'
+				<if test="categoryNo != 0 || categoryNo != null">
+					<choose>
+						<when test="categoryNo == 100">
+							and category_no = 100
+						</when>
+						<when test="categoryNo == 200">
+							and category_no = 200
+						</when>
+						<when test="categoryNo == 300">
+							and category_no = 300
+						</when>
+					</choose>
+				</if>
 				<if test="opt != null and value != null">
 					<choose>
 						<when test="opt == 'title'">

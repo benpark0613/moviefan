@@ -23,7 +23,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.jhta.moviefan.annotation.LoginedCustomer;
 import com.jhta.moviefan.dto.CinemaDto;
 import com.jhta.moviefan.dto.MovieTimeTableDto;
-import com.jhta.moviefan.form.Criteria;
+import com.jhta.moviefan.form.CriteriaNotice;
 import com.jhta.moviefan.form.NoticeInsertForm;
 import com.jhta.moviefan.form.ScheduleCriteria;
 import com.jhta.moviefan.pagination.Pagination;
@@ -144,7 +144,7 @@ public class AdminController {
 	// 공지사항
 	@GetMapping("/notice/list")
 	public String getNoticeList(@LoginedCustomer Customer customer,
-			@RequestParam(name = "page", required = false, defaultValue = "1") String page, Criteria criteria,
+			@RequestParam(name = "page", required = false, defaultValue = "1") String page, CriteriaNotice criteria,
 			Model model) {
 		
 		logger.info("customer의 값: " + customer);

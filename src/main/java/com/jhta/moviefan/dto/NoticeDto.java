@@ -2,7 +2,7 @@ package com.jhta.moviefan.dto;
 
 import java.util.Date;
 
-import com.jhta.moviefan.pagination.Pagination;
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 public class NoticeDto {
 
@@ -10,7 +10,9 @@ public class NoticeDto {
 	private int no;
 	private String title;
 	private String content;
+	@JsonFormat(pattern = "yyyy-MM-dd")
 	private Date createdDate;
+	@JsonFormat(pattern = "yyyy-MM-dd")
 	private Date updatedDate;
 	private int viewCount;
 	private String isDeleted;

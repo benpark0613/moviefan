@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
 
-import com.jhta.moviefan.form.Criteria;
+import com.jhta.moviefan.form.CriteriaNotice;
 import com.jhta.moviefan.vo.Notice;
 import com.jhta.moviefan.vo.NoticeCategory;
 import com.jhta.moviefan.vo.NoticeImage;
@@ -14,10 +14,10 @@ public interface NoticeDao {
 
 	void insertNotice(Notice notice);
 	void updateNotice(Notice notice);
-	int getNoticeTotalRows(Criteria criteria);
+	int getNoticeTotalRows(CriteriaNotice criteria);
 	Notice getNoticeDetailByNo(int no);
 	List<Notice> getAllNoticeList();
-	List<Notice> searchNoticeList(Criteria criteria);
+	List<Notice> searchNoticeList(CriteriaNotice criteria);
 //	List<Notice> searchNoticeListByTitle(String title);
 //	List<Notice> searchNoticeListByContent(String content);
 	

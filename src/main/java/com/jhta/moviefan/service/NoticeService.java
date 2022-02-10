@@ -1,9 +1,10 @@
 package com.jhta.moviefan.service;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -12,7 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.jhta.moviefan.dao.NoticeDao;
 import com.jhta.moviefan.dto.NoticeDto;
 import com.jhta.moviefan.exception.AdminErrorException;
-import com.jhta.moviefan.form.Criteria;
+import com.jhta.moviefan.form.CriteriaNotice;
 import com.jhta.moviefan.vo.Notice;
 import com.jhta.moviefan.vo.NoticeCategory;
 import com.jhta.moviefan.vo.NoticeImage;
@@ -25,6 +26,8 @@ public class NoticeService {
 	private NoticeDao noticeDao;
 	@Autowired
 	private CustomerService customerService;
+	
+	static final Logger logger = LogManager.getLogger(NoticeService.class);
 	
 	public void insertNewNotice(Notice notice, NoticeImage noticeImage) {
 		if (!customerService.isAdmin(notice.getCustomerNo())) {
@@ -46,11 +49,13 @@ public class NoticeService {
 		return noticeDao.getAllNoticeList();
 	}
 	
-	public int getTotalRows(Criteria criteria) {
+	public int getTotalRows(CriteriaNotice criteria) {
+		logger.info("검색조건: " + criteria);
 		return noticeDao.getNoticeTotalRows(criteria);
 	}
 	
-	public List<Notice> searchNoticeList(Criteria criteria) {
+	public List<Notice> searchNoticeList(CriteriaNotice criteria) {
+		logger.info("검색조건: " + criteria);
 		return noticeDao.searchNoticeList(criteria);
 	};
 	
@@ -71,31 +76,48 @@ public class NoticeService {
 		noticeDao.updateNotice(notice);
 	}
 	
-	public List<NoticeDto> getNoticeDtos(Criteria criteria) {
-		NoticeDto dto = new NoticeDto();
+	public List<NoticeDto> getNoticeDtos(CriteriaNotice criteria) {
 		List<NoticeDto> dtos = new ArrayList<NoticeDto>();
 		
-		List<Notice> NoticeList = noticeDao.searchNoticeList(criteria);
-		List<NoticeImage> noticeImages = noticeDao.getAllNoticeImages();
+		List<Notice> noticeList = noticeDao.searchNoticeList(criteria);
+		List<NoticeCategory> noticeCategories = getAllNoticeCategories();
+		logger.info("검색조건: " + criteria);
+		logger.info("noticeList의 값: " + noticeList);
+		
+		if (!noticeList.isEmpty()) {
+			for (Notice notice : noticeList) {
+				NoticeDto dto = new NoticeDto();
+				BeanUtils.copyProperties(notice, dto);
+				for (NoticeCategory category : noticeCategories) {	
+					if (category.getCategoryNo() == dto.getCategoryNo()) {
+						dto.setCategoryName(category.getName());
+					}
+				}
+				if (getNoticeImageByNoticeNo(dto.getNo()) != null) {
+					dto.setImage(getNoticeImageByNoticeNo(dto.getNo()).getImage());
+				}
+				dtos.add(dto);
+			}
+		}
+		return dtos;
+	}
+	
+	public NoticeDto getNoticeDto(int noticeNo) {
+		NoticeDto dto = new NoticeDto();
+		Notice notice = getNoticeDetailByNoticeNo(noticeNo);
 		List<NoticeCategory> noticeCategories = getAllNoticeCategories();
 		
-		for (Notice notice : NoticeList) {
-			BeanUtils.copyProperties(notice, dto);
-			for (NoticeImage noticeImage : noticeImages) {
-				if (noticeImage.getNoticeNo() == notice.getNo()) {
-					dto.setImage(noticeImage.getImage());
-				}
+		BeanUtils.copyProperties(notice, dto);
+		NoticeImage noticeImage = getNoticeImageByNoticeNo(noticeNo);
+		for (NoticeCategory category : noticeCategories) {	
+			if (category.getCategoryNo() == dto.getCategoryNo()) {
+				dto.setCategoryName(category.getName());
 			}
-			for (NoticeCategory category : noticeCategories) {	
-				if (notice.getCategoryNo() == category.getCategoryNo()) {
-					dto.setCategoryNo(category.getCategoryNo());
-					dto.setCategoryName(category.getName());
-				}
-			}
-			dtos.add(dto);
 		}
-		
-		return dtos;
+		if (getNoticeImageByNoticeNo(dto.getNo()) != null) {
+			dto.setImage(getNoticeImageByNoticeNo(dto.getNo()).getImage());
+		}
+		return dto;
 	}
 }
 
