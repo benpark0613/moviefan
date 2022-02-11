@@ -36,6 +36,8 @@
 <%@ include file="/WEB-INF/views/admin/common/header.jsp" %>
 <div class="container">
 
+<div>${param.page }</div>
+
 	<div class="row">
 		<div class="col">
 			<h1>상영일정 수정</h1>
@@ -47,7 +49,7 @@
 					</h3>
 				</div>
 				<div>
-					<a type="button" class="btn btn-dark btn-sm" href="list?pageNo=${param.pageNo }&cityNo=${detailSchedule.cityNo }&cinemaNo=${detailSchedule.cinemaNo }">목록으로 돌아가기</a>
+					<a type="button" class="btn btn-dark btn-sm" href="list?page=${param.page }&cityNo=${detailSchedule.cityNo }&cinemaNo=${detailSchedule.cinemaNo }">목록으로 돌아가기</a>
 				</div>
 			</div>
 		</div>
