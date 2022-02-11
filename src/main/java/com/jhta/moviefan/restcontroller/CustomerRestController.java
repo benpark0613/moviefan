@@ -27,6 +27,7 @@ import com.jhta.moviefan.service.MovieService;
 import com.jhta.moviefan.service.NoticeService;
 import com.jhta.moviefan.vo.Customer;
 import com.jhta.moviefan.vo.CustomerCinemaFavorites;
+import com.jhta.moviefan.vo.CustomerMovieWishList;
 import com.jhta.moviefan.vo.Movie;
 import com.jhta.moviefan.vo.MovieImage;
 
@@ -105,8 +106,10 @@ public class CustomerRestController {
 	public ResponseDto<String> updateNickName(@LoginedCustomer Customer customer, @RequestParam(name = "nickName", required = true) String nickName) {
 		ResponseDto<String> response = new ResponseDto<String>();
 		
-		customer.setNickName(nickName);
-		customerService.updateCustomerInfo(customer);
+		Customer newNickNameCustomer = customer;
+		newNickNameCustomer.setNickName(nickName);
+		
+		customerService.updateCustomerInfo(customer, newNickNameCustomer);
 		
 		response.setStatus("OK");
 		return response;
@@ -174,12 +177,23 @@ public class CustomerRestController {
 	public RestNoticeDto getNoticeDetail(@LoginedCustomer Customer customer, @RequestParam(name = "no", required = true) int no) {
 		
 		RestNoticeDto restNoticeDto = new RestNoticeDto();
-		restNoticeDto.setStatus("OK");
 		restNoticeDto.setNoticeDtos(List.of(noticeService.getNoticeDto(no)));
+		restNoticeDto.setStatus("OK");
 
 		return restNoticeDto;
+	}
+	
+	@GetMapping("/delete-wishmovie")
+	public ResponseDto<String> deleteWishMovie(@LoginedCustomer Customer customer, @RequestParam(name = "movieNo", required = true) int movieNo) {
+		CustomerMovieWishList wishList = new CustomerMovieWishList();
+		wishList.setCustomerNo(customer.getNo());
+		wishList.setMovieNo(movieNo);
+		customerService.deleteCustomerMovieWishListByMovieNo(wishList);
 		
+		ResponseDto<String> response = new ResponseDto<String>();
+		response.setStatus("OK");
 		
+		return response;
 	}
 	
 }

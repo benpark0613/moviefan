@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.jhta.moviefan.annotation.LoginedCustomer;
 import com.jhta.moviefan.dto.HomeTrailerDto;
 import com.jhta.moviefan.dto.ResponseDto;
 import com.jhta.moviefan.exception.RestLoginErrorException;
@@ -61,6 +62,22 @@ public class HomeRestController {
 		System.out.println("암호화 후 " + customer.getPassword());
 		
 		customerService.registerCustomer(customer);
+		response.setStatus("OK");
+		
+		return response;
+	}
+	
+	// 회원정보수정
+	@PostMapping("/update")
+	public ResponseDto<String> update(@LoginedCustomer Customer customer, @RequestBody CustomerRegisterForm form) {
+		ResponseDto<String> response = new ResponseDto<String>();
+		Customer newInfo = new Customer();
+		BeanUtils.copyProperties(form, newInfo);
+		
+		LOGGER.info("customer의 값: " + customer);
+		LOGGER.info("newInfo의 값: " + newInfo);
+		
+		customerService.updateCustomerInfo(customer, newInfo);
 		response.setStatus("OK");
 		
 		return response;

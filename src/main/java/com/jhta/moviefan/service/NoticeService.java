@@ -105,10 +105,11 @@ public class NoticeService {
 	public NoticeDto getNoticeDto(int noticeNo) {
 		NoticeDto dto = new NoticeDto();
 		Notice notice = getNoticeDetailByNoticeNo(noticeNo);
+		notice.setViewCount(notice.getViewCount() + 1);
+		updateNotice(notice);
 		List<NoticeCategory> noticeCategories = getAllNoticeCategories();
 		
 		BeanUtils.copyProperties(notice, dto);
-		NoticeImage noticeImage = getNoticeImageByNoticeNo(noticeNo);
 		for (NoticeCategory category : noticeCategories) {	
 			if (category.getCategoryNo() == dto.getCategoryNo()) {
 				dto.setCategoryName(category.getName());

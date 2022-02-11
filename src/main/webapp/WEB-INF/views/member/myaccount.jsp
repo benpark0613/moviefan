@@ -19,7 +19,7 @@
 </style>
 <body>
 <%@ include file="/WEB-INF/views/common/header.jsp" %>
-<div class="container bg-light mb-3 p-4">
+<div class="container bg-light mb-3 p-4" id="div-my-panel">
 	<%-- 닉네임 변경 모달 --%>
 	<div class="modal fade" tabindex="-1" aria-labelledby="nickNameModalLabel" id="modal-update-nickname" >
 		<div class="modal-dialog modal-dialog-centered">
@@ -191,14 +191,14 @@
 			</div>
 		</div>
 		<div class="vr p-0"></div>
-		<div class="col-6">
+		<div class="col-6" id="div-wishmovie-panel">
 			<div class="row">
 				<div class="col">
 					<c:choose>
 						<c:when test="${empty movieWithImages }">
 							<div class="d-flex justify-content-between mb-3 mx-3">
 								<span class="h3">찜한 영화</span>
-								<span class="align-self-end"><a href="/movie/list" class="btn text-decoration-none link-dark" id="link-moveto-movie">찜 하러 가기</a></span>
+								<span class="align-self-end"><a href="/movie/list" class="btn text-decoration-none link-dark">찜 하러 가기</a></span>
 							</div>
 							<div class="row text-center mt-4">
 								<p class="fs-1 fw-bold">찜한 영화가 없습니다.</p>
@@ -208,12 +208,15 @@
 						<c:otherwise>
 							<div class="d-flex justify-content-between mb-3 mx-3">
 								<span class="h3">찜한 영화</span>
-								<span class="align-self-end"><a href="/movie/list" class="btn text-decoration-none link-dark" id="link-wishlist-show">더 보러 가기</a></span>
+								<span class="align-self-end"><a href="" class="btn text-decoration-none link-dark" id="link-wishlist-show">더 보러 가기</a></span>
 							</div>
-							<div class="d-flex justify-content-evenly">
+							<div class="d-flex justify-content-evenly" id="div-card-section">
 								<c:forEach var="entry" items="${movieWithImages }" varStatus="loop" end="2">
 									<c:forEach var="movieImage" items="${entry.value }" end="0">
-										<div class="card col-3 p-1 d-flex justify-content-center align-self-center">
+										<form action="delete-wishmovie">
+											<input type="hidden" name="movieNo" value="${entry.key.no}">
+										</form>
+										<div class="card col-3 p-1 d-flex justify-content-center align-self-center" id="card-wishmovie">
 											<div class="row">
 										  		<img src="/resources/images/movie/${movieImage.filename }" class="w-100 my-auto" alt="...">
 											</div>
@@ -355,45 +358,73 @@
 				<div class="row text-center"><p class="fs-1">작성글</p></div>
 			</div>
 		</div>
-<!-- 		<div class="row d-flex justify-content-evenly d-none" id="my-comment"> -->
-<%-- 			<c:when test=""> --%>
-<%-- 				<c:choose> --%>
-<!-- 					<div class="col p-5 my-5"> -->
-<!-- 						<div class="row text-center"><i class="bi bi-exclamation-square" style="font-size: 5em;"></i></div> -->
-<!-- 						<div class="row text-center"><p class="fs-1">작성한 한줄평이 없습니다.</p></div> -->
-<!-- 					</div> -->
-<%-- 				</c:choose> --%>
-<%-- 				<c:otherwise> --%>
-<!-- 					<div class="col-8"> -->
-<!-- 						<div class="row d-flex justify-content-center"> -->
-<!-- 						</div> -->
-<!-- 						페이지 내비게이션 표시 -->
-<!-- 						<div class="row d-flex justify-content-center p-0 m-0 mt-4"> -->
-<!-- 							<div class="col" id=""> -->
-<!-- 							</div> -->
-<!-- 						</div> -->
-<!-- 						검색 표시 -->
-<!-- 						<div class="row d-flex justify-content-center p-0 m-0 mt-2"> -->
-<!-- 							<form class="row d-flex justify-content-center gx-1" id=""> -->
-<!-- 								<input type="hidden" name="current-page" value="1" /> -->
-<!-- 								<div class="col-2"> -->
-<!-- 									<select class="form-select" name="opt"> -->
-<!-- 										<option value="title" selected="selected">제목 검색</option> -->
-<!-- 										<option value="content">내용 검색</option> -->
-<!-- 									</select> -->
-<!-- 								</div> -->
-<!-- 								<div class="col-3"> -->
-<!-- 									<input type="text" class="form-control" name="value" placeholder="한줄평 검색"> -->
-<!-- 								</div> -->
-<!-- 								<div class="col-1"> -->
-<!-- 									<button type="button" class="btn btn-outline-dark w-100 h-100" id="">검색</button> -->
-<!-- 								</div> -->
-<!-- 							</form> -->
-<!-- 						</div> -->
-<!-- 					</div> -->
-<%-- 				</c:otherwise> --%>
-<%-- 			</c:when> --%>
-<!-- 		</div> -->
+		<%-- 한줄평 --%>
+		<div class="row d-none d-flex justify-content-evenly" id="my-comment">
+			<div class="col-8">
+				<div class="row mt-3">
+					<div class="col p-0">
+						<span class="fw-bolder fs-5 text-start">내가 남긴 한줄평</span>
+					</div>
+				</div>
+				<%-- 검색조건 --%>
+				<div class="row mt-2">
+					<div class="col p-0">
+						<form class="row d-flex justify-content-start gx-1" id="form-search-comment">
+							<input type="hidden" name="current-page" value="1">
+							<div class="col-2">
+								<select class="form-select" name="opt">
+									<option value="" selected="selected" disabled="disabled">검색조건</option>
+									<option value="movie">영화</option>
+									<option value="actor">배우</option>
+									<option value="content">한줄평 내용</option>
+								</select>
+							</div>
+							<div class="col-3">
+								<input type="text" class="form-control" name="value">
+							</div>
+							<div class="col-1">
+								<button type="button" class="btn btn-outline-dark w-100 h-100" id="btn-search-comment">검색</button>
+							</div>
+						</form>
+					</div>
+				</div>
+				<%-- 한줄평리스트 --%>
+				<div class="row p-3">
+					<div class="col">
+					
+						<div class="row d-flex justify-content-center" id="div-commentlist">
+							<div class="col-2">
+								<div class="row">
+									<div class="card p-2">
+								  		<img class="img-fluid" src="/resources/images/movie/moviePoster/20205443.jpg">
+									</div>
+								</div>
+							</div>
+							<div class="col align-self-center">
+								<div class="row ps-3">
+									<table class="table table-borderless">
+										<thead>
+											<tr>
+												<th>작성자</th>
+												<td>홍길동</td>
+												<th>평점</th>
+												<td>4.5/5.0</td>
+											</tr>
+										</thead>
+										<tbody>
+											<tr>
+												<td colspan="5">한줄평한줄평한줄평한줄평한줄평한줄평한줄평한줄평한줄평한줄평한줄평한줄평한줄평한줄평</td>
+											</tr>
+										</tbody>
+									</table>
+								</div>
+							</div>
+						</div>
+						
+					</div>
+				</div>
+			</div>
+		</div>
 		<div class="row d-none" id="my-reply">
 			<div class="col p-5 my-5">
 				<div class="row text-center"><i class="bi bi-exclamation-square" style="font-size: 5em;"></i></div>
@@ -655,7 +686,6 @@ $(function() {
 			
 		}
 	});
-	
 	if ($('#table-mycinema tbody tr [data-cityno-of-cinema]').length < 3) {
 		let row = `<td class="col-3 fs-5 text-center"><button type="button" class="btn btn-outline-secondary" id="btn-empty-mycinema" style="width: 120px; height: 60px;"></button></td>`
 		for (var i = 0; i < 3 - $('#table-mycinema tbody tr [data-cityno-of-cinema]').length; i++) {
@@ -790,7 +820,13 @@ $(function() {
 		});
 		
 	});
-	
+	// 나의 정보 패널 찜한 영화
+	$('.bi-heart-fill').parent().click(function(event) {
+		event.preventDefault();  
+		if(confirm('찜한 영화에서 삭제하시겠습니까?')) {
+			$(this).parents('#card-wishmovie').prev().trigger('submit');
+		}
+	})	
 	// 나의 정보 패널에서 찜한 영화로 이동
 	$('#link-wishlist-show').click(function(event) {
 		event.preventDefault();
@@ -832,7 +868,7 @@ $(function() {
 		$('#cancle-list').removeClass("d-none")
 	});
 	
-	// MY무비로그
+	// 	MY무비로그
 	$('#wish-movie-item').click(function(event) {
 		event.preventDefault();
 		$("#sub-menu-list-container > div").addClass("d-none")
@@ -848,9 +884,9 @@ $(function() {
 			$('#form-search-movie input[name=current-page]').val("1");
 			getMovieWishList();
 		});
-		
-	// 찜한 영화와 페이지네이션
-	function getMovieWishList() {
+	
+		// 찜한 영화 리스트
+		function getMovieWishList() {
 			let $divWishList = $('#div-wishlist').empty();
 			let pagination;
 			let currentPage = $('#form-search-movie input[name=current-page]').val();
@@ -874,7 +910,7 @@ $(function() {
 				},
 				success: function(response) {
 					$divWishList.empty();
-
+	
 					let wishMovies = response.wishMovies;
 					let movieImages = response.movieImages;
 					pagination = response.pagination;
@@ -882,11 +918,20 @@ $(function() {
 					// 찜한 영화가 없는 경우
 					if (wishMovies.length == 0) {
 						let row = 
-							`<div class="row">
-							<div class="row text-center"><i class="bi bi-exclamation-square" style="font-size: 5em;"></i></div>
-							<div class="row text-center"><p class="fs-1">찜한 영화가 존재하지 않습니다.</p></div>
+							`<div class="row mt-3">
+							<span class="text-center fs-2"><i class="bi bi-exclamation-square"></i>찜한 영화가 존재하지 않습니다.</span>
+							<div class="row d-flex justify-content-center mx-auto mt-3"><a type="button" href="/movie/list" class="btn btn-outline-danger w-25">찜 하러 가기</a></div>
 							</div>`;
 						$divWishList.append(row);
+						
+// 						<div class="d-flex justify-content-between mb-3 mx-3">
+// 						<span class="h3">찜한 영화</span>
+// 						<span class="align-self-end"><a href="/movie/list" class="btn text-decoration-none link-dark">찜 하러 가기</a></span>
+// 					</div>
+// 					<div class="row text-center mt-4">
+// 						<p class="fs-1 fw-bold">찜한 영화가 없습니다.</p>
+// 						<p class="fs-4">보고 싶은 영화를 "찜" 해 보세요.</p>
+// 					</div>
 					} else {
 						// 찜한 영화가 있는 경우
 						// 찜한 영화에 영화 이미지를 추가한다.
@@ -906,13 +951,21 @@ $(function() {
 								row += '</div>';
 								row += '<div class="card-body d-flex justify-content-center p-0">';
 								row += '<a href="/movie/detail?no='+ wishMovie.no+'" type="button" class="btn btn-danger w-100"><span class="fs-6">상세정보</span></a>';
-								row += '<a type="button" class="btn btn-outline-secondary"><span class="bi bi-heart-fill"></span></a>';
+								row += '<a type="button" class="btn btn-outline-secondary" data-wishMovieNo="'+wishMovie.no+'"><span class="bi bi-heart-fill"></span></a>';
 								row += '</div>';
 								row += '</div>';
 								
 							$divWishList.append(row);
-							getPaginationNav(currentPage, pagination);
 						});
+						getPaginationNav(currentPage, pagination);
+						
+						$('.bi-heart-fill').parent().click(function(event) {
+							let movieNo = $(this).attr('data-wishMovieNo');
+							event.preventDefault();  
+							if(confirm('찜한 영화에서 삭제하시겠습니까?')) {
+								deleteWishMovie(movieNo)
+							}
+						})	
 					}
 					
 				},
@@ -967,7 +1020,20 @@ $(function() {
 				})
 			}
 		}
+	
+		// 찜한 영화 삭제
+		function deleteWishMovie(movieNo) {
+			$.get('/rest/member/delete-wishmovie', {movieNo: movieNo}, function(response) {
+				if (response.status == 'OK') {
+					$('#div-card-section').load(location.href+' #div-card-section>*');
+					getMovieWishList();
+				} else {
+					alert(response.error);
+				}
+			})
+		}
 	});
+	
 	$('#watched-movie-item').click(function(event) {
 		event.preventDefault();
 		$("#sub-menu-list-container > div").addClass("d-none")
@@ -1001,6 +1067,33 @@ $(function() {
 		$('#my-comment-item').addClass('fw-bolder')
 		$('#my-document-tab').addClass('fw-bolder')
 		$('#my-comment').removeClass("d-none")
+		$('#div-commentlist').empty();
+		
+		function getMyComments() {
+			let pagination
+			let currentPage = $('#form-search-comment input[name=current-page]').val();
+			let searchOption = $("#form-search-notice select[name=opt]").val();
+			let searchValue = $.trim($("#form-search-notice :input[name=value]").val());
+			let $divCommentList = $('#div-commentlist');
+			
+			$.ajax({
+				type: "GET",
+				url: "",
+				data: {
+					
+				},
+				before: {
+					
+				},
+				success: function(response) {
+					
+				},
+				error: function(response) {
+					alert(response.error);
+				}
+			})
+		}
+		
 	});
 	$('#my-reply-item').click(function(event) {
 		event.preventDefault();
@@ -1203,6 +1296,7 @@ $(function() {
 						event.preventDefault();
 						$colNoticeTemplate.removeClass('d-none');
 						$('#div-notice-detail').remove();
+						getNoticeList(noticeDto.categoryNo);
 					})
 				},
 				error: function(response) {
@@ -1258,6 +1352,7 @@ $(function() {
 	});
 			
 });
+
 </script>
 </body>
 </html>
