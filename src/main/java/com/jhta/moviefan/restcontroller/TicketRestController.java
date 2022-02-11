@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.jhta.moviefan.dto.CinemaHallWithShowsDto;
 import com.jhta.moviefan.dto.CityWithCinemasDto;
 import com.jhta.moviefan.dto.TicketMoviePageDto;
 import com.jhta.moviefan.service.CinemaService;
@@ -107,6 +108,9 @@ public class TicketRestController {
 		if (showDate != null) {
 			request.put("showDate", showDate);
 		}
+		List<CinemaHallWithShowsDto> showTimesAvailable = ticketService.getCinemaHallsWithShowsDto(request);
+		
+		showTimes.setShowTimesAvailable(showTimesAvailable);
 		
 		return showTimes;
 	}

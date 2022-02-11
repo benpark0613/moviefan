@@ -18,6 +18,7 @@ public class ShowWithSeatsDto {
 	private Date endTime;
 	private int movieNo;
 	private int hallNo;
+	private int totalSeatsAvailable;
 	List<ShowSeat> seats;
 	
 	public ShowWithSeatsDto() {}
@@ -58,17 +59,27 @@ public class ShowWithSeatsDto {
 	public void setHallNo(int hallNo) {
 		this.hallNo = hallNo;
 	}
+	public int getTotalSeatsAvailable() {
+		return totalSeatsAvailable;
+	}
+	public void setTotalSeatsAvailable(int totalSeatsAvailable) {
+		this.totalSeatsAvailable = totalSeatsAvailable;
+	}
 	public List<ShowSeat> getSeats() {
 		return seats;
 	}
 	public void setSeats(List<ShowSeat> seats) {
 		this.seats = seats;
 	}
+
 	@Override
 	public String toString() {
 		return "ShowWithSeatsDto [no=" + no + ", showDate=" + showDate + ", startTime=" + startTime + ", endTime="
-				+ endTime + ", movieNo=" + movieNo + ", hallNo=" + hallNo + ", seats=" + seats + "]";
+				+ endTime + ", movieNo=" + movieNo + ", hallNo=" + hallNo + ", totalSeatsAvailable="
+				+ totalSeatsAvailable + ", seats=" + seats + "]";
 	}
+
+	
 	
 	
 }

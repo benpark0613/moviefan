@@ -46,6 +46,17 @@
 		order by
 			show_seat_no
 	</select>
+	
+	<select id="getTotalSeatsAvailable" parameterType="int"  resultType="int">
+		select
+			count(*)
+		from 
+			show_seat
+		where 
+			show_no = #{value}
+		and
+			is_reserved = 'N'
+	</select>
 
 	<select id="getShowDatesNowPlaying" parameterType="map" resultType="date">
 		select 

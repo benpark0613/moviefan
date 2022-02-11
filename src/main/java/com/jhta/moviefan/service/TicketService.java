@@ -50,8 +50,10 @@ public class TicketService {
 		for (Show show : shows) {
 			ShowWithSeatsDto showWithSeats = new ShowWithSeatsDto();
 			List<ShowSeat> seats = ticketDao.getShowSeatsByShowNo(show.getNo());
+			int totalSeatsAvailabe = ticketDao.getTotalSeatsAvailable(show.getNo());
 			BeanUtils.copyProperties(show, showWithSeats);
 			showWithSeats.setSeats(seats);
+			showWithSeats.setTotalSeatsAvailable(totalSeatsAvailabe);
 			showsWithSeatsNowPlaying.add(showWithSeats);
 		}
 		
