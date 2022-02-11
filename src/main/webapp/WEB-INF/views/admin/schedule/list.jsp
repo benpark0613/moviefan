@@ -21,6 +21,15 @@
 			font-family: NanumBarunGothic;
 			font-size: 16pt;
 		}
+		.pagination a {
+		    color: black;
+		    border: none;
+		}
+		.pagination > li.disabled > a {
+		    font-weight: lighter;
+		    color: #EEEEEE;
+		    border: none;
+		}
 	</style>
 </head>
 <body>
@@ -86,6 +95,11 @@
 			  	</thead>
 			  	<tbody>
 			  		<c:choose>
+			  			<c:when test="${empty param }">
+							<tr>
+								<td class="text-center" colspan="7">지역별, 영화관별 상영일정을 조회할 수 있습니다.<br>먼저 검색옵션을 선택하세요.</td>
+							</tr>
+						</c:when>
 						<c:when test="${empty timetables }">
 							<tr>
 								<td class="text-center" colspan="7">현재 상영중인 영화가 없습니다.</td>
@@ -117,15 +131,15 @@
 				<nav>
 					<ul class="pagination justify-content-center">
 				    	<li class="page-item ${pagination.existPrev ? '' : 'disabled' }">
-				    		<a class="page-link" href="list?page=${pagination.prevPage }" data-page="${pagination.prevPage }">이전</a>
+				    		<a class="page-link" href="list?page=${pagination.prevPage }" data-page="${pagination.prevPage }">이전 &nbsp;&nbsp;</a>
 				    	</li>
 				    	<c:forEach var="num" begin="${pagination.beginPage }" end="${pagination.endPage }">
 					    	<li class="page-item ${pagination.pageNo eq num ? 'active' : '' }">
-					    		<a id="current-page" class="page-link" href="list?page=${num }" data-page="${num }">${num }</a>
+					    		<a id="current-page" class="page-link" href="list?page=${num }" data-page="${num }">${num } </a>
 					    	</li>
 				    	</c:forEach>
 				    	<li class="page-item ${pagination.existNext ? '' : 'disabled' }">
-				    		<a class="page-link" href="list?page=${pagination.nextPage }" data-page="${pagination.nextPage }">다음</a>
+				    		<a class="page-link" href="list?page=${pagination.nextPage }" data-page="${pagination.nextPage }"> &nbsp;&nbsp; 다음</a>
 				    	</li>
 					</ul>
 				</nav>
@@ -138,7 +152,7 @@
 <script type="text/javascript">
 
 	$(function () {
-		
+
 		// 1. 지역선택 셀렉트박스가 변경될 때마다 실행될 이벤트 핸들러 함수
 		$('#city-select').change(function () {
 			// 선택한 지역번호를 input hidden에 저장한다.

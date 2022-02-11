@@ -24,12 +24,12 @@
 		tr {
 			border-color: white;
 		}
-		#cinemaName, #warning {
+		#cinemaName {
 			font-weight: bold;
 			font-size: xx-large;
 		}
-		ul {
-			display: inline-block
+		.card {
+			border: none;
 		}
 	</style>
 </head>
@@ -37,12 +37,12 @@
 <%@ include file="/WEB-INF/views/common/header.jsp" %>
 <div class="container">
 	<input type="hidden" name="parameter" value="${param.cinemaNo }">
-	<div id="cinemaName" class="p-5 mt-3">
+	<div id="cinemaName" class="p-3 mb-3">
 		<span>${cinema.name }&nbsp;&nbsp;&nbsp;</span>
 		<span><a type="button" class="btn btn-dark btn-sm" href="main?cityNo=${param.cityNo }">목록으로 돌아가기</a></span>
 	</div>
-	<!-- 상영시간표 -->
-	<div id="movie-timetable" class="row justify-content-center mt-5 mb-5">
+	
+	<div id="movie-timetable" class="row justify-content-center mb-3">
 		<div id="content" class="col-10 px-0">
 			<c:choose>
 				<c:when test="${empty movieTimeTableDtos }">
@@ -50,18 +50,45 @@
 				</c:when>
 				<c:otherwise>
 					<!-- 안내버튼 -->
-					<div class="row mb-0 justify-content-end hstack gap-2">
+					<div class="row mb-0 justify-content-end hstack gap-2 mb-3">
 						<a href="/theater/price" id="price-info" class="col-2 btn btn-success" data-bs-toggle="modal" data-bs-target="#priceInfoModal">
 						관람가격 안내</a>
 <!-- 						<a href="/cinema/location" id="location-info" class="col-2 btn btn-success">위치/주차 안내</a> -->
 					</div>
+					<!-- 상영시간표 -->
 					<c:forEach var="timetable" items="${movieTimeTableDtos }">
-						<table class="table" id="schedule-list">
+						<div class="card mb-3">
+							<div class="card-body">
+								<div class="border-0 border-bottom border-3 p-3">
+									<span class="fs-2" id="movie-title">${timetable.title } &nbsp; &nbsp;</span>
+			<%-- 					<span class="ml-3">${movieTimeTable.genre } | </span> --%>
+									<span><fmt:formatDate value="${timetable.openDate }" pattern="yyyy-MM-dd"/> 개봉 &nbsp;|</span>
+									<span>${timetable.runtime }분</span>
+								</div>
+								<div class="mx-5 my-3">
+									<span class="fs-4" id="hall-name"><strong>${timetable.hallName }</strong></span>
+<%-- 								<span>총 ${movieTimeTable.totalSeats }석</span> --%>
+								</div>
+								
+								<div class="d-flex justify-content-start">
+									<c:forEach var="timetable" items="${timetable.schedules }">
+										<a href="#" class="border p-3 m-3">
+											<strong>
+											<fmt:formatDate value="${timetable.startTime }" pattern="HH:mm"/> ~ 
+											<fmt:formatDate value="${timetable.endTime }" pattern="HH:mm"/> 
+											</strong>
+											<br>잔여좌석수/전체좌석수
+										</a>
+									</c:forEach>
+								</div>
+							</div>
+						</div>
+						<%-- <table class="table" id="schedule-list">
 							<thead>
 								<tr>
 									<th>
 										<span class="fs-2" id="movie-title">${timetable.title } &nbsp; &nbsp;</span>
-		<%-- 							<span class="ml-3">${movieTimeTable.genre } | </span> --%>
+									<span class="ml-3">${movieTimeTable.genre } | </span>
 										<span><fmt:formatDate value="${timetable.openDate }" pattern="yyyy-MM-dd"/> 개봉 &nbsp;|</span>
 										<span>${timetable.runtime }분</span>
 									</th>
@@ -70,27 +97,29 @@
 							<tbody>
 								<tr>
 									<td class="show-info">
-										<div class="mx-5 my-3">
-											<span class="fs-4" id="hall-name"><strong>${timetable.hallName }</strong></span>
-		<%-- 								<span>총 ${movieTimeTable.totalSeats }석</span> --%>
-										</div>
-										<div class="d-flex align-items-center mx-5">
-											<ul class="list-group list-group-horizontal">
-												<li class="list-group-item mt-0 mb-3 text-center">
-													<a href="#">
-														<strong>
-														<fmt:formatDate value="${timetable.startTime }" pattern="HH:mm"/> ~ 
-														<fmt:formatDate value="${timetable.endTime }" pattern="HH:mm"/> 
-														</strong>
-														<br>잔여좌석수/전체좌석수
-													</a>
-												</li>
-											</ul>
-										</div>
+										<c:forEach var="timetable" items="${movieTimeTableDtos }">
+											<div class="mx-5 my-3">
+												<span class="fs-4" id="hall-name"><strong>${timetable.hallName }</strong></span>
+											<span>총 ${movieTimeTable.totalSeats }석</span>
+											</div>
+											<div class="d-flex align-items-center mx-5">
+												<ul class="list-group list-group-horizontal">
+													<li class="list-group-item mt-0 mb-3 text-center">
+														<a href="#">
+															<strong>
+															<fmt:formatDate value="${timetable.startTime }" pattern="HH:mm"/> ~ 
+															<fmt:formatDate value="${timetable.endTime }" pattern="HH:mm"/> 
+															</strong>
+															<br>잔여좌석수/전체좌석수
+														</a>
+													</li>
+												</ul>
+											</div>
+										</c:forEach>
 									</td>
 								</tr>
 							</tbody>
-						</table>
+						</table> --%>
 					</c:forEach>
 				</c:otherwise>
 			</c:choose>
@@ -132,11 +161,6 @@
 <%@ include file="/WEB-INF/views/common/footer.jsp" %>
 </body>
 <script type="text/javascript">
-
-	$('#back').click(function () {
-		
-		
-	})
 
 </script>
 </html>

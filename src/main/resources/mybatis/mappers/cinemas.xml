@@ -159,7 +159,7 @@
 		and
 			b.cinema_no = #{value}
 		order by
-			d.show_no asc
+			d.hall_no asc, d.show_start_time asc
 	</select>
 
 	<!-- 페이징처리용 영화관별 상영시간표 갯수 -->
