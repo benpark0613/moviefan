@@ -23,7 +23,7 @@
 			border: none;
 		}
 		.wrapper {
-			 margin-left:auto; 
+			margin-left:auto; 
     		margin-right:auto;
 		}
 		form {
@@ -35,9 +35,6 @@
 <body>
 <%@ include file="/WEB-INF/views/admin/common/header.jsp" %>
 <div class="container">
-
-<div>${param.page }</div>
-
 	<div class="row">
 		<div class="col">
 			<h1>상영일정 수정</h1>
@@ -103,7 +100,7 @@
 			  	</div>
 			  	<div class="row-sm-10">
 			  		<label for="show-time" class="form-label">상영시간</label>
-			  		<div class="col d-flex justify-content-between mb-3">
+			  		<div class="col d-flex justify-content-between mb-3" id="time-check">
 						<!-- 시작시간 -->
 						<div class="col-sm-5">
 							<input type="datetime" class="form-control" id="start-time" name="startTime" value="<fmt:formatDate value="${detailSchedule.startTime}" pattern="yyyy-MM-dd HH:mm:ss" />">
@@ -127,5 +124,21 @@
 </body>
 <script type="text/javascript">
 
+	$('#btn-modify-status').click(function (e) {
+		e.preventDefault();
+		
+		let start = $('input[name=startTime]').val();
+		let end = $('input[name=endTime]').val();
+		// 시작시간이 종료시간 이전인 경우
+		if (moment(start).isBefore(end)) {
+			alert('정상적으로 수정되었습니다.');
+			$("#modify-form").trigger("submit");
+		} else {
+			// 시작시간이 종료시간 이후인 경우
+			$('input[name=endTime]').focus();
+			alert('상영 시작시간보다 종료시간이 더 빠릅니다. 다시 입력해주세요.');
+		}
+	})
+	
 </script>
 </html>
