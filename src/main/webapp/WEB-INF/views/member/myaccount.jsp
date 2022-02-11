@@ -1078,13 +1078,15 @@ $(function() {
 			
 			$.ajax({
 				type: "GET",
-				url: "",
+				url: "/rest/member/mycomments",
 				data: {
-					
+					page: currentPage,
+					opt: searchOption,
+					value: searchValue,
 				},
-				before: {
+// 				before: {
 					
-				},
+// 				},
 				success: function(response) {
 					
 				},

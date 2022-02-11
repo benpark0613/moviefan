@@ -18,6 +18,7 @@ import com.jhta.moviefan.dto.NoticeDto;
 import com.jhta.moviefan.dto.ResponseDto;
 import com.jhta.moviefan.dto.RestMovieWishListDto;
 import com.jhta.moviefan.dto.RestNoticeDto;
+import com.jhta.moviefan.form.Criteria;
 import com.jhta.moviefan.form.CriteriaMyAccount;
 import com.jhta.moviefan.form.CriteriaNotice;
 import com.jhta.moviefan.pagination.Pagination;
@@ -46,6 +47,7 @@ public class CustomerRestController {
 	@Autowired
 	NoticeService noticeService;
 	
+	// 자주가는 극장
 	@PostMapping("/deletemycinema") 
 	public ResponseDto<String> deleteMyCinema(@LoginedCustomer Customer customer, @RequestParam(name = "cinemaNo", required = true) int cinemaNo) {
 		ResponseDto<String> response = new ResponseDto<String>();
@@ -58,7 +60,6 @@ public class CustomerRestController {
 		response.setStatus("OK");
 		return response;
 	}
-	
 	@PostMapping("/addmycinema")
 	public ResponseDto<String> insertMyCinema(@LoginedCustomer Customer customer, @RequestParam(name = "cinemaNo", required = true) int cinemaNo) {
 		ResponseDto<String> response = new ResponseDto<String>();
@@ -74,7 +75,6 @@ public class CustomerRestController {
 		response.setStatus("OK");
 		return response;
 	}
-	
 	@GetMapping("/mycinema")
 	public ResponseDto<?> getCityWithCinemaList(@LoginedCustomer Customer customer) {
 		ResponseDto<?> response = new ResponseDto<>();
@@ -86,6 +86,7 @@ public class CustomerRestController {
 		return response;
 	}
 	
+	// 닉네임 변경
 	@PostMapping("/check-nickname")
 	public ResponseDto<String> checkNickName(@LoginedCustomer Customer customer, @RequestParam(name = "nickName", required = true) String nickName) {
 		ResponseDto<String> response = new ResponseDto<String>();
@@ -101,7 +102,6 @@ public class CustomerRestController {
 		response.setItem(List.of("사용 가능한 닉네임입니다."));
 		return response;
 	}
-	
 	@PostMapping("/update-nickname")
 	public ResponseDto<String> updateNickName(@LoginedCustomer Customer customer, @RequestParam(name = "nickName", required = true) String nickName) {
 		ResponseDto<String> response = new ResponseDto<String>();
@@ -115,6 +115,7 @@ public class CustomerRestController {
 		return response;
 	}
 	
+	// 찜한 영화
 	@GetMapping("/movie-wish-list")
 	public RestMovieWishListDto movieWishList(@LoginedCustomer Customer customer, 
 			@RequestParam(name = "page", required = false, defaultValue = "1") String page, CriteriaMyAccount criteriaMyAccount) {
@@ -148,6 +149,7 @@ public class CustomerRestController {
 		return response;
 	}
 	
+	// 공지사항
 	@GetMapping("/notice-list")
 	public RestNoticeDto getNoticeList(@LoginedCustomer Customer customer, CriteriaNotice criteriaNotice,
 			@RequestParam(name = "page", required = false, defaultValue = "1") String page) {
@@ -172,7 +174,6 @@ public class CustomerRestController {
 		
 		return restNoticeDto;
 	}
-	
 	@GetMapping("/detail")
 	public RestNoticeDto getNoticeDetail(@LoginedCustomer Customer customer, @RequestParam(name = "no", required = true) int no) {
 		
@@ -182,7 +183,6 @@ public class CustomerRestController {
 
 		return restNoticeDto;
 	}
-	
 	@GetMapping("/delete-wishmovie")
 	public ResponseDto<String> deleteWishMovie(@LoginedCustomer Customer customer, @RequestParam(name = "movieNo", required = true) int movieNo) {
 		CustomerMovieWishList wishList = new CustomerMovieWishList();
@@ -193,6 +193,17 @@ public class CustomerRestController {
 		ResponseDto<String> response = new ResponseDto<String>();
 		response.setStatus("OK");
 		
+		return response;
+	}
+	
+	// 한줄평
+	@GetMapping("/mycomments")
+	public ResponseDto<String> getMyComments(@LoginedCustomer Customer customer, Criteria criteria,
+			@RequestParam(name = "currentPage", required = false, defaultValue = "1") String currentPage) {
+		
+		
+		
+		ResponseDto<String> response = new ResponseDto<String>();
 		return response;
 	}
 	

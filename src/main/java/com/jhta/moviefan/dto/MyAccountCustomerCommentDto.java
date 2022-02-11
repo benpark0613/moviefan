@@ -3,12 +3,13 @@ package com.jhta.moviefan.dto;
 import java.util.Date;
 import java.util.List;
 
+import com.jhta.moviefan.vo.MovieActor;
 import com.jhta.moviefan.vo.MovieImage;
 
-public class CustomerCommentDto {
+public class MyAccountCustomerCommentDto {
 
 	// myaccount > 한줄평 조회할 때 사용
-	// customer, movie_customer_comment, comment_liked_user, MovieWithImagesDto(movie, movie_image) 를 담는다.
+	// customer, movie_customer_comment, comment_liked_user, MovieDetailDto(movie, movie_image, actor) 를 담는다.
 	
 	// Customer
 	private int customerNo;
@@ -29,8 +30,9 @@ public class CustomerCommentDto {
 	private int movieNo;
 	private String title;
 	private List<MovieImage> images;
+	private List<MovieActor> actors;
 	
-	public CustomerCommentDto() {}
+	public MyAccountCustomerCommentDto() {}
 
 	public int getCustomerNo() {
 		return customerNo;
@@ -144,13 +146,22 @@ public class CustomerCommentDto {
 		this.images = images;
 	}
 
+	public List<MovieActor> getActors() {
+		return actors;
+	}
+
+	public void setActors(List<MovieActor> actors) {
+		this.actors = actors;
+	}
+
 	@Override
 	public String toString() {
-		return "CustomerCommentDto [customerNo=" + customerNo + ", name=" + name + ", nickName=" + nickName
+		return "MyAccountCustomerCommentDto [customerNo=" + customerNo + ", name=" + name + ", nickName=" + nickName
 				+ ", isBanned=" + isBanned + ", commentNo=" + commentNo + ", customerRating=" + customerRating
 				+ ", content=" + content + ", createdDate=" + createdDate + ", reportCount=" + reportCount
 				+ ", likeCount=" + likeCount + ", updatedDate=" + updatedDate + ", movieNo=" + movieNo + ", title="
-				+ title + ", images=" + images + "]";
+				+ title + ", images=" + images + ", actors=" + actors + "]";
 	}
+
 	
 }
