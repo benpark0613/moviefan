@@ -28,7 +28,6 @@
 				<div class="row">
 					<form class="border bg-light" method="post" action="home/registerTrailer" id="form-register-trailer">
 						<div class="mb-3 mt-3">
-							
 							<label class="form-label">영화 제목</label>
 							<select id="titleSelect" class="form-select" aria-label="Default select example">
 								<option selected disabled="disabled">영화 선택하세요</option>

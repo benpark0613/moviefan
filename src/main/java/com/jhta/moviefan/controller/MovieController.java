@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.jhta.moviefan.dto.CommentDto;
 import com.jhta.moviefan.dto.MovieDetailDto;
 import com.jhta.moviefan.form.CriteriaMovieComment;
 import com.jhta.moviefan.pagination.Pagination;
@@ -28,7 +29,6 @@ import com.jhta.moviefan.service.CommentService;
 import com.jhta.moviefan.service.CustomerService;
 import com.jhta.moviefan.service.MovieService;
 import com.jhta.moviefan.utils.SessionUtils;
-import com.jhta.moviefan.vo.Comment;
 import com.jhta.moviefan.vo.Customer;
 import com.jhta.moviefan.vo.Movie;
 
@@ -106,7 +106,7 @@ public class MovieController {
 	public String detail(int no, Model model) {
 		
 		MovieDetailDto movieDetail = movieService.getMovieDetail(no);
-		List<Comment> commentList = commentService.searchCommentsByMovieNo(no);
+		List<CommentDto> commentList = commentService.searchCommentsByMovieNo(no);
 		int countTrailer = movieService.getMovieDetail(no).getTrailers().size();
 		int countImage = movieService.getMovieDetail(no).getImages().size();
 		int size = commentList.size();
@@ -142,9 +142,10 @@ public class MovieController {
 		Pagination pagination = new Pagination(page, totalRecords, 5);
 		criteria.setBeginIndex(pagination.getBegin());
 		criteria.setEndIndex(pagination.getEnd());
+		criteria.setOpt("영화명");
+		criteria.setValue(movieDetail.getTitle());
 		
-		List<Comment> commentList = commentService.searchComment(criteria);
-		
+		List<CommentDto> commentList = commentService.searchComment(criteria);
 		
 		model.addAttribute("movieDetail", movieDetail);
 		model.addAttribute("comment", commentList);

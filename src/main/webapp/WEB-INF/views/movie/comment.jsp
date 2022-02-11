@@ -152,7 +152,7 @@ $(function(){
 				for(var i=0; i<response.item.length;i++){
 					$("#like"+[i]).text(response.item[i].likeCount);
 				}
-				alert("추천이 완료되었습니다.")
+				alert("추천이 완료되었습니다.");
 			},
 			error : function(response){
 				alert(response.error)

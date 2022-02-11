@@ -2,104 +2,10 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.jhta.moviefan.dao.CommentDao">
 
-<!-- 	<resultMap type="com.jhta.moviefan.vo.Comment" id="CommentResultMap">
-		<id column="COMMENT_NO"			property="commentNo"/>
-		<result column="CUSTOMER_NO" 	property="customerNo"/>
-		<result column="MOVIE_NO" 		property="movieNo"/>
-		<result column="CUSTOMER_RATING" property="rating"/>
-		<result column="COMMENT_CONTENT" property="content"/>
-		<result column="COMMENT_CREATED_DATE" property="creDate"/>
-		<result column="COMMENT_REPORT_COUNT" property="reportCount"/>
-		<result column="COMMENT_LIKE_COUNT" property="likeCount"/>
-		<result column="COMMENT_UPDATED_DATE" property="upDate"/>
-	</resultMap> -->
 	
-	<insert id="insertComment" parameterType="com.jhta.moviefan.vo.Comment">
-		insert into movie_customer_comment
-		(comment_no, movie_no, customer_rating, comment_content, customer_no, comment_created_date)
-		values
-		(movie_customer_comment_seq.nextval, #{movieNo}, #{rating}, #{content}, #{customerNo}, sysdate)
-	</insert>
+	<!-- 여기부터 주성 -->
 	
-	<update id="updateCommentByNo" parameterType="com.jhta.moviefan.vo.Comment">
-		update movie_customer_comment
-		set
-			customer_rating = #{rating},
-			comment_content = #{content},
-			comment_updated_date = sysdate
-		where
-			comment_no = #{commentNo}
-	</update>
-	
-	<delete id="deleteCommentByNo">
-		delete 
-	</delete>
-	
-	<select id="getAllComments" resultType="com.jhta.moviefan.vo.Comment">
-		select 
-			CO.COMMENT_NO				as commentNo, 
-			CO.CUSTOMER_NO				as customerNo, 
-			CO.MOVIE_NO					as movieNo, 
-			CO.CUSTOMER_RATING			as rating, 
-			CO.COMMENT_CONTENT			as content, 
-			CO.COMMENT_CREATED_DATE		as creDate, 
-			CO.COMMENT_REPORT_COUNT		as reprtCount,
-			CO.COMMENT_LIKE_COUNT		as likeCount,
-			CO.COMMENT_UPDATED_DATE		as updatedDate,
-			M.MOVIE_TITLE				as movieTitle, 
-			CU.customer_id				as customerId 
-		from 
-			MOVIE_CUSTOMER_COMMENT CO, 
-			MOVIE M, 
-			CUSTOMER CU
-		where 
-			CO.MOVIE_NO = M.MOVIE_NO
-   		and CO.CUSTOMER_NO = CU.CUSTOMER_NO
-		order by
-			COMMENT_CREATED_DATE desc
-	</select>
-	
-<!-- 	<select id="commentAllRows" resultType="com.jhta.moviefan.vo.Comment">
-		select count(*)
-		from (select 
-				comment_no	 			as commentNo,
-				movie_title				as movieTitle, 
-				customer_rating			as rating, 
-				comment_content			as content, 
-				customer_id				as customerId, 
-				comment_created_date	as creDate, 
-				comment_like_count		as likeCount, 
-				comment_report_count	as reprtCount
-			from 
-				movie_customer_comment c, 
-				movie m, 
-				customer cus
-			where 
-				c.movie_no = m.movie_no
-   			and c.customer_no = cus.customer_no)
-	</select> -->
-	
-	<select id="getMovieTitle" parameterType="int" resultType="com.jhta.moviefan.vo.Comment">
-		select 	
-			movie_title
-		from 
-			movie m, movie_customer_comment c
-		where 
-			m.movie_no = c.movie_no
-			movie_no = #{value}
-	</select>
-	
-	<select id="getCustomerId" parameterType="int" resultType="com.jhta.moviefan.vo.Comment">
-		select 
-			customer_id
-		from 
-			customer cus, movie_customer_comment c
-		where 
-			cus.customer_no = c.customer_no
-			customer_no = #{value}
-	</select>
-	
-	<select id="searchCommentsByMovieNo" parameterType="int" resultType="com.jhta.moviefan.vo.Comment">
+	<select id="searchCommentsByMovieNo" parameterType="int" resultType="com.jhta.moviefan.dto.CommentDto">
 		select 
 			m.comment_no			as commentNo,				
 			m.customer_no			as customerNo,
@@ -121,40 +27,28 @@
 			comment_no desc
 	</select>
 	
-	<select id="searchCommnetsByCustomerNo" parameterType="int" resultType="com.jhta.moviefan.vo.Comment">
+	<select id="getAllComments" resultType="com.jhta.moviefan.dto.CommentDto">
 		select 
-			comment_no				as commentNo,				
-			customer_no				as customerNo,
-			movie_no				as movieNo,
-			customer_rating			as rating,
-			comment_content			as content,
-			comment_created_date	as creDate,
-			comment_report_count	as reportCount,
-			comment_like_count		as likeCount,
-			comment_updated_date	as upDate
+			CO.COMMENT_NO				as commentNo, 
+			CO.CUSTOMER_NO				as customerNo, 
+			CO.MOVIE_NO					as movieNo, 
+			CO.CUSTOMER_RATING			as rating, 
+			CO.COMMENT_CONTENT			as content, 
+			CO.COMMENT_CREATED_DATE		as creDate, 
+			CO.COMMENT_REPORT_COUNT		as reprtCount,
+			CO.COMMENT_LIKE_COUNT		as likeCount,
+			CO.COMMENT_UPDATED_DATE		as updatedDate,
+			M.MOVIE_TITLE				as movieTitle, 
+			CU.customer_id				as customerId 
 		from 
-			movie_customer_comment
-		where
-			customer_no = #{value}
+			MOVIE_CUSTOMER_COMMENT CO, 
+			MOVIE M, 
+			CUSTOMER CU
+		where 
+			CO.MOVIE_NO = M.MOVIE_NO
+   		and CO.CUSTOMER_NO = CU.CUSTOMER_NO
 		order by
-			comment_no desc
-	</select>
-	
-	<select id="getCommentByCommentNo" parameterType="int" resultType="com.jhta.moviefan.vo.Comment">
-		select 
-			comment_no				as commentNo,				
-			customer_no				as customerNo,
-			movie_no				as movieNo,
-			customer_rating			as rating,
-			comment_content			as content,
-			comment_created_date	as creDate,
-			comment_report_count	as reportCount,
-			comment_like_count		as likeCount,
-			comment_updated_date	as upDate
-		from 
-			movie_customer_comment
-		where
-			comment_no = #{value}
+			COMMENT_CREATED_DATE desc
 	</select>
 	
 	<select id="getCommentPages" parameterType="com.jhta.moviefan.form.CriteriaMovieComment" resultType="com.jhta.moviefan.vo.Comment">
@@ -228,8 +122,6 @@
 				 			C.COMMENT_CREATED_DATE desc
 				 		</otherwise> 
 				 	</choose>
-				 
-				 
 			 ) rn
 			 from MOVIE_CUSTOMER_COMMENT C, MOVIE M, CUSTOMER CU
 			 where C.MOVIE_NO = M.MOVIE_NO
@@ -283,9 +175,23 @@
 	</update>
 	
 	<insert id="updateCommentLikeCustomer" parameterType="com.jhta.moviefan.vo.CommentLikedCustomer">
-	insert into COMMENT_LIKED_USER
+		insert into COMMENT_LIKED_USER
+			(COMMENT_NO, CUSTOMER_NO)
+		values
+			(#{commentNo}, #{customerNo})
+	</insert>
+	
+	<insert id="insertComment" parameterType="com.jhta.moviefan.form.CommentInsertForm">
+		insert into MOVIE_CUSTOMER_COMMENT
+		(COMMENT_NO, CUSTOMER_NO, MOVIE_NO, CUSTOMER_RATING, COMMENT_CONTENT, COMMENT_CREATED_DATE)
+		values
+		(movie_customer_comment_seq.nextval, #{customerNo}, #{movieNo}, #{rating}, #{content}, sysdate)
+	</insert>
+	
+	<insert id="insertCommentLikedCustomer" parameterType="com.jhta.moviefan.vo.CommentLikedCustomer">
+		insert into COMMENT_LIKED_USER
 		(COMMENT_NO, CUSTOMER_NO)
-	values
+		values
 		(#{commentNo}, #{customerNo})
 	</insert>
 	
