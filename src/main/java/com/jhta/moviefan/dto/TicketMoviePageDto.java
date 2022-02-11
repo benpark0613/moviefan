@@ -13,52 +13,74 @@ public class TicketMoviePageDto {
 	List<CityWithCinemasDto> citiesWithCinemasAvailable;	// 선택한 영화, 날짜로 예매 가능한 극장 목록
 	List<Map<String, Object>> showDatesNowPlaying;			// 상영중인 영화가 있는 날짜 전체 목록
 	List<Map<String, Object>> showDatesAvailable;			// 선택한 영화, 극장에서 예매 가능한 날짜 목록
+	List<CinemaHallWithShowsDto> showTimesAvailable;		// 선택한 영화, 극장, 날짜에 예매 가능한 상영관별 상영시작 시간 목록
 	
 	public TicketMoviePageDto() {}
 	
 	public List<Movie> getMoviesNowPlaying() {
 		return moviesNowPlaying;
 	}
+	
 	public void setMoviesNowPlaying(List<Movie> moviesNowPlaying) {
 		this.moviesNowPlaying = moviesNowPlaying;
 	}
+	
 	public List<Movie> getMoviesAvailable() {
 		return moviesAvailable;
 	}
+	
 	public void setMoviesAvailable(List<Movie> moviesAvailable) {
 		this.moviesAvailable = moviesAvailable;
 	}
+	
 	public List<CityWithCinemasDto> getCitiesWithCinemas() {
 		return citiesWithCinemas;
 	}
+	
 	public void setCitiesWithCinemas(List<CityWithCinemasDto> citiesWithCinemas) {
 		this.citiesWithCinemas = citiesWithCinemas;
 	}
+	
 	public List<CityWithCinemasDto> getCitiesWithCinemasAvailable() {
 		return citiesWithCinemasAvailable;
 	}
+	
 	public void setCitiesWithCinemasAvailable(List<CityWithCinemasDto> citiesWithCinemasAvailable) {
 		this.citiesWithCinemasAvailable = citiesWithCinemasAvailable;
 	}
+	
 	public List<Map<String, Object>> getShowDatesNowPlaying() {
 		return showDatesNowPlaying;
 	}
+	
 	public void setShowDatesNowPlaying(List<Map<String, Object>> showDatesNowPlaying) {
 		this.showDatesNowPlaying = showDatesNowPlaying;
 	}
+	
 	public List<Map<String, Object>> getShowDatesAvailable() {
 		return showDatesAvailable;
 	}
+	
 	public void setShowDatesAvailable(List<Map<String, Object>> showDatesAvailable) {
 		this.showDatesAvailable = showDatesAvailable;
 	}
+	
+	public List<CinemaHallWithShowsDto> getShowTimesAvailable() {
+		return showTimesAvailable;
+	}
+
+	public void setShowTimesAvailable(List<CinemaHallWithShowsDto> showTimesAvailable) {
+		this.showTimesAvailable = showTimesAvailable;
+	}
+
 	@Override
 	public String toString() {
 		return "TicketMoviePageDto [moviesNowPlaying=" + moviesNowPlaying + ", moviesAvailable=" + moviesAvailable
 				+ ", citiesWithCinemas=" + citiesWithCinemas + ", citiesWithCinemasAvailable="
 				+ citiesWithCinemasAvailable + ", showDatesNowPlaying=" + showDatesNowPlaying + ", showDatesAvailable="
-				+ showDatesAvailable + "]";
+				+ showDatesAvailable + ", showTimesAvailable=" + showTimesAvailable + "]";
 	}
+
 	
 	
 	

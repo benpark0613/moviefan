@@ -19,32 +19,42 @@
 		    max-height: 500px !important;
 		    overflow-y: auto !important;
 		}
+		#time-list-box {
+			max-height: 450px !important;
+		    overflow-y: auto !important;
+		}
 		#movie-list-box::-webkit-scrollbar-track,
 		#date-list-box::-webkit-scrollbar-track,
-		#cinema-list-box::-webkit-scrollbar-track {
+		#cinema-list-box::-webkit-scrollbar-track,
+		#time-list-box::-webkit-scrollbar-track {
 			-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
 			border-radius: 10px;
 			background-color: #F5F5F5;
 		}
 		#movie-list-box::-webkit-scrollbar,
 		#date-list-box::-webkit-scrollbar, 
-		#cinema-list-box::-webkit-scrollbar {
+		#cinema-list-box::-webkit-scrollbar,
+		#time-list-box::-webkit-scrollbar {
 			width: 5px;
 			background-color: #F5F5F5;
 		}
 		#movie-list-box::-webkit-scrollbar-thumb,
 		#date-list-box::-webkit-scrollbar-thumb, 
-		#cinema-list-box::-webkit-scrollbar-thumb {
+		#cinema-list-box::-webkit-scrollbar-thumb,
+		#time-list-box::-webkit-scrollbar-thumb {
 			border-radius: 10px;
 			-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);
 			background-color: #555;
-		}
+		} 
 		/*
 			리스트 CSS 설정
 		*/
 		.list-group-item.active {
 			color: #fff !important;
     		background-color: #212529 !important;
+		}
+		.list-group-item:hover {
+			color: #333;
 		}
 		#city-list-box .list-group-item.active {
 			color: #333 !important;
@@ -194,18 +204,33 @@
 							</c:forEach>
 						</div>
 					</td>
-					<!-- <td class="col-4 bg-light align-middle text-center border-end-0">
-							<span>영화, 극장, 날짜를 선택해주세요.</span>
-					</td> -->
 					<td class="col-4 bg-light border-end-0">
+						<div class="mt-2 ps-1 fw-bold">
+							<i class="bi bi-brightness-high-fill text-warning"></i> 조조 
+							<i class="bi bi-moon-fill text-primary"></i> 심야
+						</div>
+						<hr>
+						<div class="text-center" id="time-list-box">
+							<br/>
+							<br/>
+							<br/>
+							<br/>
+							<br/>
+							<br/>
+							<br/>
+							<br/>
+							<span>영화, 극장, 날짜를 선택해주세요.</span>
+						</div>
+					</td>
+					<!-- <td class="col-4 bg-light border-end-0">
 						<div class="ps-1 fw-bold">
 							<i class="bi bi-brightness-high-fill text-warning"></i> 조조 
 							<i class="bi bi-moon-fill text-primary"></i> 심야
 						</div>
 						<hr>
 						<div class="mb-3" id="">
-							<div class="ps-1 mb-1">2D(라스트 특가)5관(Laser) 10층(총172석)</div>
-							<a class="btn bg-secondary bg-opacity-10 border-light" id="" data-bs-toggle="button" href="#">09:00</a><span class="align-middle" style="display: inline-block; width: 70px;">155석</span>
+							<div class="ps-1 mb-2">2D(라스트 특가)5관(Laser) 10층(총172석)</div>
+							<a class="btn bg-secondary bg-opacity-10 border-light" id="" data-bs-toggle="button" href="#">09:00</a><span class="align-middle" style="display: inline-block; width: 70px;"><i class="bi bi-brightness-high-fill text-warning"></i>155석</span>
 							<a class="btn bg-secondary bg-opacity-10 border-light" id="" data-bs-toggle="button" href="#">09:00</a><span class="align-middle" style="display: inline-block; width: 70px;">155석</span>
 							<a class="btn bg-secondary bg-opacity-10 border-light" id="" data-bs-toggle="button" href="#">09:00</a><span class="align-middle" style="display: inline-block; width: 70px;">155석</span>
 							<a class="btn bg-secondary bg-opacity-10 border-light" id="" data-bs-toggle="button" href="#">09:00</a><span class="align-middle" style="display: inline-block; width: 70px;">155석</span>
@@ -214,7 +239,7 @@
 						</div>
 						<hr>
 						<div class="mb-3" id="">
-							<div class="ps-1 mb-1">2D(라스트 특가)5관(Laser) 10층(총172석)</div>
+							<div class="ps-1 mb-2">2D(라스트 특가)5관(Laser) 10층(총172석)</div>
 							<a class="btn bg-secondary bg-opacity-10 border-light" id="" data-bs-toggle="button" href="#">09:00</a><span class="align-middle" style="display: inline-block; width: 70px;">155석</span>
 							<a class="btn bg-secondary bg-opacity-10 border-light" id="" data-bs-toggle="button" href="#">09:00</a><span class="align-middle" style="display: inline-block; width: 70px;">155석</span>
 							<a class="btn bg-secondary bg-opacity-10 border-light" id="" data-bs-toggle="button" href="#">09:00</a><span class="align-middle" style="display: inline-block; width: 70px;">155석</span>
@@ -222,7 +247,7 @@
 							<a class="btn bg-secondary bg-opacity-10 border-light" id="" data-bs-toggle="button" href="#">09:00</a><span class="align-middle" style="display: inline-block; width: 70px;">155석</span>
 							<a class="btn bg-secondary bg-opacity-10 border-light" id="" data-bs-toggle="button" href="#">09:00</a><span class="align-middle" style="display: inline-block; width: 70px;">155석</span>
 						</div>
-					</td>
+					</td> -->
 				</tr>
 			</tbody>
 		</table>
@@ -298,6 +323,9 @@
 				if ($("#date-list-box a.active").length == 0) {
 					getShowDates(movieNo, cinemaNo);
 				}
+				if ($("#cinema-list-box a.active").length != 0 && $("#date-list-box a.active").length != 0) {
+					getShowTimes(movieNo, cinemaNo, showDate);
+				}
 			}
 		});
 		
@@ -328,6 +356,9 @@
 				if ($("#date-list-box a.active").length == 0) {
 					getShowDates(movieNo, cinemaNo);
 				}
+				if ($("#movie-list-box a.active").length != 0 && $("#date-list-box a.active").length != 0) {
+					getShowTimes(movieNo, cinemaNo, showDate);
+				}
 			}
 		});
 		
@@ -346,8 +377,26 @@
 				if ($("#cinema-list-box a.active").length == 0) {
 					getCinemas(movieNo, showDate);
 				}
+				if ($("#movie-list-box a.active").length != 0 && $("#cinema-list-box a.active").length != 0) {
+					getShowTimes(movieNo, cinemaNo, showDate);
+				}
 			}
 		});
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
 	});
 	
 	function getMovies(cinemaNo = null, showDate = null) {
@@ -566,9 +615,9 @@
 		});	
 	}
 	
-	function getShowTime(movieNo, cinemaNo, showDate) {
+	function getShowTimes(movieNo, cinemaNo, showDate) {
 		var $spinnerBox = $("#spinner-box").empty();
-		
+		var $tdShowTime = $("#td-time").removeClass("align-middle").removeClass("text-center").empty();
 		$.ajax({
 			type: "get",
 			url: "/rest/ticket/time",
@@ -584,14 +633,8 @@
 					+ '</div>';
 				$spinnerBox.append(row);
 			},
-			success: function(cinemas) {
+			success: function(showTimes) {
 				$spinnerBox.empty();
-				
-				
-				
-				
-				
-				
 				
 				
 				
