@@ -29,6 +29,7 @@ import com.jhta.moviefan.service.MovieService;
 import com.jhta.moviefan.utils.SessionUtils;
 import com.jhta.moviefan.vo.Cinema;
 import com.jhta.moviefan.vo.Customer;
+import com.jhta.moviefan.vo.CustomerMovieWishList;
 import com.jhta.moviefan.vo.Movie;
 import com.jhta.moviefan.vo.MovieImage;
 
@@ -92,15 +93,6 @@ public class CustomerController {
 		
 		return "member/myinfo/modifyform";
 	}
-	@PostMapping("/myinfo/modify-customer-info")
-	public String modifyCustomerInfo(@LoginedCustomer Customer customer, CustomerRegisterForm modifyform) {
-		BeanUtils.copyProperties(modifyform, customer);
-		customerService.updateCustomerInfo(customer);
-		
-		SessionUtils.removeAttribute("LOGINED_CUSTOMER");
-		
-		return "redirect:/member/myinfo/modifycompleted";
-	}
 	
 	@GetMapping("/myinfo/modifycompleted")
 	public String modifyCompleted() {
@@ -132,6 +124,16 @@ public class CustomerController {
 	@GetMapping("/myinfo/withdrawal-completed")
 	public String withdrawalCompleted() {
 		return "member/myinfo/withdrawal-completed";
+	}
+	
+	@GetMapping("/delete-wishmovie")
+	public String deleteWishMovie(@LoginedCustomer Customer customer, int movieNo) {
+		CustomerMovieWishList wishList = new CustomerMovieWishList();
+		wishList.setCustomerNo(customer.getNo());
+		wishList.setMovieNo(movieNo);
+		customerService.deleteCustomerMovieWishListByMovieNo(wishList);
+		
+		return "redirect:/member/myaccount";
 	}
 	
 }

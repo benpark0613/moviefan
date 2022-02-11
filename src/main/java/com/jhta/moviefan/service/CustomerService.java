@@ -10,6 +10,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.jhta.moviefan.annotation.LoginedCustomer;
 import com.jhta.moviefan.dao.CinemaDao;
 import com.jhta.moviefan.dao.CustomerDao;
 import com.jhta.moviefan.dao.MovieDao;
@@ -76,6 +77,31 @@ public class CustomerService {
 		
 		return customer;
 	}
+
+	// 회원정보 수정 체크
+	public void checkCustomer(@LoginedCustomer Customer customer, Customer newInfo) {
+		LOGGER.info("customer의 값: " + customer);
+		LOGGER.info("newInfo의 값: " + newInfo);
+		
+		if (!customer.getEmail().equals(newInfo.getEmail())) {
+			Customer savedCustomer = customerDao.getCustomerByEmail(newInfo.getEmail());
+			if (savedCustomer != null) {
+				throw new RestRegisterErrorException("중복되는 이메일입니다.");
+			}
+		}
+		if (!customer.getNickName().equals(newInfo.getNickName())) {
+			Customer savedCustomer = customerDao.getCustomerByNickName(newInfo.getNickName());
+			if (savedCustomer != null) {
+				throw new RestRegisterErrorException("중복되는 닉네임입니다.");
+			}
+		}
+		if (!customer.getPhoneNumber().equals(newInfo.getPhoneNumber()) ) {
+			Customer savedCustomer =  customerDao.getCustomerByPhoneNumber(newInfo.getPhoneNumber());
+			if (savedCustomer != null) {
+				throw new RestRegisterErrorException("중복되는 전화번호입니다.");
+			}
+		}
+	}
 	
 	// 일반 로그인
 	public Customer login(String id, String password) {
@@ -137,8 +163,11 @@ public class CustomerService {
 	}
 	
 	// 회원정보 업데이트
-	public void updateCustomerInfo(Customer customer) {
-		customerDao.updateCustomer(customer);
+	public void updateCustomerInfo(@LoginedCustomer Customer customer, Customer newInfo) {
+		LOGGER.info("customer의 값: " + customer);
+		LOGGER.info("newInfo의 값: " + newInfo);
+		checkCustomer(customer, newInfo);
+		customerDao.updateCustomer(newInfo);
 	}
 	// 회원정보 삭제
 	public void deleteCustomerInfo(int customerNo) {
@@ -249,7 +278,7 @@ public class CustomerService {
 		customerDao.deleteCustomerMovieWishListByMovieNo(wishList);
 	}
 	
-	// 한줄평
+//	 한줄평
 //	public void name() {
 //		
 //	}

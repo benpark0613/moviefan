@@ -44,14 +44,14 @@
 						<div class="col d-flex align-items-end">
 							<span>총 <strong id="totalRecords">${pagination.totalRecords }</strong>건</span>
 						</div>
-						<div class="col-2">
-							<select class="form-select">
-								<option value="all" selected="selected">전체</option>
-								<c:forEach var="category" items="${categories }">
-									<option value="${category.categoryNo }">${category.name }</option>
-								</c:forEach>
-							</select>
-						</div>
+<!-- 						<div class="col-2"> -->
+<!-- 							<select class="form-select"> -->
+<!-- 								<option value="all" selected="selected">전체</option> -->
+<%-- 								<c:forEach var="category" items="${categories }"> --%>
+<%-- 									<option value="${category.categoryNo }">${category.name }</option> --%>
+<%-- 								</c:forEach> --%>
+<!-- 							</select> -->
+<!-- 						</div> -->
 					</div>
 					<table class="table" id="">
 						<thead>

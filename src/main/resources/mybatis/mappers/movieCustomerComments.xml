@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jhta.moviefan.dao.MovieCustomerCommentDao">
+	
+	<!-- 성근 -->
+	<resultMap type="com.jhta.moviefan.vo.MovieCustomerComment" id="CommentResultMap">
+		<id column="comment_no" property="commentNo"/>
+		<result column="customer_no" property="customerNo"/>
+		<result column="movie_no" property="movieNo"/>
+		<result column="customer_rating" property="customerRating"/>
+		<result column="comment_content" property="content"/>
+		<result column="comment_created_date" property="createdDate"/>
+		<result column="comment_report_count" property="reportCount"/>
+		<result column="comment_like_count" property="likeCount"/>
+		<result column="comment_updated_date" property="updatedDate"/>
+	</resultMap>
+	
+	<select id="getMovieCustomerCommentByCommentNo" parameterType="int" resultMap="CommentResultMap">
+		select *
+		from movie_customer_comment
+		where comment_no = #{commentNo};
+	</select>
+	
+	<select id="getAllMovieCustomerComments" resultMap="CommentResultMap">
+		select *
+		from movie_customer_comment
+	</select>
+	
+	<insert id="insertMovieCustomerComment" parameterType="com.jhta.moviefan.vo.MovieCustomerComment">
+		<selectKey keyProperty="commentNo" resultType="int" order="BEFORE">
+			select movie_customer_comment_seq.nextval
+			from dual
+		</selectKey>
+		insert into movie_customer_comment
+		(comment_no, customer_no, movie_no, customer_rating, comment_content)
+		values
+		(#commentNo, #customerNo, #movieNo, #customerRating, #content)
+	</insert>
+	
+	<update id="updateMovieCustomerComment" parameterType="com.jhta.moviefan.vo.MovieCustomerComment">
+		update comment
+		set
+			customer_rating = #{customerRating},
+			comment_content = #{content},
+			comment_report_count = #{reportCount},
+			comment_like_count = #{likeCount},
+			comment_updated_date = sysdate
+		where
+			commnet_no = #{commentNo}
+	</update>
+	
+	<delete id="deleteMovieCustomerCommentByCommentNo" parameterType="int">
+		delete from movie_customer_comment
+		where comment_no = #{commentNo}
+	</delete>
+	
+</mapper>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

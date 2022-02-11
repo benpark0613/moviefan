@@ -30,6 +30,7 @@
 			notice_title = #{title}, 
 			notice_content = #{content},
 			notice_updated_date = sysdate,
+			notice_view_count = #{viewCount},
 			notice_deleted = #{isDeleted},
 			category_no = #{categoryNo}
 		where
