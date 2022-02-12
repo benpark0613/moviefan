@@ -43,8 +43,12 @@ public class CinemaController {
 	}
 	
 	@GetMapping("/timetable")
+<<<<<<< HEAD
+	public String timetable(int cinemaNo,Date showDate, Model model) {
+=======
 	public String timetable(int cinemaNo, Model model) {
 		List<MovieTimeTableDto> movieTimeTableDtos = cinemaService.getMovieTimeTableByCinemaNo(cinemaNo);
+>>>>>>> parent of cd70d7e (메인페이지 극장-날짜별로 상영시간표 나오게 구현중, datepicker css파일 분리예정)
 		Cinema cinemaName = cinemaService.getCinemaNameByNo(cinemaNo);
 		
 		List<Dto> result = new ArrayList<>();
