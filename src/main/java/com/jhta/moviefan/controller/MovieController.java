@@ -138,7 +138,6 @@ public class MovieController {
 		MovieDetailDto movieDetail = movieService.getMovieDetail(no);
 		
 		int totalRecords = commentService.getCommentTotalRowByMovieNo(no);
-		
 		Pagination pagination = new Pagination(page, totalRecords, 5);
 		criteria.setBeginIndex(pagination.getBegin());
 		criteria.setEndIndex(pagination.getEnd());
