@@ -97,7 +97,7 @@
 			  		<c:choose>
 			  			<c:when test="${empty param }">
 							<tr>
-								<td class="text-center" colspan="7">영화관별 상영일정 목록을 조회할 수 있습니다.<br>먼저 검색옵션을 선택하세요.</td>
+								<td class="text-center" colspan="7">지역별, 영화관별 상영일정을 조회할 수 있습니다.<br>먼저 검색옵션을 선택하세요.</td>
 							</tr>
 						</c:when>
 						<c:when test="${empty timetables }">

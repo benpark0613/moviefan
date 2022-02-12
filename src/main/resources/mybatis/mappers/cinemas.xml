@@ -159,44 +159,8 @@
 		and
 			b.cinema_no = #{value}
 		order by
-			d.hall_no asc, d.show_date asc, d.show_start_time asc
+			d.hall_no asc, d.show_start_time asc
 	</select>
-	
-	<!-- 상영날짜별 상영시간표 -->
-	<select id="getMovieTimeTableByShowDate" parameterType="date" resultType="com.jhta.moviefan.dto.MovieTimeTableDto">
-		select
-		    a.city_no 											as cityNo,
-		    a.city_name 										as cityName,
-		    b.cinema_no											as cinemaNo,
-		    b.cinema_name 										as cinemaName,
-		    d.show_no                                    		as showNo,
-		    d.hall_no											as hallNo,
-		    c.hall_name 										as hallName,
-		    e.movie_no											as movieNo,
-		    e.movie_title 										as title,
-		    e.movie_runtime 									as runtime,
-		    e.movie_open_date 									as openDate,
-		    d.show_date	 										as showDate,
-		    d.show_start_time 									as startTime,
-		    d.show_end_time						 				as endTime
-		from
-		    city a, cinema b, cinema_hall c, show d, movie e
-		where
-		    a.city_no = b.city_no
-		and
-		    b.cinema_no = c.cinema_no
-		and
-		    c.hall_no = d.hall_no
-		and
-		    d.movie_no = e.movie_no
-		and
-			b.cinema_no = 56
-        and
-           d.show_date = to_char('#{showDate}')
-		order by
-			d.hall_no asc, d.show_date asc, d.show_start_time asc
-	</select>
-	
 
 	<!-- 페이징처리용 영화관별 상영시간표 갯수 -->
 	<select id="getTotalRowsTimetable" parameterType="com.jhta.moviefan.form.ScheduleCriteria" resultType="int">
