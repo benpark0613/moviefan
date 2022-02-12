@@ -39,7 +39,7 @@ public class CinemaController {
 	}
 	
 	@GetMapping("/timetable")
-	public String timetable(int cinemaNo, Date showDate, Model model) {
+	public String timetable(int cinemaNo,Date showDate, Model model) {
 		Cinema cinemaName = cinemaService.getCinemaNameByNo(cinemaNo);
 		List<MovieTimeTableDto> movieTimeTableDtos = cinemaService.getMovieTimeTableByShowDate(showDate);
 		
