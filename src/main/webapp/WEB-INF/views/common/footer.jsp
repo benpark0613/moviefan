@@ -19,7 +19,7 @@
 					<li class="nav-item mb-2"><a href="/cinema/main" class="nav-link p-0 text-muted">Cinema&emsp;</a></li>
 					<li class="nav-item mb-2"><a href="/ticket/movie" class="nav-link p-0 text-muted">Booking&emsp;</a></li>
 					<li class="nav-item mb-2"><a href="/community/commentScore" class="nav-link p-0 text-muted">Talk&emsp;</a></li>
-					<li class="nav-item mb-2"><a href="/member/myaccount" class="nav-link p-0 text-muted">My account</a></li>
+					<li class="nav-item mb-2"><a href="/member/myaccount" class="nav-link p-0 text-muted">MyAccount</a></li>
 				</ul>
 			</div>
 		</div>

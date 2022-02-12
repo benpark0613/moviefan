@@ -88,7 +88,7 @@ public class CustomerController {
 			throw new LoginErrorException("아이디를 확인해주세요.");
 		}
 		if (!bCryptPasswordEncoder.matches(password, customer.getPassword())) {
-			throw new RestLoginErrorException("비밀번호가 일치하지 않습니다.");	
+			throw new LoginErrorException("비밀번호가 일치하지 않습니다.");	
 		}
 		
 		return "member/myinfo/modifyform";
@@ -106,7 +106,7 @@ public class CustomerController {
 		}
 		
 		if (!bCryptPasswordEncoder.matches(password, customer.getPassword())) {
-			throw new RestLoginErrorException("비밀번호가 일치하지 않습니다.");	
+			throw new LoginErrorException("비밀번호가 일치하지 않습니다.");	
 		}
 		
 		return "/member/myinfo/checkwithdrawal";
