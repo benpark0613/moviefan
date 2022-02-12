@@ -36,7 +36,7 @@
 			<span><a id="recent">최신순</a> <a id="recommend">공감순</a></span>
 			<form id="form-sort" action="comment" method="get">
 				<input type="hidden" name="page" value="" />
-				<input type="hidden" name="sort" value="" />
+				<input id="sort" type="hidden" name="sort" value="" />
 				<input type="hidden" name="no" value="${movieDetail.no }" />
 			</form>
 		</div>
@@ -54,6 +54,7 @@
 					 		<br>
 					 		<strong>${movieDetail.title }</strong> 재미있게 보셨나요? 영화의 어떤 점이 좋았는지 이야기해주세요.
 					 		<input id="movieNo" type="hidden" value="${movieDetail.no }">
+					 		<input id="movieTitle" type="hidden" value="${movieDetail.title }">
 					 		<br><br>
 						</span>
 					</div>
@@ -87,7 +88,7 @@
 							<input type="hidden" value="${comment.commentNo }">
 							<br>
 							<span id="like${status.index }" style="font-size: 13pt;"><strong>${comment.likeCount }</strong></span>
-							<span><fmt:formatDate value="${comment.creDate }" pattern="YYYY.MM.DD"/></span>
+							<span><fmt:formatDate value="${comment.creDate }" pattern="yyyy.MM.dd"/></span>
 						</div>
 					</div>
 				</div>
@@ -138,7 +139,12 @@ $(function(){
 	$(".like").click(function(){
 		event.preventDefault();
 		var commentNo = $(this).next().val();
-		var movieNo = $("#movieNo").val();
+		var movieNo = $(this).next().next().val();
+		var page = "1";
+		var sort = ""
+		var movieTitle = $("#movieTitle").val();
+		
+		
 		
 		$.ajax({
 			type : "post",
@@ -146,12 +152,16 @@ $(function(){
 			dataType : "json",
 			data : {
 				commentNo : commentNo,
-				movieNo : movieNo
+				page : page,
+				sort : sort,
+				movieTitle : movieTitle
 			},
 			success : function(response){
+				
 				for(var i=0; i<response.item.length;i++){
 					$("#like"+[i]).text(response.item[i].likeCount);
 				}
+				
 				alert("추천이 완료되었습니다.");
 			},
 			error : function(response){

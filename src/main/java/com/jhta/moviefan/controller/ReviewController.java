@@ -57,10 +57,13 @@ public class ReviewController {
 	}
 	
 	@GetMapping("/commentForm") 
-	public String commentForm(Model model) { 
+	public String commentForm(@RequestParam(name = "title", required = false, defaultValue = "") String title, Model model) { 
 		
 		List<Movie> movieList = movieService.getAllMovies();
 		
+		if(title != null) {
+			model.addAttribute("title", title);
+		}
 		model.addAttribute("movieList", movieList);
 		
 		
@@ -86,7 +89,7 @@ public class ReviewController {
 		
 		
 		
-		return "community/commentScore";
+		return "redirect:commentScore";
 	}
 	
 }

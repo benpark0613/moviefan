@@ -51,7 +51,7 @@
 			COMMENT_CREATED_DATE desc
 	</select>
 	
-	<select id="getCommentPages" parameterType="com.jhta.moviefan.form.CriteriaMovieComment" resultType="com.jhta.moviefan.vo.Comment">
+	<select id="getCommentPages" parameterType="com.jhta.moviefan.form.CriteriaMovieComment" resultType="com.jhta.moviefan.dto.CommentDto">
 		select 	
 				CO.COMMENT_NO			as commentNo, 
 				CO.CUSTOMER_NO			as customerNo, 
@@ -72,7 +72,7 @@
 		and rn between #{beginIndex} and #{endIndex}
 	</select>
 	
-	<select id="getAllCommentByIndex" parameterType="com.jhta.moviefan.form.Criteria" resultType="com.jhta.moviefan.vo.Comment">
+	<select id="getAllCommentByIndex" parameterType="com.jhta.moviefan.form.Criteria" resultType="com.jhta.moviefan.dto.CommentDto">
 		select 	
 				CO.MOVIE_NO				as movieNo, 
 				M.MOVIE_TITLE			as movieTitle, 
@@ -93,9 +93,10 @@
 			CO.CUSTOMER_NO = CU.CUSTOMER_NO
 		and	CO.MOVIE_NO = M.MOVIE_NO 
 		AND	rn between #{beginIndex} and #{endIndex}
+		order by CO.COMMENT_CREATED_DATE desc
 	</select>
 	
-	<select id="searchComment" parameterType="com.jhta.moviefan.form.CriteriaMovieComment" resultType="com.jhta.moviefan.vo.Comment">
+	<select id="searchComment" parameterType="com.jhta.moviefan.form.CriteriaMovieComment" resultType="com.jhta.moviefan.dto.CommentDto">
 		select 	
 				CO.MOVIE_NO				as movieNo, 
 				M.MOVIE_TITLE			as movieTitle, 
@@ -110,18 +111,7 @@
 				CU.CUSTOMER_ID 			as customerId
 		from(
 			 select C.*, row_number() over (
-			 order by 
-				 	<choose>
-				 		<when test="sort == 'recent'">
-				 			C.COMMENT_CREATED_DATE desc
-				 		</when>
-				 		<when test="sort == 'recommend'">
-				 			C.COMMENT_LIKE_COUNT desc
-				 		</when>
-				 		<otherwise>
-				 			C.COMMENT_CREATED_DATE desc
-				 		</otherwise> 
-				 	</choose>
+			 order by C.COMMENT_CREATED_DATE desc
 			 ) rn
 			 from MOVIE_CUSTOMER_COMMENT C, MOVIE M, CUSTOMER CU
 			 where C.MOVIE_NO = M.MOVIE_NO
@@ -140,7 +130,19 @@
 		where
 			CO.CUSTOMER_NO = CU.CUSTOMER_NO
 		and	CO.MOVIE_NO = M.MOVIE_NO 
-		AND	rn between #{beginIndex} and #{endIndex}	
+		AND	rn between #{beginIndex} and #{endIndex}
+		order by 
+		<choose>
+	 		<when test="sort == 'recent'">
+	 			Co.COMMENT_CREATED_DATE desc
+	 		</when>
+	 		<when test="sort == 'recommend'">
+	 			Co.COMMENT_LIKE_COUNT desc
+	 		</when>
+	 		<otherwise>
+	 			Co.COMMENT_CREATED_DATE desc
+	 		</otherwise> 
+	 	</choose>
 	</select>
 	
 	<select id="getCommentTotalRow" parameterType="com.jhta.moviefan.form.CriteriaMovieComment" resultType="int">
@@ -166,12 +168,19 @@
 		where movie_no = #{value}
 	</select>
 	
+	<select id="getAllLikedCommentByCustomerNo" parameterType="int" resultType="com.jhta.moviefan.vo.CommentLikedCustomer">
+		select COMMENT_NO	as commentNo, 
+			   CUSTOMER_NO	as customerNo
+		from	COMMENT_LIKED_USER
+		where	CUSTOMER_NO = #{value}
+	</select>
+	
 	<update id="updateCommentLike" parameterType="int">
 		update MOVIE_CUSTOMER_COMMENT
 		set
-			COMMENT_LIKE_COUNT = COMMENT_LIKE_COUNT + 1
+			COMMENT_LIKE_COUNT = COMMENT_LIKE_COUNT + #{count}
 		where
-			COMMENT_NO = #{value}
+			COMMENT_NO = #{commentNo}
 	</update>
 	
 	<insert id="updateCommentLikeCustomer" parameterType="com.jhta.moviefan.vo.CommentLikedCustomer">
@@ -194,5 +203,11 @@
 		values
 		(#{commentNo}, #{customerNo})
 	</insert>
+	
+	<delete id="deleteCommentLikedCustomer" parameterType="com.jhta.moviefan.vo.CommentLikedCustomer">
+		delete from COMMENT_LIKED_USER
+		where COMMENT_NO = #{commentNo}
+		and CUSTOMER_NO = #{customerNo}
+	</delete>
 	
 </mapper>

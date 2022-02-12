@@ -3,6 +3,7 @@ package com.jhta.moviefan.dao;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import com.jhta.moviefan.dto.CommentDto;
 import com.jhta.moviefan.form.CommentInsertForm;
@@ -19,12 +20,15 @@ public interface CommentDao {
 	List<CommentDto> getAllCommentByIndex(Criteria criteria);
 	List<CommentDto> searchComment(CriteriaMovieComment criteria);
 	List<CommentDto> getAllComments();
+	List<CommentLikedCustomer> getAllLikedCommentByCustomerNo(int customerNo);
 	int getCommentTotalRow(CriteriaMovieComment criteria);
 	int getCommentTotalRowByMovieNo(int movieNo);
-	void updateCommentLike(int commentNo);
+	void updateCommentLike(@Param("commentNo") int commentNo, @Param("count") int count);
 	void updateCommentLikeCustomer(CommentLikedCustomer commentLikedCustomer);
 	void insertComment(CommentInsertForm form);
 	//댓글 추천인 저장
 	void insertCommentLikedCustomer(CommentLikedCustomer commentLikedCustomer);
+	//댓글 추천인 삭제
+	void deleteCommentLikedCustomer(CommentLikedCustomer commentLikedCustomer);
 	
 }

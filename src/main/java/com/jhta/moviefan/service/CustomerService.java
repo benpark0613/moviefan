@@ -203,9 +203,7 @@ public class CustomerService {
 		return movies;
 	}
 	public int countCustomerMovieWishListByMovieNo(int movieNo) {
-		int countWishList = customerDao.countCustomerMovieWishListByMovieNo(movieNo);
-		
-		return countWishList;
+		return customerDao.countCustomerMovieWishListByMovieNo(movieNo);
 	}
 	
 	public void insertCustomerMovieWishListByMovieNo(CustomerMovieWishList wishList) {
@@ -264,7 +262,6 @@ public class CustomerService {
 	
 	public String getMyWishList(int customerNo, int movieNo) {
 		List<CustomerMovieWishList> wishList = customerDao.getAllCustomerMovieWishListByCustomerNo(customerNo);
-		
 		String value = "";
 		for(CustomerMovieWishList wish : wishList) {
 			if(wish.getMovieNo() == movieNo) {

@@ -83,7 +83,7 @@
 						</span>
 					</div>
 					<div class="col-2">
-						<i class="fas fa-pen fa-lg"></i><span> 관람평 쓰기</span>
+						<a href="/community/commentForm?title=${movieDetail.title }"><i class="fas fa-pen fa-lg"></i><span> 관람평 쓰기</span></a>
 					</div>
 				</div>
 			</div>
@@ -111,6 +111,7 @@
 							<i class="far fa-thumbs-up fa-lg"></i>
 							<br>
 							<span>${comment.likeCount }</span>
+							<span><fmt:formatDate value="${comment.creDate }" pattern="yyyy.MM.dd"/></span>
 						</div>
 					</div>
 				</div>

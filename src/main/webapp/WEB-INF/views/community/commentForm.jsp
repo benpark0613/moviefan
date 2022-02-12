@@ -31,7 +31,7 @@
 						<select id="titleSelect" class="form-select" name="movieNo" aria-label="Default select example">
 							<option selected disabled="disabled">영화를 선택하세요</option>
 							<c:forEach var="movies" items="${movieList }">
-								<option value="${movies.no }">${movies.title }</option>
+								<option value="${movies.no }" ${title eq movies.title ? 'selected' : '' }>${movies.title }</option>
 							</c:forEach>
 						</select>
 				  	</div>

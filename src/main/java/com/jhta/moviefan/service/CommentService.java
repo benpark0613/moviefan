@@ -2,6 +2,7 @@ package com.jhta.moviefan.service;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -39,8 +40,8 @@ public class CommentService {
 		return commentDao.searchComment(criteria);
 	}
 	
-	public void updateCommentLike(int commentNo) {
-		commentDao.updateCommentLike(commentNo);
+	public void updateCommentLike(@Param("commentNo") int commentNo, @Param("count") int count) {
+		commentDao.updateCommentLike(commentNo, count);
 	}
 	
 	public int getCommentTotalRow(CriteriaMovieComment criteria) {
@@ -61,5 +62,13 @@ public class CommentService {
 	
 	public void insertCommentLikedCustomer(CommentLikedCustomer commentLikedCustomer) {
 		commentDao.insertCommentLikedCustomer(commentLikedCustomer);
+	}
+	
+	public List<CommentLikedCustomer> getAllLikedCommentByCustomerNo(int customerNo){
+		return commentDao.getAllLikedCommentByCustomerNo(customerNo);
+	}
+	
+	public void deleteCommentLikedCustomer(CommentLikedCustomer commentLikedCustomer) {
+		commentDao.deleteCommentLikedCustomer(commentLikedCustomer);
 	}
 }

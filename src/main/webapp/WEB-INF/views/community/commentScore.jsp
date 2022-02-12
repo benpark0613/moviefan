@@ -22,6 +22,20 @@
 	 p, span{
 	 font-family: 'Noto Sans KR', sans-serif; 
 	 }
+	 a:link {
+	color: #444;
+	text-decoration: none;
+	}
+	
+	a:visited {
+		color: #444;
+		text-decoration: none;
+	}
+	
+	a:hover {
+		color: #444;
+		text-decoration: none;
+	}
 </style>
 <body>
 <%@ include file="/WEB-INF/views/common/header.jsp"%>
@@ -68,12 +82,16 @@
 		<c:forEach var="comment" items="${comment }" varStatus="status">
 			<div class="row mb-3">
 				<div class="row mb-3">
-					<div class="col-2">
-						<img alt="" width="150" height="250" src="/resources/images/movie/moviePoster/${comment.movieNo }.jpg">
+					<div class="col-2 align-self-center">
+						<a href="/movie/detail?no=${comment.movieNo }"><img alt="" width="150" height="250" src="/resources/images/movie/moviePoster/${comment.movieNo }.jpg"></a>
 					</div>
-					<div class="col-10 align-self-center">
+					<div class="col-1 align-self-center">
+						<img alt="" src="/resources/images/movie/bg-profile.png">
+						<p>&nbsp;&nbsp;${comment.customerId }</p>
+					</div>
+					<div class="col-8 align-self-center">
 						<div class="row">
-							<span style="font-size: 15pt; "><strong>${comment.movieTitle }</strong></span>
+							<a href="/movie/detail?no=${comment.movieNo }"><span style="font-size: 15pt; "><strong>${comment.movieTitle }</strong></span></a>
 						</div>		
 						<div class="row rounded bg-light">
 							<div class="col-1 align-self-center">
@@ -88,9 +106,10 @@
 							<div class="col-1 align-self-center">
 								<a href="" class="like"><i class="far fa-thumbs-up fa-lg"></i></a>
 								<input type="hidden" value="${comment.commentNo }">
+								<input type="hidden" value="${comment.movieNo }">
 								<br>
 								<span id="like${status.index }" style="font-size: 13pt;"><strong>${comment.likeCount }</strong></span>
-								<span><fmt:formatDate value="${comment.creDate }" pattern="YYYY.MM.DD"/></span>
+								<span><fmt:formatDate value="${comment.creDate }" pattern="yyyy.MM.dd"/></span>
 							</div>
 						</div>
 					</div>
@@ -154,6 +173,43 @@
 		$(":input[name=sort]").val('recommend');
 		$("#form-search-comment").trigger("submit");
 	})
+	
+	$(".like").click(function(){
+		event.preventDefault();
+		var commentNo = $(this).next().val();
+		var movieNo = $(this).next().next().val();
+		var page = $(":input[name=page]").val();
+		var sort = $(":input[name=sort]").val();
+		
+		var opt = $("select[name=opt]").val();
+		var value = $.trim($(":input[name=value]").val());
+		
+		$.ajax({
+			type : "post",
+			url : "/rest/review/updatelikecount",
+			dataType : "json",
+			data : {
+				commentNo : commentNo,
+				movieNo : movieNo,
+				page : page,
+				sort : sort,
+				opt : opt,
+				value : value
+			},
+			success : function(response){
+				
+				for(var i=0; i<response.item.length;i++){
+					$("#like"+[i]).text(response.item[i].likeCount);
+				}
+				alert("추천이 완료되었습니다.");
+			},
+			error : function(response){
+				alert(response.error)
+			}
+		})
+	})
+	
+	
 </script>
 </body>
 <%@ include file="/WEB-INF/views/common/footer.jsp"%>
