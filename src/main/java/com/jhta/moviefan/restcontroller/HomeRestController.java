@@ -72,10 +72,8 @@ public class HomeRestController {
 	public ResponseDto<String> update(@LoginedCustomer Customer customer, @RequestBody CustomerRegisterForm form) {
 		ResponseDto<String> response = new ResponseDto<String>();
 		Customer newInfo = new Customer();
-		BeanUtils.copyProperties(form, newInfo);
 		
-		LOGGER.info("customer의 값: " + customer);
-		LOGGER.info("newInfo의 값: " + newInfo);
+		BeanUtils.copyProperties(form, newInfo);
 		
 		customerService.updateCustomerInfo(customer, newInfo);
 		response.setStatus("OK");

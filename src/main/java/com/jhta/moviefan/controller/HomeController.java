@@ -128,10 +128,8 @@ public class HomeController {
 		Customer customer = new Customer();
 		BeanUtils.copyProperties(form, customer);
 		
-		System.out.println("암호화 전 : " + customer.getPassword());
 		customer.setPassword(bCryptPasswordEncoder.encode(customer.getPassword()));
 		customer.setLoginType("NORMAL");
-		System.out.println("암호화 후 " + customer.getPassword());
 		
 		customerService.registerCustomer(customer);
 		redirectAttributes.addFlashAttribute("customer", customer);

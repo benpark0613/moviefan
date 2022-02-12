@@ -163,10 +163,13 @@ public class CustomerService {
 	}
 	
 	// 회원정보 업데이트
-	public void updateCustomerInfo(@LoginedCustomer Customer customer, Customer newInfo) {
-		LOGGER.info("customer의 값: " + customer);
-		LOGGER.info("newInfo의 값: " + newInfo);
+	public void updateCustomerInfo(Customer customer, Customer newInfo) {
 		checkCustomer(customer, newInfo);
+		
+		if (!bCryptPasswordEncoder.matches(customer.getPassword(), newInfo.getPassword())) {
+			newInfo.setPassword(bCryptPasswordEncoder.encode(newInfo.getPassword()));
+		}
+		newInfo.setNo(customer.getNo());
 		customerDao.updateCustomer(newInfo);
 	}
 	// 회원정보 삭제

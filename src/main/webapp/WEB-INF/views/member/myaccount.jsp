@@ -7,6 +7,7 @@
 	<meta charset="utf-8">
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css" rel="stylesheet">
+	<link href="/resources/css/style.css" type="text/css" rel="stylesheet" >
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 	<script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
@@ -278,8 +279,8 @@
 				<li><a class="dropdown-item-text text-decoration-none" href="" id="info-delete-item">회원 탈퇴</a></li>
 			</ul>
 		</li>
-		<li class="nav-item">
-			<a class="nav-link link-secondary text-dark text-decoration-none" href="" id="link-notice">공지/뉴스</a>
+		<li class="nav-item dropdown" aria-expanded="false">
+			<a class="nav-link text-dark text-decoration-none btn" href="" id="link-notice"><span style="color: #6c757d;">공지/뉴스</span></a>
 		</li>
 	</ul>
 	
@@ -420,7 +421,6 @@
 								</div>
 							</div>
 						</div>
-<!-- 						<input type="hidden" name="end-page" value="1" id="comment-end"> -->
 					</div>
 				</div>
 			</div>
@@ -541,7 +541,7 @@
 					    	</div>
 					  	</div>
 					  	<div class="row">
-							<button class="btn btn-danger w-100" id="check-password" type="submit">비밀번호 확인</button>
+							<button class="btn btn-danger w-100" id="btn-check-password" type="submit">비밀번호 확인</button>
 						</div>
 					</form>
 				</div>
@@ -1110,7 +1110,7 @@ $(function() {
 										</div>
 										<div class="col align-self-center">
 									 	<div class="row ps-3">
-										<table class="table table-borderless">
+										<table class="table table-borderless" data-commentNo="`+dto.commentNo+`">
 										<thead>
 										<tr>
 										<th>작성자</th>
@@ -1127,7 +1127,10 @@ $(function() {
 										</thead>
 										<tbody>
 										<tr>
-										<td colspan="5">`+dto.content+`</td>
+										<td colspan="5">`+dto.content+
+											`<a href="update" class="link-dark ms-1"><i class="bi bi-pencil"></i></a>
+											<a href="delete" class="link-dark ms-1"><i class="bi bi-x-square"></i></a>
+										</td>
 										</tr>
 										</tbody>
 										</table>
@@ -1143,10 +1146,25 @@ $(function() {
 									row += `<input type="hidden" name="end-page" value="`+pageForScroll+`" id="comment-end">`
 								}
 							}
-										
 							$divCommentList.append(row);
 						})
 						getMorePagesByScrolling(pagination);
+						
+						$('#div-commentlist a').click(function(event) {
+							// TODO 버튼 검색 작업중
+							event.preventDefault();
+// 							$(this).parents($('form')).children($(":selected")).val();
+// 							$(this).parents($('form')).children($(":text")).val();
+							console.log($(this).parents($('form')));
+							console.log($(this).parents($('table').children($(':selected'))));
+							console.log($(this).parents($('table').children($(':text'))));
+						})
+						
+	// 					$('a[href=update]').click(function(event) {
+	// 						event.preventDefault();
+	// 						console.log($(this).parents($('table')));
+	// 						updateMyComment()
+// 						});
 					}
 				},
 				error: function(response) {
@@ -1165,6 +1183,12 @@ $(function() {
 			    }
 			});
 		}
+		
+		
+		
+// 		function updateMyComment() {
+// 			let 
+// 		}
 		
 	});
 	$('#my-reply-item').click(function(event) {

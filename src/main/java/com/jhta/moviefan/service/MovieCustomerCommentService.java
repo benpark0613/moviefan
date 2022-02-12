@@ -13,6 +13,7 @@ import com.jhta.moviefan.dao.MovieCustomerCommentDao;
 import com.jhta.moviefan.dto.MovieDetailDto;
 import com.jhta.moviefan.dto.MyAccountCustomerCommentDto;
 import com.jhta.moviefan.form.Criteria;
+import com.jhta.moviefan.vo.Comment;
 import com.jhta.moviefan.vo.Customer;
 import com.jhta.moviefan.vo.MovieActor;
 import com.jhta.moviefan.vo.MovieCustomerComment;
@@ -62,6 +63,10 @@ public class MovieCustomerCommentService {
 			dtos.add(dto);
 		}
 		return dtos; 
+	}
+	
+	public void updateMyComment(MovieCustomerComment comment) {
+		movieCustomerCommentDao.updateMovieCustomerComment(comment);
 	}
 }
 

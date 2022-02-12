@@ -179,8 +179,8 @@ $(function() {
 					alert(response.error);
 					return;
 				} else {
-					window.location.href = "/home";	
 					alert("회원 정보 수정이 완료되었습니다.");
+					window.location.replace("/logout");	
 				}
 			}
 		})

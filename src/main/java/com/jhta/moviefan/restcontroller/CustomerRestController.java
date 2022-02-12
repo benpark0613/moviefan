@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -32,6 +33,7 @@ import com.jhta.moviefan.vo.Customer;
 import com.jhta.moviefan.vo.CustomerCinemaFavorites;
 import com.jhta.moviefan.vo.CustomerMovieWishList;
 import com.jhta.moviefan.vo.Movie;
+import com.jhta.moviefan.vo.MovieCustomerComment;
 import com.jhta.moviefan.vo.MovieImage;
 
 @RestController
@@ -196,7 +198,6 @@ public class CustomerRestController {
 	@GetMapping("/mycomments")
 	public RestMyCommentDto getMyComments(@LoginedCustomer Customer customer, Criteria criteria,
 			@RequestParam(name = "page", required = false, defaultValue = "1") String currentPage) {
-		System.out.println("================= getMyComments의 시작 =================");
 		List<MyAccountCustomerCommentDto> dtos = movieCustomerCommentService.getAllMyComments(customer, criteria);
 		
 		int totalRecords = dtos.size();
@@ -230,7 +231,11 @@ public class CustomerRestController {
 		
 		return response;
 	}
-	
+//	@PostMapping("/updatecomment")
+//	public ResponseDto<?> updateMyComment(@LoginedCustomer Customer customer, MovieCustomerComment comment) {
+//		
+//		
+//	}
 }
 
 
