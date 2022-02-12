@@ -3,11 +3,7 @@ package com.jhta.moviefan.controller;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Map;
-import java.util.Objects;
-import java.util.TreeMap;
 
-import org.apache.ibatis.annotations.Param;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,10 +39,11 @@ public class CinemaController {
 	}
 	
 	@GetMapping("/timetable")
-	public String timetable(int cinemaNo, Model model) {
-		List<MovieTimeTableDto> movieTimeTableDtos = cinemaService.getMovieTimeTableByCinemaNo(cinemaNo);
+	public String timetable(int cinemaNo, Date showDate, Model model) {
 		Cinema cinemaName = cinemaService.getCinemaNameByNo(cinemaNo);
+		List<MovieTimeTableDto> movieTimeTableDtos = cinemaService.getMovieTimeTableByShowDate(showDate);
 		
+		//
 		List<Dto> result = new ArrayList<>();
 		for (MovieTimeTableDto item : movieTimeTableDtos) {
 			Dto dto = getDto(result, item.getMovieNo(), item.getShowDate());
@@ -68,22 +65,21 @@ public class CinemaController {
 			//dto2.setTotalSeats(item.getTotalSeats());
 			//dto2.setReservedSteats(item.getReservedSteats());
 			dto.getSchedules().add(dto2);
-			
 		}
 		
-		
-		
-		model.addAttribute("movieTimeTableDtos", result);
 		model.addAttribute("cinema", cinemaName);
+		model.addAttribute("movieTimeTableDtos", result);
 		
 		return "cinema/timetable";
 	}
-	
 	
 	@GetMapping("/location")
 	public String location() {
 		return "cinema/location";
 	}
+	
+	
+/////////////////////////////////////////////////////////////////////////////////////////////////////////
 	
 	private Dto getDto(List<Dto> dtos, int movieNo, Date showDate) {
 		for (Dto dto : dtos) {
@@ -99,11 +95,12 @@ public class CinemaController {
 		private int movieNo;
 		private String title;
 		private Date openDate;
-		private Date  showDate;
+		private Date showDate;
 		private int runtime;
 		private int hallNo;
 		private String hallName;
 		private List<Dto2> schedules = new ArrayList<>();
+		
 		public Date getShowDate() {
 			return showDate;
 		}
@@ -152,7 +149,6 @@ public class CinemaController {
 		public void setHallName(String hallName) {
 			this.hallName = hallName;
 		}
-		
 	}
 	
 	
@@ -161,6 +157,7 @@ public class CinemaController {
 		private Date endTime;
 		private int totalSeats;
 		private int reservedSteats;
+		
 		public Date getStartTime() {
 			return startTime;
 		}
@@ -185,6 +182,6 @@ public class CinemaController {
 		public void setReservedSteats(int reservedSteats) {
 			this.reservedSteats = reservedSteats;
 		}
-		
 	}
+	
 }

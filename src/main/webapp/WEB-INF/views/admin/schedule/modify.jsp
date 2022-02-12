@@ -39,14 +39,14 @@
 		<div class="col">
 			<h1>상영일정 수정</h1>
 			<div class="d-flex d-flex justify-content-between">
-				<div>
+				<div class="mt-1">
 					<h3>
 						${detailSchedule.cinemaName } &nbsp;|&nbsp; ${detailSchedule.hallName } &nbsp;|&nbsp;
 						<fmt:formatDate value="${detailSchedule.startTime}" pattern="HH:ss" /> ~ <fmt:formatDate value="${detailSchedule.endTime}" pattern="HH:ss" /> 상영
 					</h3>
 				</div>
 				<div>
-					<a type="button" class="btn btn-dark btn-sm" href="list?page=${param.page }&cityNo=${detailSchedule.cityNo }&cinemaNo=${detailSchedule.cinemaNo }">목록으로 돌아가기</a>
+					<a type="button" class="btn btn-dark" href="list?page=${param.page }&cityNo=${detailSchedule.cityNo }&cinemaNo=${detailSchedule.cinemaNo }">목록으로 돌아가기</a>
 				</div>
 			</div>
 		</div>
