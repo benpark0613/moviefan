@@ -18,7 +18,15 @@
 	<select id="getMovieCustomerCommentByCommentNo" parameterType="int" resultMap="CommentResultMap">
 		select *
 		from movie_customer_comment
-		where comment_no = #{commentNo};
+		where comment_no = #{commentNo}
+	</select>
+	
+	<select id="getMovieCustomerCommentByCustomerNo" parameterType="int" resultMap="CommentResultMap">
+		select rownum, x.*
+		from (select m.*
+      		  from movie_customer_comment m
+		      where m.customer_no = #{customerNo}
+		      order by m.comment_created_date) x
 	</select>
 	
 	<select id="getAllMovieCustomerComments" resultMap="CommentResultMap">

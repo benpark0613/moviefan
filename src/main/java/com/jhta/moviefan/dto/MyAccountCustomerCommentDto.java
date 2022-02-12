@@ -9,16 +9,17 @@ import com.jhta.moviefan.vo.MovieImage;
 public class MyAccountCustomerCommentDto {
 
 	// myaccount > 한줄평 조회할 때 사용
-	// customer, movie_customer_comment, comment_liked_user, MovieDetailDto(movie, movie_image, actor) 를 담는다.
+	// customer, movie_customer_comment, MovieDetailDto(movie, movie_image, actor) 를 담는다.
 	
 	// Customer
-	private int customerNo;
+	private int no;
 	private String name;
 	private String nickName;
 	private String isBanned;
 	
 	// MovieCustomerComment
 	private int commentNo;
+	private int movieNo;
 	private int customerRating;
 	private String content;
 	private Date createdDate;
@@ -26,20 +27,19 @@ public class MyAccountCustomerCommentDto {
 	private int likeCount;
 	private Date updatedDate;
 	
-	// MovieWithImagesDto
-	private int movieNo;
+	// MovieDetailDto
 	private String title;
 	private List<MovieImage> images;
 	private List<MovieActor> actors;
 	
 	public MyAccountCustomerCommentDto() {}
 
-	public int getCustomerNo() {
-		return customerNo;
+	public int getNo() {
+		return no;
 	}
 
-	public void setCustomerNo(int customerNo) {
-		this.customerNo = customerNo;
+	public void setNo(int no) {
+		this.no = no;
 	}
 
 	public String getName() {
@@ -72,6 +72,14 @@ public class MyAccountCustomerCommentDto {
 
 	public void setCommentNo(int commentNo) {
 		this.commentNo = commentNo;
+	}
+
+	public int getMovieNo() {
+		return movieNo;
+	}
+
+	public void setMovieNo(int movieNo) {
+		this.movieNo = movieNo;
 	}
 
 	public int getCustomerRating() {
@@ -122,14 +130,6 @@ public class MyAccountCustomerCommentDto {
 		this.updatedDate = updatedDate;
 	}
 
-	public int getMovieNo() {
-		return movieNo;
-	}
-
-	public void setMovieNo(int movieNo) {
-		this.movieNo = movieNo;
-	}
-
 	public String getTitle() {
 		return title;
 	}
@@ -156,12 +156,13 @@ public class MyAccountCustomerCommentDto {
 
 	@Override
 	public String toString() {
-		return "MyAccountCustomerCommentDto [customerNo=" + customerNo + ", name=" + name + ", nickName=" + nickName
-				+ ", isBanned=" + isBanned + ", commentNo=" + commentNo + ", customerRating=" + customerRating
+		return "MyAccountCustomerCommentDto [no=" + no + ", name=" + name + ", nickName=" + nickName + ", isBanned="
+				+ isBanned + ", commentNo=" + commentNo + ", movieNo=" + movieNo + ", customerRating=" + customerRating
 				+ ", content=" + content + ", createdDate=" + createdDate + ", reportCount=" + reportCount
-				+ ", likeCount=" + likeCount + ", updatedDate=" + updatedDate + ", movieNo=" + movieNo + ", title="
-				+ title + ", images=" + images + ", actors=" + actors + "]";
+				+ ", likeCount=" + likeCount + ", updatedDate=" + updatedDate + ", title=" + title + ", images="
+				+ images + ", actors=" + actors + "]";
 	}
 
+	
 	
 }

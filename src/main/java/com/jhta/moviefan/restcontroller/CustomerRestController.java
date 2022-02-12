@@ -14,16 +14,18 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.jhta.moviefan.annotation.LoginedCustomer;
 import com.jhta.moviefan.dto.CityWithCinemasDto;
+import com.jhta.moviefan.dto.MyAccountCustomerCommentDto;
 import com.jhta.moviefan.dto.NoticeDto;
 import com.jhta.moviefan.dto.ResponseDto;
 import com.jhta.moviefan.dto.RestMovieWishListDto;
+import com.jhta.moviefan.dto.RestMyCommentDto;
 import com.jhta.moviefan.dto.RestNoticeDto;
 import com.jhta.moviefan.form.Criteria;
 import com.jhta.moviefan.form.CriteriaMyAccount;
 import com.jhta.moviefan.form.CriteriaNotice;
 import com.jhta.moviefan.pagination.Pagination;
-import com.jhta.moviefan.service.CinemaService;
 import com.jhta.moviefan.service.CustomerService;
+import com.jhta.moviefan.service.MovieCustomerCommentService;
 import com.jhta.moviefan.service.MovieService;
 import com.jhta.moviefan.service.NoticeService;
 import com.jhta.moviefan.vo.Customer;
@@ -39,13 +41,13 @@ public class CustomerRestController {
 	static final Logger logger = LogManager.getLogger(CustomerRestController.class);
 	
 	@Autowired
-	CustomerService customerService;
+	private CustomerService customerService;
 	@Autowired
-	MovieService movieService;
+	private MovieService movieService;
 	@Autowired
-	CinemaService cinemaService;
+	private NoticeService noticeService;
 	@Autowired
-	NoticeService noticeService;
+	private MovieCustomerCommentService movieCustomerCommentService;
 	
 	// 자주가는 극장
 	@PostMapping("/deletemycinema") 
@@ -154,14 +156,10 @@ public class CustomerRestController {
 	public RestNoticeDto getNoticeList(@LoginedCustomer Customer customer, CriteriaNotice criteriaNotice,
 			@RequestParam(name = "page", required = false, defaultValue = "1") String page) {
 		
-		logger.info("criteriaNotice 값1:" + criteriaNotice);
 		int totalRecords = noticeService.getTotalRows(criteriaNotice);
-		logger.info("totalRecords 값:" + totalRecords);
 		Pagination pagination = new Pagination(page, totalRecords);
-		logger.info("criteriaNotice 값2:" + criteriaNotice);
 		criteriaNotice.setBeginIndex(pagination.getBegin());
 		criteriaNotice.setEndIndex(pagination.getEnd());
-		logger.info("criteriaNotice 값3:" + criteriaNotice);
 		
 		List<NoticeDto> noticeDtos = noticeService.getNoticeDtos(criteriaNotice);
 		
@@ -169,8 +167,6 @@ public class CustomerRestController {
 		restNoticeDto.setStatus("OK");
 		restNoticeDto.setNoticeDtos(noticeDtos);
 		restNoticeDto.setPagination(pagination);
-		
-		logger.info("restNoticeDto 값: " + restNoticeDto);
 		
 		return restNoticeDto;
 	}
@@ -198,12 +194,40 @@ public class CustomerRestController {
 	
 	// 한줄평
 	@GetMapping("/mycomments")
-	public ResponseDto<String> getMyComments(@LoginedCustomer Customer customer, Criteria criteria,
-			@RequestParam(name = "currentPage", required = false, defaultValue = "1") String currentPage) {
+	public RestMyCommentDto getMyComments(@LoginedCustomer Customer customer, Criteria criteria,
+			@RequestParam(name = "page", required = false, defaultValue = "1") String currentPage) {
+		System.out.println("================= getMyComments의 시작 =================");
+		List<MyAccountCustomerCommentDto> dtos = movieCustomerCommentService.getAllMyComments(customer, criteria);
+		
+		int totalRecords = dtos.size();
+		Pagination pagination = new Pagination(currentPage, totalRecords, 5);
+		criteria.setBeginIndex(pagination.getBegin());
+		criteria.setEndIndex(pagination.getEnd());
+		
+		List<MyAccountCustomerCommentDto> orderedDtos = new ArrayList<>();
+		for (int i = criteria.getBeginIndex() - 1; i <= criteria.getEndIndex() - 1; i++) {
+			logger.info("dtos.size()는?: " + dtos.size());
+			if (dtos.size() <= i) {
+				continue;
+			}
+			orderedDtos.add(dtos.get(i));
+		}
 		
 		
 		
-		ResponseDto<String> response = new ResponseDto<String>();
+//		ResponseDto<?> response = new ResponseDto<>();
+		
+		
+		RestMyCommentDto response = new RestMyCommentDto();
+		response.setStatus("OK");
+		response.setDtos(orderedDtos);
+		response.setPagination(pagination);
+		
+//		
+//		response.setStatus("OK");
+//		response.setItem(dtos);
+		
+		
 		return response;
 	}
 	
