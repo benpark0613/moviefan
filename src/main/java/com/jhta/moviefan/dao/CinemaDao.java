@@ -1,5 +1,6 @@
 package com.jhta.moviefan.dao;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -24,6 +25,7 @@ public interface CinemaDao {
 	List<CinemaDto> getAllCinemas();
 	List<MovieTimeTableDto> getAllMovieTimeTables();
 	List<MovieTimeTableDto> getMovieTimeTableByCinemaNo(int cinemaNo);
+	List<MovieTimeTableDto> getMovieTimeTableByShowDate(Date showDate);
 
 	// 성근
 	Cinema getCinemaByCinemaNo(int cinemaNo);
