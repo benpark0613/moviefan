@@ -373,9 +373,9 @@
 							<input type="hidden" name="current-page" value="1">
 							<div class="col-2">
 								<select class="form-select" name="opt">
-									<option value="" selected="selected" disabled="disabled">검색조건</option>
-									<option value="movie">영화</option>
-									<option value="actor">배우</option>
+									<option selected="selected" disabled="disabled">검색조건</option>
+									<option value="movieTitle">영화</option>
+									<option value="movieActor">배우</option>
 									<option value="content">한줄평 내용</option>
 								</select>
 							</div>
@@ -420,7 +420,7 @@
 								</div>
 							</div>
 						</div>
-						
+<!-- 						<input type="hidden" name="end-page" value="1" id="comment-end"> -->
 					</div>
 				</div>
 			</div>
@@ -1069,11 +1069,13 @@ $(function() {
 		$('#my-comment').removeClass("d-none")
 		$('#div-commentlist').empty();
 		
+		getMyComments();
+		
 		function getMyComments() {
-			let pagination
+			
 			let currentPage = $('#form-search-comment input[name=current-page]').val();
-			let searchOption = $("#form-search-notice select[name=opt]").val();
-			let searchValue = $.trim($("#form-search-notice :input[name=value]").val());
+			let searchOption = $("#form-search-comment select[name=opt]").val();
+			let searchValue = $.trim($("#form-search-comment :input[name=value]").val());
 			let $divCommentList = $('#div-commentlist');
 			
 			$.ajax({
@@ -1084,16 +1086,84 @@ $(function() {
 					opt: searchOption,
 					value: searchValue,
 				},
-// 				before: {
-					
-// 				},
+				beforeSend: function() {
+					let row =
+						`<div class="spinner-border text-danger my-5" role="status" id="div-spinner-comment">
+					 	<span class="visually-hidden">Loading...</span>
+						</div>`
+					$divCommentList.append(row);
+				},
 				success: function(response) {
+					$('#div-spinner-comment').remove();
+					let pagination = response.pagination;
+					let dtos = response.dtos;
 					
+					if (pagination.totalRecords > 0) {
+						$.each(dtos, function(i, dto) {
+							let row = `<div class="row mb-3">
+										<div class="col-2">
+										<div class="row">
+										<div class="card p-2">
+										<img class="img-fluid" src="/resources/images/movie/`+dto.images[0].filename+`">
+										</div>
+										</div>
+										</div>
+										<div class="col align-self-center">
+									 	<div class="row ps-3">
+										<table class="table table-borderless">
+										<thead>
+										<tr>
+										<th>작성자</th>
+										<td>`
+							if (!dto.nickName) {
+								row += dto.name
+							} else {
+								row += dto.nickName				
+							}
+								row += `</td>
+										<th>평점</th>
+										<td>`+dto.customerRating+`/5.0</td>
+										</tr>
+										</thead>
+										<tbody>
+										<tr>
+										<td colspan="5">`+dto.content+`</td>
+										</tr>
+										</tbody>
+										</table>
+										</div>
+										</div>
+										</div>`
+							if (dtos.length == i + 1) {
+								let pageForScroll = pagination.end/5 + 1;
+								if (pageForScroll == pagination.totalPages) {
+									row += `<input type="hidden" name="end-page" value="`+pageForScroll+`">` 
+								} else {
+									$('#comment-end').val(pageForScroll);
+									row += `<input type="hidden" name="end-page" value="`+pageForScroll+`" id="comment-end">`
+								}
+							}
+										
+							$divCommentList.append(row);
+						})
+						getMorePagesByScrolling(pagination);
+					}
 				},
 				error: function(response) {
 					alert(response.error);
 				}
 			})
+		}
+
+		function getMorePagesByScrolling(pagination) {
+			$(window).scroll(function() {
+				if ($(window).scrollTop() == $(document).height() - $(window).height() && $('#comment-end').length) {
+			    	let currentPage = $('#comment-end').val();
+			    	$('#form-search-comment input[name=current-page]').val(currentPage);
+			    	$('#comment-end').remove();
+			    	getMyComments();
+			    }
+			});
 		}
 		
 	});
