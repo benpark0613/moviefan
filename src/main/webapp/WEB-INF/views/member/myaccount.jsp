@@ -374,7 +374,7 @@
 							<input type="hidden" name="current-page" value="1">
 							<div class="col-2">
 								<select class="form-select" name="opt">
-									<option selected="selected" disabled="disabled">검색조건</option>
+									<option selected="selected" disabled="disabled" value="">검색조건</option>
 									<option value="movieTitle">영화</option>
 									<option value="movieActor">배우</option>
 									<option value="content">한줄평 내용</option>
@@ -1094,6 +1094,16 @@ $(function() {
 					$divCommentList.append(row);
 				},
 				success: function(response) {
+					if (response.status == "FAIL") {
+						alert(response.error);
+						
+						let row = `<div class="col-8 mt-5">
+									<a class="link-dark" href="/movie/list"><p class="fs-3">감상한 영화의 한줄평을 남겨주세요.</p></a>
+									</div>`
+									
+						$divCommentList.append(row);
+					}
+					
 					$('#div-spinner-comment').remove();
 					let pagination = response.pagination;
 					let dtos = response.dtos;
@@ -1139,7 +1149,7 @@ $(function() {
 										</div>`
 							if (dtos.length == i + 1) {
 								let pageForScroll = pagination.end/5 + 1;
-								if (pageForScroll == pagination.totalPages) {
+								if (pagination.totalPages == 1 || pageForScroll == pagination.totalPages) {
 									row += `<input type="hidden" name="end-page" value="`+pageForScroll+`">` 
 								} else {
 									$('#comment-end').val(pageForScroll);
@@ -1150,25 +1160,34 @@ $(function() {
 						})
 						getMorePagesByScrolling(pagination);
 						
-						$('#div-commentlist a').click(function(event) {
-							// TODO 버튼 검색 작업중
+						$('#form-search-comment button').click(function(event) {
 							event.preventDefault();
-// 							$(this).parents($('form')).children($(":selected")).val();
-// 							$(this).parents($('form')).children($(":text")).val();
-							console.log($(this).parents($('form')));
-							console.log($(this).parents($('table').children($(':selected'))));
-							console.log($(this).parents($('table').children($(':text'))));
+							
+							let $opt = $("#form-search-comment :selected");
+							let $value = $("#form-search-comment :input[name=value]");
+									
+							if (!$opt.val()) {
+								alert('검색조건을 선택해주세요.');
+								return;
+							}
+							if (!$value.val()) {
+								alert('검색어를 입력해주세요.');
+								return;
+							}
+							$('#div-commentlist').empty();
+							getMyComments();
 						})
 						
-	// 					$('a[href=update]').click(function(event) {
-	// 						event.preventDefault();
-	// 						console.log($(this).parents($('table')));
-	// 						updateMyComment()
+// 						$('a[href=update]').click(function(event) {
+// 							event.preventDefault();
+// 							console.log($(this).closest($('table')).attr('data-commentNo'));
+// 							let commentNo = $(this).closest($('table')).attr('data-commentNo');
+// 							updateMyComment()
 // 						});
 					}
 				},
 				error: function(response) {
-					alert(response.error);
+					alert(error);
 				}
 			})
 		}
@@ -1187,7 +1206,7 @@ $(function() {
 		
 		
 // 		function updateMyComment() {
-// 			let 
+			
 // 		}
 		
 	});

@@ -21,8 +21,7 @@ import com.jhta.moviefan.vo.Customer;
  *
  */
 public class LoginCheckInterceptor implements HandlerInterceptor {
-	
-	private static Logger logger = LogManager.getLogger(LoginCheckInterceptor.class);
+public static Logger logger = LogManager.getLogger(LoginCheckInterceptor.class);
 	
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)

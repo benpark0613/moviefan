@@ -44,23 +44,23 @@ public class MovieCustomerCommentService {
 			
 			if (!criteria.getOpt().isEmpty() && !criteria.getValue().isEmpty()) {
 				if ("movieTitle".equals(criteria.getOpt()) 
-						&& !criteria.getValue().toUpperCase().contains(dto.getTitle().trim().toUpperCase())) {
-					continue;
+						&& dto.getTitle().trim().toUpperCase().toUpperCase().contains(criteria.getValue())) {
+					dtos.add(dto);
 				}
 				if ("movieActor".equals(criteria.getOpt())) {
 					for (MovieActor actor : dto.getActors()) {
-						if (!criteria.getValue().toUpperCase().contains(actor.getActorName().trim().toUpperCase())) {
-							continue;
+						if (actor.getActorName().trim().toUpperCase().toUpperCase().contains(criteria.getValue())) {
+							dtos.add(dto);
 						}
 					}
 				}
 				if ("content".equals(criteria.getOpt())
-						&& !criteria.getValue().toUpperCase().contains(dto.getContent().trim().toUpperCase())) {
-					continue;
+						&& dto.getContent().trim().toUpperCase().contains(criteria.getValue().toUpperCase())) {
+					dtos.add(dto);
 				}
-				continue;
+			} else {
+				dtos.add(dto);
 			}
-			dtos.add(dto);
 		}
 		return dtos; 
 	}

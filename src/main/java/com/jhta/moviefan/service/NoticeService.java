@@ -57,8 +57,7 @@ public class NoticeService {
 	public List<Notice> searchNoticeList(CriteriaNotice criteria) {
 		logger.info("검색조건: " + criteria);
 		return noticeDao.searchNoticeList(criteria);
-	};
-	
+	}	
 	public List<NoticeCategory> getAllNoticeCategories() {
 		return noticeDao.getAllNoticeCategories();
 	}

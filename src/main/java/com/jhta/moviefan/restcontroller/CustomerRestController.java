@@ -21,6 +21,7 @@ import com.jhta.moviefan.dto.ResponseDto;
 import com.jhta.moviefan.dto.RestMovieWishListDto;
 import com.jhta.moviefan.dto.RestMyCommentDto;
 import com.jhta.moviefan.dto.RestNoticeDto;
+import com.jhta.moviefan.exception.MovieErrorException;
 import com.jhta.moviefan.form.Criteria;
 import com.jhta.moviefan.form.CriteriaMyAccount;
 import com.jhta.moviefan.form.CriteriaNotice;
@@ -201,6 +202,12 @@ public class CustomerRestController {
 		List<MyAccountCustomerCommentDto> dtos = movieCustomerCommentService.getAllMyComments(customer, criteria);
 		
 		int totalRecords = dtos.size();
+		
+		RestMyCommentDto response = new RestMyCommentDto();
+		if (totalRecords == 0) {
+			throw new MovieErrorException("검색결과가 없습니다.");
+		}
+		
 		Pagination pagination = new Pagination(currentPage, totalRecords, 5);
 		criteria.setBeginIndex(pagination.getBegin());
 		criteria.setEndIndex(pagination.getEnd());
@@ -214,19 +221,10 @@ public class CustomerRestController {
 			orderedDtos.add(dtos.get(i));
 		}
 		
-		
-		
-//		ResponseDto<?> response = new ResponseDto<>();
-		
-		
-		RestMyCommentDto response = new RestMyCommentDto();
 		response.setStatus("OK");
 		response.setDtos(orderedDtos);
 		response.setPagination(pagination);
 		
-//		
-//		response.setStatus("OK");
-//		response.setItem(dtos);
 		
 		
 		return response;
