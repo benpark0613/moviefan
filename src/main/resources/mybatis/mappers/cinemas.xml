@@ -163,7 +163,7 @@
 	</select>
 	
 	<!-- 상영날짜별 상영시간표 -->
-	<select id="getMovieTimeTableByShowDate" parameterType="date" resultType="com.jhta.moviefan.dto.MovieTimeTableDto">
+	<select id="getMovieTimeTableByShowDate" parameterType="com.jhta.moviefan.form.ScheduleCriteria" resultType="com.jhta.moviefan.dto.MovieTimeTableDto">
 		select
 		    a.city_no 											as cityNo,
 		    a.city_name 										as cityName,
@@ -190,9 +190,9 @@
 		and
 		    d.movie_no = e.movie_no
 		and
-			b.cinema_no = 56
+			b.cinema_no = #{cinemaNo}
         and
-           d.show_date = to_char('#{showDate}')
+           d.show_date = #{showDate}
 		order by
 			d.hall_no asc, d.show_date asc, d.show_start_time asc
 	</select>

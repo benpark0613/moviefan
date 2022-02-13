@@ -21,7 +21,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.jhta.moviefan.annotation.LoginedCustomer;
-import com.jhta.moviefan.dto.CinemaDto;
 import com.jhta.moviefan.dto.MovieTimeTableDto;
 import com.jhta.moviefan.form.CriteriaNotice;
 import com.jhta.moviefan.form.NoticeInsertForm;
