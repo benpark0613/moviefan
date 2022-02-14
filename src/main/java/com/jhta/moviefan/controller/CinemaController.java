@@ -57,14 +57,17 @@ public class CinemaController {
 				dto.setRuntime(item.getRuntime());
 				dto.setHallNo(item.getHallNo());
 				dto.setHallName(item.getHallName());
+				dto.setTotalSeats(item.getTotalSeats());
+				
 				result.add(dto);
 			}
 			
 			Dto2 dto2 = new Dto2();
 			dto2.setStartTime(item.getStartTime());
 			dto2.setEndTime(item.getEndTime());
-			//dto2.setTotalSeats(item.getTotalSeats());
+			dto2.setTotalSeats(item.getTotalSeats());
 			//dto2.setReservedSteats(item.getReservedSteats());
+			
 			dto.getSchedules().add(dto2);
 		}
 		
@@ -104,20 +107,9 @@ public class CinemaController {
 		private int runtime;
 		private int hallNo;
 		private String hallName;
+		private int totalSeats;
 		private List<Dto2> schedules = new ArrayList<>();
 		
-		public Date getShowDate() {
-			return showDate;
-		}
-		public void setShowDate(Date showDate) {
-			this.showDate = showDate;
-		}
-		public List<Dto2> getSchedules() {
-			return schedules;
-		}
-		public void setSchedules(List<Dto2> schedules) {
-			this.schedules = schedules;
-		}
 		public int getMovieNo() {
 			return movieNo;
 		}
@@ -136,6 +128,12 @@ public class CinemaController {
 		public void setOpenDate(Date openDate) {
 			this.openDate = openDate;
 		}
+		public Date getShowDate() {
+			return showDate;
+		}
+		public void setShowDate(Date showDate) {
+			this.showDate = showDate;
+		}
 		public int getRuntime() {
 			return runtime;
 		}
@@ -153,6 +151,18 @@ public class CinemaController {
 		}
 		public void setHallName(String hallName) {
 			this.hallName = hallName;
+		}
+		public int getTotalSeats() {
+			return totalSeats;
+		}
+		public void setTotalSeats(int totalSeats) {
+			this.totalSeats = totalSeats;
+		}
+		public List<Dto2> getSchedules() {
+			return schedules;
+		}
+		public void setSchedules(List<Dto2> schedules) {
+			this.schedules = schedules;
 		}
 	}
 	

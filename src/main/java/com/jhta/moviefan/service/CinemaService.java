@@ -105,6 +105,8 @@ public class CinemaService {
 		savedShow.setStartTime(new java.sql.Date(show.getStartTime().getTime()));
 		savedShow.setEndTime(new java.sql.Date(show.getEndTime().getTime()));
 		
+		logger.info("수정된 내용: " + savedShow);
+		
 		cinemaDao.updateSchedule(savedShow);
 	}
 	

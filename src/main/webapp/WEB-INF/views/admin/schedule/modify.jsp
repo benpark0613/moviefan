@@ -30,6 +30,9 @@
 /*  		body {  */
 /*  			font-family: NanumBarunGothic;  */
 /*  		} */
+		.card {
+			border: none;
+		}
 		.pagination a {
 		    color: black;
 		    border: none;
@@ -51,7 +54,8 @@
 				<div class="mt-1">
 					<h3>
 						${detailSchedule.cinemaName } &nbsp;|&nbsp; ${detailSchedule.hallName } &nbsp;|&nbsp;
-						<fmt:formatDate value="${detailSchedule.startTime}" pattern="HH:ss" /> ~ <fmt:formatDate value="${detailSchedule.endTime}" pattern="HH:ss" /> 상영
+						<fmt:formatDate value="${detailSchedule.showDate }" pattern="yyyy-MM-dd" /> &nbsp;|&nbsp;
+						<fmt:formatDate value="${detailSchedule.startTime }" pattern="HH:ss" /> ~ <fmt:formatDate value="${detailSchedule.endTime }" pattern="HH:ss" />
 					</h3>
 				</div>
 				<div>
