@@ -154,19 +154,15 @@
 					<div class="carousel slide carousel-fade" id="carouselExampleFade" data-bs-ride="carousel">
 						<div class="row">
 							<div class="carousel-inner">
-						    	<div class="carousel-item active">
-						      		<img src="https://movie-phinf.pstatic.net/20190109_149/1546998123676c6LjJ_JPEG/movie_image.jpg" class="d-block w-100 my-auto" alt="...">
-						    	</div>
-						    	<div class="carousel-item">
-						      		<img src="https://movie-phinf.pstatic.net/20200914_150/1600046531864xvhtF_JPEG/movie_image.jpg" class="d-block w-100 my-auto" alt="...">
-						    	</div>
-						    	<div class="carousel-item">
-						      		<img src="https://img.cgv.co.kr/Movie/Thumbnail/Poster/000085/85291/85291_1000.jpg" class="d-block w-100 my-auto" alt="...">
-						    	</div>
+								<c:forEach var="commentsForHome" items="${commentsForHomes }" varStatus="status">
+<%-- 									<div class="carousel-item ${status.index eq 0 ? 'active' : ''}"> --%>
+<%-- 										<img src="/resources/images/movie/${commentsForHome.images[0].filename }" class="d-block w-100 my-auto" alt="..."> --%>
+<!-- 									</div> -->
+								</c:forEach>
 						  	</div>
 						</div>
 					  	<div class="card-body d-flex justify-content-center p-0">
-							<a type="button" class="btn btn-danger w-100"><span>예매</span></a>
+							<a type="button" class="btn btn-danger w-100"><span>상세보기</span></a>
 							<a type="button" class="btn btn-outline-secondary"><span class="bi bi-heart-fill"></span></a>
 						</div>
 					  	<button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleFade" data-bs-slide="prev">
@@ -180,45 +176,7 @@
 					</div>
 				</div>
 				<div class="col-8 p-4">
-					<div class="row">
-						<span class="fs-4 text-start fw-bolder">한줄평</span>
-					</div>
-					<div class="row p-2">
-						<div class="row">
-							<table class="table table-borderless">
-								<thead>
-									<tr>
-										<th>작성자</th>
-										<td>홍길동</td>
-										<th>평점</th>
-										<td>4.5/5.0</td>
-									</tr>
-								</thead>
-								<tbody>
-									<tr>
-										<td colspan="5">한줄평한줄평한줄평한줄평한줄평한줄평한줄평한줄평한줄평한줄평한줄평한줄평한줄평한줄평</td>
-									</tr>
-								</tbody>
-							</table>
-						</div>
-						<div class="row">
-							<table class="table table-borderless">
-								<thead>
-									<tr>
-										<th>작성자</th>
-										<td>홍길동</td>
-										<th>평점</th>
-										<td>4.5/5.0</td>
-									</tr>
-								</thead>
-								<tbody>
-									<tr>
-										<td colspan="5">한줄평한줄평한줄평한줄평한줄평한줄평한줄평한줄평한줄평한줄평한줄평한줄평한줄평한줄평</td>
-									</tr>
-								</tbody>
-							</table>
-						</div>
-					</div>
+					
 				</div>
 			</div>
 		</div>

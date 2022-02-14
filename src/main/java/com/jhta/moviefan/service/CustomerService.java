@@ -10,7 +10,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.jhta.moviefan.annotation.LoginedCustomer;
 import com.jhta.moviefan.dao.CinemaDao;
 import com.jhta.moviefan.dao.CustomerDao;
 import com.jhta.moviefan.dao.MovieDao;
@@ -79,7 +78,7 @@ public class CustomerService {
 	}
 
 	// 회원정보 수정 체크
-	public void checkCustomer(@LoginedCustomer Customer customer, Customer newInfo) {
+	public void checkCustomer(Customer customer, Customer newInfo) {
 		LOGGER.info("customer의 값: " + customer);
 		LOGGER.info("newInfo의 값: " + newInfo);
 		
@@ -145,6 +144,10 @@ public class CustomerService {
 	}
 	
 	// 회원 찾기
+	public Customer getCustomerByNo(int customerNo) {
+		Customer savedCustomer = customerDao.getCustomerByNo(customerNo);
+		return savedCustomer;
+	}
 	public Customer getCustomerById(String id) {
 		Customer savedCustomer = customerDao.getCustomerById(id);
 		return savedCustomer;
@@ -171,6 +174,10 @@ public class CustomerService {
 		}
 		newInfo.setNo(customer.getNo());
 		customerDao.updateCustomer(newInfo);
+	}
+	// 회원비밀번호 업데이트
+	public void updateCustomerPassword(Customer savedCustomer) {
+		customerDao.updateCustomer(savedCustomer);
 	}
 	// 회원정보 삭제
 	public void deleteCustomerInfo(int customerNo) {

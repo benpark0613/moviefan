@@ -474,6 +474,5 @@
 		$("#input-open-trailer-modal").addClass("d-none");
 	});
 </script>
-<%@ include file="/WEB-INF/views/common/footer.jsp" %>
 </body>
 </html>

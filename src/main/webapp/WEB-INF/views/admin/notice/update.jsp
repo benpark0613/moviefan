@@ -30,7 +30,7 @@
 </head>
 <body>
 <%@ include file="/WEB-INF/views/admin/common/header.jsp" %>
-<div class="container">
+<div class="container mb-5">
 	<div class="row d-flex justify-content-center mb-3">
 		<div class="col-10">
 			<div class="row">

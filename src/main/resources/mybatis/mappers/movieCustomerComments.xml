@@ -34,6 +34,15 @@
 		from movie_customer_comment
 	</select>
 	
+	<select id="getMovieCustomerCommentsByMovieNo" parameterType="int" resultMap="CommentResultMap">
+		select rownum, x.*
+		from (select m.*
+      		  from movie_customer_comment m
+      		  where movie_no = #{movieNo}
+		      order by m.comment_created_date) x
+		where rownum between 1 and 2
+	</select>
+	
 	<insert id="insertMovieCustomerComment" parameterType="com.jhta.moviefan.vo.MovieCustomerComment">
 		<selectKey keyProperty="commentNo" resultType="int" order="BEFORE">
 			select movie_customer_comment_seq.nextval

@@ -13,10 +13,10 @@
    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
    <script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
    <style type="text/css">
-		body {
-			font-family: NanumBarunGothic;
-			font-size: 16pt;
-		}
+/* 		body { */
+/* 			font-family: NanumBarunGothic; */
+/* 			font-size: 16pt; */
+/* 		} */
 	</style>
 </head>
 <body>

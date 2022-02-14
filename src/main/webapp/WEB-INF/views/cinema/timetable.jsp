@@ -18,10 +18,10 @@
 	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
 	<link href="/resources/css/datepicker.css" rel="stylesheet">
 	<style>
-		body {
-			font-family: NanumBarunGothic;
-			font-size: 16pt;
-		}
+/* 		body { */
+/* 			font-family: NanumBarunGothic; */
+/* 			font-size: 16pt; */
+/* 		} */
 		a {
 			color: black;
 			text-decoration: none;
