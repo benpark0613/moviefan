@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-   <title>MovieFan : 관람평</title>
+   <title>MovieFan : 한줄평</title>
    <link type="image/png" href="/resources/images/logo/moviefan-favicon.png" rel="icon"/>
    <meta charset="utf-8">
    <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -22,11 +22,6 @@
 	<div class="row mb-3">
 		<div class="col-10">
 			<span style="font-size:1.6em; color:#503396;"><strong>${movieDetail.title }</strong>에 대한 <strong>${size }</strong>개의 이야기가 있어요!</span>
-		</div>
-		<div class="col-2">
-			<div class="row">
-				<button type="button" class="btn btn-outline-secondary">본 영화 등록</button>
-			</div>
 		</div>
 	</div>
 	<div class="row">

@@ -3,7 +3,7 @@
 <html lang="ko">
 <head>
    <title>MovieFan : 무비차트</title>
-   <link type="image/png" href="/resources/images/movie/logo/moviefan-favicon.png" rel="icon"/>
+   <link type="image/png" href="/resources/images/logo/moviefan-favicon.png" rel="icon"/>
    <meta charset="utf-8">
    <meta name="viewport" content="width=device-width, initial-scale=1">
    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -29,7 +29,7 @@
 				<div class="col">
 					<ul id="sort" style="list-style:none;">
 						<li>
-							<span class="align-middle" style="font-size: 12pt;">무비차트</span>
+							<span class="align-middle" style="font-size: 12pt; color:#444; ">무비차트</span>
 						</li>
 						<li class="subMenu" style="visibility: hidden;">
 							<a href="list"><span id="audience" style="font-size: 10pt;">&nbsp;&nbsp;관람객순</span></a>
@@ -46,7 +46,7 @@
 		</div>
 		<hr size="3px" color="black">
 	</div>
-	<div class="row mb-3">
+	<div class="row">
 		<c:choose>
 			<c:when test="${empty movie }">
 				<h3><strong>등록된 영화가 없습니다.</strong></h3>

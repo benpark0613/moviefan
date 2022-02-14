@@ -115,7 +115,7 @@
 					  		<img class="w-100 my-auto imgs" src="/resources/images/movie/moviePoster/${movieList.no }.jpg" alt="...">
 					  		<a href="movie/detail?no=${movieList.no }"><button type="button" class="btn btn-outline-secondary btndetail">상세보기</button></a>
 					  		<a><button type="button" class="btn btn-outline-success btnreservation">예매하기</button></a>
-							<span class="customerRating">관람평 <strong>7.8</strong></span>
+							<span class="customerRating">관람평 <strong>${movieList.customerRating }</strong></span>
 						</div>
 					</div>
 				</c:forEach>
