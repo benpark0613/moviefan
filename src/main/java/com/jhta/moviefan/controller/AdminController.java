@@ -52,10 +52,10 @@ public class AdminController {
 	@Autowired
 	private NoticeService noticeService;
 
-	@GetMapping("home")
-	public String home() {
-		return "admin/home";
-	}
+//	@GetMapping("home")
+//	public String home() {
+//		return "admin/home";
+//	}
 
 	@GetMapping("dashboard")
 	public String index() {
@@ -144,13 +144,10 @@ public class AdminController {
 	}
 
 	// 공지사항
-	@GetMapping("/notice/list")
+	@GetMapping(value = {"/notice/list", "/", "/home", "/index"})
 	public String getNoticeList(@LoginedCustomer Customer customer,
 			@RequestParam(name = "page", required = false, defaultValue = "1") String page, CriteriaNotice criteria,
 			Model model) {
-		
-		logger.info("customer의 값: " + customer);
-		logger.info("세션에 저장된 값: " + SessionUtils.getAttribute("LOGINED_CUSTOMER"));
 		
 		int totalRecords = noticeService.getTotalRows(criteria);
 		Pagination pagination = new Pagination(page, totalRecords);
@@ -181,8 +178,9 @@ public class AdminController {
 
 	@GetMapping("/notice/write")
 	public String writeNotice(@LoginedCustomer Customer customer) {
-		return "write";
+		return "admin/notice/write";
 	}
+	
 	@Transactional
 	@PostMapping("/notice/insert")
 	public String insertNotice(@LoginedCustomer Customer customer, NoticeInsertForm form) throws IOException {
@@ -216,7 +214,7 @@ public class AdminController {
 	public String getNoticeUpdateForm(@RequestParam(name = "no", required = true) int noticeNo, Model model) {
 		Notice notice = noticeService.getNoticeDetailByNoticeNo(noticeNo);
 		model.addAttribute("notice", notice);
-		return "update";
+		return "admin/notice/update";
 	}
 	@PostMapping("/notice/update")
 	public String updateNotice(@LoginedCustomer Customer customer, @RequestParam(name = "no", required = true) int noticeNo, 
@@ -224,6 +222,7 @@ public class AdminController {
 		Notice notice = new Notice();
 		BeanUtils.copyProperties(form, notice);
 		notice.setNo(noticeNo);
+		notice.setIsDeleted("N");
 		
 		noticeService.updateNotice(notice);
 		return "redirect:/admin/notice/detail?no=" + noticeNo;

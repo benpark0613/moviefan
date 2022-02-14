@@ -17,10 +17,22 @@
 		header {
 			background-color: #1c243c;
 		}
-		body {
-			font-family: NanumBarunGothic;
-			font-size: 16pt;
+		#overlay {
+			position: fixed; /* Sit on top of the page content */
+		 	width: 100%; /* Full width (cover the whole page) */
+		  	height: 100%; /* Full height (cover the whole page) */
+		  	top: 0;
+		  	left: 0;
+		  	right: 0;
+		  	bottom: 0;
+		  	background-color: rgba(0,0,0,0.5); /* Black background with opacity */
+		  	z-index: 10000000 !important; /* Specify a stack order in case you're using a different order for other elements */
+		  	cursor: pointer; /* Add a pointer on hover */
 		}
+/* 		body { */
+/* 			font-family: NanumBarunGothic; */
+/* 			font-size: 16pt; */
+/* 		} */
 		.pagination a {
 		    color: black;
 		    border: none;
@@ -147,7 +159,6 @@
 		</div>
 	</c:if>
 </div>
-<%@ include file="/WEB-INF/views/common/footer.jsp" %>
 </body>
 <script type="text/javascript">
 

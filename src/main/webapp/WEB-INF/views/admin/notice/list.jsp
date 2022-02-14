@@ -30,7 +30,7 @@
 </head>
 <body>
 <%@ include file="/WEB-INF/views/admin/common/header.jsp" %>
-<div class="container">
+<div class="container mb-5">
 	<div class="row d-flex justify-content-center">
 		<div class="col-10">
 			<div class="row mb-3">
@@ -136,6 +136,7 @@
 </div>
 <script type="text/javascript">
 	$("#btn-search-notice").click(function() {
+		event.preventDefault();
 		// 검색옵션값과 입력값을 조회한다.
 		var opt = $("select[name=opt]").val();
 		var value = $.trim($(":input[name=value]").val());

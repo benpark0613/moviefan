@@ -1,4 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<style type="text/css">
+	body { 
+ 			font-family: NanumBarunGothic; 
+ 		}
+</style>
 <!-- 로그인 모달 -->
 <div class="modal fade" id="modal-login" data-bs-backdrop="static" tabindex="-1" aria-labelledby="로그인 모달" aria-hidden="true">
   	<div class="modal-dialog modal-dialog-centered">
@@ -96,11 +101,11 @@
 		<div class="container">
 			<div class="collapse navbar-collapse">
 				<ul class="navbar-nav me-auto mb-2 mb-lg-0">
-					<li class="nav-item me-4"><a class="nav-link text-secondary active" aria-current="page" href="#">관리자홈</a></li>		
-					<li class="nav-item me-4"><a class="nav-link text-secondary" href="/admin/schedule/list">상영일정</a></li>
-					<li class="nav-item me-4"><a class="nav-link text-secondary" href="#">회원정보</a></li>
-					<li class="nav-item me-4"><a class="nav-link text-secondary" href="#">매출통계</a></li>
+<!-- 					<li class="nav-item me-4"><a class="nav-link text-secondary active" aria-current="page" href="#">관리자홈</a></li>		 -->
 					<li class="nav-item me-4"><a class="nav-link text-secondary" href="/admin/notice/list">공지사항</a></li>
+					<li class="nav-item me-4"><a class="nav-link text-secondary" href="/admin/schedule/list">상영일정</a></li>
+<!-- 					<li class="nav-item me-4"><a class="nav-link text-secondary" href="#">회원정보</a></li> -->
+<!-- 					<li class="nav-item me-4"><a class="nav-link text-secondary" href="#">매출통계</a></li> -->
 					<li class="nav-item me-4"><a class="nav-link text-secondary" href="/admin/movie/list">영화DB</a></li>
 					<li class="nav-item me-4"><a class="nav-link text-secondary" href="/admin/movie/search">영화검색/등록</a></li>
 				</ul>	
