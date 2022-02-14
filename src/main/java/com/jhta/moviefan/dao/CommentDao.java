@@ -21,8 +21,10 @@ public interface CommentDao {
 	List<CommentDto> searchComment(CriteriaMovieComment criteria);
 	List<CommentDto> getAllComments();
 	List<CommentLikedCustomer> getAllLikedCommentByCustomerNo(int customerNo);
+	List<Integer> getCommentRatingByMovieNo(int movieNo);
 	int getCommentTotalRow(CriteriaMovieComment criteria);
 	int getCommentTotalRowByMovieNo(int movieNo);
+	void updateMovieCustomerRating(@Param("movieNo") int movieNo, @Param("rating") int rating);
 	void updateCommentLike(@Param("commentNo") int commentNo, @Param("count") int count);
 	void updateCommentLikeCustomer(CommentLikedCustomer commentLikedCustomer);
 	void insertComment(CommentInsertForm form);

@@ -53,7 +53,7 @@
 					<span class="rank">${status.count }</span>
 					<img class="imgs" src="/resources/images/movie/moviePoster/${movies.no }.jpg" class="rounded float-start" alt="..."> 
 					<span class="summary">${movies.summary }</span>
-					<span class="customerRating">관람평 7.8</span>
+					<span class="customerRating">관람평 ${movies.customerRating }</span>
 				</div>
 				<div class="row">
 					<div class="col-1">
@@ -123,6 +123,8 @@
 	$(".wishListBtn").click(function(){
 		var movieNo = $(this).next().val();
 		var count = $(this).children("span")
+		$(this).toggleClass('active');
+		
 		
 		$.ajax({
 			type : "post",
@@ -132,9 +134,13 @@
 				movieNo : movieNo
 			},
 			success : function(response){
-				$(this).children("span").text(response.item[0]);
-				count.text(' '+response.item[0]);
-				alert("저장되었습니다.");
+				if(response.status == 'FAIL'){
+					alert(response.error);
+				}else{
+					$(this).children("span").text(response.item[0]);
+					count.text(' '+response.item[0]);
+					alert("저장되었습니다.");
+				}
 			},
 			error : function(response){
 				alert(response.error);

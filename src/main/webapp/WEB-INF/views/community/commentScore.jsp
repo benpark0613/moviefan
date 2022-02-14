@@ -89,26 +89,27 @@
 						<img alt="" src="/resources/images/movie/bg-profile.png">
 						<p>&nbsp;&nbsp;${comment.customerId }</p>
 					</div>
-					<div class="col-8 align-self-center">
+					<div class="col-9 align-self-center">
 						<div class="row">
 							<a href="/movie/detail?no=${comment.movieNo }"><span style="font-size: 15pt; "><strong>${comment.movieTitle }</strong></span></a>
 						</div>		
 						<div class="row rounded bg-light">
-							<div class="col-1 align-self-center">
+							<div class="col align-self-center">
 							 	<span class="" style="font-size:1.2em; color:#503396;">관람평</span>
 							</div>
 							<div class="col-1 align-self-center">
 								<span style="font-size:1.5em; color:#503396;">${comment.rating }</span>
 							</div>
-							<div class="col-9 align-self-center">
+							<div class="col-8 align-self-center">
 								<span>${comment.content }</span>
 							</div>
-							<div class="col-1 align-self-center">
-								<a href="" class="like"><i class="far fa-thumbs-up fa-lg"></i></a>
+							<div class="col-2 align-self-center text-center">
+								<button type="button" class="btn btn-outline-secondary like"><i class="far fa-thumbs-up fa-lg"></i></button>
 								<input type="hidden" value="${comment.commentNo }">
 								<input type="hidden" value="${comment.movieNo }">
 								<br>
-								<span id="like${status.index }" style="font-size: 13pt;"><strong>${comment.likeCount }</strong></span>
+								<span id="like${status.index }" style="font-size: 17pt;"><strong>${comment.likeCount }</strong></span>
+								<br>
 								<span><fmt:formatDate value="${comment.creDate }" pattern="yyyy.MM.dd"/></span>
 							</div>
 						</div>
@@ -183,6 +184,7 @@
 		
 		var opt = $("select[name=opt]").val();
 		var value = $.trim($(":input[name=value]").val());
+		$(this).toggleClass('active');
 		
 		$.ajax({
 			type : "post",
@@ -197,11 +199,14 @@
 				value : value
 			},
 			success : function(response){
-				
-				for(var i=0; i<response.item.length;i++){
-					$("#like"+[i]).text(response.item[i].likeCount);
+				if(response.status == 'FAIL'){
+					alert(response.error)
+				}else{
+					for(var i=0; i<response.item.length;i++){
+						$("#like"+[i]).text(response.item[i].likeCount);
+					}
+					alert("추천이 완료되었습니다.");
 				}
-				alert("추천이 완료되었습니다.");
 			},
 			error : function(response){
 				alert(response.error)

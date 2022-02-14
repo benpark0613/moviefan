@@ -57,7 +57,11 @@ public class ReviewController {
 	}
 	
 	@GetMapping("/commentForm") 
-	public String commentForm(@RequestParam(name = "title", required = false, defaultValue = "") String title, Model model) { 
+	public String commentForm(@RequestParam(name = "title", required = false, defaultValue = "") String title, @LoginedCustomer Customer customer, Model model) { 
+		
+		if(customer == null) {
+			throw new LoginErrorException("로그인 후 이용해 주세요");
+		}
 		
 		List<Movie> movieList = movieService.getAllMovies();
 		
@@ -80,14 +84,8 @@ public class ReviewController {
 		
 		form.setCustomerNo(customer.getNo());
 		
-		System.out.println("movieNo의 값 : " + form.getMovieNo());
-		System.out.println("customerNo의 값 : " + form.getCustomerNo());
-		System.out.println("rating의 값 : " + form.getRating());
-		System.out.println("content의 값 : " + form.getContent());
-		
 		commentService.insertComment(form);
-		
-		
+		commentService.updateMovieCustomerRating(form.getMovieNo());
 		
 		return "redirect:commentScore";
 	}
