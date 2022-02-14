@@ -178,7 +178,8 @@
 		    e.movie_open_date 									as openDate,
 		    d.show_date	 										as showDate,
 		    d.show_start_time 									as startTime,
-		    d.show_end_time						 				as endTime
+		    d.show_end_time						 				as endTime,
+		    c.hall_total_seats  								as totalSeats
 		from
 		    city a, cinema b, cinema_hall c, show d, movie e
 		where
@@ -187,6 +188,8 @@
 		    b.cinema_no = c.cinema_no
 		and
 		    c.hall_no = d.hall_no
+		and
+            b.cinema_no = c.cinema_no
 		and
 		    d.movie_no = e.movie_no
 		and

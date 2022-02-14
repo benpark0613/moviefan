@@ -19,8 +19,8 @@ public class MovieTimeTableDto {
 	private Date showDate;			// 상영일
 	private Date startTime;			// 상영 시작시간
 	private Date endTime;			// 상영 종료시간
+	private int totalSeats;		// 상영관 전체 좌석수
 	//private String status;		// 상영상태
-	//private int totalSeats;		// 상영관 전체 좌석수
 	//private int reservedSeats;	// 상영관 예약 좌석수
 	
 	public MovieTimeTableDto() {}
@@ -137,12 +137,21 @@ public class MovieTimeTableDto {
 		this.endTime = endTime;
 	}
 
+	public int getTotalSeats() {
+		return totalSeats;
+	}
+
+	public void setTotalSeats(int totalSeats) {
+		this.totalSeats = totalSeats;
+	}
+
 	@Override
 	public String toString() {
 		return "MovieTimeTableDto [cityNo=" + cityNo + ", cityName=" + cityName + ", cinemaNo=" + cinemaNo
 				+ ", cinemaName=" + cinemaName + ", showNo=" + showNo + ", hallNo=" + hallNo + ", hallName=" + hallName
 				+ ", movieNo=" + movieNo + ", title=" + title + ", runtime=" + runtime + ", openDate=" + openDate
-				+ ", showDate=" + showDate + ", startTime=" + startTime + ", endTime=" + endTime + "]";
+				+ ", showDate=" + showDate + ", startTime=" + startTime + ", endTime=" + endTime + ", totalSeats="
+				+ totalSeats + "]";
 	}
 
 }

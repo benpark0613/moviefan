@@ -90,14 +90,13 @@
 								<!-- 상영관정보 -->
 								<div class="mt-4 mb-0 mx-5">
 									<span class="fs-3" id="hall-name"><strong>${timetable.hallName }</strong></span>
-									<span id="hall-name"> &nbsp;&nbsp;|&nbsp;&nbsp;총 100석</span>
-<%-- 								<span>총 ${movieTimeTable.totalSeats }석</span> --%>
+									<span id="hall-name"> &nbsp;&nbsp;|&nbsp;&nbsp;총 ${timetable.totalSeats }석</span>
 								</div>
 								<!-- 상영시간 -->
 								<div id="ticketing" class="row d-flex justify-content-start mt-1 mx-5 p-0">
 									<c:forEach var="timetable" items="${timetable.schedules }">
 										<div class="col-3 border text-center p-3 m-1 fs-4">
-											<a href="/ticket/movie">
+											<a href="/ticket/booking">
 												<strong>
 													<fmt:formatDate value="${timetable.startTime }" pattern="HH:mm"/> ~ 
 													<fmt:formatDate value="${timetable.endTime }" pattern="HH:mm"/> 
