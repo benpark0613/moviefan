@@ -9,6 +9,7 @@ import org.apache.ibatis.annotations.Param;
 
 import com.jhta.moviefan.dto.HomeTrailerDetailDto;
 import com.jhta.moviefan.dto.HomeTrailerDto;
+import com.jhta.moviefan.dto.MovieWithImagesDto;
 import com.jhta.moviefan.vo.Actor;
 import com.jhta.moviefan.vo.Director;
 import com.jhta.moviefan.vo.Genre;
@@ -28,7 +29,6 @@ public interface MovieDao {
 	Movie getMovieByMovieNo(int movieNo);
 	HomeTrailerDetailDto getHomeMovieDetail();
 	List<HomeTrailerDto> getHomeTrailer();
-	
 	
 	List<Movie> getAllMovies();
 	List<Movie> getMovies(@Param("beginIndex") int beginIndex, @Param("endIndex") int endIndex);

@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.jhta.moviefan.dto.CinemaHallWithShowsDto;
 import com.jhta.moviefan.dto.CityWithCinemasDto;
+import com.jhta.moviefan.dto.MovieWithImagesDto;
 import com.jhta.moviefan.dto.TicketMoviePageDto;
 import com.jhta.moviefan.service.CinemaService;
 import com.jhta.moviefan.service.MovieService;
@@ -114,5 +115,24 @@ public class TicketRestController {
 		
 		return showTimes;
 	}
+	
+	@GetMapping("movie/detail")
+	public MovieWithImagesDto movieDetail(int movieNo) {
+		return movieService.getMovieWithImages(movieNo);
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 }
