@@ -25,6 +25,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.jhta.moviefan.annotation.LoginedCustomer;
 import com.jhta.moviefan.dto.HomeTrailerDetailDto;
+import com.jhta.moviefan.dto.MovieDetailDto;
 import com.jhta.moviefan.dto.MyAccountCustomerCommentDto;
 import com.jhta.moviefan.form.CustomerRegisterForm;
 import com.jhta.moviefan.form.KakaoLoginForm;
@@ -92,7 +93,12 @@ public class HomeController {
 			model.addAttribute("wishList", wishLists);
 			
 			List<MyAccountCustomerCommentDto> commentsForHomes = commentService.getCustomerCommentForHome();
+			List<MovieDetailDto> rankedMovies = commentService.getRankedMovieWithDetail();
+			
+			LOGGER.info("commentsForHomes의값 : " + commentsForHomes);
+			
 			model.addAttribute("commentsForHomes", commentsForHomes);
+			model.addAttribute("rankedMovies", rankedMovies);
 			
 		}catch(Exception e) {
 			e.printStackTrace();

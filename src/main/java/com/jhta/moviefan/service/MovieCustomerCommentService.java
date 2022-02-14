@@ -78,14 +78,14 @@ public class MovieCustomerCommentService {
 		LOGGER.info("rankedMovies 값: " + rankedMovies);
 		
 		for (Movie rankedMovie : rankedMovies) {
-			MovieDetailDto movieDetailDto = movieService.getMovieDetail(rankedMovie.getNo());
+//			MovieDetailDto movieDetailDto = movieService.getMovieDetail(rankedMovie.getNo());
 			List<MovieCustomerComment> comments = movieCustomerCommentDao.getMovieCustomerCommentsByMovieNo(rankedMovie.getNo());
 			for (MovieCustomerComment item : comments) {
 				Customer customer = customerService.getCustomerByNo(item.getCustomerNo());
 				MyAccountCustomerCommentDto dto = new MyAccountCustomerCommentDto();
 				BeanUtils.copyProperties(item, dto);
-				BeanUtils.copyProperties(movieDetailDto, dto);
 				BeanUtils.copyProperties(customer, dto);
+//				BeanUtils.copyProperties(movieDetailDto, dto);
 				dtos.add(dto);
 			}
 			
@@ -93,6 +93,21 @@ public class MovieCustomerCommentService {
 		
 		return dtos; 
 	}
+	
+	public List<MovieDetailDto> getRankedMovieWithDetail() {
+		
+		List<MovieDetailDto> dtos = new ArrayList<>();
+		List<Movie> rankedMovies = movieService.getMovieOrderByRating();
+		
+		for (Movie rankedMovie : rankedMovies) {
+			MovieDetailDto movieDetailDto = movieService.getMovieDetail(rankedMovie.getNo());
+			dtos.add(movieDetailDto);
+		}
+		
+		return dtos; 
+	}
+	
+	
 }
 
 
