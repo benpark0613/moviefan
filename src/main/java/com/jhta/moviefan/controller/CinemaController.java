@@ -75,7 +75,11 @@ public class CinemaController {
 	}
 	
 	@GetMapping("/location")
-	public String location() {
+	public String location(int cinemaNo, Model model) {
+		Cinema cinema = cinemaService.getCinemaNameByNo(cinemaNo);
+		
+		model.addAttribute("cinema", cinema);
+		
 		return "cinema/location";
 	}
 	

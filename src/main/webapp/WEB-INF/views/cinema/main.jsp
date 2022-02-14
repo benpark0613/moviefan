@@ -14,10 +14,10 @@
    <script src="https://cdn.jsdelivr.net/npm/moment@2.29.1/moment.min.js"></script>
    <script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
 	<style>
-		body {
-			font-family: NanumBarunGothic;
-			font-size: 16pt;
-		}
+/* 		body { */
+/* 			font-family: NanumBarunGothic; */
+/* 			font-size: 16pt; */
+/* 		} */
 		a {
 			color: black;
 			text-decoration: none;
@@ -86,6 +86,8 @@
 			let $box = $("#cinemaBox").empty();
 			
 			$.getJSON("/rest/cinema/list", {cityNo:cityNo}, function(cinemaList) {
+				const date = moment();
+				let today = date.format('YYYYMMDD');
 					
 				$.each (cinemaList, function(index, cinema) {
 					let content = '<div id="cinema-select" class="col">';
@@ -103,9 +105,12 @@
 		let today = date.format('YYYYMMDD');
 		
 		$('#cinemaBox a').click(function () {
+			event.preventDefault();
 			let link = $(this).attr('href');
-			let url = link + '&showDate=' + today;
-			$(this).attr("href", url);
+			if (!link.includes('showDate')) {
+				let url = link + '&showDate=' + today;
+				location.href = url;
+			}
 		})
 		
  	})
