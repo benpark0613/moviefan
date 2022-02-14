@@ -30,7 +30,7 @@ public class TicketController {
 
 	static final Logger logger = LogManager.getLogger(TicketController.class);
 
-	@GetMapping("movie")
+	@GetMapping("booking")
 	public String movie(Model model) {
 		List<Movie> movies = movieService.getMoviesNowPlaying(null);
 		List<CityWithCinemasDto> cities = cinemaService.getCitiesWithCinemas();
@@ -40,12 +40,7 @@ public class TicketController {
 		model.addAttribute("cities", cities);
 		model.addAttribute("dates", dates);
 
-		return "ticket/movie";
-	}
-
-	@GetMapping("seat")
-	public String seat() {
-		return "ticket/seat";
+		return "ticket/booking";
 	}
 
 	@GetMapping("checkout")

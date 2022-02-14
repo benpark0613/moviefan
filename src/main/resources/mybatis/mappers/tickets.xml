@@ -2,6 +2,20 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.jhta.moviefan.dao.TicketDao">
 
+	<select id="getShowByNo" parameterType="int" resultType="com.jhta.moviefan.vo.Show">
+		select 
+			show_no				as no, 
+			show_date			as showDate, 
+			show_start_time		as startTime, 
+			show_end_time		as endTime, 
+			movie_no			as movieNo, 
+			hall_no				as hallNo
+		from 
+			show
+		where 
+			show_no = #{value}
+	</select>
+
 	<select id="getShowsNowPlaying" parameterType="map" resultType="com.jhta.moviefan.vo.Show">
 		select 
 			s.show_no				as no, 
@@ -45,6 +59,28 @@
 			show_no = #{value}
 		order by
 			show_seat_no
+	</select>
+	
+	<select id="getShowSeatDetailByShowNo" parameterType="int" resultType="com.jhta.moviefan.dto.ShowSeatDetailDto">
+		select
+			s.show_seat_no			as no,
+			s.show_no				as showNo,
+			s.seat_no				as seatNo,
+			s.booking_no			as bookingNo,
+			s.is_reserved			as isReserved,
+			c.hall_no				as hallNo,
+			c.seat_row				as row,
+			c.seat_column			as column,
+			c.seat_type				as type,
+			c.seat_section			as section
+		from
+			show_seat s, cinema_seat c
+		where
+			s.show_no = #{value}
+		and
+			s.seat_no = c.seat_no
+		order by
+			c.seat_no
 	</select>
 	
 	<select id="getTotalSeatsAvailable" parameterType="int"  resultType="int">

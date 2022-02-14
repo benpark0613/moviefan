@@ -16,7 +16,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.jhta.moviefan.dto.CinemaHallWithShowsDto;
 import com.jhta.moviefan.dto.CityWithCinemasDto;
 import com.jhta.moviefan.dto.MovieWithImagesDto;
-import com.jhta.moviefan.dto.TicketMoviePageDto;
+import com.jhta.moviefan.dto.ShowSeatDetailDto;
+import com.jhta.moviefan.dto.BookingPageDto;
 import com.jhta.moviefan.service.CinemaService;
 import com.jhta.moviefan.service.MovieService;
 import com.jhta.moviefan.service.TicketService;
@@ -36,8 +37,8 @@ public class TicketRestController {
 	private CinemaService cinemaService;
 	
 	@GetMapping("movie")
-	public TicketMoviePageDto movie(Integer cinemaNo, @DateTimeFormat(pattern = "yyyy-MM-dd") Date showDate) {
-		TicketMoviePageDto movies = new TicketMoviePageDto();
+	public BookingPageDto movie(Integer cinemaNo, @DateTimeFormat(pattern = "yyyy-MM-dd") Date showDate) {
+		BookingPageDto movies = new BookingPageDto();
 		
 		Map<String, Object> request = new HashMap<>();
 		if (cinemaNo != null) {
@@ -56,8 +57,8 @@ public class TicketRestController {
 	}
 	
 	@GetMapping("cinema")
-	public TicketMoviePageDto cinema(Integer movieNo, @DateTimeFormat(pattern = "yyyy-MM-dd") Date showDate) {
-		TicketMoviePageDto cinemas = new TicketMoviePageDto();
+	public BookingPageDto cinema(Integer movieNo, @DateTimeFormat(pattern = "yyyy-MM-dd") Date showDate) {
+		BookingPageDto cinemas = new BookingPageDto();
 		
 		Map<String, Object> request = new HashMap<>();
 		if (movieNo != null) {
@@ -76,8 +77,8 @@ public class TicketRestController {
 	}
 	
 	@GetMapping("date")
-	public TicketMoviePageDto showDate(Integer movieNo, Integer cinemaNo) {
-		TicketMoviePageDto showDates = new TicketMoviePageDto();
+	public BookingPageDto showDate(Integer movieNo, Integer cinemaNo) {
+		BookingPageDto showDates = new BookingPageDto();
 		
 		Map<String, Integer> request = new HashMap<>();
 		if (movieNo != null) {
@@ -96,8 +97,8 @@ public class TicketRestController {
 	}
 	
 	@GetMapping("time")
-	public TicketMoviePageDto showTime(Integer movieNo, Integer cinemaNo, @DateTimeFormat(pattern = "yyyy-MM-dd") Date showDate) {
-		TicketMoviePageDto showTimes = new TicketMoviePageDto();
+	public BookingPageDto showTime(Integer movieNo, Integer cinemaNo, @DateTimeFormat(pattern = "yyyy-MM-dd") Date showDate) {
+		BookingPageDto showTimes = new BookingPageDto();
 		
 		Map<String, Object> request = new HashMap<>();
 		if (movieNo != null) {
@@ -122,7 +123,15 @@ public class TicketRestController {
 	}
 	
 	
-	
+	@GetMapping("seat")
+	public BookingPageDto seat(int showNo) {
+		BookingPageDto seats = new BookingPageDto();
+		
+		List<ShowSeatDetailDto> showSeatDetailDtos = ticketService.getShowSeatDetailDtos(showNo);
+		seats.setSeats(showSeatDetailDtos);
+		
+		return seats;
+	}
 	
 	
 	

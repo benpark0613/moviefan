@@ -7,7 +7,7 @@ public class CinemaSeat {
 	private String row;
 	private int column;
 	private String type;
-	private String section;
+	private int section;
 	
 	public CinemaSeat() {}
 
@@ -51,11 +51,11 @@ public class CinemaSeat {
 		this.type = type;
 	}
 
-	public String getSection() {
+	public int getSection() {
 		return section;
 	}
 
-	public void setSection(String section) {
+	public void setSection(int section) {
 		this.section = section;
 	}
 
@@ -64,6 +64,8 @@ public class CinemaSeat {
 		return "CinemaSeat [no=" + no + ", hallNo=" + hallNo + ", row=" + row + ", column=" + column + ", type=" + type
 				+ ", section=" + section + "]";
 	}
+
+	
 	
 	
 }
