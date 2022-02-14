@@ -72,7 +72,7 @@
 			</div>
 			<div class="row mb-3">
 				<div class="col-2">
-					<button type="button" class="btn btn-danger">예매하기</button>
+					<a href="/ticket/movie"><button type="button" class="btn btn-danger">예매하기</button></a>
 				</div>
 			</div>
 		</div>
@@ -90,9 +90,6 @@
 		  </li>
 		  <li class="nav-item">
 		    <a class="nav-link ${movieNav eq '평점' ? 'active' : ''}" href="comment?no=${movieDetail.no }">평점/리뷰</a>
-		  </li>
-		  <li class="nav-item">
-		    <a class="nav-link">상영시간표</a>
 		  </li>
 		</ul>	
 	</div>

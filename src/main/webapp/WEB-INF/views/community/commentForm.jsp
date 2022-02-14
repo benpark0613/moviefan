@@ -2,8 +2,8 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-   <title>MovieFan : 내 평점등록</title>
-   <link type="image/png" href="/resources/images/movie/logo/moviefan-favicon.png" rel="icon"/>
+   <title>MovieFan : 평점등록</title>
+   <link type="image/png" href="/resources/images/logo/moviefan-favicon.png" rel="icon"/>
    <meta charset="utf-8">
    <meta name="viewport" content="width=device-width, initial-scale=1">
    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -31,7 +31,9 @@
 						<select id="titleSelect" class="form-select" name="movieNo" aria-label="Default select example">
 							<option selected disabled="disabled">영화를 선택하세요</option>
 							<c:forEach var="movies" items="${movieList }">
-								<option value="${movies.no }" ${title eq movies.title ? 'selected' : '' }>${movies.title }</option>
+								<c:if test="${'미개봉' ne movies.title }">
+									<option value="${movies.no }"  ${title eq movies.title ? 'selected' : '' }>${movies.title }</option>
+								</c:if>
 							</c:forEach>
 						</select>
 				  	</div>

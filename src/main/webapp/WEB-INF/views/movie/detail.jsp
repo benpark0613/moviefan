@@ -27,7 +27,7 @@
 	  <span style="font-size:1.6em; color:#503396;"><strong>줄거리</strong></span>
 	</div>
 	<div class="row mb-3">
-		<span style="font-size: 15px;">${movie.summary }</span>
+		<span style="font-size: 15px;">${movieDetail.summary }</span>
 	</div>
 	<div class="row">
 		<div class="col">
@@ -37,7 +37,7 @@
 			<div id="barChart"></div>
 		</div>
 	</div>
-	<div class="row mb-3 bg-light ">
+	<div class="row mb-3">
 		<span style="font-size:1.3em; color:#503396;">트레일러 <strong>${countTrailer } 건</strong></span>
 	</div>
 	
@@ -54,7 +54,7 @@
 			</div>
 		</c:forEach>
 	</div>
-	<div class="row mb-3 bg-light">
+	<div class="row mb-3">
 		<span style="font-size:1.3em; color:#503396;">스틸컷 <strong>${countImage } 건</strong></span>
 	</div>
 	
@@ -98,19 +98,20 @@
 				</div>
 				<div class="col-10 rounded-pill bg-light align-self-center">
 					<div class="row">
-						<div class="col-1 align-self-center">
+						<div class="col align-self-center">
 						 	<span class="" style="font-size:1.2em; color:#503396;">관람평</span>
 						</div>
 						<div class="col-1 align-self-center">
 							<span style="font-size:1.5em; color:#503396;">${comment.rating }</span>
 						</div>
-						<div class="col-9 align-self-center">
+						<div class="col-8 align-self-center">
 							<span>${comment.content }</span>
 						</div>
-						<div class="col-1 align-self-center">
+						<div class="col-2 align-self-center text-center">
 							<i class="far fa-thumbs-up fa-lg"></i>
 							<br>
 							<span>${comment.likeCount }</span>
+							<br>
 							<span><fmt:formatDate value="${comment.creDate }" pattern="yyyy.MM.dd"/></span>
 						</div>
 					</div>

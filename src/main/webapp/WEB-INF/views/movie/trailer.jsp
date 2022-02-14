@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-   <title>MovieFan : 영화상세정보</title>
+   <title>MovieFan : 영화트레일러</title>
    <link type="image/png" href="/resources/images/logo/moviefan-favicon.png" rel="icon"/>
    <meta charset="utf-8">
    <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -42,18 +42,17 @@
 		<c:forEach var="movieTrailer" items="${movieDetail.trailers }" varStatus="status">
 			<div class="col-3 trailer text-center">
 				<video id="trailerSub${status.count }" width="240" height="136" src="${movieTrailer.urlAddress }"></video>
+				<br>
+				<span>${movieTrailer.title }</span>
 			</div>
 		</c:forEach>
 	</div>
 	
-	
-	
-	
-	<div class="row">
+	<div class="row mb-3">
 		<hr color="black">
 		<span style="font-size:1.3em; color:#503396;"> <strong>${movieDetail.title }</strong>에 대한 <strong>${countImage }개</strong>의 스틸컷이 있어요! </span>
 	</div>
-	<div class="row">
+	<div class="row mb-3">
 		<c:forEach var="movieImage" items="${movieDetail.images }">
 			<div class="col">
 				<img src="/resources/images/movie/${movieImage.filename }" class="d-block w-100" alt="...">

@@ -1,5 +1,11 @@
 package com.jhta.moviefan.controller;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -57,18 +63,37 @@ public class ReviewController {
 	}
 	
 	@GetMapping("/commentForm") 
-	public String commentForm(@RequestParam(name = "title", required = false, defaultValue = "") String title, @LoginedCustomer Customer customer, Model model) { 
+	public String commentForm(@RequestParam(name = "title", required = false, defaultValue = "") String title, @LoginedCustomer Customer customer, Model model) throws ParseException { 
 		
 		if(customer == null) {
 			throw new LoginErrorException("로그인 후 이용해 주세요");
 		}
 		
 		List<Movie> movieList = movieService.getAllMovies();
-		
+		List<Movie> list = new ArrayList<>();
 		if(title != null) {
 			model.addAttribute("title", title);
 		}
-		model.addAttribute("movieList", movieList);
+		
+		SimpleDateFormat sdf = new SimpleDateFormat ("yyyy.MM.dd");
+				
+		Date time = new Date();
+				
+		String time1 = sdf.format(time);
+				
+		Date today = sdf.parse(time1);
+		
+		for(Movie aa : movieList) {
+			Movie movie = new Movie();
+			if(aa.getOpenDate().before(today)) {
+				movie.setNo(aa.getNo());
+				movie.setTitle(aa.getTitle());
+			}else {
+				movie.setTitle("미개봉");
+			}
+			list.add(movie);
+		}
+		model.addAttribute("movieList", list);
 		
 		
 		return "community/commentForm";
