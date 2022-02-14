@@ -44,6 +44,7 @@ public class MovieController {
 	CustomerService customerService;
 	@Autowired
 	CommentService commentService;
+	
 
 	@GetMapping("/list")
 	public String list(Model model) {
@@ -210,6 +211,6 @@ public class MovieController {
 		
 		return "movie/commingsoon";
 	}
-
+	
 
 }

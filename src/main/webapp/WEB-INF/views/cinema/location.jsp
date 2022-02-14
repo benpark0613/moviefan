@@ -15,10 +15,10 @@
 <!--    <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=ae34331860bca5cb54eb73c6c398b367"></script> -->
    <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=ae34331860bca5cb54eb73c6c398b367&libraries=services"></script>
    <style type="text/css">
-		body {
-			font-family: NanumBarunGothic;
-			font-size: 16pt;
-		}
+/* 		body { */
+/* 			font-family: NanumBarunGothic; */
+/* 			font-size: 16pt; */
+/* 		} */
 		#map {
 			width:100%; 
 			height:700px;

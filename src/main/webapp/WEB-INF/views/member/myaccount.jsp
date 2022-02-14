@@ -7,7 +7,6 @@
 	<meta charset="utf-8">
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css" rel="stylesheet">
-	<link href="/resources/css/style.css" type="text/css" rel="stylesheet" >
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 	<script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
@@ -83,13 +82,13 @@
 								<tr>
 									<c:choose>
 										<c:when test="${empty myCinemaList}">
-											<td class="col-3 fs-5 text-center"><button type="button" class="btn btn-outline-secondary" id="btn-empty-mycinema" style="width: 120px; height: 60px;"></button></td>
-											<td class="col-3 fs-5 text-center"><button type="button" class="btn btn-outline-secondary" id="btn-empty-mycinema" style="width: 120px; height: 60px;"></button></td>
-											<td class="col-3 fs-5 text-center"><button type="button" class="btn btn-outline-secondary" id="btn-empty-mycinema" style="width: 120px; height: 60px;"></button></td>
+											<td class="col-3 fs-5 text-center"><button type="button" class="btn btn-outline-secondary" data-isempty="1" style="width: 120px; height: 60px;"></button></td>
+											<td class="col-3 fs-5 text-center"><button type="button" class="btn btn-outline-secondary" data-isempty="1" style="width: 120px; height: 60px;"></button></td>
+											<td class="col-3 fs-5 text-center"><button type="button" class="btn btn-outline-secondary" data-isempty="1" style="width: 120px; height: 60px;"></button></td>
 										</c:when>
 										<c:otherwise>
 											<c:forEach var="cinema" items="${myCinemaList}">
-												<td class="col-3 fs-5 text-center"><button type="button" class="btn btn-outline-secondary" value="${cinema.no }" data-cityno-of-cinema="${cinema.cityNo }" style="width: 120px; height: 60px;">${cinema.name}<i class="bi bi-x-square"></i></button></td>
+												<td class="col-3 fs-5 text-center"><button type="button" class="btn btn-outline-secondary" value="${cinema.no }" data-cityno-of-cinema="${cinema.cityNo }" style="width: 120px; height: 60px;"><small>${cinema.name}</small><i class="bi bi-x-square"></i></button></td>
 											</c:forEach>
 										</c:otherwise>
 									</c:choose>
@@ -178,10 +177,10 @@
 									<td class="fs-4">MY 영화관&nbsp;<a class="link-secondary" href="" data-bs-toggle="modal" data-bs-target="#modal-update-mycinema" id="link-update-mycinema"  data-bs-toggle="tooltip" data-bs-placement="top" title="자주 가는 영화관 설정"><i class="bi bi-gear" style="font-size: 0.5em;"></i></a></td>
 								</tr>
 							</thead>
-							<tbody class="mx-3">
+							<tbody class="mx-3" id="tbody-mycinema">
 								<tr>
 									<c:forEach var="cinema" items="${myCinemaList}" varStatus="loop">
-										<td class="col-3 fs-5 text-center"><a href="/cinema/timetable?cinemaNo=${cinema.no }"><button type="button" class="btn btn-outline-secondary" value="${cinema.no }" data-cityno-of-cinema="${cinema.cityNo }" style="width: 120px; height: 60px;">${cinema.name }</button></a></td>
+										<td class="col-3 fs-5 text-center"><a href="/cinema/timetable?cinemaNo=${cinema.no }&showDate=${nowDate}"><button type="button" class="btn btn-outline-secondary" value="${cinema.no }" data-cityno-of-cinema="${cinema.cityNo }"  style="width: 120px; height: 60px;"><small>${cinema.name }</small></button></a></td>
 									</c:forEach>
 								</tr>
 							</tbody>
@@ -686,14 +685,15 @@ $(function() {
 			
 		}
 	});
+	// 내 정보 패널 > 자주가는 극장
 	if ($('#table-mycinema tbody tr [data-cityno-of-cinema]').length < 3) {
-		let row = `<td class="col-3 fs-5 text-center"><button type="button" class="btn btn-outline-secondary" id="btn-empty-mycinema" style="width: 120px; height: 60px;"></button></td>`
+		let row = `<td class="col-3 fs-5 text-center"><button type="button" class="btn btn-outline-secondary" data-isempty="1" style="width: 120px; height: 60px;"></button></td>`
 		for (var i = 0; i < 3 - $('#table-mycinema tbody tr [data-cityno-of-cinema]').length; i++) {
 			$('#table-mycinema tbody tr').append(row);
 		}
 	}
 	if ($('#modal-table-mycinema tbody tr').children().length < 3) {
-		let row = `<td class="col-3 fs-5 text-center"><button type="button" class="btn btn-outline-secondary" id="btn-empty-mycinema" style="width: 120px; height: 60px;"></button></td>`
+		let row = `<td class="col-3 fs-5 text-center"><button type="button" class="btn btn-outline-secondary" data-isempty="1" style="width: 120px; height: 60px;"></button></td>`
 		for (var i = 0; i < 3 - $('#modal-table-mycinema tbody tr').children().length; i++) {
 			$('#modal-table-mycinema tbody tr').append(row);
 		}
@@ -702,7 +702,7 @@ $(function() {
 	$('#link-update-mycinema').click(function(event) {
 		event.preventDefault();
 		if ($('#modal-table-mycinema tbody tr').children().length < 3) {
-			let row = `<td class="col-3 fs-5 text-center"><button type="button" class="btn btn-outline-secondary" id="btn-empty-mycinema" style="width: 120px; height: 60px;"></button></td>`
+			let row = `<td class="col-3 fs-5 text-center"><button type="button" class="btn btn-outline-secondary" data-isempty="1" style="width: 120px; height: 60px;"></button></td>`
 			for (var i = 0; i < 3 - $('#modal-table-mycinema tbody tr').children().length; i++) {
 				$('#modal-table-mycinema tbody tr').append(row);
 			}
@@ -780,15 +780,13 @@ $(function() {
     				data: {cinemaNo:cinemaNo},
     				success: function(response) {
     					alert("자주찾는 극장을 추가하였습니다.");
-    					$('#link-update-mycinema').click
+    					let replaceRow = '<td class="col-3 fs-5 text-center"><button type="button" class="btn btn-outline-secondary" value="'+cinemaNo+'" data-cityno-of-cinema="'+cityNo+'" style="width: 120px; height: 60px;"><small>'+cinemaName+'</small><i class="bi bi-x-square"></i></button></td>'
+    					$('#modal-table-mycinemamodal-table button[data-isempty]').replaceWith(replaceRow);
    						location.reload();
 					},
 					fail: function(response) {
 						alert(response.error);
 					}
-    			}).done(function() {
-					let replaceRow = '<td class="col-3 fs-5 text-center"><button type="button" class="btn btn-outline-secondary" value="'+cinemaNo+'" data-cityno-of-cinema="'+cityNo+'" style="width: 120px; height: 60px;">'+cinemaName+'<i class="bi bi-x-square"></i></button></td>'
-					$('#btn-empty-mycinema').replaceWith(replaceRow);
     			})
 			}	
 		})

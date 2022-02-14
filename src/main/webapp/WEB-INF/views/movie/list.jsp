@@ -3,7 +3,7 @@
 <html lang="ko">
 <head>
    <title>MovieFan : 무비차트</title>
-   <link type="image/png" href="/resources/images/movie/logo/moviefan-favicon.png" rel="icon"/>
+   <link type="image/png" href="/resources/images/logo/moviefan-favicon.png" rel="icon"/>
    <meta charset="utf-8">
    <meta name="viewport" content="width=device-width, initial-scale=1">
    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -20,11 +20,11 @@
 <body>
 <%@ include file="/WEB-INF/views/common/header.jsp" %>
 <div class="container">
-	<div class="row mb-3">
-		<div class="col-9">
+	<div class="row my-3">
+		<div class="col-9 align-self-center">
 		<h1>무비 차트</h1>
 		</div>
-		<div class="col-3 text-align-right align-self-center">
+		<div class="col-3">
 			<div class="row">
 				<div class="col">
 					<ul id="sort" style="list-style:none;">
@@ -46,7 +46,7 @@
 		</div>
 		<hr size="3px" color="black">
 	</div>
-	<div class="row mb-3">
+	<div class="row">
 		<c:forEach var="movies" items="${movie }" varStatus="status">
 			<div class="col-3 mb-3">
 				<div class="row pic">
@@ -76,7 +76,7 @@
 							<input type="hidden" value="${movies.no}" /> 
 					</div>
 					<div class="col">
-						<button type="button" class="btn btn-danger btn-block" style="padding-left:50px; padding-right:50px;"><span>예매</span></button>
+						<a href="/ticket/movie"><button type="button" class="btn btn-danger btn-block" style="padding-left:50px; padding-right:50px;"><span>예매</span></button></a>
 					</div>
 				</div>
 			</div>
@@ -105,7 +105,7 @@
 		$("#rating").hover(function(){
 				$(this).css("color", "red");
 			}, function(){
-				$(this).css("color", "black");
+				$(this).css("color", "#444");
 			})
 	}, function(){
 		$(".subMenu").css("visibility", "hidden");

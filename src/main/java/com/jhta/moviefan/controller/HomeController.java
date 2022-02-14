@@ -25,13 +25,16 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.jhta.moviefan.annotation.LoginedCustomer;
 import com.jhta.moviefan.dto.HomeTrailerDetailDto;
+import com.jhta.moviefan.dto.MyAccountCustomerCommentDto;
 import com.jhta.moviefan.form.CustomerRegisterForm;
 import com.jhta.moviefan.form.KakaoLoginForm;
 import com.jhta.moviefan.service.CustomerService;
+import com.jhta.moviefan.service.MovieCustomerCommentService;
 import com.jhta.moviefan.service.MovieService;
 import com.jhta.moviefan.utils.SessionUtils;
 import com.jhta.moviefan.vo.Customer;
 import com.jhta.moviefan.vo.Movie;
+import com.jhta.moviefan.vo.MovieCustomerComment;
 
 @Controller
 public class HomeController {
@@ -44,6 +47,8 @@ public class HomeController {
 	private MovieService movieService;
 	@Autowired
 	private BCryptPasswordEncoder bCryptPasswordEncoder;
+	@Autowired
+	MovieCustomerCommentService commentService;
 	
 	@GetMapping(value = {"/", "/home", "/index"})
 	public String home(Model model) {
@@ -85,7 +90,10 @@ public class HomeController {
 			model.addAttribute("movieTrailer", dto);
 			model.addAttribute("movie", movieList);
 			model.addAttribute("wishList", wishLists);
-
+			
+			List<MyAccountCustomerCommentDto> commentsForHomes = commentService.getCustomerCommentForHome();
+			model.addAttribute("commentsForHomes", commentsForHomes);
+			
 		}catch(Exception e) {
 			e.printStackTrace();
 		}
@@ -175,11 +183,12 @@ public class HomeController {
 	}
 
 	@PostMapping("**/newpassword")
-	public String changePassword(@LoginedCustomer Customer customer, CustomerRegisterForm form) {
-		Customer customerNewPassword = customerService.getCustomerByEmail(form.getEmail());
-		customerNewPassword.setPassword(bCryptPasswordEncoder.encode(form.getPassword()));
+	public String changePassword(CustomerRegisterForm form) {
 		
-		customerService.updateCustomerInfo(customer, customerNewPassword);
+		Customer savedCustomer = customerService.getCustomerByEmail(form.getEmail());
+		savedCustomer.setPassword(bCryptPasswordEncoder.encode(form.getPassword()));
+		
+		customerService.updateCustomerPassword(savedCustomer);
 		
 		return "redirect:/member/myinfo/modifycompleted";
 	}

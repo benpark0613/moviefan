@@ -1,6 +1,8 @@
 package com.jhta.moviefan.controller;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -8,7 +10,6 @@ import java.util.Map;
 import org.apache.ibatis.annotations.Param;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -20,9 +21,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.jhta.moviefan.annotation.LoginedCustomer;
 import com.jhta.moviefan.exception.LoginErrorException;
-import com.jhta.moviefan.exception.RestLoginErrorException;
 import com.jhta.moviefan.form.CriteriaMyAccount;
-import com.jhta.moviefan.form.CustomerRegisterForm;
 import com.jhta.moviefan.pagination.Pagination;
 import com.jhta.moviefan.service.CustomerService;
 import com.jhta.moviefan.service.MovieService;
@@ -74,9 +73,16 @@ public class CustomerController {
 		
 		List<Cinema> myCinemaList = customerService.getCustomerFavoriteCinemaList(customer.getNo());
 		
+		Date now = new Date();
+		System.out.println("-----------------"+now+"---------------오늘");
+		SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMdd");
+		String formatedNow = formatter.format(now);
+		System.out.println("-----------------"+formatedNow+"---------------오늘");
+		
 		model.addAttribute("myCinemaList", myCinemaList);
 		model.addAttribute("movieWithImages", movieWithImages);
 		model.addAttribute("pagination", pagination);
+		model.addAttribute("nowDate", formatedNow);
 		
 		return "member/myaccount";
 	}

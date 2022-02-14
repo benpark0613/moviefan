@@ -15,6 +15,7 @@ public interface MovieCustomerCommentDao {
 	List<MovieCustomerComment> getMovieCustomerCommentByCustomerNo(int customerNo);
 	MovieCustomerComment getMovieCustomerCommentByCommentNo(int commentNo);
 	List<MovieCustomerComment> getAllMovieCustomerComments();
+	List<MovieCustomerComment> getMovieCustomerCommentsByMovieNo(int movieNo);
 	void deleteMovieCustomerCommentByCommentNo(int commentNo);
 	void insertMovieCustomerComment(MovieCustomerComment movieCustomerComment);
 	void updateMovieCustomerComment(MovieCustomerComment movieCustomerComment);

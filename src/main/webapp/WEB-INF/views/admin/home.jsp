@@ -20,6 +20,5 @@
 <div class="container">
   
 </div>
-<%@ include file="/WEB-INF/views/common/footer.jsp" %>
 </body>
 </html>

@@ -30,7 +30,7 @@
 </head>
 <body>
 <%@ include file="/WEB-INF/views/admin/common/header.jsp" %>
-<div class="container">
+<div class="container mb-5">
 	<div class="row d-flex justify-content-center mb-3">
 		<div class="col-10">
 			<div class="row mb-2">
@@ -72,11 +72,42 @@
 				<div class="col d-flex justify-content-end">
 					<a href="/admin/notice/list?no=${param.no }" class="btn btn-primary" type="button">목록으로</a>
 					<a href="/admin/notice/update?no=${param.no }" class="btn btn-secondary ms-2" type="button">수정</a>
-					<a href="/admin/notice/delete?no=${param.no }" class="btn btn-dark ms-2" type="button">삭제</a>
+					<a href="/admin/notice/delete?no=${param.no }" class="btn btn-dark ms-2" type="button" id="a-delete-notice">삭제</a>
 				</div>
 			</div>
 		</div>	
 	</div>
 </div>
 </body>
+<script type="text/javascript">
+$(function() {
+	$('#a-delete-notice').click(function(event) {
+		event.preventDefault();
+		if (confirm("삭제하시겠습니까?")) {
+			let request = $(this).attr('href');
+			location.href = request;
+			alert('삭제가 완료되었습니다.');
+		}
+	})
+})
+</script>
 </html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

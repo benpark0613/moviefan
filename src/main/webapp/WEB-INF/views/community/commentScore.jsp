@@ -4,8 +4,8 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-<title>MovieFan : 한줄평점</title>
-<link type="image/png" href="/resources/images/logo/moviefan-favicon.png" rel="icon" />
+<title>MovieFan : 한줄평</title>
+<link type="image/png" href="/resources/images/logo/moviefan-favicon.png" rel="icon"/>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -40,12 +40,12 @@
 <body>
 <%@ include file="/WEB-INF/views/common/header.jsp"%>
 <div class="container">
-	<div class="row">
+	<div class="row my-3">
 		<div class="row mb-3">
-			<div class="col-8">
+			<div class="col-8 align-self-center">
 				<h4>네티즌·관람객 평점</h4>
 			</div>
-			<div class="col-4">
+			<div class="col-4 align-self-center">
 				<form id="form-search-comment" action="commentScore" method="get">
 					<input type="hidden" name="page" value="1" />
 					<input type="hidden" name="sort" value="" />
@@ -68,7 +68,7 @@
 				<span style="font-size:1.6em; color:#503396;">총 ${size }개의 이야기가 있어요</span>
 			</div>
 			<div class="col mb-3 text-end">
-				<a href="/community/commentForm" type="button" class="btn btn-primary">평점등록</a>
+				<a href="/community/commentForm" type="button" class="btn btn-secondary">평점등록</a>
 			</div>
 		</div>
 		<div class="row">
@@ -110,7 +110,14 @@
 								<br>
 								<span id="like${status.index }" style="font-size: 17pt;"><strong>${comment.likeCount }</strong></span>
 								<br>
-								<span><fmt:formatDate value="${comment.creDate }" pattern="yyyy.MM.dd"/></span>
+								<fmt:formatDate value="${comment.creDate }" pattern="yyyy.MM.dd" var="date"/>
+								<fmt:formatDate value="${now }" pattern="yyyy.MM.dd" var="now"/>
+								<c:if test="${now eq date }">
+									<span>1분전</span>
+								</c:if>
+								<span>${date }</span>
+								<span>${now }</span>
+								
 							</div>
 						</div>
 					</div>
@@ -205,7 +212,7 @@
 					for(var i=0; i<response.item.length;i++){
 						$("#like"+[i]).text(response.item[i].likeCount);
 					}
-					alert("추천이 완료되었습니다.");
+					alert("완료되었습니다.");
 				}
 			},
 			error : function(response){

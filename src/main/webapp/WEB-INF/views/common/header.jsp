@@ -1,4 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<style type="text/css">
+	body { 
+ 			font-family: 'IBMPlexSansKR-Regular'; 
+ 		}
+</style>
 <!-- 로그인 모달 -->
 <div class="modal fade" id="modal-login" data-bs-backdrop="static" tabindex="-1" aria-labelledby="로그인 모달" aria-hidden="true">
   	<div class="modal-dialog modal-dialog-centered">
