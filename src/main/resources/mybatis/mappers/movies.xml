@@ -197,10 +197,11 @@
 	</select>
 	
 	<select id="getMovieOrderByRating" resultMap="MovieResultMap">
-		select *
-		from movie
+		select x.*
+		from (select m.*
+		      from movie m
+		      order by MOVIE_CUSTOMER_RATING desc) x
 		where rownum &lt;= 10
-		order by MOVIE_CUSTOMER_RATING desc
 	</select>
 	
 	<select id="getMovieByDate" resultMap="MovieResultMap">

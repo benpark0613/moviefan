@@ -133,49 +133,73 @@
 					<strong>영화 평점 순위</strong>
 				</div>
 			</div>
-			<div class="row">
-				<ul class="nav nav-tabs">
-					<li class="nav-item">
-				    	<a class="nav-link link-dark text-decoration-none active" aria-current="page" href="#">전체</a>
-				  	</li>
-					<li class="nav-item">
-				    	<a class="nav-link link-dark text-decoration-none" aria-current="page" href="#">장르1</a>
-				  	</li>
-					<li class="nav-item">
-				    	<a class="nav-link link-dark text-decoration-none" aria-current="page" href="#">장르2</a>
-				  	</li>
-					<li class="nav-item">
-				    	<a class="nav-link link-dark text-decoration-none" aria-current="page" href="#">장르3</a>
-				  	</li>
-				</ul>
-			</div>
-			<div class="row">
-				<div class="card col-3 p-1 d-flex justify-content-center align-self-center">
-					<div class="carousel slide carousel-fade" id="carouselExampleFade" data-bs-ride="carousel">
+<!-- 			<div class="row"> -->
+<!-- 				<ul class="nav nav-tabs"> -->
+<!-- 					<li class="nav-item"> -->
+<!-- 				    	<a class="nav-link link-dark text-decoration-none active" aria-current="page" href="#">전체</a> -->
+<!-- 				  	</li> -->
+<!-- 					<li class="nav-item"> -->
+<!-- 				    	<a class="nav-link link-dark text-decoration-none" aria-current="page" href="#">장르1</a> -->
+<!-- 				  	</li> -->
+<!-- 					<li class="nav-item"> -->
+<!-- 				    	<a class="nav-link link-dark text-decoration-none" aria-current="page" href="#">장르2</a> -->
+<!-- 				  	</li> -->
+<!-- 					<li class="nav-item"> -->
+<!-- 				    	<a class="nav-link link-dark text-decoration-none" aria-current="page" href="#">장르3</a> -->
+<!-- 				  	</li> -->
+<!-- 				</ul> -->
+<!-- 			</div> -->
+			<div class="row d-flex justify-content-center my-2" id="div-comment-card">
+				<div class="card col-3 p-1 d-flex justify-content-center align-self-center" id="card-ranked-movie">
+					<div class="carousel slide carousel-fade" id="div-carousel-body">
 						<div class="row">
 							<div class="carousel-inner">
-								<c:forEach var="commentsForHome" items="${commentsForHomes }" varStatus="status">
-<%-- 									<div class="carousel-item ${status.index eq 0 ? 'active' : ''}"> --%>
-<%-- 										<img src="/resources/images/movie/${commentsForHome.images[0].filename }" class="d-block w-100 my-auto" alt="..."> --%>
-<!-- 									</div> -->
+								<c:forEach var="rankedMovie" items="${rankedMovies }" varStatus="status">
+									<div class="carousel-item ${status.index eq 0 ? 'active' : ''}" id="div-carousel-image" data-rank-movieNo="${rankedMovie.no }" data-count="${status.index }">
+										<img src="/resources/images/movie/${rankedMovie.images[0].filename }" class="d-block w-100 my-auto" alt="..." >
+									</div>
 								</c:forEach>
 						  	</div>
 						</div>
 					  	<div class="card-body d-flex justify-content-center p-0">
-							<a type="button" class="btn btn-danger w-100"><span>상세보기</span></a>
-							<a type="button" class="btn btn-outline-secondary"><span class="bi bi-heart-fill"></span></a>
+							<a type="button" class="btn btn-danger w-100" id="a-movie-detail"><span>상세보기</span></a>
 						</div>
-					  	<button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleFade" data-bs-slide="prev">
+					  	<button class="carousel-control-prev" type="button" data-bs-target="" data-bs-slide="prev" id="btn-carousel-prev">
 				    		<span class="carousel-control-prev-icon" aria-hidden="true"></span>
 				    		<span class="visually-hidden">Previous</span>
 				  		</button>
-					  	<button class="carousel-control-next" type="button" data-bs-target="#carouselExampleFade" data-bs-slide="next">
+					  	<button class="carousel-control-next" type="button" data-bs-target="" data-bs-slide="next" id="btn-carousel-next">
 				    		<span class="carousel-control-next-icon" aria-hidden="true"></span>
 					    	<span class="visually-hidden">Next</span>
 					  	</button>
 					</div>
 				</div>
 				<div class="col-8 p-4">
+				
+					<div class="row">
+						<span class="fs-4 text-start fw-bolder">한줄평</span>
+					</div>
+					<div class="row p-2" id="div-comment">
+					<c:forEach var="comment" items="${commentsForHomes }">
+						<div class="row d-none" data-comment-movieNo="${comment.movieNo }">
+							<table class="table table-borderless">
+								<thead>
+									<tr>
+										<th>작성자</th>
+										<td>${comment.name }</td>
+										<th>평점</th>
+										<td>${comment.customerRating }/5.0</td>
+									</tr>
+								</thead>
+								<tbody>
+									<tr>
+										<td colspan="5">${comment.content }</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+					</c:forEach>
+					</div>
 					
 				</div>
 			</div>
@@ -194,44 +218,44 @@
 			</div>
 			<div class="row">
 				<div class="card py-3 d-flex justify-content-center">
-					<div class="row d-flex justify-content-center">
+					<div class="row d-flex justify-content-center my-1">
 						<div class="col-1 text-center">
 							<span class="badge bg-danger">1</span>
 						</div>
 						<div class="col-9">
-							<p>인기글인기글인기글인기글인기글인기글인기글인기글인기글인기글인기글</p>
+							<a class="link-dark" href="">'고스트버스터즈' 이반 라이트만 감독 별세</a>
 						</div>
 					</div>
-					<div class="row d-flex justify-content-center">
+					<div class="row d-flex justify-content-center my-1">
 						<div class="col-1 text-center">
 							<span class="badge bg-warning">2</span>
 						</div>
 						<div class="col-9">
-							<p>인기글인기글인기글인기글인기글인기글인기글인기글인기글인기글인기글</p>
+							<a class="link-dark" href="">혹시 정말 유명한 영화인데 아직까지 안본 영화 있으신가요?</a>
 						</div>
 					</div>
-					<div class="row d-flex justify-content-center">
+					<div class="row d-flex justify-content-center my-1">
 						<div class="col-1 text-center">
 							<span class="badge bg-dark">3</span>
 						</div>
 						<div class="col-9">
-							<p>인기글인기글인기글인기글인기글인기글인기글인기글인기글인기글인기글</p>
+							<a class="link-dark" href="">대환장 막장 아사리판의 멀티버스 예고편 보고 후다닥 찍은 핫토이 닥터... </a>
 						</div>
 					</div>
-					<div class="row d-flex justify-content-center">
+					<div class="row d-flex justify-content-center my-1">
 						<div class="col-1 text-center">
 							<span class="badge bg-secondary">4</span>
 						</div>
 						<div class="col-9">
-							<p>인기글인기글인기글인기글인기글인기글인기글인기글인기글인기글인기글</p>
+							<a class="link-dark" href="">올해 박스오피스 1위를 지켜줄 영화는 어떤게 있을까(잡담)</a>
 						</div>
 					</div>
-					<div class="row d-flex justify-content-center">
+					<div class="row d-flex justify-content-center my-1">
 						<div class="col-1 text-center">
 							<span class="badge bg-secondary">5</span>
 						</div>
 						<div class="col-9">
-							<p>인기글인기글인기글인기글인기글인기글인기글인기글인기글인기글인기글</p>
+							<a class="link-dark" href="">'더 배트맨' 일본판 포스터에서 일본어 제거해봤습니다.</a>
 						</div>
 					</div>
 				</div>
@@ -250,45 +274,45 @@
 				</div>
 			</div>
 			<div class="row">
-				<div class="card py-3 d-flex justify-content-center">
+				<div class="card py-3 d-flex justify-content-center my-1">
 					<div class="row d-flex justify-content-center">
 						<div class="col-1 text-center">
 							<span class="badge bg-danger">1</span>
 						</div>
 						<div class="col-9">
-							<p>추천글추천글추천글추천글추천글추천글추천글추천글추천글추천글추천글</p>
+							<a class="link-dark" href="">[라라랜드] CGV 2월 24일 재개봉 -> 2월 22일 재개봉</a>
 						</div>
 					</div>
-					<div class="row d-flex justify-content-center">
+					<div class="row d-flex justify-content-center my-1">
 						<div class="col-1 text-center">
 							<span class="badge bg-warning">2</span>
 						</div>
 						<div class="col-9">
-							<p>추천글추천글추천글추천글추천글추천글추천글추천글추천글추천글추천글</p>
+							<a class="link-dark" href="">'언차티드' 적당히 킬링타임용</a>
 						</div>
 					</div>
-					<div class="row d-flex justify-content-center">
+					<div class="row d-flex justify-content-center my-1">
 						<div class="col-1 text-center">
 							<span class="badge bg-dark">3</span>
 						</div>
 						<div class="col-9">
-							<p>추천글추천글추천글추천글추천글추천글추천글추천글추천글추천글추천글</p>
+							<a class="link-dark" href="">어제 굿즈대리수령 연락두절건으로 글을 썼었습니다.</a>
 						</div>
 					</div>
-					<div class="row d-flex justify-content-center">
+					<div class="row d-flex justify-content-center my-1">
 						<div class="col-1 text-center">
 							<span class="badge bg-secondary">4</span>
 						</div>
 						<div class="col-9">
-							<p>추천글추천글추천글추천글추천글추천글추천글추천글추천글추천글추천글</p>
+							<a class="link-dark" href="">'더 배트맨' 28일 전야 상영 확정</a>
 						</div>
 					</div>
-					<div class="row d-flex justify-content-center">
+					<div class="row d-flex justify-content-center my-1">
 						<div class="col-1 text-center">
 							<span class="badge bg-secondary">5</span>
 						</div>
 						<div class="col-9">
-							<p>추천글추천글추천글추천글추천글추천글추천글추천글추천글추천글추천글</p>
+							<a class="link-dark" href="">[메가박스 코엑스] 관람요금 기준 변경 안내 (2/14~)</a>
 						</div>
 					</div>
 				</div>
@@ -383,8 +407,76 @@ $(function() {
 			}
 		})
 	})
+	
+	// 한줄평
+	let movieNo = $('.carousel-inner .active').attr('data-rank-movieNo');
+	$('#div-comment').find($('[data-comment-movieNo='+movieNo+']')).removeClass('d-none');
+	
+	$('#btn-carousel-prev').click(function(evnet) {
+		event.preventDefault();
+		let index = $('.carousel-inner .active').attr('data-count')*1;
+		let movieNo = $('.carousel-inner .active').attr('data-rank-movieNo');
+		
+		$('.carousel-inner .active').removeClass('active');
+		index -= 1;
+		if (index < 0) {
+			index = 9;
+		}
+		$('.carousel-inner').find($('[data-count='+index+']')).addClass('active');
+		
+		$('#div-comment').find($('[data-comment-movieNo]')).addClass('d-none')
+		$('#div-comment').find($('[data-comment-movieNo='+movieNo+']')).removeClass('d-none');
+	})
+	$('#btn-carousel-next').click(function(evnet) {
+		event.preventDefault();
+		let index = $('.carousel-inner .active').attr('data-count')*1;
+		let movieNo = $('.carousel-inner .active').attr('data-rank-movieNo');
+		
+		$('.carousel-inner .active').removeClass('active');
+		index += 1;
+		if (index > 9) {
+			index = 0;
+		}
+		$('.carousel-inner').find($('[data-count='+index+']')).addClass('active');
+		
+		$('#div-comment').find($('[data-comment-movieNo]')).addClass('d-none')
+		$('#div-comment').find($('[data-comment-movieNo='+movieNo+']')).removeClass('d-none');
+	})
+	
+	$('#a-movie-detail').click(function(event) {
+		event.preventDefault();
+		let movieNo = $('.carousel-inner .active').attr('data-rank-movieNo');
+		let link = '/movie/detail?no=' + movieNo;
+		location.href = link; 
+	})
+	
 })
 </script>
 <%@ include file="/WEB-INF/views/common/footer.jsp" %>
 </body>
 </html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

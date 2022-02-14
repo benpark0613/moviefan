@@ -20,7 +20,7 @@ public class MyAccountCustomerCommentDto {
 	// MovieCustomerComment
 	private int commentNo;
 	private int movieNo;
-	private int customerRating;
+	private double customerRating;
 	private String content;
 	private Date createdDate;
 	private int reportCount;
@@ -82,11 +82,11 @@ public class MyAccountCustomerCommentDto {
 		this.movieNo = movieNo;
 	}
 
-	public int getCustomerRating() {
+	public double getCustomerRating() {
 		return customerRating;
 	}
 
-	public void setCustomerRating(int customerRating) {
+	public void setCustomerRating(double customerRating) {
 		this.customerRating = customerRating;
 	}
 
@@ -163,6 +163,7 @@ public class MyAccountCustomerCommentDto {
 				+ images + ", actors=" + actors + "]";
 	}
 
+	
 	
 	
 }

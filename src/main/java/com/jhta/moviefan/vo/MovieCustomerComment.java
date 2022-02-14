@@ -7,7 +7,7 @@ public class MovieCustomerComment {
 	private int commentNo;
 	private int customerNo;
 	private int movieNo;
-	private int customerRating;
+	private double customerRating;
 	private String content;
 	private Date createdDate;
 	private int reportCount;
@@ -40,11 +40,11 @@ public class MovieCustomerComment {
 		this.movieNo = movieNo;
 	}
 
-	public int getCustomerRating() {
+	public double getCustomerRating() {
 		return customerRating;
 	}
 
-	public void setCustomerRating(int customerRating) {
+	public void setCustomerRating(double customerRating) {
 		this.customerRating = customerRating;
 	}
 
@@ -94,6 +94,8 @@ public class MovieCustomerComment {
 				+ ", customerRating=" + customerRating + ", content=" + content + ", createdDate=" + createdDate
 				+ ", reportCount=" + reportCount + ", likeCount=" + likeCount + ", updatedDate=" + updatedDate + "]";
 	}
+
+	
 	
 	
 	
