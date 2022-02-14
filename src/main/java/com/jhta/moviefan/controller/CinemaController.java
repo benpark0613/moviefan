@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.jhta.moviefan.dto.CinemaDto;
 import com.jhta.moviefan.dto.MovieTimeTableDto;
+import com.jhta.moviefan.form.ScheduleCriteria;
 import com.jhta.moviefan.service.CinemaService;
 import com.jhta.moviefan.vo.Cinema;
 import com.jhta.moviefan.vo.City;
@@ -39,9 +40,9 @@ public class CinemaController {
 	}
 	
 	@GetMapping("/timetable")
-	public String timetable(int cinemaNo, Date showDate, Model model) {
+	public String timetable(int cinemaNo, ScheduleCriteria criteria, Model model) {
 		Cinema cinemaName = cinemaService.getCinemaNameByNo(cinemaNo);
-		List<MovieTimeTableDto> movieTimeTableDtos = cinemaService.getMovieTimeTableByShowDate(showDate);
+		List<MovieTimeTableDto> movieTimeTableDtos = cinemaService.getMovieTimeTableByShowDate(criteria);
 		
 		//
 		List<Dto> result = new ArrayList<>();

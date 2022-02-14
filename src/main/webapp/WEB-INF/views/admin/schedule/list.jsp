@@ -97,7 +97,7 @@
 			  		<c:choose>
 			  			<c:when test="${empty param }">
 							<tr>
-								<td class="text-center" colspan="7">지역별, 영화관별 상영일정을 조회할 수 있습니다.<br>먼저 검색옵션을 선택하세요.</td>
+								<td class="text-center" colspan="7">영화관별 상영일정을 조회할 수 있습니다.<br>먼저 검색옵션을 선택하세요.</td>
 							</tr>
 						</c:when>
 						<c:when test="${empty timetables }">
@@ -158,17 +158,17 @@
 			// 선택한 지역번호를 input hidden에 저장한다.
 			let cityNo = $(this).val();
 			$('input[name=cityNo]').val(cityNo);
-					// 영화관 선택 셀렉트박스를 비워둔다.
-					let $select = $("#cinema-select").empty();
-					$select.prepend('<option value="" disabled selected>--영화관을 선택하세요. --</option>');
-					// ajax로 선택한 지역번호에 해당하는 영화관 리스트를 받아온다.
-					$.getJSON("/rest/cinema/list", {cityNo:cityNo}, function (cinemaList) {
-						$.each (cinemaList, function(index, cinema) {
-							let option = '<option value="' + cinema.no + '" >' + cinema.name + '</option>';
-							
-							$select.append(option);
-						})
-					})
+			// 영화관 선택 셀렉트박스를 비워둔다.
+			let $select = $("#cinema-select").empty();
+			$select.prepend('<option value="" disabled selected>--영화관을 선택하세요. --</option>');
+			// ajax로 선택한 지역번호에 해당하는 영화관 리스트를 받아온다.
+			$.getJSON("/rest/cinema/list", {cityNo:cityNo}, function (cinemaList) {
+				$.each (cinemaList, function(index, cinema) {
+					let option = '<option value="' + cinema.no + '" >' + cinema.name + '</option>';
+					
+					$select.append(option);
+				})
+			})
 		})
 		
 		// 2. 상영관이 변경될 때마다 실행될 이벤트 핸들러 함수
@@ -201,7 +201,7 @@
 			$("#form-search-schedule").trigger("submit");
 		});
 		
-		// 5. 수정페이지에서 목록으로 되돌아가기 기능 구현	
+		// 5. 수정페이지에서의 목록으로 되돌아가기 기능 관련	
 		// 수정페이지의 파라미터값(지역번호, 영화관번호, 페이지번호)을 가져온다.
 		let paramCityNo = $('input[name=paramCityNo]').val();
 		let paramCinemaNo = $('input[name=paramCinemaNo]').val();

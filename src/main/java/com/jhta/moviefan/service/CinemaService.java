@@ -1,7 +1,6 @@
 package com.jhta.moviefan.service;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -85,8 +84,8 @@ public class CinemaService {
 		return cinemaDao.getMovieTimeTableByShowNo(showNo);
 	}
 	
-	public List<MovieTimeTableDto> getMovieTimeTableByShowDate(Date showDate) {
-		return cinemaDao.getMovieTimeTableByShowDate(showDate);
+	public List<MovieTimeTableDto> getMovieTimeTableByShowDate(ScheduleCriteria criteria) {
+		return cinemaDao.getMovieTimeTableByShowDate(criteria);
 	}
 	
 	public Show getShowByShowNo(int showNo) {

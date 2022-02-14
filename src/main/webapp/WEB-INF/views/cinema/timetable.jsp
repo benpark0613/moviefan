@@ -16,6 +16,7 @@
    <!-- datepicker -->
 	<link type="text/css" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/base/jquery-ui.css" rel="stylesheet" />
 	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+	<link href="/resources/css/datepicker.css" rel="stylesheet">
 	<style>
 		body {
 			font-family: NanumBarunGothic;
@@ -28,6 +29,10 @@
 		tr {
 			border-color: white;
 		}
+		#show-datepicker {
+			width:300px; 
+			text-align:center;
+		}
 		#movie-title, #cinema-name, #hall-name {
 			font-weight: bold;
 		}
@@ -38,175 +43,6 @@
 			width: 210px;
   			height: 110px;
 		}
-		
-		.ui-widget-header {
-		border: 0px solid #dddddd;
-		background: #fff;
-		}
-		
-		.ui-datepicker-calendar>thead>tr>th {
-		font-size: 14px !important;
-		}
-		
-		.ui-datepicker .ui-datepicker-header {
-		position: relative;
-		padding: 10px 0;
-		}
-
-		.ui-state-default, .ui-widget-content .ui-state-default, .ui-widget-header .ui-state-default, .ui-button, html .ui-button.ui-state-disabled:hover, html .ui-button.ui-state-disabled:active {
-		border: 0px solid #c5c5c5;
-		background-color: transparent;
-		font-weight: normal;
-		color: #454545;
-		text-align: center;
-		}
-		
-		.ui-datepicker .ui-datepicker-title {
-		margin: 0 0em;
-		line-height: 16px;
-		text-align: center;
-		font-size: 14px;
-		padding: 0px;
-		font-weight: bold;
-		}
-		
-		.ui-datepicker {
-		display: none;
-		background-color: #fff;
-		border-radius: 4px;
-		margin-top: 10px;
-		margin-left: 0px;
-		margin-right: 0px;
-		padding: 20px;
-		padding-bottom: 10px;
-		width: 300px;
-		box-shadow: 10px 10px 40px rgba(0,0,0,0.1);
-		}
-		    
-		.ui-widget.ui-widget-content {
-		    border: 1px solid #eee;
-		}
-		
-		#datepicker:focus>.ui-datepicker {
-		display: block;
-		}
-		
-		.ui-datepicker-prev,
-		.ui-datepicker-next {
-		cursor: pointer;
-		}
-		
-		.ui-datepicker-next {
-		float: right;
-		}
-		
-		.ui-state-disabled {
-		cursor: auto;
-		color: hsla(0, 0%, 80%, 1);
-		}
-		
-		.ui-datepicker-title {
-		text-align: center;
-		padding: 10px;
-		font-weight: 100;
-		font-size: 20px;
-		}
-		
-		.ui-datepicker-calendar {
-		width: 100%;
-		}
-		
-		.ui-datepicker-calendar>thead>tr>th {
-		padding: 5px;
-		font-size: 20px;
-		font-weight: 400;
-		}
-		
-		
-		.ui-datepicker-calendar>tbody>tr>td>a {
-		color: #000;
-		font-size: 12px !important;
-		font-weight: bold !important;
-		text-decoration: none;
-		    
-		}
-		
-		
-		.ui-datepicker-calendar>tbody>tr>.ui-state-disabled:hover {
-		cursor: auto;
-		background-color: #fff;
-		}
-		    
-		.ui-datepicker-calendar>tbody>tr>td {
-		    border-radius: 100%;
-		    width: 44px;
-		    height: 30px;
-		    cursor: pointer;
-		    padding: 5px;
-		    font-weight: 100;
-		    text-align: center;
-		    font-size: 12px;
-		}
-		    
-		.ui-datepicker-calendar>tbody>tr>td:hover {
-		    background-color: transparent;
-		    opacity: 0.6;
-		}
-		
-		.ui-state-hover,
-		.ui-widget-content .ui-state-hover,
-		.ui-widget-header .ui-state-hover,
-		.ui-state-focus,
-		.ui-widget-content .ui-state-focus,
-		.ui-widget-header .ui-state-focus,
-		.ui-button:hover,
-		.ui-button:focus {
-		border: 0px solid #cccccc;
-		background-color: transparent;
-		font-weight: normal;
-		color: #2b2b2b;
-		}
-		
-		.ui-widget-header .ui-icon {
-		background-image: url('../resources/btns.png');
-		}
-		.ui-icon-circle-triangle-e {
-		background-position: -20px 0px;
-		background-size: 36px;
-		}
-		
-		.ui-icon-circle-triangle-w {
-		background-position: -0px -0px;
-		background-size: 36px;
-		}
-		    
-		.ui-datepicker-calendar>tbody>tr>td:first-child a{
-		color: red !important;
-		}
-		    
-		.ui-datepicker-calendar>tbody>tr>td:last-child a{
-		color: #0099ff !important;
-		}
-		    
-		.ui-datepicker-calendar>thead>tr>th:first-child {
-		    color: red !important;
-		}
-		    
-		.ui-datepicker-calendar>thead>tr>th:last-child {
-		    color: #0099ff !important;
-		}
-		
-		.ui-state-highlight, .ui-widget-content .ui-state-highlight, .ui-widget-header .ui-state-highlight {
-		    border: 0px;
-		    background: #f1f1f1;
-		    border-radius: 50%;
-		    padding-top: 10px;
-		    padding-bottom: 10px;
-		}
-		
-		
-		.inp {padding:10px 10px; background-color:#f1f1f1; border-radius:4px; border:0px;}
-		.inp:focus {outline:none; background-color:#eee;}
 	</style>
 </head>
 <body>
@@ -214,10 +50,9 @@
 <div class="container">
 	<input type="hidden" name="parameter" value="${param.cinemaNo }">
 	<div id="cinema-name" class="fs-1 p-3 mt-3 mb-3">
-		<span>${cinema.name }&nbsp;&nbsp;&nbsp;</span>
+		<span>${cinema.name }&nbsp;&nbsp;</span>
 		<span><a type="button" class="btn btn-dark" href="main?cityNo=${param.cityNo }">목록으로 돌아가기</a></span>
 	</div>
-	
 	<div id="movie-timetable" class="row justify-content-center mb-3">
 		<div id="content" class="col-11 px-0">
 			<c:choose>
@@ -225,23 +60,27 @@
 					<div id="warning" class="text-center mt-5 mb-5 fs-3">현재 상영중인 영화가 없습니다.</div>
 				</c:when>
 				<c:otherwise>
-				<div style="width:400px; margin:0 auto; margin-top:100px; text-align:center;">
-        <input type="text" name="showDate" value="" class="datepicker inp" readonly /> 
-    </div>
 					<!-- 안내버튼 -->
-					<div class="row mb-0 justify-content-end hstack gap-2">
-						<a href="/theater/price" id="price-info" class="col-2 btn btn-success" data-bs-toggle="modal" data-bs-target="#priceInfoModal">
-						관람가격 안내</a>
-<!-- 					<a href="/cinema/location" id="location-info" class="col-2 btn btn-success">위치/주차 안내</a> -->
+					<div class="row justify-content-between">
+						<div class="col">
+							<form id="form-search-show-date" method="get" action="timetable">
+								<input id="cinema-no" type="hidden" name="cinemaNo" value="${param.cinemaNo }" />
+								<input id="show-datepicker" type="text" name="showDate" value="${param.showDate }" class="datepicker inp" readonly />
+							</form>
+						</div>
+						<div class="col">
+							<a href="/theater/price" id="price-info" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#priceInfoModal">
+							관람가격 안내</a>
+	<!-- 					<a href="/cinema/location" id="location-info" class="col-2 btn btn-success">위치/주차 안내</a> -->
+						</div>
 					</div>
+					
 					<!-- 상영시간표 부분 -->
 					<c:forEach var="timetable" items="${movieTimeTableDtos }">
-
-
-						<div class="card mb-3">
-							<div class="card-body row-12 p-0 mt-5">
+						<div class="card mt-5 mb-3">
+							<div class="card-body row-12 p-0 mt-3 mb-5">
+<div>상영일: <fmt:formatDate value="${timetable.showDate }" pattern="yyyy-MM-dd"/></div>							
 								<!-- 영화정보 -->
-	<div>상영일: <fmt:formatDate value="${timetable.showDate }" pattern="yyyy-MM-dd"/></div>
 								<div class="border-0 border-bottom border-3 p-3">
 									<span class="fs-2" id="movie-title">${timetable.title } &nbsp; &nbsp;</span>
 			<%-- 					<span class="ml-3">${movieTimeTable.genre } | </span> --%>
@@ -310,34 +149,35 @@
 </body>
 <script type="text/javascript">
 
-$.datepicker.setDefaults({
-    closeText: "닫기",
-    prevText: "이전달",
-    nextText: "다음달",
-    currentText: "오늘",
-    monthNames: ["1월", "2월", "3월", "4월", "5월", "6월", "7월", "8월", "9월", "10월", "11월", "12월"],
-    monthNamesShort: ["1월", "2월", "3월", "4월", "5월", "6월", "7월", "8월", "9월", "10월", "11월", "12월"],
-    dayNames: ["일요일", "월요일", "화요일", "수요일", "목요일", "금요일", "토요일"],
-    dayNamesShort: ["일", "월", "화", "수", "목", "금", "토"],
-    dayNamesMin: ["일", "월", "화", "수", "목", "금", "토"],
-    weekHeader: "주",
-    dateFormat: "yy.mm.dd", // 날짜형태 예)yy년 m월 d일
-    firstDay: 0,
-    isRTL: false,
-    showMonthAfterYear: true,
-    yearSuffix: "년"
-  })
-
-  $(".datepicker").datepicker({
-    minDate: 0
-  })
-  
-  
-  $('input[name=showDate]').change(function () {
-	  let a = $(this).val();
-	  console.log(a);
+	$.datepicker.setDefaults({
+		closeText: "닫기",
+	    prevText: "이전달",
+	    nextText: "다음달",
+	    currentText: "오늘",
+	    monthNames: ["1월", "2월", "3월", "4월", "5월", "6월", "7월", "8월", "9월", "10월", "11월", "12월"],
+	    monthNamesShort: ["1월", "2월", "3월", "4월", "5월", "6월", "7월", "8월", "9월", "10월", "11월", "12월"],
+	    dayNames: ["일요일", "월요일", "화요일", "수요일", "목요일", "금요일", "토요일"],
+	    dayNamesShort: ["일", "월", "화", "수", "목", "금", "토"],
+	    dayNamesMin: ["일", "월", "화", "수", "목", "금", "토"],
+	    weekHeader: "주",
+	    dateFormat: "yy.mm.dd",
+	    firstDay: 0,
+	    isRTL: false,
+	    showMonthAfterYear: true,
+	    yearSuffix: "년"
+	})
 	
-})
+	$(".datepicker").datepicker({
+	    minDate: 0
+	})
+	
+	$('input[name=showDate]').change(function () {
+		let searchDate = $(this).val().replace(/\./g, '');
+		let cinemaNo = $('input[name=cinemaNo]').val();
+		$(this).val(searchDate);
+
+		$("#form-search-show-date").trigger('submit');
+	});
 
 </script>
 </html>
