@@ -20,7 +20,7 @@
 		    overflow-y: auto !important;
 		}
 		#time-list-box {
-			max-height: 450px !important;
+			max-height: 430px !important;
 		    overflow-y: auto !important;
 		}
 		#movie-list-box::-webkit-scrollbar-track,
@@ -74,11 +74,16 @@
 		 	outline: none !important;
 			box-shadow: none !important;
 		}
+		#ticket-btn-box a {
+			border-color: #333; 
+			width: 30px; 
+			height: 30px;
+		}
 		/*
 			좌석 CSS 설정
 		*/
-		#seat a {
-			background-color: #333;
+		#seat-box a {
+			background-color: #212529;
 			color: #fff;
 			border-radius: 0;
 			border-color: #f8f9fa;
@@ -87,16 +92,36 @@
 			margin-right: -4px;
 			padding: 0;
 		}
-		#seat .btn.active {
+		#seat-box .btn.active {
 			background-color: #dc3545 !important;
 		}
-		#seat .btn.none {
+		#seat-box .btn.none {
 			background-color: #f8f9fa !important;
 			color: #f8f9fa;
+		}
+		/*
+			오버레이 CSS 설정
+		*/
+		#overlay {
+			position: fixed; /* Sit on top of the page content */
+		 	width: 100%; /* Full width (cover the whole page) */
+		  	height: 100%; /* Full height (cover the whole page) */
+		  	top: 0;
+		  	left: 0;
+		  	right: 0;
+		  	bottom: 0;
+		  	background-color: rgba(0,0,0,0.5); /* Black background with opacity */
+		  	z-index: 10000000 !important; /* Specify a stack order in case you're using a different order for other elements */
+		  	cursor: pointer; /* Add a pointer on hover */
 		}	
 	</style>
 </head>
 <body>
+<div class="d-flex justify-content-center align-items-center d-none" id="overlay">
+	<div class="spinner-border text-light" style="width: 15rem; height: 15rem; border: 1em solid; border-right-color: transparent;">
+		<span class="visually-hidden">Loading...</span>
+	</div>
+</div>
 <%@ include file="/WEB-INF/views/common/header.jsp" %>
 <div class="container">
 	<div class="row my-3">
@@ -106,6 +131,9 @@
 		</div>
 	</div>
 	<div class="row">
+		
+		<!-- 영화선택 테이블 -->
+	
 		<table class="table table-bordered mb-0" id="table-movie">
 			<thead>
 				<tr>
@@ -230,15 +258,7 @@
 							<i class="bi bi-moon-fill text-primary"></i> 심야
 						</div>
 						<hr>
-						<div class="text-center" id="time-list-box">
-							<br/>
-							<br/>
-							<br/>
-							<br/>
-							<br/>
-							<br/>
-							<br/>
-							<br/>
+						<div class="d-flex justify-content-center align-items-center" id="time-list-box" style="height: 430px;">
 							<span>영화, 극장, 날짜를 선택해주세요.</span>
 						</div>
 					</td>
@@ -246,11 +266,7 @@
 			</tbody>
 		</table>
 		
-		
-		
-		
-		
-		
+		<!-- 좌석선택 테이블 -->
 		
 		<table class="table table-bordered mb-0 d-none" id="table-seat">
 			<thead>
@@ -260,261 +276,146 @@
 			</thead>
 			<tbody>
 				<tr>
-					<td class="col-6 bg-light border-start-0" colspan="2">
-						<div class="mb-1">
-							<span class="align-middle" style="display: inline-block; width: 70px;">일반</span>
-							<a class="btn btn-sm active" id="" data-bs-toggle="button" href="#" style="border-color: #333; width: 30px; height: 30px;"><strong>0</strong></a>
-							<a class="btn btn-sm" id="" data-bs-toggle="button" href="#" style="border-color: #333; width: 30px; height: 30px;"><strong>1</strong></a>
-							<a class="btn btn-sm" id="" data-bs-toggle="button" href="#" style="border-color: #333; width: 30px; height: 30px;"><strong>2</strong></a>
-							<a class="btn btn-sm" id="" data-bs-toggle="button" href="#" style="border-color: #333; width: 30px; height: 30px;"><strong>3</strong></a>
-							<a class="btn btn-sm" id="" data-bs-toggle="button" href="#" style="border-color: #333; width: 30px; height: 30px;"><strong>4</strong></a>
-							<a class="btn btn-sm" id="" data-bs-toggle="button" href="#" style="border-color: #333; width: 30px; height: 30px;"><strong>5</strong></a>
-							<a class="btn btn-sm" id="" data-bs-toggle="button" href="#" style="border-color: #333; width: 30px; height: 30px;"><strong>6</strong></a>
+					<td class="col-6 bg-light border-start-0" colspan="2" id="ticket-btn-box">
+						<span class="text-danger float-end">* 최대 6명 선택 가능</span>
+						<div class="mb-1" id="adult-ticket-box">
+							<span class="align-middle fw-bold" style="display: inline-block; width: 70px;">일반</span>
+							<a class="btn btn-sm fw-bold active" href="#">0</a>
+							<a class="btn btn-sm fw-bold" href="#">1</a>
+							<a class="btn btn-sm fw-bold" href="#">2</a>
+							<a class="btn btn-sm fw-bold" href="#">3</a>
+							<a class="btn btn-sm fw-bold" href="#">4</a>
+							<a class="btn btn-sm fw-bold" href="#">5</a>
+							<a class="btn btn-sm fw-bold" href="#">6</a>
+							<a class="btn btn-sm fw-bold disabled" href="#">7</a>
+							<a class="btn btn-sm fw-bold disabled" href="#">8</a>
 						</div>
-						<div class="mb-1">
-							<span class="align-middle" style="display: inline-block; width: 70px;">청소년</span>
-							<a class="btn btn-sm active" id="" data-bs-toggle="button" href="#" style="border-color: #333; width: 30px; height: 30px;"><strong>0</strong></a>
-							<a class="btn btn-sm" id="" data-bs-toggle="button" href="#" style="border-color: #333; width: 30px; height: 30px;"><strong>1</strong></a>
-							<a class="btn btn-sm" id="" data-bs-toggle="button" href="#" style="border-color: #333; width: 30px; height: 30px;"><strong>2</strong></a>
-							<a class="btn btn-sm" id="" data-bs-toggle="button" href="#" style="border-color: #333; width: 30px; height: 30px;"><strong>3</strong></a>
-							<a class="btn btn-sm" id="" data-bs-toggle="button" href="#" style="border-color: #333; width: 30px; height: 30px;"><strong>4</strong></a>
-							<a class="btn btn-sm" id="" data-bs-toggle="button" href="#" style="border-color: #333; width: 30px; height: 30px;"><strong>5</strong></a>
-							<a class="btn btn-sm" id="" data-bs-toggle="button" href="#" style="border-color: #333; width: 30px; height: 30px;"><strong>6</strong></a>						
+						<div class="mb-1" id="youth-ticket-box">
+							<span class="align-middle fw-bold" style="display: inline-block; width: 70px;">청소년</span>
+							<a class="btn btn-sm fw-bold active" href="#">0</a>
+							<a class="btn btn-sm fw-bold" href="#">1</a>
+							<a class="btn btn-sm fw-bold" href="#">2</a>
+							<a class="btn btn-sm fw-bold" href="#">3</a>
+							<a class="btn btn-sm fw-bold" href="#">4</a>
+							<a class="btn btn-sm fw-bold" href="#">5</a>
+							<a class="btn btn-sm fw-bold" href="#">6</a>					
+							<a class="btn btn-sm fw-bold disabled" href="#">7</a>
+							<a class="btn btn-sm fw-bold disabled" href="#">8</a>			
 						</div>
-						<div class="mb-1">
-							<span class="align-middle" style="display: inline-block; width: 70px;">경로</span>
-							<a class="btn btn-sm active" id="" data-bs-toggle="button" href="#" style="border-color: #333; width: 30px; height: 30px;"><strong>0</strong></a>
-							<a class="btn btn-sm" id="" data-bs-toggle="button" href="#" style="border-color: #333; width: 30px; height: 30px;"><strong>1</strong></a>
-							<a class="btn btn-sm" id="" data-bs-toggle="button" href="#" style="border-color: #333; width: 30px; height: 30px;"><strong>2</strong></a>
-							<a class="btn btn-sm" id="" data-bs-toggle="button" href="#" style="border-color: #333; width: 30px; height: 30px;"><strong>3</strong></a>
-							<a class="btn btn-sm" id="" data-bs-toggle="button" href="#" style="border-color: #333; width: 30px; height: 30px;"><strong>4</strong></a>
-							<a class="btn btn-sm" id="" data-bs-toggle="button" href="#" style="border-color: #333; width: 30px; height: 30px;"><strong>5</strong></a>
-							<a class="btn btn-sm" id="" data-bs-toggle="button" href="#" style="border-color: #333; width: 30px; height: 30px;"><strong>6</strong></a>						
+						<div class="mb-1" id="senior-ticket-box">
+							<span class="align-middle fw-bold" style="display: inline-block; width: 70px;">경로</span>
+							<a class="btn btn-sm fw-bold active" href="#">0</a>
+							<a class="btn btn-sm fw-bold" href="#">1</a>
+							<a class="btn btn-sm fw-bold" href="#">2</a>
+							<a class="btn btn-sm fw-bold" href="#">3</a>
+							<a class="btn btn-sm fw-bold" href="#">4</a>
+							<a class="btn btn-sm fw-bold" href="#">5</a>
+							<a class="btn btn-sm fw-bold" href="#">6</a>	
+							<a class="btn btn-sm fw-bold disabled" href="#">7</a>
+							<a class="btn btn-sm fw-bold disabled" href="#">8</a>		
 						</div>
 					</td>
 					<td class="col-6 bg-light border-end-0" colspan="2">
-						<span class="align-middle">CGV강남</span>
+						<span class="align-middle" id="seat-cinema-name">CGV강남</span>
 						<div class="vr mx-2 align-middle"></div>
-						<span class="align-middle">5관(Laser) 10층</span>
+						<span class="align-middle" id="seat-hall-name">5관(Laser) 10층</span>
 						<div class="vr mx-2 align-middle"></div>
-						<span class="align-middle">남은좌석 <strong class="text-danger">161</strong>/172</span>
-						<span class="d-block fs-3"><strong>2022.01.24(월) 09:00 ~ 11:38</strong></span>
+						<span class="align-middle">남은좌석 <span class="fw-bold text-danger" id="seat-available">161</span>/<span class="fw-bold" id="seat-total">/172</span></span>
+						<span class="d-block fs-3 fw-bold "><span id="seat-show-date">2022.01.24(월)</span> <span id="seat-start-time">09:00</span> ~ <span id="seat-end-time">11:38</span></span>
 					</td>
 				</tr>
 				<tr>
 					<td class="col-9 bg-light border-start-0" colspan="3">
 						<div class="d-flex justify-content-center">
-							<div class="text-center" style="background-color: #333; color: #fff; width: 700px;">SCREEN</div>
+							<div class="text-center" style="background-color: #212529; color: #fff; width: 700px;">SCREEN</div>
 						</div>
 						<div class="d-flex justify-content-center my-5">
-							<div class="" style="width: 452px; height: 400px;" id="seat">
-								<a class="btn bg-light text-dark border-top border-bottom" id="" data-bs-toggle="button" href="#">A</a>
-								<a class="btn" id="" data-bs-toggle="button" href="#">1</a>
-								<a class="btn" id="" data-bs-toggle="button" href="#">2</a>
-								<a class="btn" id="" data-bs-toggle="button" href="#">3</a>
-								<a class="btn" id="" data-bs-toggle="button" href="#">4</a>
-								<a class="btn" id="" data-bs-toggle="button" href="#">5</a>
-								<a class="btn" id="" data-bs-toggle="button" href="#">6</a>
-								<a class="btn" id="" data-bs-toggle="button" href="#">7</a>
-								<a class="btn" id="" data-bs-toggle="button" href="#">8</a>
-								<a class="btn" id="" data-bs-toggle="button" href="#">9</a>
-								<a class="btn" id="" data-bs-toggle="button" href="#">10</a>
-								<a class="btn" id="" data-bs-toggle="button" href="#">11</a>
-								<a class="btn disabled none" id="" data-bs-toggle="button" href="#"></a>
-								<a class="btn disabled none" id="" data-bs-toggle="button" href="#"></a>
-								<a class="btn" id="" data-bs-toggle="button" href="#">14</a>
-								
-								<a class="btn bg-light text-dark border-top border-bottom" id="" data-bs-toggle="button" href="#">B</a>
-								<a class="btn" id="" data-bs-toggle="button" href="#">1</a>
-								<a class="btn" id="" data-bs-toggle="button" href="#">2</a>
-								<a class="btn" id="" data-bs-toggle="button" href="#">3</a>
-								<a class="btn" id="" data-bs-toggle="button" href="#">4</a>
-								<a class="btn" id="" data-bs-toggle="button" href="#">5</a>
-								<a class="btn" id="" data-bs-toggle="button" href="#">6</a>
-								<a class="btn" id="" data-bs-toggle="button" href="#">7</a>
-								<a class="btn" id="" data-bs-toggle="button" href="#">8</a>
-								<a class="btn" id="" data-bs-toggle="button" href="#">9</a>
-								<a class="btn" id="" data-bs-toggle="button" href="#">10</a>
-								<a class="btn" id="" data-bs-toggle="button" href="#">11</a>
-								<a class="btn" id="" data-bs-toggle="button" href="#">12</a>
-								<a class="btn" id="" data-bs-toggle="button" href="#">13</a>
-								<a class="btn" id="" data-bs-toggle="button" href="#">14</a>
-								
-								<a class="btn bg-light text-dark border-top border-bottom" id="" data-bs-toggle="button" href="#">C</a>
-								<a class="btn" id="" data-bs-toggle="button" href="#">1</a>
-								<a class="btn" id="" data-bs-toggle="button" href="#">2</a>
-								<a class="btn" id="" data-bs-toggle="button" href="#">3</a>
-								<a class="btn" id="" data-bs-toggle="button" href="#">4</a>
-								<a class="btn" id="" data-bs-toggle="button" href="#">5</a>
-								<a class="btn" id="" data-bs-toggle="button" href="#">6</a>
-								<a class="btn" id="" data-bs-toggle="button" href="#">7</a>
-								<a class="btn" id="" data-bs-toggle="button" href="#">8</a>
-								<a class="btn" id="" data-bs-toggle="button" href="#">9</a>
-								<a class="btn" id="" data-bs-toggle="button" href="#">10</a>
-								<a class="btn" id="" data-bs-toggle="button" href="#">11</a>
-								<a class="btn" id="" data-bs-toggle="button" href="#">12</a>
-								<a class="btn" id="" data-bs-toggle="button" href="#">13</a>
-								<a class="btn" id="" data-bs-toggle="button" href="#">14</a>
-								
-								<a class="btn bg-light text-dark border-top border-bottom" id="" data-bs-toggle="button" href="#">D</a>
-								<a class="btn" id="" data-bs-toggle="button" href="#">1</a>
-								<a class="btn" id="" data-bs-toggle="button" href="#">2</a>
-								<a class="btn" id="" data-bs-toggle="button" href="#">3</a>
-								<a class="btn" id="" data-bs-toggle="button" href="#">4</a>
-								<a class="btn" id="" data-bs-toggle="button" href="#">5</a>
-								<a class="btn" id="" data-bs-toggle="button" href="#">6</a>
-								<a class="btn" id="" data-bs-toggle="button" href="#">7</a>
-								<a class="btn" id="" data-bs-toggle="button" href="#">8</a>
-								<a class="btn" id="" data-bs-toggle="button" href="#">9</a>
-								<a class="btn" id="" data-bs-toggle="button" href="#">10</a>
-								<a class="btn" id="" data-bs-toggle="button" href="#">11</a>
-								<a class="btn" id="" data-bs-toggle="button" href="#">12</a>
-								<a class="btn" id="" data-bs-toggle="button" href="#">13</a>
-								<a class="btn" id="" data-bs-toggle="button" href="#">14</a>
-								
-								<a class="btn bg-light text-dark border-top border-bottom" id="" data-bs-toggle="button" href="#">E</a>
-								<a class="btn disabled" id="" data-bs-toggle="button" href="#">1</a>
-								<a class="btn disabled" id="" data-bs-toggle="button" href="#">2</a>
-								<a class="btn disabled" id="" data-bs-toggle="button" href="#">3</a>
-								<a class="btn disabled" id="" data-bs-toggle="button" href="#">4</a>
-								<a class="btn disabled" id="" data-bs-toggle="button" href="#">5</a>
-								<a class="btn" id="" data-bs-toggle="button" href="#">6</a>
-								<a class="btn" id="" data-bs-toggle="button" href="#">7</a>
-								<a class="btn" id="" data-bs-toggle="button" href="#">8</a>
-								<a class="btn" id="" data-bs-toggle="button" href="#">9</a>
-								<a class="btn" id="" data-bs-toggle="button" href="#">10</a>
-								<a class="btn" id="" data-bs-toggle="button" href="#">11</a>
-								<a class="btn" id="" data-bs-toggle="button" href="#">12</a>
-								<a class="btn" id="" data-bs-toggle="button" href="#">13</a>
-								<a class="btn" id="" data-bs-toggle="button" href="#">14</a>
-								
-								<a class="btn bg-light text-dark border-top border-bottom" id="" data-bs-toggle="button" href="#">F</a>
-								<a class="btn" id="" data-bs-toggle="button" href="#">1</a>
-								<a class="btn" id="" data-bs-toggle="button" href="#">2</a>
-								<a class="btn" id="" data-bs-toggle="button" href="#">3</a>
-								<a class="btn" id="" data-bs-toggle="button" href="#">4</a>
-								<a class="btn" id="" data-bs-toggle="button" href="#">5</a>
-								<a class="btn" id="" data-bs-toggle="button" href="#">6</a>
-								<a class="btn" id="" data-bs-toggle="button" href="#">7</a>
-								<a class="btn" id="" data-bs-toggle="button" href="#">8</a>
-								<a class="btn disabled" id="" data-bs-toggle="button" href="#">9</a>
-								<a class="btn" id="" data-bs-toggle="button" href="#">10</a>
-								<a class="btn" id="" data-bs-toggle="button" href="#">11</a>
-								<a class="btn" id="" data-bs-toggle="button" href="#">12</a>
-								<a class="btn" id="" data-bs-toggle="button" href="#">13</a>
-								<a class="btn" id="" data-bs-toggle="button" href="#">14</a>
-								
-								<a class="btn bg-light text-dark border-top border-bottom" id="" data-bs-toggle="button" href="#">G</a>
-								<a class="btn disabled none" id="" data-bs-toggle="button" href="#"></a>
-								<a class="btn disabled none" id="" data-bs-toggle="button" href="#"></a>
-								<a class="btn" id="" data-bs-toggle="button" href="#">3</a>
-								<a class="btn" id="" data-bs-toggle="button" href="#">4</a>
-								<a class="btn" id="" data-bs-toggle="button" href="#">5</a>
-								<a class="btn" id="" data-bs-toggle="button" href="#">6</a>
-								<a class="btn" id="" data-bs-toggle="button" href="#">7</a>
-								<a class="btn" id="" data-bs-toggle="button" href="#">8</a>
-								<a class="btn disabled" id="" data-bs-toggle="button" href="#">9</a>
-								<a class="btn" id="" data-bs-toggle="button" href="#">10</a>
-								<a class="btn" id="" data-bs-toggle="button" href="#">11</a>
-								<a class="btn" id="" data-bs-toggle="button" href="#">12</a>
-								<a class="btn" id="" data-bs-toggle="button" href="#">13</a>
-								<a class="btn" id="" data-bs-toggle="button" href="#">14</a>
-								
-								<a class="btn bg-light text-dark border-top border-bottom" id="" data-bs-toggle="button" href="#">H</a>
-								<a class="btn disabled none" id="" data-bs-toggle="button" href="#"></a>
-								<a class="btn disabled none" id="" data-bs-toggle="button" href="#"></a>
-								<a class="btn" id="" data-bs-toggle="button" href="#">3</a>
-								<a class="btn" id="" data-bs-toggle="button" href="#">4</a>
-								<a class="btn" id="" data-bs-toggle="button" href="#">5</a>
-								<a class="btn" id="" data-bs-toggle="button" href="#">6</a>
-								<a class="btn" id="" data-bs-toggle="button" href="#">7</a>
-								<a class="btn" id="" data-bs-toggle="button" href="#">8</a>
-								<a class="btn" id="" data-bs-toggle="button" href="#">9</a>
-								<a class="btn" id="" data-bs-toggle="button" href="#">10</a>
-								<a class="btn" id="" data-bs-toggle="button" href="#">11</a>
-								<a class="btn" id="" data-bs-toggle="button" href="#">12</a>
-								<a class="btn" id="" data-bs-toggle="button" href="#">13</a>
-								<a class="btn" id="" data-bs-toggle="button" href="#">14</a>
-								
-								<a class="btn bg-light text-dark border-top border-bottom" id="" data-bs-toggle="button" href="#">I</a>
-								<a class="btn disabled none" id="" data-bs-toggle="button" href="#"></a>
-								<a class="btn disabled none" id="" data-bs-toggle="button" href="#"></a>
-								<a class="btn" id="" data-bs-toggle="button" href="#">3</a>
-								<a class="btn" id="" data-bs-toggle="button" href="#">4</a>
-								<a class="btn" id="" data-bs-toggle="button" href="#">5</a>
-								<a class="btn" id="" data-bs-toggle="button" href="#">6</a>
-								<a class="btn" id="" data-bs-toggle="button" href="#">7</a>
-								<a class="btn" id="" data-bs-toggle="button" href="#">8</a>
-								<a class="btn" id="" data-bs-toggle="button" href="#">9</a>
-								<a class="btn" id="" data-bs-toggle="button" href="#">10</a>
-								<a class="btn" id="" data-bs-toggle="button" href="#">11</a>
-								<a class="btn" id="" data-bs-toggle="button" href="#">12</a>
-								<a class="btn" id="" data-bs-toggle="button" href="#">13</a>
-								<a class="btn" id="" data-bs-toggle="button" href="#">14</a>
-								
-								<a class="btn bg-light text-dark border-top border-bottom" id="" data-bs-toggle="button" href="#">J</a>
-								<a class="btn disabled none" id="" data-bs-toggle="button" href="#"></a>
-								<a class="btn disabled none" id="" data-bs-toggle="button" href="#"></a>
-								<a class="btn" id="" data-bs-toggle="button" href="#">3</a>
-								<a class="btn" id="" data-bs-toggle="button" href="#">4</a>
-								<a class="btn" id="" data-bs-toggle="button" href="#">5</a>
-								<a class="btn" id="" data-bs-toggle="button" href="#">6</a>
-								<a class="btn" id="" data-bs-toggle="button" href="#">7</a>
-								<a class="btn" id="" data-bs-toggle="button" href="#">8</a>
-								<a class="btn disabled" id="" data-bs-toggle="button" href="#">9</a>
-								<a class="btn" id="" data-bs-toggle="button" href="#">10</a>
-								<a class="btn" id="" data-bs-toggle="button" href="#">11</a>
-								<a class="btn" id="" data-bs-toggle="button" href="#">12</a>
-								<a class="btn" id="" data-bs-toggle="button" href="#">13</a>
-								<a class="btn" id="" data-bs-toggle="button" href="#">14</a>
-								
-								<a class="btn bg-light text-dark border-top border-bottom" id="" data-bs-toggle="button" href="#">K</a>
-								<a class="btn disabled none" id="" data-bs-toggle="button" href="#"></a>
-								<a class="btn disabled none" id="" data-bs-toggle="button" href="#"></a>
-								<a class="btn" id="" data-bs-toggle="button" href="#">3</a>
-								<a class="btn" id="" data-bs-toggle="button" href="#">4</a>
-								<a class="btn" id="" data-bs-toggle="button" href="#">5</a>
-								<a class="btn" id="" data-bs-toggle="button" href="#">6</a>
-								<a class="btn" id="" data-bs-toggle="button" href="#">7</a>
-								<a class="btn" id="" data-bs-toggle="button" href="#">8</a>
-								<a class="btn" id="" data-bs-toggle="button" href="#">9</a>
-								<a class="btn" id="" data-bs-toggle="button" href="#">10</a>
-								<a class="btn" id="" data-bs-toggle="button" href="#">11</a>
-								<a class="btn" id="" data-bs-toggle="button" href="#">12</a>
-								<a class="btn" id="" data-bs-toggle="button" href="#">13</a>
-								<a class="btn" id="" data-bs-toggle="button" href="#">14</a>
-								
-								<a class="btn bg-light text-dark border-top border-bottom" id="" data-bs-toggle="button" href="#">L</a>
-								<a class="btn disabled none" id="" data-bs-toggle="button" href="#"></a>
-								<a class="btn disabled none" id="" data-bs-toggle="button" href="#"></a>
-								<a class="btn" id="" data-bs-toggle="button" href="#">3</a>
-								<a class="btn" id="" data-bs-toggle="button" href="#">4</a>
-								<a class="btn" id="" data-bs-toggle="button" href="#">5</a>
-								<a class="btn" id="" data-bs-toggle="button" href="#">6</a>
-								<a class="btn" id="" data-bs-toggle="button" href="#">7</a>
-								<a class="btn" id="" data-bs-toggle="button" href="#">8</a>
-								<a class="btn" id="" data-bs-toggle="button" href="#">9</a>
-								<a class="btn" id="" data-bs-toggle="button" href="#">10</a>
-								<a class="btn" id="" data-bs-toggle="button" href="#">11</a>
-								<a class="btn" id="" data-bs-toggle="button" href="#">12</a>
-								<a class="btn" id="" data-bs-toggle="button" href="#">13</a>
-								<a class="btn" id="" data-bs-toggle="button" href="#">14</a>
-								
-								<a class="btn bg-light text-dark border-top border-bottom" id="" data-bs-toggle="button" href="#">M</a>
-								<a class="btn disabled none" id="" data-bs-toggle="button" href="#"></a>
-								<a class="btn disabled none" id="" data-bs-toggle="button" href="#"></a>
-								<a class="btn" id="" data-bs-toggle="button" href="#">3</a>
-								<a class="btn" id="" data-bs-toggle="button" href="#">4</a>
-								<a class="btn" id="" data-bs-toggle="button" href="#">5</a>
-								<a class="btn" id="" data-bs-toggle="button" href="#">6</a>
-								<a class="btn" id="" data-bs-toggle="button" href="#">7</a>
-								<a class="btn" id="" data-bs-toggle="button" href="#">8</a>
-								<a class="btn" id="" data-bs-toggle="button" href="#">9</a>
-								<a class="btn" id="" data-bs-toggle="button" href="#">10</a>
-								<a class="btn" id="" data-bs-toggle="button" href="#">11</a>
-								<a class="btn" id="" data-bs-toggle="button" href="#">12</a>
-								<a class="btn" id="" data-bs-toggle="button" href="#">13</a>
-								<a class="btn" id="" data-bs-toggle="button" href="#">14</a>
+							<div class="" id="seat-box">
+								<div>
+									<a class="btn bg-light text-secondary fw-bold border-top border-bottom" href="#">A</a>
+									<a class="btn" href="#">1</a>
+									<a class="btn" href="#">2</a>
+									<a class="btn" href="#">3</a>
+									<a class="btn" href="#">4</a>
+									<a class="btn" href="#">5</a>
+									<a class="btn" href="#">6</a>
+									<a class="btn" href="#">7</a>
+									<a class="btn" href="#">8</a>
+									<a class="btn" href="#">9</a>
+									<a class="btn" href="#">10</a>
+									<a class="btn" href="#">11</a>
+									<a class="btn disabled none" href="#"></a>
+									<a class="btn disabled none" href="#"></a>
+									<a class="btn" href="#">14</a>
+								</div>
+								<div>
+									<a class="btn bg-light text-secondary fw-bold border-top border-bottom" href="#">A</a>
+									<a class="btn" href="#">1</a>
+									<a class="btn" href="#">2</a>
+									<a class="btn" href="#">3</a>
+									<a class="btn" href="#">4</a>
+									<a class="btn" href="#">5</a>
+									<a class="btn" href="#">6</a>
+									<a class="btn" href="#">7</a>
+									<a class="btn" href="#">8</a>
+									<a class="btn" href="#">9</a>
+									<a class="btn" href="#">10</a>
+									<a class="btn" href="#">11</a>
+									<a class="btn disabled none" href="#"></a>
+									<a class="btn disabled none" href="#"></a>
+									<a class="btn" href="#">14</a>
+								</div>
+								<div>
+									<a class="btn bg-light text-secondary fw-bold border-top border-bottom" href="#">A</a>
+									<a class="btn" href="#">1</a>
+									<a class="btn" href="#">2</a>
+									<a class="btn" href="#">3</a>
+									<a class="btn" href="#">4</a>
+									<a class="btn" href="#">5</a>
+									<a class="btn" href="#">6</a>
+									<a class="btn" href="#">7</a>
+									<a class="btn" href="#">8</a>
+									<a class="btn" href="#">9</a>
+									<a class="btn" href="#">10</a>
+									<a class="btn" href="#">11</a>
+									<a class="btn disabled none" href="#"></a>
+									<a class="btn disabled none" href="#"></a>
+									<a class="btn" href="#">14</a>
+								</div>
+								<div>
+									<a class="btn bg-light text-secondary fw-bold border-top border-bottom" href="#">A</a>
+									<a class="btn" href="#">1</a>
+									<a class="btn" href="#">2</a>
+									<a class="btn" href="#">3</a>
+									<a class="btn" href="#">4</a>
+									<a class="btn" href="#">5</a>
+									<a class="btn" href="#">6</a>
+									<a class="btn" href="#">7</a>
+									<a class="btn" href="#">8</a>
+									<a class="btn" href="#">9</a>
+									<a class="btn" href="#">10</a>
+									<a class="btn" href="#">11</a>
+									<a class="btn disabled none" href="#"></a>
+									<a class="btn disabled none" href="#"></a>
+									<a class="btn" href="#">14</a>
+								</div>
+								<div>
+									<a class="btn bg-light text-secondary fw-bold border-top border-bottom" href="#">A</a>
+									<a class="btn" href="#">1</a>
+									<a class="btn" href="#">2</a>
+									<a class="btn" href="#">3</a>
+									<a class="btn" href="#">4</a>
+									<a class="btn" href="#">5</a>
+									<a class="btn" href="#">6</a>
+									<a class="btn" href="#">7</a>
+									<a class="btn" href="#">8</a>
+									<a class="btn" href="#">9</a>
+									<a class="btn" href="#">10</a>
+									<a class="btn" href="#">11</a>
+									<a class="btn disabled none" href="#"></a>
+									<a class="btn disabled none" href="#"></a>
+									<a class="btn" href="#">14</a>
+								</div>
 							</div>
 						</div>
 					</td>
@@ -526,23 +427,6 @@
 				</tr>
 			</tbody>
 		</table>
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
 	</div>
 </div>
 <div class="bg-dark text-white">
@@ -560,12 +444,16 @@
 					<span class="d-block"><span style="display: inline-block; width: 70px;">극장</span><strong id="strong-cinema-name"></strong></span>
 					<span class="d-block"><span style="display: inline-block; width: 70px;">일시</span><strong id="strong-show-date"></strong></span>
 					<span class="d-block"><span style="display: inline-block; width: 70px;">상영관</span><strong id="strong-cinema-hall"></strong></span>
-					<span class="d-block"><span style="display: inline-block; width: 70px;">인원</span><strong></strong></span>
+					<span class="d-block"><span style="display: inline-block; width: 70px;">인원</span><strong id="strong-ticket-count"></strong></span>
 				</div>
 			</div>
 			<div class="vr p-0 my-4"></div>
 			<div class="col d-flex justify-content-center align-items-center">
-				<span class="fs-3"><i class="bi bi-chevron-right"></i> 좌석선택 <i class="bi bi-chevron-right"></i> 결제</span>
+				<span class="fs-3" id="span-select-seat"><i class="bi bi-chevron-right"></i> 좌석선택 <i class="bi bi-chevron-right"></i> 결제</span>
+				<div class="d-none" id="seat-detail-box">
+					<span class="d-block">좌석명: 일반석</span>
+					<span class="d-block">좌석번호: C1,C2</span>
+				</div>
 			</div>
 			<div class="col d-flex justify-content-end align-items-center" id="next-btn-box">
 				<a class="btn btn-lg disabled" href="#" style="background-color: #333; color: #fff;"><i class="bi bi-caret-right d-flex justify-content-center" style="font-size: 3rem;"></i> <strong>좌석선택</strong></a>
@@ -574,43 +462,6 @@
 	</div>
 </div>
 
-
-
-<div class="bg-dark text-white">
-	<div class="container">
-		<div class="row" style="height: 150px;">
-			<div class="col d-flex justify-content-start align-items-center">
-				<a class="btn btn-lg" href="/ticket/movie" style="background-color: #333; color: #fff;"><i class="bi bi-caret-left-fill d-flex justify-content-center" style="font-size: 3rem;"></i> <strong>영화선택</strong></a>
-			</div>
-			<div class="col-1 d-flex justify-content-center align-items-center">
-				<img src="/resources/images/84949_185.jpg" style="width: 74px; height:104px;">
-			</div>
-			<div class="col d-flex justify-content-center align-items-center">
-				<div>
-					<span class="d-block"><strong>스파이더맨-노웨이홈</strong></span>
-					<span class="d-block"><strong>2D(라스트특가)</strong></span>
-					<span class="d-block"><strong>12세 관람가</strong></span>
-				</div>
-			</div>
-			<div class="vr p-0 my-4"></div>
-			<div class="col-3 d-flex justify-content-center align-items-center">
-				<div>
-					<span class="d-block"><span style="display: inline-block; width: 70px;">극장</span><strong>CGV 강남</strong></span>
-					<span class="d-block"><span style="display: inline-block; width: 70px;">일시</span><strong>2022.1.24(월) 18:00</strong></span>
-					<span class="d-block"><span style="display: inline-block; width: 70px;">상영관</span><strong>5관(Laser) 10층</strong></span>
-					<span class="d-block"><span style="display: inline-block; width: 70px;">인원</span><strong></strong></span>
-				</div>
-			</div>
-			<div class="vr p-0 my-4"></div>
-			<div class="col d-flex justify-content-center align-items-center">
-				<span class="fs-3"><i class="bi bi-chevron-right"></i> 좌석선택</span>
-			</div>
-			<div class="col d-flex justify-content-end align-items-center">
-				<a class="btn btn-lg disabled" href="/ticket/checkout" style="background-color: #333; color: #fff;"><i class="bi bi-caret-right d-flex justify-content-center" style="font-size: 3rem;"></i> <strong>결제선택</strong></a>
-			</div>
-		</div>
-	</div>
-</div>
 <div class="bg-dark text-white">
 	<div class="container">
 		<div class="row" style="height: 150px;">
@@ -763,26 +614,61 @@
 				$(this).addClass("active");	
 				var showTime = $(this).text();
 				var cinemaHall = $(this).attr("data-cinema-hall");
-				var showDate = $("#strong-show-date").text();
-				$("#strong-show-date").empty().text(showDate + " " + showTime);
+				var showDate = $("#date-list-box a.active").attr("data-show-date");
+				var showDay = moment(showDate).format('dd');
+				$("#strong-show-date").empty().text(moment(showDate).format('YYYY.MM.DD') + "(" + showDay + ") " + showTime);
 				$("#strong-cinema-hall").empty().text(cinemaHall);
-				var row = '<a class="btn btn-danger btn-lg" href="/ticket/seat"><i class="bi bi-caret-right-fill d-flex justify-content-center" style="font-size: 3rem;"></i> <strong>좌석선택</strong></a>';
-				$("#next-btn-box").empty().append(row);
+				$("#next-btn-box").empty().append('<a class="btn btn-danger btn-lg" href="/ticket/seat"><i class="bi bi-caret-right-fill d-flex justify-content-center" style="font-size: 3rem;"></i> <strong>좌석선택</strong></a>');
 			}
 		});
 		
-		$("#next-btn-box").on("click", ".btn-danger", function(event) {
+		$("#booking-nav").on("click", "#next-btn-box .btn-danger", function(event) {
 			event.preventDefault();
 			$("#h1-page-title").text("좌석선택");
 			$("#table-movie").addClass("d-none");
 			$("#table-seat").removeClass("d-none");
-			var row = '<div class="col d-flex justify-content-start align-items-center">'
+			var row = '<div class="col d-flex justify-content-start align-items-center" id="prev-btn-box">'
 				+ '<a class="btn btn-lg" href="#" style="background-color: #333; color: #fff;"><i class="bi bi-caret-left-fill d-flex justify-content-center" style="font-size: 3rem;"></i> <strong>영화선택</strong></a>';
 				+ '</div>';
 			$("#booking-nav").prepend(row);
+			$("#span-select-seat").empty().append('<i class="bi bi-chevron-right"></i> 좌석선택');
+			$("#next-btn-box").empty().append('<a class="btn btn-lg disabled" href="/ticket/checkout" style="background-color: #333; color: #fff;"><i class="bi bi-caret-right d-flex justify-content-center" style="font-size: 3rem;"></i> <strong>결제선택</strong></a>');
+			var cinemaName = $("#cinema-list-box a.active").attr("data-cinema-name");
+			var hallName = $("#time-list-box a.active").attr("data-cinema-hall");
+			var showDate = $("#date-list-box a.active").attr("data-show-date");
+			var startTime = $("#time-list-box a.active").attr("data-start-time");
+			var endTime = $("#time-list-box a.active").attr("data-end-time");
+			var totalSeatsAvailable = $("#time-list-box a.active").attr("data-seat-available");
+			var totalSeats = $("#time-list-box a.active").attr("data-seat-total");
+			$("#seat-cinema-name").text(cinemaName);
+			$("#seat-hall-name").text(hallName);
+			$("#seat-available").text(totalSeatsAvailable);
+			$("#seat-total").text(totalSeats);
+			var showDay = moment(showDate).format('dd');
+			$("#seat-show-date").text(moment(showDate).format('YYYY.MM.DD') + "(" + showDay + ")");
+			$("#seat-start-time").text(startTime);
+			$("#seat-end-time").text(endTime);
+			
+			
+			
+			
+			
+			
+			
+			
+			var showNo = $("#time-list-box a.active").attr("data-show-no");
+			getSeats(showNo);
 		});
 		
-		
+		$("#booking-nav").on("click", "#prev-btn-box .btn", function(event) {
+			event.preventDefault();
+			$("#h1-page-title").text("영화선택");
+			$("#table-movie").removeClass("d-none");
+			$("#table-seat").addClass("d-none");
+			$("#prev-btn-box").remove();
+			$("#span-select-seat").empty().append('<span class="fs-3" id="span-select-seat"><i class="bi bi-chevron-right"></i> 좌석선택 <i class="bi bi-chevron-right"></i> 결제</span>');
+			$("#next-btn-box").empty().append('<a class="btn btn-danger btn-lg" href="/ticket/seat"><i class="bi bi-caret-right-fill d-flex justify-content-center" style="font-size: 3rem;"></i> <strong>좌석선택</strong></a>');
+		});
 		
 		
 		
@@ -813,7 +699,6 @@
 				$spinnerBox.append(row);
 			},
 			success: function(movies) {
-				$spinnerBox.empty();
 				for (var i = 0; i < movies.moviesAvailable.length; i++) {
 					var movieNo = movies.moviesAvailable[i].no;
 					var row = '<a class="list-group-item list-group-item-action bg-light border-light d-flex align-items-center" data-movie-no="' + movieNo + '" href="#">';
@@ -851,6 +736,7 @@
 				if (movieNoSelected != null) {
 					$("#movie-list-box a[data-movie-no=" + movieNoSelected + "]").addClass("active");
 				}
+				$spinnerBox.empty();
 			},
 			error: function() {
 				$spinnerBox.empty();
@@ -878,7 +764,6 @@
 				$spinnerBox.append(row);
 			},
 			success: function(cinemas) {
-				$spinnerBox.empty();
 				for (var i = 0; i < cinemas.citiesWithCinemas.length; i++) {
 					var cityNo = cinemas.citiesWithCinemas[i].no;
 					var cityName = cinemas.citiesWithCinemas[i].name;
@@ -938,6 +823,7 @@
 				if (cinemaNoSelected != null) {
 					$("#cinema-list-box a[data-cinema-no=" + cinemaNoSelected + "]").addClass("active");
 				}
+				$spinnerBox.empty();
 			},
 			error: function() {
 				$spinnerBox.empty();
@@ -964,7 +850,6 @@
 				$spinnerBox.append(row);
 			},
 			success: function(showDates) {
-				$spinnerBox.empty();
 				var prevYear;
 				var prevMonth;
 				for (var i = 0; i < showDates.showDatesNowPlaying.length; i++) {
@@ -1017,6 +902,7 @@
 				if (showDateSelected != null) {
 					$("#date-list-box a[data-show-date=" + showDateSelected + "]").addClass("active");
 				}
+				$spinnerBox.empty();
 			},
 			error: function() {
 				$spinnerBox.empty();
@@ -1026,8 +912,7 @@
 	}
 	
 	function getShowTimes(movieNo, cinemaNo, showDate) {
-		var $spinnerBox = $("#spinner-box").empty();
-		var $timeListBox = $("#time-list-box").removeClass("text-center").empty();
+		var $timeListBox = $("#time-list-box").empty().addClass("d-flex");
 		$.ajax({
 			type: "get",
 			url: "/rest/ticket/time",
@@ -1041,25 +926,26 @@
 				var row = '<div class="spinner-border spinner-border-md" role="status">'
 					+ '<span class="visually-hidden">Loading...</span>'
 					+ '</div>';
-				$spinnerBox.append(row);
+				$timeListBox.append(row);
 			},
 			success: function(showTimes) {
-				$spinnerBox.empty();
+				$timeListBox.empty().removeClass("d-flex");
 				var cinemaHalls = showTimes.showTimesAvailable;
-				
 				for (var i = 0; i < cinemaHalls.length; i++) {
 					var shows = cinemaHalls[i].shows;
-					var row = '<div class="mb-3">' + '<div class="ps-1 mb-2"><span class="fw-bold">' + cinemaHalls[i].name + '</span> <span class="text-secondary">(총' + cinemaHalls[i].totalSeats + '석)</span></div>';
+					var hallName = cinemaHalls[i].name;
+					var totalSeats = cinemaHalls[i].totalSeats;
+					var row = '<div class="mb-3">' + '<div class="ps-1 mb-2"><span class="fw-bold">' + hallName + '</span> <span class="text-secondary">(총' + totalSeats + '석)</span></div>';
 					for (var j = 0; j < shows.length; j++) {
 						var showNo = shows[j].no;
-						var startTime =shows[j].startTime;
+						var startTime = shows[j].startTime;
 						var endTime = shows[j].endTime;
 						var totalSeatsAvailable = shows[j].totalSeatsAvailable;
 						if (totalSeatsAvailable == 0) {
-							row += '<a class="btn bg-secondary bg-opacity-10 border-light rounded-0 disabled" data-show-no="' + showNo + '" data-cinema-hall="' + cinemaHalls[i].name + '" href="#"><strike>' + moment(startTime).format('hh:mm') + '</strike></a>';
+							row += '<a class="btn bg-secondary bg-opacity-10 border-light rounded-0 disabled" data-show-no="' + showNo + '" data-cinema-hall="' + hallName + '" data-start-time="' + moment(startTime).format('HH:mm') + '" data-end-time="' + moment(endTime).format('HH:mm') + '" data-seat-total="' + totalSeats + '" data-seat-available="' + totalSeatsAvailable + '" href="#"><strike>' + moment(startTime).format('HH:mm') + '</strike></a>';
 							row += '<span class="align-middle text-success ps-1" style="display: inline-block; width: 70px;"> ' + totalSeatsAvailable + '석</span>';
 						} else {
-							row += '<a class="btn bg-secondary bg-opacity-10 border-light rounded-0" data-show-no="' + showNo + '" data-cinema-hall="' + cinemaHalls[i].name + '" href="#">' + moment(startTime).format('hh:mm') + '</a>';
+							row += '<a class="btn bg-secondary bg-opacity-10 border-light rounded-0" data-show-no="' + showNo + '" data-cinema-hall="' + hallName + '" data-start-time="' + moment(startTime).format('HH:mm') + '" data-end-time="' + moment(endTime).format('HH:mm') + '" data-seat-total="' + totalSeats + '" data-seat-available="' + totalSeatsAvailable + '" href="#">' + moment(startTime).format('HH:mm') + '</a>';
 							row += '<span class="align-middle text-success ps-1" style="display: inline-block; width: 70px;"> ' + totalSeatsAvailable + '석</span>';
 						}
 					}
@@ -1071,7 +957,7 @@
 				}
 			},
 			error: function() {
-				$spinnerBox.empty();
+				$timeListBox.removeClass("d-flex");
 				alert("오류가 발생하였습니다.");
 			}
 		});
@@ -1095,7 +981,6 @@
 				$spinnerBox.append(row);
 			},
 			success: function(movieDetail) {
-				$spinnerBox.empty();
 				if (movieDetail.images.length > 0) {
 					var row = '<img src="/resources/images/movie/' + movieDetail.images[0].filename + '" style="width: 90px; height:125px;">';
 					$movieImageBox.append(row);
@@ -1104,9 +989,44 @@
 				row += '<span class="d-block"><strong>' + movieDetail.runtime + '분</strong></span>';
 				row += '<span class="d-block"><strong>' + movieDetail.rate + '</strong></span>';
 				$movieDetailBox.append(row);
+				$spinnerBox.empty();
 			},
 			error: function() {
 				$spinnerBox.empty();
+				alert("오류가 발생하였습니다.");
+			}
+		});
+	}
+	
+	function getSeats(showNo) {
+		$.ajax({
+			type: "get",
+			url: "/rest/ticket/seat",
+			data: {
+				showNo: showNo
+			},
+			dataType: "json",
+			beforeSend: function() {
+				$("#overlay").removeClass("d-none");
+			},
+			success: function(seats) {
+				$("#overlay").addClass("d-none");
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+			},
+			error: function() {
+				$("#overlay").addClass("d-none");
 				alert("오류가 발생하였습니다.");
 			}
 		});

@@ -5,7 +5,7 @@ import java.util.Map;
 
 import com.jhta.moviefan.vo.Movie;
 
-public class TicketMoviePageDto {
+public class BookingPageDto {
 
 	List<Movie> moviesNowPlaying;							// 상영중인 영화 전체 목록
 	List<Movie> moviesAvailable;							// 선택한 극장, 날짜로 예매 가능한 영화 목록
@@ -14,8 +14,9 @@ public class TicketMoviePageDto {
 	List<Map<String, Object>> showDatesNowPlaying;			// 상영중인 영화가 있는 날짜 전체 목록
 	List<Map<String, Object>> showDatesAvailable;			// 선택한 영화, 극장에서 예매 가능한 날짜 목록
 	List<CinemaHallWithShowsDto> showTimesAvailable;		// 선택한 영화, 극장, 날짜에 예매 가능한 상영관별 상영시작 시간 목록
+	List<ShowSeatDetailDto> seats;							// 선택한 상영 시간의 좌석 목록
 	
-	public TicketMoviePageDto() {}
+	public BookingPageDto() {}
 	
 	public List<Movie> getMoviesNowPlaying() {
 		return moviesNowPlaying;
@@ -73,13 +74,26 @@ public class TicketMoviePageDto {
 		this.showTimesAvailable = showTimesAvailable;
 	}
 
+	public List<ShowSeatDetailDto> getSeats() {
+		return seats;
+	}
+
+	public void setSeats(List<ShowSeatDetailDto> seats) {
+		this.seats = seats;
+	}
+
 	@Override
 	public String toString() {
-		return "TicketMoviePageDto [moviesNowPlaying=" + moviesNowPlaying + ", moviesAvailable=" + moviesAvailable
+		return "BookingPageDto [moviesNowPlaying=" + moviesNowPlaying + ", moviesAvailable=" + moviesAvailable
 				+ ", citiesWithCinemas=" + citiesWithCinemas + ", citiesWithCinemasAvailable="
 				+ citiesWithCinemasAvailable + ", showDatesNowPlaying=" + showDatesNowPlaying + ", showDatesAvailable="
-				+ showDatesAvailable + ", showTimesAvailable=" + showTimesAvailable + "]";
+				+ showDatesAvailable + ", showTimesAvailable=" + showTimesAvailable + ", seats=" + seats + "]";
 	}
+
+	
+	
+
+	
 
 	
 	

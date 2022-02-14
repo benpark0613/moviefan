@@ -19,6 +19,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.jhta.moviefan.dao.CinemaDao;
 import com.jhta.moviefan.dao.TicketDao;
 import com.jhta.moviefan.dto.CinemaHallWithShowsDto;
+import com.jhta.moviefan.dto.ShowSeatDetailDto;
 import com.jhta.moviefan.dto.ShowWithSeatsDto;
 import com.jhta.moviefan.vo.CinemaHall;
 import com.jhta.moviefan.vo.Show;
@@ -41,6 +42,21 @@ public class TicketService {
 	
 	public List<ShowSeat> getShowSeatsByShowNo(int showNo) {
 		return ticketDao.getShowSeatsByShowNo(showNo);
+	}
+	
+	public ShowWithSeatsDto getShowWithSeatsByShowNo(int showNo) {
+		ShowWithSeatsDto showWithSeats = new ShowWithSeatsDto();
+		
+		Show show = ticketDao.getShowByNo(showNo);
+		BeanUtils.copyProperties(show, showWithSeats);
+		List<ShowSeat> seats = ticketDao.getShowSeatsByShowNo(showNo);
+		showWithSeats.setSeats(seats);
+		
+		return showWithSeats;
+	}
+	
+	public List<ShowSeatDetailDto> getShowSeatDetailDtos(int showNo) {
+		return ticketDao.getShowSeatDetailByShowNo(showNo);
 	}
 	
 	public List<ShowWithSeatsDto> getShowsWithSeatsNowPlaying(Map<String, Object> request) {
