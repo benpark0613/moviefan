@@ -62,6 +62,8 @@
 		<if test="showDate != null">
 			and s.show_date = #{showDate}
 		</if>
+		order by
+			m.movie_open_date desc
 	</select>
 	
 	<select id="getMovieByMovieNo" parameterType="int" resultMap="MovieResultMap">
