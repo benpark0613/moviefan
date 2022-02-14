@@ -53,6 +53,23 @@
 		<span>${cinema.name }&nbsp;&nbsp;</span>
 		<span><a type="button" class="btn btn-dark" href="main?cityNo=${param.cityNo }">목록으로 돌아가기</a></span>
 	</div>
+	<!-- 날짜선택, 안내버튼 -->
+	<div class="row mb-5 ">
+		<div class="col">
+			<div class="d-flex justify-content-between">
+				<form id="form-search-show-date" method="get" action="timetable">
+					<input id="cinema-no" type="hidden" name="cinemaNo" value="${param.cinemaNo }" />
+					<input id="show-datepicker" type="text" name="showDate" value="${param.showDate }" class="datepicker inp" readonly />
+				</form>
+				<div>
+					<a href="/theater/price" id="price-info" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#priceInfoModal">
+					관람가격 안내</a>
+					<a href="/cinema/location?cinemaNo=${param.cinemaNo }" id="location-info" class="btn btn-success">위치/주차 안내</a>
+				</div>
+			</div>
+		</div>
+	</div>
+					
 	<div id="movie-timetable" class="row justify-content-center mb-3">
 		<div id="content" class="col-11 px-0">
 			<c:choose>
@@ -60,30 +77,13 @@
 					<div id="warning" class="text-center mt-5 mb-5 fs-3">현재 상영중인 영화가 없습니다.</div>
 				</c:when>
 				<c:otherwise>
-					<!-- 안내버튼 -->
-					<div class="row justify-content-between">
-						<div class="col">
-							<form id="form-search-show-date" method="get" action="timetable">
-								<input id="cinema-no" type="hidden" name="cinemaNo" value="${param.cinemaNo }" />
-								<input id="show-datepicker" type="text" name="showDate" value="${param.showDate }" class="datepicker inp" readonly />
-							</form>
-						</div>
-						<div class="col">
-							<a href="/theater/price" id="price-info" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#priceInfoModal">
-							관람가격 안내</a>
-	<!-- 					<a href="/cinema/location" id="location-info" class="col-2 btn btn-success">위치/주차 안내</a> -->
-						</div>
-					</div>
-					
 					<!-- 상영시간표 부분 -->
 					<c:forEach var="timetable" items="${movieTimeTableDtos }">
-						<div class="card mt-5 mb-3">
+						<div class="card">
 							<div class="card-body row-12 p-0 mt-3 mb-5">
-<div>상영일: <fmt:formatDate value="${timetable.showDate }" pattern="yyyy-MM-dd"/></div>							
 								<!-- 영화정보 -->
 								<div class="border-0 border-bottom border-3 p-3">
 									<span class="fs-2" id="movie-title">${timetable.title } &nbsp; &nbsp;</span>
-			<%-- 					<span class="ml-3">${movieTimeTable.genre } | </span> --%>
 									<span><fmt:formatDate value="${timetable.openDate }" pattern="yyyy-MM-dd"/> 개봉</span>
 									<span>&nbsp;|&nbsp;${timetable.runtime }분</span>
 								</div>
@@ -97,7 +97,7 @@
 								<div id="ticketing" class="row d-flex justify-content-start mt-1 mx-5 p-0">
 									<c:forEach var="timetable" items="${timetable.schedules }">
 										<div class="col-3 border text-center p-3 m-1 fs-4">
-											<a href="#">
+											<a href="/ticket/movie">
 												<strong>
 													<fmt:formatDate value="${timetable.startTime }" pattern="HH:mm"/> ~ 
 													<fmt:formatDate value="${timetable.endTime }" pattern="HH:mm"/> 
@@ -174,7 +174,6 @@
 	$('input[name=showDate]').change(function () {
 		let searchDate = $(this).val().replace(/\./g, '');
 		let cinemaNo = $('input[name=cinemaNo]').val();
-		$(this).val(searchDate);
 
 		$("#form-search-show-date").trigger('submit');
 	});
