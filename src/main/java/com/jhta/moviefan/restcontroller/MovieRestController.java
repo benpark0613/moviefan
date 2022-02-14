@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.jhta.moviefan.dto.ResponseDto;
 import com.jhta.moviefan.exception.LoginErrorException;
 import com.jhta.moviefan.exception.MovieErrorException;
+import com.jhta.moviefan.exception.RestLoginErrorException;
 import com.jhta.moviefan.service.CustomerService;
 import com.jhta.moviefan.utils.SessionUtils;
 import com.jhta.moviefan.vo.Customer;
@@ -32,10 +33,9 @@ public class MovieRestController {
 		ResponseDto<Integer> response = new ResponseDto<>();
 		CustomerMovieWishList wishList = new CustomerMovieWishList();
 		Customer customer = (Customer) SessionUtils.getAttribute("LOGINED_CUSTOMER");
-		logger.info("로그인 된 사용자 정보 : " + customer);
 		
 		if(customer == null) {
-			throw new LoginErrorException("위시리스트는 로그인 후 사용할 수 있습니다.");
+			throw new RestLoginErrorException("로그인 후 이용하세요");
 		}
 		
 		wishList.setCustomerNo(customer.getNo());

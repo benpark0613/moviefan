@@ -175,12 +175,27 @@
 		where	CUSTOMER_NO = #{value}
 	</select>
 	
+	<select id="getCommentRatingByMovieNo" parameterType="int" resultType="int">
+		select CUSTOMER_RATING
+		from MOVIE_CUSTOMER_COMMENT
+		where MOVIE_NO = #{value}
+	</select>
+	
 	<update id="updateCommentLike" parameterType="int">
 		update MOVIE_CUSTOMER_COMMENT
 		set
 			COMMENT_LIKE_COUNT = COMMENT_LIKE_COUNT + #{count}
 		where
 			COMMENT_NO = #{commentNo}
+	</update>
+	
+	<update id="updateMovieCustomerRating" parameterType="int">
+		update MOVIE
+		set 
+			MOVIE_CUSTOMER_RATING = #{rating}
+		where
+			MOVIE_NO = #{movieNo}
+		
 	</update>
 	
 	<insert id="updateCommentLikeCustomer" parameterType="com.jhta.moviefan.vo.CommentLikedCustomer">

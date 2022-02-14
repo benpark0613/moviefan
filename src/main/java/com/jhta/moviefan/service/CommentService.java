@@ -65,10 +65,24 @@ public class CommentService {
 	}
 	
 	public List<CommentLikedCustomer> getAllLikedCommentByCustomerNo(int customerNo){
+		
 		return commentDao.getAllLikedCommentByCustomerNo(customerNo);
 	}
 	
 	public void deleteCommentLikedCustomer(CommentLikedCustomer commentLikedCustomer) {
 		commentDao.deleteCommentLikedCustomer(commentLikedCustomer);
+	}
+	
+	public void updateMovieCustomerRating(@Param("movieNo") int movieNo) {
+		
+		List<Integer> list = commentDao.getCommentRatingByMovieNo(movieNo);
+		int sum = 0;
+		for(int rating : list) {
+			sum += rating;
+		}
+		int count = commentDao.getCommentTotalRowByMovieNo(movieNo);
+		
+		commentDao.updateMovieCustomerRating(movieNo, sum/count);
+		
 	}
 }

@@ -13,6 +13,7 @@ import com.jhta.moviefan.annotation.LoginedCustomer;
 import com.jhta.moviefan.dto.CommentDto;
 import com.jhta.moviefan.dto.ResponseDto;
 import com.jhta.moviefan.exception.LoginErrorException;
+import com.jhta.moviefan.exception.RestLoginErrorException;
 import com.jhta.moviefan.form.CriteriaMovieComment;
 import com.jhta.moviefan.pagination.Pagination;
 import com.jhta.moviefan.service.CommentService;
@@ -35,7 +36,7 @@ public class ReviewRestController {
 		
 		
 		if(customer == null) {
-			throw new LoginErrorException("로그인 후 이용하세요");
+			throw new RestLoginErrorException("로그인 후 이용하세요");
 		}
 		
 		commentLikedCustomer.setCommentNo(commentNo);

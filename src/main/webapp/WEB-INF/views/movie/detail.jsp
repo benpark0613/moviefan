@@ -57,11 +57,11 @@
 	<div class="row mb-3 bg-light">
 		<span style="font-size:1.3em; color:#503396;">스틸컷 <strong>${countImage } 건</strong></span>
 	</div>
-	<!-- 캐러셀 -->
+	
 	<div class="row mb-3">
 		<c:forEach var="movieImage" items="${movieDetail.images }" varStatus="status">
 			<div class="col">
-				<img src="/resources/images/movie/${movieImage.filename }" alt="...">
+				<a class="asd"><img src="/resources/images/movie/${movieImage.filename }" alt="..."></a>
 			</div>
 		</c:forEach>
 	</div>
@@ -124,8 +124,6 @@
 </div>
 <%@ include file="/WEB-INF/views/common/footer.jsp" %>
 <script type="text/javascript">
-
-
 
 var chart = bb.generate({
 	size: {
