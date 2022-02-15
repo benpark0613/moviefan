@@ -1067,10 +1067,28 @@ $(function() {
 		$('#my-comment').removeClass("d-none")
 		$('#div-commentlist').empty();
 		
-		getMyComments();
+		getMyComments(event);
+		
+		$('#form-search-comment button').click(function(event) {
+			event.preventDefault();
+			
+			let $opt = $("#form-search-comment :selected");
+			let $value = $("#form-search-comment :input[name=value]");
+					
+			if (!$opt.val()) {
+				alert('검색조건을 선택해주세요.');
+				return;
+			}
+			if (!$value.val()) {
+				alert('검색어를 입력해주세요.');
+				return;
+			}
+			$('#div-commentlist').empty();
+			getMyComments();
+		})
 		
 		function getMyComments() {
-			
+			event.preventDefault();
 			let currentPage = $('#form-search-comment input[name=current-page]').val();
 			let searchOption = $("#form-search-comment select[name=opt]").val();
 			let searchValue = $.trim($("#form-search-comment :input[name=value]").val());
@@ -1148,7 +1166,7 @@ $(function() {
 							if (dtos.length == i + 1) {
 								let pageForScroll = pagination.end/5 + 1;
 								if (pagination.totalPages == 1 || pageForScroll == pagination.totalPages) {
-									row += `<input type="hidden" name="end-page" value="`+pageForScroll+`">` 
+									row += `<input type="hidden" name="end-page" id="comment-end">` 
 								} else {
 									$('#comment-end').val(pageForScroll);
 									row += `<input type="hidden" name="end-page" value="`+pageForScroll+`" id="comment-end">`
@@ -1156,33 +1174,11 @@ $(function() {
 							}
 							$divCommentList.append(row);
 						})
-						getMorePagesByScrolling(pagination);
 						
-						$('#form-search-comment button').click(function(event) {
-							event.preventDefault();
-							
-							let $opt = $("#form-search-comment :selected");
-							let $value = $("#form-search-comment :input[name=value]");
-									
-							if (!$opt.val()) {
-								alert('검색조건을 선택해주세요.');
-								return;
-							}
-							if (!$value.val()) {
-								alert('검색어를 입력해주세요.');
-								return;
-							}
-							$('#div-commentlist').empty();
-							getMyComments();
-						})
-						
-// 						$('a[href=update]').click(function(event) {
-// 							event.preventDefault();
-// 							console.log($(this).closest($('table')).attr('data-commentNo'));
-// 							let commentNo = $(this).closest($('table')).attr('data-commentNo');
-// 							updateMyComment()
-// 						});
 					}
+				
+					getMorePagesByScrolling(pagination);
+					
 				},
 				error: function(response) {
 					alert(error);
@@ -1192,9 +1188,15 @@ $(function() {
 
 		function getMorePagesByScrolling(pagination) {
 			$(window).scroll(function() {
+				event.preventDefault();
 				if ($(window).scrollTop() == $(document).height() - $(window).height() && $('#comment-end').length) {
 			    	let currentPage = $('#comment-end').val();
 			    	$('#form-search-comment input[name=current-page]').val(currentPage);
+			    	
+			    	if (!$('#comment-end').val()) {
+						return;
+					}
+			    	
 			    	$('#comment-end').remove();
 			    	getMyComments();
 			    }
@@ -1243,6 +1245,22 @@ $(function() {
 		$('#info-modify-item').addClass('fw-bolder')
 		$('#my-info-tab').addClass('fw-bolder')
 		$('#info-modify').removeClass("d-none")
+		
+		$('[action=modifyform] button').click(function(event) {
+			event.preventDefault();
+			
+			let id = $('[action=modifyform] [name=id]').val();
+			let password = $('[action=modifyform] [name=password]').val();
+			
+			$.post('/rest/member/checkpassword', {id: id, password: password}, function(response) {
+				if (response.status == "OK") {
+					alert('인증이 완료되었습니다.');
+					$('[action=modifyform]').trigger("submit");
+				} else {
+					alert(response.error);
+				}
+			})
+		})
 	});
 	$('#info-delete-item').click(function(event) {
 		event.preventDefault();
@@ -1251,6 +1269,22 @@ $(function() {
 		$('#info-delete-item').addClass('fw-bolder')
 		$('#my-info-tab').addClass('fw-bolder')
 		$('#info-delete').removeClass("d-none")
+		
+		$('[action=check-withdrawal] button').click(function(event) {
+			event.preventDefault();
+			
+			let id = $('[action=check-withdrawal] [name=id]').val();
+			let password = $('[action=check-withdrawal] [name=password]').val();
+			
+			$.post('/rest/member/checkpassword', {id: id, password: password}, function(response) {
+				if (response.status == "OK") {
+					alert('인증이 완료되었습니다.');
+					$('[action=check-withdrawal]').trigger("submit");
+				} else {
+					alert(response.error);
+				}
+			})
+		})
 	});
 	
 	// 공지사항

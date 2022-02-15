@@ -42,7 +42,7 @@
 					method는 반드시 post로 설정한다.
 					enctype는 반드시 multipart/form-data로 설정한다.
 				 -->
-				<form class="border bg-light p-3" method="post" action="insert" enctype="multipart/form-data">
+				<form class="border bg-light p-3" method="post" action="/admin/notice/insert" enctype="multipart/form-data">
 					<div class="row mb-3">
 						<div class="col">
 							<label class="form-label">제목</label>
@@ -50,7 +50,7 @@
 						</div>
 						<div class="col">
 							<label class="form-label">구분</label>
-							<select class="form-select form-select-sm" name="categoryNo">
+							<select class="form-select form-select" name="categoryNo">
 								<option value="100">시스템점검</option>
 								<option value="200">극장</option>
 								<option value="300" selected="selected">기타</option>

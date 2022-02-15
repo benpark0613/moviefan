@@ -50,6 +50,7 @@ public class CustomerService {
 		
 	}
 	
+	
 	// 일반 회원가입
 	public Customer registerCustomer(Customer customer) {
 		Customer savedCustomer = customerDao.getCustomerById(customer.getId());

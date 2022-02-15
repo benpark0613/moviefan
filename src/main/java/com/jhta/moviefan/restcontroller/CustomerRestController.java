@@ -5,8 +5,8 @@ import java.util.List;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,6 +22,7 @@ import com.jhta.moviefan.dto.RestMovieWishListDto;
 import com.jhta.moviefan.dto.RestMyCommentDto;
 import com.jhta.moviefan.dto.RestNoticeDto;
 import com.jhta.moviefan.exception.MovieErrorException;
+import com.jhta.moviefan.exception.RestLoginErrorException;
 import com.jhta.moviefan.form.Criteria;
 import com.jhta.moviefan.form.CriteriaMyAccount;
 import com.jhta.moviefan.form.CriteriaNotice;
@@ -34,7 +35,6 @@ import com.jhta.moviefan.vo.Customer;
 import com.jhta.moviefan.vo.CustomerCinemaFavorites;
 import com.jhta.moviefan.vo.CustomerMovieWishList;
 import com.jhta.moviefan.vo.Movie;
-import com.jhta.moviefan.vo.MovieCustomerComment;
 import com.jhta.moviefan.vo.MovieImage;
 
 @RestController
@@ -51,6 +51,8 @@ public class CustomerRestController {
 	private NoticeService noticeService;
 	@Autowired
 	private MovieCustomerCommentService movieCustomerCommentService;
+	@Autowired
+	private BCryptPasswordEncoder bCryptPasswordEncoder;
 	
 	// 자주가는 극장
 	@PostMapping("/deletemycinema") 
@@ -229,6 +231,25 @@ public class CustomerRestController {
 		
 		return response;
 	}
+	
+	@PostMapping("/checkpassword")
+	public ResponseDto<String> checkPassword(@LoginedCustomer Customer customer, 
+			@RequestParam(name = "id", required = true) String id,
+			@RequestParam(name = "password", required = true) String password) {
+		
+		Customer savedCustomer = customerService.getCustomerById(id);
+		
+		if (!bCryptPasswordEncoder.matches(password, savedCustomer.getPassword())) {
+			throw new RestLoginErrorException("비밀번호가 일치하지 않습니다.");	
+		}
+		
+		ResponseDto<String> response = new ResponseDto<String>();
+		response.setStatus("OK");
+		return response;
+		
+	}
+	
+	
 //	@PostMapping("/updatecomment")
 //	public ResponseDto<?> updateMyComment(@LoginedCustomer Customer customer, MovieCustomerComment comment) {
 //		
