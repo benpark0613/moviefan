@@ -144,7 +144,7 @@ public class AdminController {
 	}
 
 	// 공지사항
-	@GetMapping(value = {"/notice/list", "/", "/home", "/index"})
+	@GetMapping(value = {"/notice/list", "/home", "/index"})
 	public String getNoticeList(@LoginedCustomer Customer customer,
 			@RequestParam(name = "page", required = false, defaultValue = "1") String page, CriteriaNotice criteria,
 			Model model) {

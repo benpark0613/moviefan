@@ -97,15 +97,15 @@
 					<nav>
 						<ul class="pagination justify-content-center">
 							<li class="page-item ${pagination.existPrev ? '' : 'disabled' }">
-								<a class="page-link" href="list?page=${pagination.prevPage }" data-page="${pagination.prevPage }">이전</a>
+								<a class="page-link" href="/admin/list?page=${pagination.prevPage }" data-page="${pagination.prevPage }">이전</a>
 							</li>
 							<c:forEach var="num" begin="${pagination.beginPage }" end="${pagination.endPage }">
 								<li class="page-item ${pagination.pageNo eq num ? 'active' : '' }">
-									<a class="page-link" href="list?page=${num }" data-page="${num }">${num }</a>
+									<a class="page-link" href="/admin/list?page=${num }" data-page="${num }">${num }</a>
 								</li>
 							</c:forEach>
 							<li class="page-item ${pagination.existNext ? '' : 'disabled' }">
-								<a class="page-link" href="list?page=${pagination.nextPage }" data-page="${pagination.nextPage }">다음</a>
+								<a class="page-link" href="/admin/list?page=${pagination.nextPage }" data-page="${pagination.nextPage }">다음</a>
 							</li>
 						</ul>
 					</nav>
@@ -114,7 +114,7 @@
 			</div>
 			<div class="row mb-3 justify-content-center">
 				<div class="col-5 offset-2">
-					<form class="" method="get" action="list" id="form-search-notice">
+					<form class="" method="get" action="/admin/notice/list" id="form-search-notice">
 						<input type="hidden" name="page" value="1">
 						<div class="input-group">
 		 					<select class="form-select" name="opt">
@@ -128,7 +128,7 @@
 					</form>
 				</div>
 				<div class="col-2 text-end">
-					<a class="btn btn-primary" type="button" href="write">글작성</a>
+					<a class="btn btn-primary" type="button" href="/admin/notice/write">글작성</a>
 				</div>
 			</div>
 		</div>
