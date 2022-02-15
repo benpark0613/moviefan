@@ -69,10 +69,10 @@
 			s.booking_no			as bookingNo,
 			s.is_reserved			as isReserved,
 			c.hall_no				as hallNo,
-			c.seat_row				as row,
-			c.seat_column			as column,
-			c.seat_type				as type,
-			c.seat_section			as section
+			c.seat_row				as seatRow,
+			c.seat_column			as seatColumn,
+			c.seat_type				as seatType,
+			c.seat_section			as seatSection
 		from
 			show_seat s, cinema_seat c
 		where
@@ -80,18 +80,33 @@
 		and
 			s.seat_no = c.seat_no
 		order by
-			c.seat_no
+			s.seat_no
 	</select>
 	
 	<select id="getTotalSeatsAvailable" parameterType="int"  resultType="int">
 		select
 			count(*)
 		from 
-			show_seat
+			show_seat s, cinema_seat c
 		where 
-			show_no = #{value}
+			s.show_no = #{value}
 		and
-			is_reserved = 'N'
+			s.is_reserved = 'N'
+		and
+			s.seat_no = c.seat_no
+		and
+			c.seat_type != 'DISTANCE'
+	</select>
+	
+	<select id="getTotalSeatsRows" parameterType="int"  resultType="int">
+		select
+			count(distinct c.seat_row)			
+		from 
+			show s, cinema_seat c
+		where 
+			s.show_no = #{value}
+		and
+			s.hall_no = c.hall_no
 	</select>
 
 	<select id="getShowDatesNowPlaying" parameterType="map" resultType="date">

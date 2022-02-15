@@ -15,6 +15,7 @@ public class BookingPageDto {
 	List<Map<String, Object>> showDatesAvailable;			// 선택한 영화, 극장에서 예매 가능한 날짜 목록
 	List<CinemaHallWithShowsDto> showTimesAvailable;		// 선택한 영화, 극장, 날짜에 예매 가능한 상영관별 상영시작 시간 목록
 	List<ShowSeatDetailDto> seats;							// 선택한 상영 시간의 좌석 목록
+	int seatsTotalRows;
 	
 	public BookingPageDto() {}
 	
@@ -81,14 +82,25 @@ public class BookingPageDto {
 	public void setSeats(List<ShowSeatDetailDto> seats) {
 		this.seats = seats;
 	}
+	
+	public int getSeatsTotalRows() {
+		return seatsTotalRows;
+	}
+
+	public void setSeatsTotalRows(int seatsTotalRows) {
+		this.seatsTotalRows = seatsTotalRows;
+	}
 
 	@Override
 	public String toString() {
 		return "BookingPageDto [moviesNowPlaying=" + moviesNowPlaying + ", moviesAvailable=" + moviesAvailable
 				+ ", citiesWithCinemas=" + citiesWithCinemas + ", citiesWithCinemasAvailable="
 				+ citiesWithCinemasAvailable + ", showDatesNowPlaying=" + showDatesNowPlaying + ", showDatesAvailable="
-				+ showDatesAvailable + ", showTimesAvailable=" + showTimesAvailable + ", seats=" + seats + "]";
+				+ showDatesAvailable + ", showTimesAvailable=" + showTimesAvailable + ", seats=" + seats
+				+ ", seatsTotalRows=" + seatsTotalRows + "]";
 	}
+
+	
 
 	
 	

@@ -59,6 +59,10 @@ public class TicketService {
 		return ticketDao.getShowSeatDetailByShowNo(showNo);
 	}
 	
+	public int getTotalSeatsRows(int showNo) {
+		return ticketDao.getTotalSeatsRows(showNo);
+	}
+	
 	public List<ShowWithSeatsDto> getShowsWithSeatsNowPlaying(Map<String, Object> request) {
 		List<ShowWithSeatsDto> showsWithSeatsNowPlaying = new ArrayList<>();
 		
