@@ -28,14 +28,28 @@
 	</div>
 	<div class="row mb-3">
 		<span style="font-size: 15px;">${movieDetail.summary }</span>
+		<br>
+		<br>
 	</div>
-	<div class="row">
-		<div class="col">
-			<div id="donutChart"></div>
-		</div>
-		<div class="col">
-			<div id="barChart"></div>
-		</div>
+	<div class="row mb-3">
+	<br>
+	<br>
+	<table>
+		<thead>
+		<tr>
+			<td><span style="font-size:1.2em; color:#503396;">성별 예매 분포</span></td>
+			<td><span style="font-size:1.2em; color:#503396;">연령별 예매 분포</span></td>
+		</tr>
+	
+		</thead>
+		<tbody>
+			<tr>
+				<td><div id="donutChart"></div></td>
+				<td><div id="barChart"></div></td>
+			</tr>
+		</tbody>
+	
+	</table>
 	</div>
 	<div class="row mb-3">
 		<span style="font-size:1.3em; color:#503396;">트레일러 <strong>${countTrailer } 건</strong></span>

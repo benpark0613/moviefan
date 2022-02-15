@@ -76,7 +76,7 @@
 							<input type="hidden" value="${movies.no}" /> 
 					</div>
 					<div class="col">
-						<a href="/ticket/movie"><button type="button" class="btn btn-danger btn-block" style="padding-left:50px; padding-right:50px;"><span>예매</span></button></a>
+						<a href="/ticket/booking"><button type="button" class="btn btn-danger btn-block" style="padding-left:50px; padding-right:50px;"><span>예매</span></button></a>
 					</div>
 				</div>
 			</div>

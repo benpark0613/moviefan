@@ -72,7 +72,7 @@
 			</div>
 			<div class="row mb-3">
 				<div class="col-2">
-					<a href="/ticket/movie"><button type="button" class="btn btn-danger">예매하기</button></a>
+					<a href="/ticket/booking"><button type="button" class="btn btn-danger">예매하기</button></a>
 				</div>
 			</div>
 		</div>

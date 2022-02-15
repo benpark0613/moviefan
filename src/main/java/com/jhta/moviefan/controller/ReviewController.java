@@ -24,6 +24,7 @@ import com.jhta.moviefan.form.CriteriaMovieComment;
 import com.jhta.moviefan.pagination.Pagination;
 import com.jhta.moviefan.service.CommentService;
 import com.jhta.moviefan.service.MovieService;
+import com.jhta.moviefan.vo.CommentLikedCustomer;
 import com.jhta.moviefan.vo.Customer;
 import com.jhta.moviefan.vo.Movie;
 
@@ -44,9 +45,13 @@ public class ReviewController {
 		criteria.setEndIndex(pagination.getEnd());
 		
 		List<CommentDto> commentList = commentService.searchComment(criteria);
+		List<CommentLikedCustomer> likeList = commentService.getAllLikedCommentByCustomerNo(customer.getNo());
+				
+		
 		if(customer != null) {
 			model.addAttribute("customerNo", customer.getNo());
 		}
+		model.addAttribute("likeList", likeList);
 		model.addAttribute("comment", commentList);
 		model.addAttribute("pagination", pagination);
 		model.addAttribute("size", totalRecords);

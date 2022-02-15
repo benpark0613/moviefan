@@ -84,6 +84,9 @@
 							<input type="hidden" value="${comment.movieNo }">
 							<br>
 							<span id="like${status.index }" style="font-size: 17pt;"><strong>${comment.likeCount }</strong></span>
+							<c:if test="${comment.customerNo eq customerNo}">
+								<a href="/community/deletecomment?commentNo=${comment.commentNo }"><i class="bi bi-file-excel remove"></i></a>
+							</c:if>
 							<br>
 							<span><fmt:formatDate value="${comment.creDate }" pattern="yyyy.MM.dd"/></span>
 						</div>
