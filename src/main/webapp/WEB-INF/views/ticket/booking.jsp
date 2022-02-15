@@ -336,7 +336,7 @@
 					</td>
 				</tr>
 				<tr>
-					<td class="col-9 bg-light border-start-0" colspan="3">
+					<td class="col-9 bg-light border-start-0" colspan="3" id="td-seat-map" style="opacity: 0.4; pointer-events: none;">
 						<div class="d-flex justify-content-center">
 							<div class="text-center" style="background-color: #212529; color: #fff; width: 700px;">SCREEN</div>
 						</div>
@@ -594,9 +594,58 @@
 			$("#next-btn-box").empty().append('<a class="btn btn-danger btn-lg" href="/ticket/seat"><i class="bi bi-caret-right-fill d-flex justify-content-center" style="font-size: 3rem;"></i> <strong>좌석선택</strong></a>');
 		});
 		
+		var adult = 0;
+		var youth = 0;
+		var senior = 0;
 		
+		$("#ticket-btn-box").on("click", ".btn", function(event) {
+			if ((adult + youth + senior) > 0) {
+				$("#td-seat-map").removeAttr("style");
+			} else if ((adult + youth + senior) == 0) {
+				$("#td-seat-map").css("opacity", "0.4");
+				$("#td-seat-map").css("pointer-events", "none");
+			}
+		});
 		
+		$("#adult-ticket-box").on("click", ".btn", function(event) {
+			event.preventDefault();
+			var isSelected = $(this).hasClass("active");
+			if (!isSelected) {
+				$("#adult-ticket-box a").removeClass("active");
+				$(this).addClass("active");	
+				adult = parseInt($(this).text());
+			}
+		});
 		
+		$("#youth-ticket-box").on("click", ".btn", function(event) {
+			event.preventDefault();
+			var isSelected = $(this).hasClass("active");
+			if (!isSelected) {
+				$("#youth-ticket-box a").removeClass("active");
+				$(this).addClass("active");	
+				youth = parseInt($(this).text());
+			}
+		});
+		
+		$("#senior-ticket-box").on("click", ".btn", function(event) {
+			event.preventDefault();
+			var isSelected = $(this).hasClass("active");
+			if (!isSelected) {
+				$("#senior-ticket-box a").removeClass("active");
+				$(this).addClass("active");	
+				senior = parseInt($(this).text());
+			}
+		});
+		
+		$("#seat-box").on("click", ".btn", function(event) {
+			event.preventDefault();
+			var isSelected = $(this).hasClass("active");
+			if (!isSelected) {
+				if ((adult + youth + senior) > $("#seat-box a.active").length) {
+					$(this).addClass("active");
+				}
+			}
+		});
 		
 		
 		
