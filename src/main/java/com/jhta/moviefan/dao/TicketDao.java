@@ -18,6 +18,7 @@ public interface TicketDao {
 	List<Show> getShowsNowPlaying(Map<String, Object> request);
 	List<ShowSeat> getShowSeatsByShowNo(int showNo);
 	int getTotalSeatsAvailable(int showNo);
+	int getTotalSeatsRows(int showNo);
 	Date[] getShowDatesNowPlaying(Map<String, Integer> request);
 	
 }

@@ -8,10 +8,10 @@ public class ShowSeatDetailDto {
 	private int bookingNo;
 	private String isReserved;
 	private int hallNo;
-	private String row;
-	private int column;
-	private String type;
-	private int section;
+	private String seatRow;
+	private int seatColumn;
+	private String seatType;
+	private int seatSection;
 	
 	public ShowSeatDetailDto() {}
 
@@ -63,44 +63,45 @@ public class ShowSeatDetailDto {
 		this.hallNo = hallNo;
 	}
 
-	public String getRow() {
-		return row;
+	public String getSeatRow() {
+		return seatRow;
 	}
 
-	public void setRow(String row) {
-		this.row = row;
+	public void setSeatRow(String seatRow) {
+		this.seatRow = seatRow;
 	}
 
-	public int getColumn() {
-		return column;
+	public int getSeatColumn() {
+		return seatColumn;
 	}
 
-	public void setColumn(int column) {
-		this.column = column;
+	public void setSeatColumn(int seatColumn) {
+		this.seatColumn = seatColumn;
 	}
 
-	public String getType() {
-		return type;
+	public String getSeatType() {
+		return seatType;
 	}
 
-	public void setType(String type) {
-		this.type = type;
+	public void setSeatType(String seatType) {
+		this.seatType = seatType;
 	}
 
-	public int getSection() {
-		return section;
+	public int getSeatSection() {
+		return seatSection;
 	}
 
-	public void setSection(int section) {
-		this.section = section;
+	public void setSeatSection(int seatSection) {
+		this.seatSection = seatSection;
 	}
 
 	@Override
 	public String toString() {
 		return "ShowSeatDetailDto [no=" + no + ", showNo=" + showNo + ", seatNo=" + seatNo + ", bookingNo=" + bookingNo
-				+ ", isReserved=" + isReserved + ", hallNo=" + hallNo + ", row=" + row + ", column=" + column
-				+ ", type=" + type + ", section=" + section + "]";
+				+ ", isReserved=" + isReserved + ", hallNo=" + hallNo + ", seatRow=" + seatRow + ", seatColumn="
+				+ seatColumn + ", seatType=" + seatType + ", seatSection=" + seatSection + "]";
 	}
+
 	
 	
 }

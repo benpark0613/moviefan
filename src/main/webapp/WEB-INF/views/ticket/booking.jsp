@@ -82,22 +82,33 @@
 		/*
 			좌석 CSS 설정
 		*/
-		#seat-box a {
+		#seat-box a, #seat-example-box a {
 			background-color: #212529;
 			color: #fff;
 			border-radius: 0;
 			border-color: #f8f9fa;
 			width: 30px;
 			height: 30px;
-			margin-right: -4px;
+			margin-right: 0px;
 			padding: 0;
 		}
-		#seat-box .btn.active {
+		#seat-box .btn.active, #seat-example-box .btn.active {
 			background-color: #dc3545 !important;
 		}
-		#seat-box .btn.none {
+		#seat-box .btn.none, #seat-example-box .btn.none {
 			background-color: #f8f9fa !important;
 			color: #f8f9fa;
+		}
+		#seat-box .btn.light, #seat-example-box .btn.light {
+			box-shadow: 0 0 0 3px #ed8c00 inset;
+		}
+		#seat-box .btn.wheelchair, #seat-example-box .btn.wheelchair {
+			background-color: #00A300;
+			border-radius: 10px 5px;
+		}
+		#seat-box .btn.sweetbox, #seat-example-box .btn.sweetbox {
+			background-color: #FF0080;
+			border-radius: 10px 5px;
 		}
 		/*
 			오버레이 CSS 설정
@@ -331,98 +342,21 @@
 						</div>
 						<div class="d-flex justify-content-center my-5">
 							<div class="" id="seat-box">
-								<div>
-									<a class="btn bg-light text-secondary fw-bold border-top border-bottom" href="#">A</a>
-									<a class="btn" href="#">1</a>
-									<a class="btn" href="#">2</a>
-									<a class="btn" href="#">3</a>
-									<a class="btn" href="#">4</a>
-									<a class="btn" href="#">5</a>
-									<a class="btn" href="#">6</a>
-									<a class="btn" href="#">7</a>
-									<a class="btn" href="#">8</a>
-									<a class="btn" href="#">9</a>
-									<a class="btn" href="#">10</a>
-									<a class="btn" href="#">11</a>
-									<a class="btn disabled none" href="#"></a>
-									<a class="btn disabled none" href="#"></a>
-									<a class="btn" href="#">14</a>
-								</div>
-								<div>
-									<a class="btn bg-light text-secondary fw-bold border-top border-bottom" href="#">A</a>
-									<a class="btn" href="#">1</a>
-									<a class="btn" href="#">2</a>
-									<a class="btn" href="#">3</a>
-									<a class="btn" href="#">4</a>
-									<a class="btn" href="#">5</a>
-									<a class="btn" href="#">6</a>
-									<a class="btn" href="#">7</a>
-									<a class="btn" href="#">8</a>
-									<a class="btn" href="#">9</a>
-									<a class="btn" href="#">10</a>
-									<a class="btn" href="#">11</a>
-									<a class="btn disabled none" href="#"></a>
-									<a class="btn disabled none" href="#"></a>
-									<a class="btn" href="#">14</a>
-								</div>
-								<div>
-									<a class="btn bg-light text-secondary fw-bold border-top border-bottom" href="#">A</a>
-									<a class="btn" href="#">1</a>
-									<a class="btn" href="#">2</a>
-									<a class="btn" href="#">3</a>
-									<a class="btn" href="#">4</a>
-									<a class="btn" href="#">5</a>
-									<a class="btn" href="#">6</a>
-									<a class="btn" href="#">7</a>
-									<a class="btn" href="#">8</a>
-									<a class="btn" href="#">9</a>
-									<a class="btn" href="#">10</a>
-									<a class="btn" href="#">11</a>
-									<a class="btn disabled none" href="#"></a>
-									<a class="btn disabled none" href="#"></a>
-									<a class="btn" href="#">14</a>
-								</div>
-								<div>
-									<a class="btn bg-light text-secondary fw-bold border-top border-bottom" href="#">A</a>
-									<a class="btn" href="#">1</a>
-									<a class="btn" href="#">2</a>
-									<a class="btn" href="#">3</a>
-									<a class="btn" href="#">4</a>
-									<a class="btn" href="#">5</a>
-									<a class="btn" href="#">6</a>
-									<a class="btn" href="#">7</a>
-									<a class="btn" href="#">8</a>
-									<a class="btn" href="#">9</a>
-									<a class="btn" href="#">10</a>
-									<a class="btn" href="#">11</a>
-									<a class="btn disabled none" href="#"></a>
-									<a class="btn disabled none" href="#"></a>
-									<a class="btn" href="#">14</a>
-								</div>
-								<div>
-									<a class="btn bg-light text-secondary fw-bold border-top border-bottom" href="#">A</a>
-									<a class="btn" href="#">1</a>
-									<a class="btn" href="#">2</a>
-									<a class="btn" href="#">3</a>
-									<a class="btn" href="#">4</a>
-									<a class="btn" href="#">5</a>
-									<a class="btn" href="#">6</a>
-									<a class="btn" href="#">7</a>
-									<a class="btn" href="#">8</a>
-									<a class="btn" href="#">9</a>
-									<a class="btn" href="#">10</a>
-									<a class="btn" href="#">11</a>
-									<a class="btn disabled none" href="#"></a>
-									<a class="btn disabled none" href="#"></a>
-									<a class="btn" href="#">14</a>
-								</div>
 							</div>
 						</div>
 					</td>
 					<td class="col-3 bg-light border-end-0">
-						<span class="d-block">선택</span>
-						<span class="d-block">예매완료</span>
-						<span class="d-block">선택불가</span>
+						<div id="seat-example-box">
+							<div class="d-flex align-items-center mb-2"><a class="btn me-1 active" href="#"></a> <span>선택</span></div>
+							<div class="d-flex align-items-center mb-2"><a class="btn me-1 disabled" href="#"></a> <span>예매완료</span></div>
+							<div class="d-flex align-items-center mb-2"><a class="btn me-1 disabled" href="#"><i class="bi bi-x-lg"></i></a> <span>선택불가</span></div>
+							<div class="d-flex align-items-center mb-2"><a class="btn me-1 disabled" href="#"><i class="bi bi-arrow-left-right"></i></a> <span>거리두기 좌석</span></div>
+							<br/>
+							<div class="d-flex align-items-center mb-2"><a class="btn me-1 light" href="#"></a> <span>Light Zone</span></div>
+							<div class="d-flex align-items-center mb-2"><a class="btn me-1" href="#"></a> <span>일반석</span></div>
+							<div class="d-flex align-items-center mb-2"><a class="btn me-1 wheelchair" href="#"></a> <span>장애인석</span></div>
+							<div class="d-flex align-items-center mb-2"><a class="btn me-1 sweetbox" href="#"></a> <span>SWEETBOX</span></div>
+						</div>
 					</td>
 				</tr>
 			</tbody>
@@ -625,8 +559,6 @@
 		$("#booking-nav").on("click", "#next-btn-box .btn-danger", function(event) {
 			event.preventDefault();
 			$("#h1-page-title").text("좌석선택");
-			$("#table-movie").addClass("d-none");
-			$("#table-seat").removeClass("d-none");
 			var row = '<div class="col d-flex justify-content-start align-items-center" id="prev-btn-box">'
 				+ '<a class="btn btn-lg" href="#" style="background-color: #333; color: #fff;"><i class="bi bi-caret-left-fill d-flex justify-content-center" style="font-size: 3rem;"></i> <strong>영화선택</strong></a>';
 				+ '</div>';
@@ -648,14 +580,6 @@
 			$("#seat-show-date").text(moment(showDate).format('YYYY.MM.DD') + "(" + showDay + ")");
 			$("#seat-start-time").text(startTime);
 			$("#seat-end-time").text(endTime);
-			
-			
-			
-			
-			
-			
-			
-			
 			var showNo = $("#time-list-box a.active").attr("data-show-no");
 			getSeats(showNo);
 		});
@@ -999,6 +923,8 @@
 	}
 	
 	function getSeats(showNo) {
+		var $seatBox = $("#seat-box").empty();
+		
 		$.ajax({
 			type: "get",
 			url: "/rest/ticket/seat",
@@ -1009,21 +935,55 @@
 			beforeSend: function() {
 				$("#overlay").removeClass("d-none");
 			},
-			success: function(seats) {
+			success: function(showSeats) {
+				var seats = showSeats.seats;
+				var totalRows = showSeats.seatsTotalRows;
+				
+				var j = 0;
+				for (var i = 0; i < totalRows; i++) {
+					var column = 1;
+					var section = 1;
+					var row = '<div>';
+					var isDone = false;
+					while (!isDone) {
+						if (column == 1) {
+							row += '<a class="btn bg-light text-secondary fw-bold border-top border-bottom" href="#">' + seats[j].seatRow + '</a>';
+						}
+						while (seats[j].seatSection != section) {
+							row += '<a class="btn disabled none" href="#"></a>';
+							section++;
+						}
+						while (seats[j].seatColumn != column) {
+							row += '<a class="btn disabled none" href="#"></a>';
+							column++;
+						}
+						if (seats[j].isReserved == "N") {
+							if (seats[j].seatType == "LIGHT") {
+								row += '<a class="btn light" data-seat-no="' + seats[j].seatNo + '" data-seat-row="' + seats[j].seatRow + '" data-seat-column="' + seats[j].seatColumn + '" data-seat-type="' + seats[j].seatType + '" href="#">' + seats[j].seatColumn + '</a>';
+							} else if (seats[j].seatType == "STANDARD") {
+								row += '<a class="btn" data-seat-no="' + seats[j].seatNo + '" data-seat-row="' + seats[j].seatRow + '" data-seat-column="' + seats[j].seatColumn + '" data-seat-type="' + seats[j].seatType + '" href="#">' + seats[j].seatColumn + '</a>';
+							} else if (seats[j].seatType == "WHEELCHAIR") {
+								row += '<a class="btn wheelchair" data-seat-no="' + seats[j].seatNo + '" data-seat-row="' + seats[j].seatRow + '" data-seat-column="' + seats[j].seatColumn + '" data-seat-type="' + seats[j].seatType + '" href="#">' + seats[j].seatColumn + '</a>';
+							} else if (seats[j].seatType == "SWEETBOX") {
+								row += '<a class="btn sweetbox" data-seat-no="' + seats[j].seatNo + '" data-seat-row="' + seats[j].seatRow + '" data-seat-column="' + seats[j].seatColumn + '" data-seat-type="' + seats[j].seatType + '" href="#">' + seats[j].seatColumn + '</a>';
+							} else if (seats[j].seatType == "DISTANCE") {
+								row += '<a class="btn disabled" href="#"><i class="bi bi-arrow-left-right"></i></a>';
+							}
+						} else if (seats[j].isReserved == "Y") {
+							row += '<a class="btn disabled" href="#">' + seats[j].seatColumn + '</a>';
+						}
+						if (j + 1 == seats.length || seats[j].seatRow != seats[j + 1].seatRow) {
+							isDone = true;
+						}
+						column++;
+						j++;
+					}					
+					row += '</div>';
+					$seatBox.append(row);
+				}
 				$("#overlay").addClass("d-none");
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
+				$("#table-movie").addClass("d-none");
+				$("#table-seat").removeClass("d-none");
 			},
 			error: function() {
 				$("#overlay").addClass("d-none");

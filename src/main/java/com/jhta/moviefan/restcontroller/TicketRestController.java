@@ -128,7 +128,9 @@ public class TicketRestController {
 		BookingPageDto seats = new BookingPageDto();
 		
 		List<ShowSeatDetailDto> showSeatDetailDtos = ticketService.getShowSeatDetailDtos(showNo);
+		int seatsTotalRows = ticketService.getTotalSeatsRows(showNo);
 		seats.setSeats(showSeatDetailDtos);
+		seats.setSeatsTotalRows(seatsTotalRows);
 		
 		return seats;
 	}
