@@ -13,7 +13,7 @@
 </head>
 <body>
 <%@ include file="/WEB-INF/views/common/header.jsp"%>
-<div class="container">
+<div class="container mb-5">
 	<div class="row mt-3 mb-2">
 		<div class="col">
 			<h2 class="text-center">회원가입</h2>
@@ -458,11 +458,11 @@ $(function() {
 	$('#agree').click(function(event) {
 		event.preventDefault();
 		
-		if ($('input[name=check]').prop('checked') == false) {
+		if (!$('.form-check input').prop('checked')) {
 			alert('회원약관 동의는 필수입니다.');
 			return false;
 		}
-		
+			
 		$('form[action=registerform]').submit();
 	});
 	

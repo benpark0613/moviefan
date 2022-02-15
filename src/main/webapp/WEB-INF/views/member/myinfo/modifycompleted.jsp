@@ -13,11 +13,11 @@
 </head>
 <body>
 <%@ include file="/WEB-INF/views/common/header.jsp" %>
-<div class="container">
+<div class="container mb-5">
 	<div class="col p-5 my-3">
 		<div class="row text-center">
 			<p class="fs-1">회원 정보 수정 완료</p>
-			<p>로그인을 다시 해주시고 변경된 회원정보를 확인해보세요.</p>	
+			<p>로그인을 통해 변경된 회원정보를 확인해보세요.</p>	
 		</div>
 	</div>
 </div>

@@ -24,10 +24,24 @@
 	<div class="modal fade" tabindex="-1" aria-labelledby="nickNameModalLabel" id="modal-update-nickname" >
 		<div class="modal-dialog modal-dialog-centered">
 			<div class="modal-content">
-				<div class="modal-header">
-					<h5 class="modal-title" id="nickNameModalLabel"><strong>${LOGINED_CUSTOMER.nickName }님</strong>&nbsp;<span class="fs-6 fw-lighter">${LOGINED_CUSTOMER.id }</span></h5>
-					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-				</div>
+				<c:choose>
+					<c:when test="${empty LOGINED_CUSTOMER.nickName}">
+						<div class="modal-header">
+							<h5 class="modal-title" id="nickNameModalLabel"><strong>${LOGINED_CUSTOMER.name }님</strong>&nbsp;<span class="fs-6 fw-lighter">${LOGINED_CUSTOMER.id }</span></h5>
+							<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+						</div>
+					</c:when>
+					<c:otherwise>
+						<div class="modal-header">
+							<h5 class="modal-title" id="nickNameModalLabel"><strong>${LOGINED_CUSTOMER.nickName }님</strong>&nbsp;<span class="fs-6 fw-lighter">${LOGINED_CUSTOMER.id }</span></h5>
+							<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+						</div>
+					</c:otherwise>
+				</c:choose>
+<!-- 				<div class="modal-header"> -->
+<%-- 					<h5 class="modal-title" id="nickNameModalLabel"><strong>${LOGINED_CUSTOMER.nickName }님</strong>&nbsp;<span class="fs-6 fw-lighter">${LOGINED_CUSTOMER.id }</span></h5> --%>
+<!-- 					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button> -->
+<!-- 				</div> -->
 				<div class="modal-body">
 					<form method="post" id="form-update-nickname">
 						<div class="row">

@@ -55,7 +55,7 @@
    				<div class="col-6">
    					<p>성별</p>
 	   				<div class="form-check form-check-inline">
-						<input class="form-check-input" type="radio" name="gender" value="male" checked>
+						<input class="form-check-input" type="radio" name="gender" value="male">
 						<label class="form-check-label" >남자</label>
 					</div>
 					<div class="form-check form-check-inline">

@@ -13,7 +13,7 @@
 </head>
 <body>
 <%@ include file="/WEB-INF/views/common/header.jsp" %>
-<div class="container">
+<div class="container mb-5">
 	<div class="row mt-4 mb-2">
 		<div class="col">
 			<h2 class="text-center">아이디/비밀번호 찾기</h2>
