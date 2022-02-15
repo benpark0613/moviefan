@@ -366,6 +366,13 @@
 <div class="bg-dark text-white">
 	<div class="container">
 		<div class="row" style="height: 150px;" id="booking-nav">
+			<div class="col d-flex justify-content-start align-items-center d-none" id="prev-btn-box">
+				<a class="btn btn-lg" href="#" style="background-color: #333; color: #fff;">
+					<i class="bi bi-caret-left-fill d-flex justify-content-center" style="font-size: 3rem;"></i> <strong>영화선택</strong>
+				</a>
+			</div>
+			<div class="col-1 d-flex justify-content-center align-items-center d-none" id="movie-image-box">
+			</div>
 			<div class="col d-flex justify-content-center align-items-center">
 				<div id="movie-detail-box">
 					<span class="fs-3">영화선택</span>
@@ -384,9 +391,18 @@
 			<div class="vr p-0 my-4"></div>
 			<div class="col d-flex justify-content-center align-items-center">
 				<span class="fs-3" id="span-select-seat"><i class="bi bi-chevron-right"></i> 좌석선택 <i class="bi bi-chevron-right"></i> 결제</span>
-				<div class="d-none" id="seat-detail-box">
-					<span class="d-block">좌석명: 일반석</span>
-					<span class="d-block">좌석번호: C1,C2</span>
+			</div>
+			<div class="col d-flex justify-content-center align-items-center d-none" id="seat-detail-box">
+				<div>
+					<span class="d-block">좌석명: <span id="seat-type">일반석</span></span>
+					<span class="d-block">좌석번호: <span id="seat-row-column">C1,C2</span></span>
+				</div>
+			</div>
+			<div class="vr p-0 my-4 d-none" id="vr"></div>
+			<div class="col d-flex justify-content-center align-items-center d-none" id="ticket-price-box">
+				<div>
+					<span class="d-block">일반: 10,000원 X 2</span>
+					<span class="d-block">총금액: <strong class="text-danger">20,000원</strong></span>
 				</div>
 			</div>
 			<div class="col d-flex justify-content-end align-items-center" id="next-btn-box">
@@ -471,10 +487,6 @@
 					getCinemas(movieNo, showDate, cityNo, cinemaNo);
 					getShowDates(movieNo, cinemaNo, showDate);
 				}
-				$("#movie-image-box").remove();
-				var row = '<div class="col-1 d-flex justify-content-center align-items-center" id="movie-image-box">' 
-					+ '</div>';
-				$("#booking-nav").prepend(row);
 				getMovieDetail(movieNo);
 			}
 		});
@@ -559,10 +571,7 @@
 		$("#booking-nav").on("click", "#next-btn-box .btn-danger", function(event) {
 			event.preventDefault();
 			$("#h1-page-title").text("좌석선택");
-			var row = '<div class="col d-flex justify-content-start align-items-center" id="prev-btn-box">'
-				+ '<a class="btn btn-lg" href="#" style="background-color: #333; color: #fff;"><i class="bi bi-caret-left-fill d-flex justify-content-center" style="font-size: 3rem;"></i> <strong>영화선택</strong></a>';
-				+ '</div>';
-			$("#booking-nav").prepend(row);
+			$("#prev-btn-box").removeClass("d-none");
 			$("#span-select-seat").empty().append('<i class="bi bi-chevron-right"></i> 좌석선택');
 			$("#next-btn-box").empty().append('<a class="btn btn-lg disabled" href="/ticket/checkout" style="background-color: #333; color: #fff;"><i class="bi bi-caret-right d-flex justify-content-center" style="font-size: 3rem;"></i> <strong>결제선택</strong></a>');
 			var cinemaName = $("#cinema-list-box a.active").attr("data-cinema-name");
@@ -580,6 +589,14 @@
 			$("#seat-show-date").text(moment(showDate).format('YYYY.MM.DD') + "(" + showDay + ")");
 			$("#seat-start-time").text(startTime);
 			$("#seat-end-time").text(endTime);
+
+			$("#adult-ticket-box a").removeClass("active");
+			$("#adult-ticket-box a:first-of-type").addClass("active");
+			$("#youth-ticket-box a").removeClass("active");
+			$("#youth-ticket-box a:first-of-type").addClass("active");
+			$("#senior-ticket-box a").removeClass("active");
+			$("#senior-ticket-box a:first-of-type").addClass("active");
+			
 			var showNo = $("#time-list-box a.active").attr("data-show-no");
 			getSeats(showNo);
 		});
@@ -589,8 +606,8 @@
 			$("#h1-page-title").text("영화선택");
 			$("#table-movie").removeClass("d-none");
 			$("#table-seat").addClass("d-none");
-			$("#prev-btn-box").remove();
-			$("#span-select-seat").empty().append('<span class="fs-3" id="span-select-seat"><i class="bi bi-chevron-right"></i> 좌석선택 <i class="bi bi-chevron-right"></i> 결제</span>');
+			$("#prev-btn-box").addClass("d-none");
+			$("#span-select-seat").removeClass("d-none").empty().append('<span class="fs-3" id="span-select-seat"><i class="bi bi-chevron-right"></i> 좌석선택 <i class="bi bi-chevron-right"></i> 결제</span>');
 			$("#next-btn-box").empty().append('<a class="btn btn-danger btn-lg" href="/ticket/seat"><i class="bi bi-caret-right-fill d-flex justify-content-center" style="font-size: 3rem;"></i> <strong>좌석선택</strong></a>');
 		});
 		
@@ -643,6 +660,14 @@
 			if (!isSelected) {
 				if ((adult + youth + senior) > $("#seat-box a.active").length) {
 					$(this).addClass("active");
+
+					var seatNo = $(this).attr("data-seat-no");
+					var seatRow = $(this).attr("data-seat-row");
+					var seatColumn = $(this).attr("data-seat-column");
+					var seatType = $(this).attr("data-seat-type");
+					
+					
+					
 				}
 			}
 		});
@@ -956,7 +981,7 @@
 			success: function(movieDetail) {
 				if (movieDetail.images.length > 0) {
 					var row = '<img src="/resources/images/movie/' + movieDetail.images[0].filename + '" style="width: 90px; height:125px;">';
-					$movieImageBox.append(row);
+					$movieImageBox.append(row).removeClass("d-none");
 				}
 				var row = '<span class="d-block"><strong>' + movieDetail.title + '</strong></span>';
 				row += '<span class="d-block"><strong>' + movieDetail.runtime + '분</strong></span>';
