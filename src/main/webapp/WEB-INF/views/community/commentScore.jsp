@@ -108,16 +108,13 @@
 								<input type="hidden" value="${comment.commentNo }">
 								<input type="hidden" value="${comment.movieNo }">
 								<br>
-								<span id="like${status.index }" style="font-size: 17pt;"><strong>${comment.likeCount }</strong></span>
-								<br>
-								<fmt:formatDate value="${comment.creDate }" pattern="yyyy.MM.dd" var="date"/>
-								<fmt:formatDate value="${now }" pattern="yyyy.MM.dd" var="now"/>
-								<c:if test="${now eq date }">
-									<span>1분전</span>
+								<span id="like${status.index }" style="font-size: 17pt;"><strong>${comment.likeCount }</strong>
+								</span>
+								<c:if test="${comment.customerNo eq customerNo}">
+									<a href="/community/deletecomment?commentNo=${comment.commentNo }"><i class="bi bi-file-excel remove"></i></a>
 								</c:if>
-								<span>${date }</span>
-								<span>${now }</span>
-								
+								<br>
+								<span><fmt:formatDate value="${comment.creDate }" pattern="yyyy.MM.dd"/></span>
 							</div>
 						</div>
 					</div>
@@ -180,6 +177,35 @@
 		$(":input[name=page]").val("1");
 		$(":input[name=sort]").val('recommend');
 		$("#form-search-comment").trigger("submit");
+	})
+	
+	$(".remove").click(function(){
+		$.ajax({
+			type : "post",
+			url : "/rest/review/updatelikecount",
+			dataType : "json",
+			data : {
+				commentNo : commentNo,
+				movieNo : movieNo,
+				page : page,
+				sort : sort,
+				opt : opt,
+				value : value
+			},
+			success : function(response){
+				if(response.status == 'FAIL'){
+					alert(response.error)
+				}else{
+					for(var i=0; i<response.item.length;i++){
+						$("#like"+[i]).text(response.item[i].likeCount);
+					}
+					alert("완료되었습니다.");
+				}
+			},
+			error : function(response){
+				alert(response.error)
+			}
+		})
 	})
 	
 	$(".like").click(function(){

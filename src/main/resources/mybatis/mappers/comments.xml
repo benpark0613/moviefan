@@ -225,4 +225,9 @@
 		and CUSTOMER_NO = #{customerNo}
 	</delete>
 	
+	<delete id="deleteComment" parameterType="int">
+		delete from MOVIE_CUSTOMER_COMMENT
+		where COMMENT_NO = #{value}
+	</delete>
+	
 </mapper>
