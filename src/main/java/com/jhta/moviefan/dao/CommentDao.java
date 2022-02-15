@@ -32,5 +32,5 @@ public interface CommentDao {
 	void insertCommentLikedCustomer(CommentLikedCustomer commentLikedCustomer);
 	//댓글 추천인 삭제
 	void deleteCommentLikedCustomer(CommentLikedCustomer commentLikedCustomer);
-	
+	void deleteComment(int commentNo);
 }

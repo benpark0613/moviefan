@@ -37,14 +37,16 @@ public class ReviewController {
 	MovieService movieService;
 	
 	@GetMapping("/commentScore")
-	public String commentScore(@RequestParam(name = "page", required = false, defaultValue = "1") String page, Model model, CriteriaMovieComment criteria) {
+	public String commentScore(@LoginedCustomer Customer customer, @RequestParam(name = "page", required = false, defaultValue = "1") String page, Model model, CriteriaMovieComment criteria) {
 		int totalRecords = commentService.getCommentTotalRow(criteria);
 		Pagination pagination = new Pagination(page, totalRecords, 10);
 		criteria.setBeginIndex(pagination.getBegin());
 		criteria.setEndIndex(pagination.getEnd());
 		
 		List<CommentDto> commentList = commentService.searchComment(criteria);
-		
+		if(customer != null) {
+			model.addAttribute("customerNo", customer.getNo());
+		}
 		model.addAttribute("comment", commentList);
 		model.addAttribute("pagination", pagination);
 		model.addAttribute("size", totalRecords);
@@ -114,5 +116,16 @@ public class ReviewController {
 		
 		return "redirect:commentScore";
 	}
+	
+	@GetMapping("/deletecomment")
+	public String deletecomment(int commentNo) {
+		
+		commentService.deleteComment(commentNo);
+		commentService.updateMovieCustomerRating(commentNo);
+		
+		
+		return "redirect:commentScore";
+	}
+	
 	
 }

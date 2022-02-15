@@ -81,8 +81,17 @@ public class CommentService {
 			sum += rating;
 		}
 		int count = commentDao.getCommentTotalRowByMovieNo(movieNo);
+		int result = 0;
+		if(count == 0) {
+			result = 0;
+		}else {
+			result = sum /count;
+		}
+		commentDao.updateMovieCustomerRating(movieNo, result);
 		
-		commentDao.updateMovieCustomerRating(movieNo, sum/count);
-		
+	}
+	
+	public void deleteComment(int commentNo) {
+		commentDao.deleteComment(commentNo);
 	}
 }
